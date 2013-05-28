@@ -1,0 +1,1 @@
+Kul.settings.enable_sessions = true
