@@ -67,20 +67,29 @@ $ ->
 
   $('#post-submit').click ->
     $.post 'app/posts/submit', { message: $('#post-text').val() }, (data) ->
-      alert(data.status)
+      if data.status is 'ok'
+        load_posts()
 
   $('#post-announcement-submit').click ->
     $.post 'app/announcements/submit', { message: $('#post-announcement-text').val() }, (data) ->
-      alert(data.status)
+      if data.status is 'ok'
+        load_announcements()
 
   $.getJSON 'app/user/username', (data) ->
     if data.status is 'ok'
       login(data.user)
 
+  load_announcements()
+  load_posts()
+
+load_announcements = ->
   $.getJSON 'app/announcements/list', (data) ->
+    window.twitarr.announcements.removeAll()
     window.twitarr.add_announcements(data.list)
 
+load_posts = () ->
   $.getJSON 'app/posts/list', (data) ->
+    window.twitarr.posts.removeAll()
     window.twitarr.add_posts(data.list)
 
 login = (user) ->
