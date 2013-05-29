@@ -9,6 +9,8 @@
     <script type='text/javascript' src='js/jquery-2.0.1.js'></script>
     <script type='text/javascript' src='js/knockout-2.2.1.js'></script>
     <script type='text/javascript' src='js/bootstrap.js'></script>
+    <script type='text/javascript' src='js/moment.js'></script>
+    <script type='text/javascript' src='js/livestamp.js'></script>
     <script type='text/javascript' src='js/main.js'></script>
 </head>
 <body>
@@ -30,9 +32,6 @@
             </li>
         </ul>
         <ul class='nav pull-right'>
-            <li data-bind="visible: logged_in, css: { active: post_screen() }">
-                <a href='#' data-bind="click: set_panel" data-section='post'>Post something!</a>
-            </li>
             <li data-bind="visible: !logged_in(), css: { active: login_screen() }">
                 <a href='#' data-bind="click: set_panel" data-section='login'>Login</a>
             </li>
@@ -54,7 +53,8 @@
         <h2>Announcements</h2>
 
         <div data-bind="visible: user.is_admin" style="margin-bottom: 10px;">
-            <button type="button" class="btn" data-toggle="collapse" data-target="#announcement-post" style="margin-bottom: 10px;">
+            <button type="button" class="btn" data-toggle="collapse" data-target="#announcement-post"
+                    style="margin-bottom: 10px;">
                 Make an announcement
             </button>
 
@@ -65,9 +65,10 @@
         </div>
 
         <div data-bind="foreach: announcements">
-            <div class="well" style="border: 1px solid black">
-                <span data-bind="text: message"></span>
-                <span data-bind="text: username" class="pull-right"></span>
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
             </div>
         </div>
     </div>
@@ -79,22 +80,29 @@
     <div data-bind="visible: all_screen">
         <h2>All</h2>
 
+        <div data-bind="visible: logged_in" style="margin-bottom: 10px;">
+            <button type="button" class="btn" data-toggle="collapse" data-target="#twit-post"
+                    style="margin-bottom: 10px;">
+                Make a post
+            </button>
+
+            <div id="twit-post" class="collapse">
+                <textarea id='post-text'></textarea>
+                <button id='post-submit'>Post it</button>
+            </div>
+        </div>
+
         <div data-bind="foreach: posts">
-            <div class="well" style="border: 1px solid black">
-                <span data-bind="text: message"></span>
-                <span data-bind="text: username" class="pull-right"></span>
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
             </div>
         </div>
     </div>
 
     <div data-bind="visible: my_stuff_screen">
         <h2>My Stuff</h2>
-    </div>
-
-    <div data-bind="visible: post_screen">
-        <legend>Post</legend>
-        <textarea id='post-text'></textarea>
-        <button id='post-submit'>Post it</button>
     </div>
 
     <div data-bind="visible: profile_screen">

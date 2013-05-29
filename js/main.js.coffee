@@ -33,8 +33,6 @@ class Twitarr
       @screen() == 'all'
     @my_stuff_screen = ko.computed =>
       @screen() == 'my-stuff'
-    @post_screen = ko.computed =>
-      @screen() == 'post'
     @profile_screen = ko.computed =>
       @screen() == 'profile'
     @login_screen = ko.computed =>
