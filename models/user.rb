@@ -1,0 +1,33 @@
+class User
+  include HashInitialize
+
+  attr_accessor :username, :password, :is_admin, :status, :email
+
+  def empty_password
+    password.nil? || password.empty?
+  end
+
+  #TODO: move this into a common base class
+  def to_hash(keys)
+    keys.each_with_object({}) do |key, map|
+      map[key] = send(key)
+    end
+  end
+
+  def to_json
+    to_hash([:username, :password, :is_admin, :status, :email]).to_json
+  end
+
+  def update(values)
+    values.each do |k, v|
+      if respond_to? k.to_s
+        # this lets us initialize classes with attr_reader
+        instance_variable_set "@#{k.to_s}", v
+      else
+        #TODO: replace this with some sort of logging
+        puts "Invalid parameter passed to class #{self.class.to_s} initialize: #{k.to_s} - value: #{v.to_s}"
+      end
+    end
+  end
+
+end

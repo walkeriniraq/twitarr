@@ -1,9 +1,27 @@
-.main-section {
-  //display: none;
+//  BOOTSTRAP OVERRIDES
+body {
+  padding: 0;
+}
 
-  &.active {
-    //display: inline;
+@media (max-width: 480px) {
+  .main {
+    padding: 0;
   }
+}
+
+@media (max-width: 767px) {
+  .main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.main {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 1000px;
 }
 
 .dialog {
