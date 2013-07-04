@@ -23,7 +23,7 @@ module UserController
     render_json status: 'logout'
   end
 
-  post 'new_user' do
+  post 'new' do
     user = User.new
     user.username = params[:username]
     user.email = params[:email]

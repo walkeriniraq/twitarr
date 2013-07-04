@@ -66,7 +66,7 @@ module AdminController
 
   get 'index' do
     return render_file 'app/admin/unauthorized.html' unless has_access?
-    render_file 'app/admin/index.html'
+    render_file 'app/admin/admin_index.html'
   end
 
   get 'users' do

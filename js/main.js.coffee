@@ -70,7 +70,7 @@ $ ->
     false
 
   $('#new-user-submit').click ->
-    $.post 'user/new_user', {
+    $.post 'user/new', {
       username: $('#new-username').val()
       email: $('#new-email').val()
       password: $('#new-password').val()
