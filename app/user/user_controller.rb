@@ -8,8 +8,12 @@ module UserController
 
   include ControllerHelpers
 
+  def database
+    server.database
+  end
+
   post 'login' do
-    user = server.get_user(params[:username])
+    user = database.get_user(params[:username])
     return render_json status: 'User does not exist.' if user.nil?
     return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
     return render_json status: 'Invalid username or password.' if BCrypt::Password.new(user.password) != @params[:password]
@@ -35,8 +39,8 @@ module UserController
     return render_json status: 'Email address is not valid.' if (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
     return render_json status: 'Password must be at least six characters long.' if @params[:password].length < 6
     return render_json status: 'Passwords do not match.' if @params[:password] != @params[:password2]
-    user.password = BCrypt::Password.create @params[:password]
-    server.write_user user
+    user.set_password @params[:password]
+    database.write_user user
     render_json status: 'ok'
   end
 
@@ -54,7 +58,7 @@ module UserController
     return render_json status: 'User does not exist.' if user.nil?
     return render_json status: 'Invalid username or password.' if BCrypt::Password.new(user.password) != @params[:old_password]
     user.password = BCrypt::Password.create @params[:new_password]
-    server.write_user user
+    database.write_user user
   end
 
 end

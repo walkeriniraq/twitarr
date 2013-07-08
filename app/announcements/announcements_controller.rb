@@ -5,21 +5,22 @@ module AnnouncementsController
 
   include ControllerHelpers
 
+  def database
+    server.database
+  end
+
   post 'submit' do
     return login_required unless logged_in?
     return render_json status: 'Announcements can only be created by admins.' unless is_admin?
-    redis = server.redis_connection
     post = Message.new_post(@params[:message], @session[:username])
-    redis.lpush "announcements", post.to_json
+    database.submit_announcement post
     render_json status: 'ok'
   end
 
   get 'list' do
-    redis = server.redis_connection
-    data = redis.lrange "announcements", 0, 20
-    return render_json list: [{ message: 'No announcements!' }] if data.empty?
-    data = data.map { |x| JSON.parse(x.to_s) }
-    render_json list: data
+    # TODO: fix this too
+    #return render_json list: [{ message: 'No announcements!' }] if data.empty?
+    render_json list: database.announcement_list(0, 20)
   end
 
 end

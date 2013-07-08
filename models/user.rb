@@ -1,3 +1,6 @@
+require 'bcrypt'
+require 'json'
+
 class User
   include HashInitialize
 
@@ -5,6 +8,10 @@ class User
 
   def empty_password
     password.nil? || password.empty?
+  end
+
+  def set_password(unencrypted_password)
+    @password = BCrypt::Password.create unencrypted_password
   end
 
   #TODO: move this into a common base class
