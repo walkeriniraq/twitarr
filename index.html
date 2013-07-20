@@ -18,21 +18,21 @@
     <div class='navbar-inner'>
         <a class='brand hidden-phone'>Twit-arr!</a>
         <ul class='nav'>
-            <li data-bind="css: { active: announcements_screen() }">
+            <li data-bind="css: { active: screen() == 'announcements' }">
                 <a href='#' data-bind="click: set_panel" data-section='announcements'>Announcements</a>
             </li>
-            <li data-bind="css: { active: popular_screen() }">
+            <li data-bind="css: { active: screen() == 'popular' }">
                 <a href='#' data-bind="click: set_panel" data-section='popular'>Popular</a>
             </li>
-            <li data-bind="css: { active: all_screen() }">
+            <li data-bind="css: { active: screen() == 'all' }">
                 <a href='#' data-bind="click: set_panel" data-section='all'>All</a>
             </li>
-            <li data-bind="visible: logged_in, css: { active: my_stuff_screen() }">
+            <li data-bind="visible: logged_in, css: { active: screen() == 'mine' }">
                 <a href='#' data-bind="click: set_panel" data-section='my-stuff'>My Stuff</a>
             </li>
         </ul>
         <ul class='nav pull-right'>
-            <li data-bind="visible: !logged_in(), css: { active: login_screen() }">
+            <li data-bind="visible: !logged_in(), css: { active: screen() == 'login' }">
                 <a href='#' data-bind="click: set_panel" data-section='login'>Login</a>
             </li>
             <li data-bind="visible: logged_in" class='dropdown'>
@@ -49,7 +49,7 @@
     </div>
 </div>
 <div class='main'>
-    <div data-bind="visible: announcements_screen">
+    <div data-bind="visible: screen() == 'announcements'">
         <h3 class="visible-desktop">Announcements</h3>
 
         <div data-bind="foreach: announcements">
@@ -74,11 +74,11 @@
 
     </div>
 
-    <div data-bind="visible: popular_screen">
+    <div data-bind="visible: screen() == 'popular'">
         <h3>Popular</h3>
     </div>
 
-    <div data-bind="visible: all_screen">
+    <div data-bind="visible: screen() == 'all'">
         <h3>All</h3>
 
         <div data-bind="visible: logged_in" style="margin-bottom: 10px;">
@@ -103,15 +103,23 @@
         </div>
     </div>
 
-    <div data-bind="visible: my_stuff_screen">
+    <div data-bind="visible: screen() == 'mine'">
         <h3>My Stuff</h3>
+        <div data-bind="foreach: user_posts">
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
+            </div>
+        </div>
     </div>
 
-    <div data-bind="visible: profile_screen">
+    <div data-bind="visible: screen() == 'profile'">
         <h3>Profile</h3>
     </div>
 
-    <div data-bind="visible: login_screen">
+    <div data-bind="visible: screen() == 'login'">
         <form class="form-horizontal">
             <legend>I have an account</legend>
             <div class="control-group">

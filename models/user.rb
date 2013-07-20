@@ -37,4 +37,31 @@ class User
     end
   end
 
+  def save
+    DbConnectionPool.instance.connection do |db|
+      db.sadd('users', username)
+      db.set("user:#{username}", to_json)
+    end
+  end
+
+  def self.list_usernames
+    DbConnectionPool.instance.connection do |db|
+      db.smembers 'users'
+    end
+  end
+
+  def self.exist?(username)
+    DbConnectionPool.instance.connection do |db|
+      db.sismember('users', username)
+    end
+  end
+
+  def self.get(username)
+    DbConnectionPool.instance.connection do |db|
+      data = db.get("user:#{username}")
+      return if data.nil?
+      User.new(JSON.parse(data))
+    end
+  end
+
 end

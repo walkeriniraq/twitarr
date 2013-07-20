@@ -5,22 +5,18 @@ module AnnouncementsController
 
   include ControllerHelpers
 
-  def database
-    server.database
-  end
-
   post 'submit' do
     return login_required unless logged_in?
     return render_json status: 'Announcements can only be created by admins.' unless is_admin?
-    post = Message.new_post(@params[:message], @session[:username])
-    database.submit_announcement post
+    post = Announcement.new_post(@params[:message], @session[:username])
+    post.save
     render_json status: 'ok'
   end
 
   get 'list' do
     # TODO: fix this too
     #return render_json list: [{ message: 'No announcements!' }] if data.empty?
-    render_json list: database.announcement_list(0, 20)
+    render_json list: Announcement.recent(0, 20)
   end
 
 end

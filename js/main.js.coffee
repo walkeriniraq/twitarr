@@ -22,21 +22,10 @@ class Twitarr
     @user = new User()
     @announcements = ko.observableArray()
     @posts = ko.observableArray()
+    @user_posts = ko.observableArray()
     @logged_in = ko.computed =>
       @user.username() != null
     @screen = ko.observable 'announcements'
-    @announcements_screen = ko.computed =>
-      @screen() == 'announcements'
-    @popular_screen = ko.computed =>
-      @screen() == 'popular'
-    @all_screen = ko.computed =>
-      @screen() == 'all'
-    @my_stuff_screen = ko.computed =>
-      @screen() == 'my-stuff'
-    @profile_screen = ko.computed =>
-      @screen() == 'profile'
-    @login_screen = ko.computed =>
-      @screen() == 'login'
 
   logout: ->
     $.getJSON 'user/logout', (data) =>
@@ -45,26 +34,39 @@ class Twitarr
 
   login: (user) ->
     @user.update user
+    @load_user_stuff() if @logged_in()
 
-  add_announcements: (list) =>
-    @announcements.push new Post(announcement) for announcement in list
+  set_panel: (data, event) ->
+    @screen $(event.target).data 'section'
 
-  add_posts: (list) =>
-    @posts.push new Post(post) for post in list
+  load_announcements: ->
+    $.getJSON 'announcements/list', (data) =>
+      @announcements.removeAll()
+      @announcements.push new Post(announcement) for announcement in data.list
 
-  set_panel: (data, event) =>
-    section = $(event.target).data 'section'
-    @screen section
+  load_posts: ->
+    $.getJSON 'posts/list', (data) =>
+      @posts.removeAll()
+      @posts.push new Post(post) for post in data.list
+
+  load_user_stuff: ->
+    $.getJSON 'posts/mine', (data) =>
+      @user_posts.removeAll()
+      @user_posts.push new Post(post) for post in data.list
+
+  initialize: ->
+    @load_announcements()
+    @load_posts()
 
 window.twitarr = new Twitarr()
 
 $ ->
-  ko.applyBindings window.twitarr
+  ko.applyBindings twitarr
   $('#login-submit').click ->
     $.post 'user/login', { username: $('#login-username').val(), password: $('#login-password').val() }, (data) ->
       if data.status is 'ok'
-        login data.user
-        window.twitarr.screen 'announcements'
+        twitarr.login data.user
+        twitarr.screen 'announcements'
       else
         alert data.status
     false
@@ -78,7 +80,7 @@ $ ->
     }, (data) ->
       if data.status is 'ok'
         alert 'Your account request is recieved and you will be notified when your account is activated.'
-        window.twitarr.screen 'announcements'
+        twitarr.screen 'announcements'
       else
         alert data.status
     false
@@ -86,36 +88,19 @@ $ ->
   $('#post-submit').click ->
     $.post 'posts/submit', { message: $('#post-text').val() }, (data) ->
       if data.status is 'ok'
-        load_posts()
+        twitarr.load_posts()
       else
         alert data.status
 
   $('#post-announcement-submit').click ->
     $.post 'announcements/submit', { message: $('#post-announcement-text').val() }, (data) ->
       if data.status is 'ok'
-        load_announcements()
+        twitarr.load_announcements()
       else
         alert data.status
 
   $.getJSON 'user/username', (data) ->
     if data.status is 'ok'
-      login data.user
+      twitarr.login data.user
 
-  load_announcements()
-  load_posts()
-
-load_announcements = ->
-  $.getJSON 'announcements/list', (data) ->
-    window.twitarr.announcements.removeAll()
-    window.twitarr.add_announcements data.list
-
-load_posts = () ->
-  $.getJSON 'posts/list', (data) ->
-    window.twitarr.posts.removeAll()
-    window.twitarr.add_posts data.list
-
-login = (user) ->
-  window.twitarr.login user
-
-logout = ->
-  window.twitarr.logout()
+  twitarr.initialize()

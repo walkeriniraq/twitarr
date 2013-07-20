@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twit-arr!</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap-responsive.css'/>
+    <link rel='stylesheet' type='text/css' href='css/main.css'/>
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="announcements">
+    <div class='navbar'>
+        <div class='navbar-inner'>
+            <a class='brand hidden-phone'>Twit-arr!</a>
+            <ul class='nav'>
+                <li><a href='#'>Announcements</a></li>
+                <li><a href='#'>Popular</a></li>
+                <li><a href='#'>All</a></li>
+                <li><a href='#'>My Stuff</a></li>
+            </ul>
+            <ul class='nav pull-right'>
+                <li><a href='#'>Login</a></li>
+                <li class='dropdown'>
+                    <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                        <span>Username</span>
+                        <b class='caret'></b>
+                    </a>
+                    <ul class='dropdown-menu'>
+                        <li><a tabindex='-1' href='#'>Profile</a></li>
+                        <li><a tabindex='-1' href='#'>Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class='main'>
+        <div id='announcements'>
+            <h3>Announcements</h3>
+            {{#each controller itemController='announcement'}}
+                <div class='post-entry' {{bindAttr class='isEditing:editing'}}>
+                    {{#if isEditing}}
+                        <input class='edit' />
+                    {{else}}
+                        <span style="color: darkgray;">{{ username }}</span>
+                        <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
+
+                        <div style="font-size: larger; font-weight: bold;" {{action 'editAnnouncement' on='doubleClick'}}
+                                >{{ message }}</div>
+                    {{/if}}
+                </div>
+            {{/each}}
+
+            {{view Ember.TextField id='new-announcement' placeholder='Announce something!' valueBinding='newPost' action='createAnnouncement'}}
+
+        </div>
+
+        <div id='popular'>
+            <h3>Popular</h3>
+        </div>
+
+        <div id='all'>
+            <h3>All</h3>
+        </div>
+
+        <div id='my_stuff'>
+            <h3>My Stuff</h3>
+        </div>
+
+        <div id='profile'>
+            <h3>Profile</h3>
+        </div>
+
+        <div class="pull-right">
+            <span class="visible-desktop">desktop</span>
+            <span class="visible-tablet">tablet</span>
+            <span class="visible-phone">phone</span>
+        </div>
+    </div></script>
+<script type='text/javascript' src='js/jquery-2.0.1.js'></script>
+<script type='text/javascript' src='js/handlebars-1.0.0-rc.4.js'></script>
+<script type='text/javascript' src='js/ember-1.0.0-rc.6.js'></script>
+<script type='text/javascript' src='js/ember-data-latest.js'></script>
+<script type='text/javascript' src='js/bootstrap.js'></script>
+<script type='text/javascript' src='js/moment.js'></script>
+<script type='text/javascript' src='js/livestamp.js'></script>
+<script type='text/javascript' src='js/ember.js'></script>
+
+</body>
+</html>
