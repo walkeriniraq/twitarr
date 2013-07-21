@@ -1,3 +1,5 @@
+require_relative 'message'
+
 class Post < Message
 
   def tags
@@ -7,7 +9,7 @@ class Post < Message
 
   def self.find(post_ids)
     DbConnectionPool.instance.connection do |db|
-      [*post_ids].map { |id| JSON.parse db.hget('posts', id) }
+      [*post_ids].map { |id| JSON.parse db.get("post:#{id}") }
     end
   end
 

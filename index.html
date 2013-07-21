@@ -27,7 +27,7 @@
             <li data-bind="css: { active: screen() == 'all' }">
                 <a href='#' data-bind="click: set_panel" data-section='all'>All</a>
             </li>
-            <li data-bind="visible: logged_in, css: { active: screen() == 'mine' }">
+            <li data-bind="visible: logged_in, css: { active: screen() == 'my-stuff' }">
                 <a href='#' data-bind="click: set_panel" data-section='my-stuff'>My Stuff</a>
             </li>
         </ul>
@@ -81,6 +81,18 @@
     <div data-bind="visible: screen() == 'all'">
         <h3>All</h3>
 
+        <div data-bind="foreach: posts">
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="visible: logged_in && screen() == 'my-stuff'">
+        <h3>My Stuff</h3>
         <div data-bind="visible: logged_in" style="margin-bottom: 10px;">
             <button type="button" class="btn" data-toggle="collapse" data-target="#twit-post"
                     style="margin-bottom: 10px;">
@@ -93,18 +105,6 @@
             </div>
         </div>
 
-        <div data-bind="foreach: posts">
-            <div class='post-entry'>
-                <span data-bind="text: username" style="color: darkgray;"></span>
-                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
-
-                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
-            </div>
-        </div>
-    </div>
-
-    <div data-bind="visible: screen() == 'mine'">
-        <h3>My Stuff</h3>
         <div data-bind="foreach: user_posts">
             <div class='post-entry'>
                 <span data-bind="text: username" style="color: darkgray;"></span>

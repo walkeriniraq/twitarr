@@ -31,10 +31,11 @@ class Twitarr
     $.getJSON 'user/logout', (data) =>
       if data.status is 'ok'
         @user.clear()
+        @screen 'announcements' if @screen() == 'my-stuff'
 
   login: (user) ->
     @user.update user
-    @load_user_stuff() if @logged_in()
+    @load_user_posts() if @logged_in()
 
   set_panel: (data, event) ->
     @screen $(event.target).data 'section'
@@ -49,7 +50,7 @@ class Twitarr
       @posts.removeAll()
       @posts.push new Post(post) for post in data.list
 
-  load_user_stuff: ->
+  load_user_posts: ->
     $.getJSON 'posts/mine', (data) =>
       @user_posts.removeAll()
       @user_posts.push new Post(post) for post in data.list
@@ -66,7 +67,7 @@ $ ->
     $.post 'user/login', { username: $('#login-username').val(), password: $('#login-password').val() }, (data) ->
       if data.status is 'ok'
         twitarr.login data.user
-        twitarr.screen 'announcements'
+        twitarr.screen 'my-stuff'
       else
         alert data.status
     false

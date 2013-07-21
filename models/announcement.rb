@@ -1,3 +1,5 @@
+require_relative 'message'
+
 class Announcement < Message
 
   def self.recent(start = 0, count = 20)
