@@ -1,16 +1,75 @@
 window.Twitarr = Ember.Application.create()
 
 Twitarr.Router.map ->
-  @resource 'announcements', { path: '/' }
+  @resource 'announcements'
+  @resource 'posts'
+  @resource 'popular'
+  @resource 'profile'
+  @resource 'login'
+
+Twitarr.IndexRoute = Ember.Route.extend
+  redirect: ->
+    @transitionTo 'announcements'
 
 Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->
     Twitarr.Announcements.find()
 
-Twitarr.Announcements = DS.Model.extend
+Twitarr.Message = DS.Model.extend
   message: DS.attr 'string'
   username: DS.attr 'string'
   post_time: DS.attr 'string'
+
+Twitarr.Announcements = Twitarr.Message.extend()
+
+Twitarr.ApplicationController = Ember.Controller.extend
+  username: null
+  is_admin: false
+
+  init: ->
+    $.getJSON 'user/username', (data) =>
+      if data.status is 'ok'
+        @login data.user
+
+  logout: ->
+    $.getJSON 'user/logout', (data) =>
+      if data.status is 'ok'
+        @set 'username', null
+        @set 'is_admin', false
+        @transitionTo 'announcements'
+
+  login: (user) ->
+    @set 'username', user.username
+    @set 'is_admin', user.is_admin
+
+  logged_in: (->
+    @get('username') != null
+  ).property('username')
+
+Twitarr.AnnouncementsController = Ember.ArrayController.extend
+  createAnnouncement: ->
+    text = @get 'newPost'
+    return unless text.trim()
+
+    announcement = Twitarr.Announcements.createRecord
+      message: text
+      username: 'kvort'
+      post_time: '1373333176'
+
+    @set 'newPost', ''
+
+    announcement.save()
+
+Twitarr.LoginController = Ember.Controller.extend
+  needs: 'application'
+
+  login: ->
+    $.post 'user/login', { username: @get('username'), password: @get('password') }, (data) =>
+      if data.status is 'ok'
+        @get('controllers.application').login data.user
+        @transitionToRoute 'posts'
+      else
+        alert data.status
 
 Twitarr.Store = DS.Store.extend
   revision: 12
@@ -27,23 +86,3 @@ Twitarr.Announcements.FIXTURES = [
     username: 'bar2'
     post_time: '1373339876'
   ]
-
-Twitarr.AnnouncementController = Ember.ObjectController.extend
-  isEditing: false
-
-  editAnnouncement: ->
-    @set 'isEditing', true
-
-Twitarr.AnnouncementsController = Ember.ArrayController.extend
-  createAnnouncement: ->
-    text = @get 'newPost'
-    return unless text.trim()
-
-    announcement = Twitarr.Announcements.createRecord
-      message: text
-      username: 'kvort'
-      post_time: '1373333176'
-
-    @set 'newPost', ''
-
-    announcement.save()
