@@ -28,7 +28,7 @@
                     </a>
                     <ul class='dropdown-menu'>
                         <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
-                        <li><a tabindex='-1' {{ action 'logout' }}>Logout</a></li>
+                        <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
                     </ul>
                 </li>
                 {{/unless}}
@@ -54,9 +54,13 @@
 
                 <div style="font-size: larger; font-weight: bold;">{{ message }}</div>
             </div>
+        {{else}}
+            No posts yet!
         {{/each}}
+        {{#if is_admin}}
         {{view Ember.TextArea placeholder='Announce something!' valueBinding='newPost'}}
         <button {{ action 'createAnnouncement' }}>Post it</button>
+        {{/if}}
     </div>
 </script>
 <script type="text/x-handlebars" data-template-name="popular">

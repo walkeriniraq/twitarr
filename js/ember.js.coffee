@@ -13,21 +13,34 @@ Twitarr.IndexRoute = Ember.Route.extend
 
 Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->
-    Twitarr.Announcements.find()
+    Twitarr.Message.announcements()
 
-Twitarr.Message = DS.Model.extend
+Twitarr.Message = Ember.Object.extend
   message: DS.attr 'string'
   username: DS.attr 'string'
   post_time: DS.attr 'string'
 
-Twitarr.Announcements = Twitarr.Message.extend()
+Twitarr.Message.reopenClass
+  announcements: ->
+    # TODO: replace this with a call to the server
+    Twitarr.Message.create(data) for data in [
+      id: 1
+      message: 'foo'
+      username: 'bar'
+      post_time: '1373332876'
+    ,
+      id: 2
+      message: 'foo2'
+      username: 'bar2'
+      post_time: '1373339876'
+    ]
 
 Twitarr.ApplicationController = Ember.Controller.extend
   username: null
   is_admin: false
 
   init: ->
-    $.getJSON 'user/username', (data) =>
+    $.getJSON('user/username').done (data) =>
       if data.status is 'ok'
         @login data.user
 
@@ -36,7 +49,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
       if data.status is 'ok'
         @set 'username', null
         @set 'is_admin', false
-        @transitionTo 'announcements'
+        @transitionToRoute 'announcements'
 
   login: (user) ->
     @set 'username', user.username
@@ -46,7 +59,20 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @get('username') != null
   ).property('username')
 
-Twitarr.AnnouncementsController = Ember.ArrayController.extend
+Twitarr.ControllerMixin = Ember.Mixin.create
+  needs: 'application'
+  logged_in: (->
+    @get('controllers.application.username')?
+  ).property('controllers.application.username')
+  is_admin: (->
+    @get('controllers.application.is_admin')
+  ).property('controllers.application.is_admin')
+
+Twitarr.ArrayController = Ember.ArrayController.extend Twitarr.ControllerMixin
+Twitarr.Controller = Ember.Controller.extend Twitarr.ControllerMixin
+Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
+
+Twitarr.AnnouncementsController = Twitarr.ArrayController.extend
   createAnnouncement: ->
     text = @get 'newPost'
     return unless text.trim()
@@ -60,29 +86,12 @@ Twitarr.AnnouncementsController = Ember.ArrayController.extend
 
     announcement.save()
 
-Twitarr.LoginController = Ember.Controller.extend
-  needs: 'application'
-
+Twitarr.LoginController = Twitarr.Controller.extend
   login: ->
-    $.post 'user/login', { username: @get('username'), password: @get('password') }, (data) =>
-      if data.status is 'ok'
-        @get('controllers.application').login data.user
-        @transitionToRoute 'posts'
-      else
-        alert data.status
-
-Twitarr.Store = DS.Store.extend
-  revision: 12
-  adapter: 'DS.FixtureAdapter'
-
-Twitarr.Announcements.FIXTURES = [
-    id: 1
-    message: 'foo'
-    username: 'bar'
-    post_time: '1373332876'
-  ,
-    id: 2
-    message: 'foo2'
-    username: 'bar2'
-    post_time: '1373339876'
-  ]
+    $.post('user/login', { username: @get('username'), password: @get('password') })
+      .done (data) =>
+        if data.status is 'ok'
+          @get('controllers.application').login data.user
+          @transitionToRoute 'posts'
+        else
+          alert data.status
