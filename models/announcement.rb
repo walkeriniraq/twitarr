@@ -9,6 +9,15 @@ class Announcement < Message
     end
   end
 
+  def self.delete(id)
+    DbConnectionPool.instance.connection do |db|
+      val = db.get "announcement:#{id}"
+      db.del "announcement:#{id}"
+      count = db.lrem 'announcements', 0, val
+      puts "Removed #{count} elements"
+    end
+  end
+
   def save
     DbConnectionPool.instance.connection do |db|
       db.set "announcement:#{post_id}", to_json

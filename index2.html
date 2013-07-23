@@ -47,15 +47,21 @@
 <script type="text/x-handlebars" data-template-name="announcements">
     <div id='announcements'>
         <h3>Announcements</h3>
-        {{#each controller}}
+        {{#each post in controller}}
             <div class='post-entry'>
-                <span style="color: darkgray;">{{ username }}</span>
-                <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
+                <span style="color: darkgray;">{{ post.username }}</span>
+                <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post.post_time"}} ></span>
 
-                <div style="font-size: larger; font-weight: bold;">{{ message }}</div>
+                <div style="font-size: larger; font-weight: bold;">{{ post.message }}</div>
+
+                {{#if is_admin}}
+                <div class="clearfix">
+                    <a href="#" class="pull-right" {{ action 'deleteAnnouncement' post.post_id }}>delete</a>
+                </div>
+                {{/if}}
             </div>
         {{else}}
-            No posts yet!
+            No announcements yet!
         {{/each}}
         {{#if is_admin}}
         {{view Ember.TextArea placeholder='Announce something!' valueBinding='newPost'}}

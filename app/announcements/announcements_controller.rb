@@ -13,6 +13,13 @@ module AnnouncementsController
     render_json status: 'ok'
   end
 
+  post 'delete' do
+    return login_required unless logged_in?
+    return render_json status: 'Announcements can only be deleted by admins.' unless is_admin?
+    Announcement.delete(@params[:id])
+    render_json status: 'ok'
+  end
+
   get 'list' do
     # TODO: fix this too
     #return render_json list: [{ message: 'No announcements!' }] if data.empty?

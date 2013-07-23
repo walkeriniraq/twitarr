@@ -15,25 +15,24 @@ Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->
     Twitarr.Message.announcements()
 
-Twitarr.Message = Ember.Object.extend
-  message: DS.attr 'string'
-  username: DS.attr 'string'
-  post_time: DS.attr 'string'
+Twitarr.Message = Ember.Object.extend()
 
 Twitarr.Message.reopenClass
   announcements: ->
-    # TODO: replace this with a call to the server
-    Twitarr.Message.create(data) for data in [
-      id: 1
-      message: 'foo'
-      username: 'bar'
-      post_time: '1373332876'
-    ,
-      id: 2
-      message: 'foo2'
-      username: 'bar2'
-      post_time: '1373339876'
-    ]
+    $.getJSON('announcements/list').then (data) =>
+      links = Ember.A()
+      links.pushObject(Twitarr.Message.create(announcement)) for announcement in data.list
+      links
+
+  postAnnouncement: (text) ->
+    $.post('announcements/submit', { message: text }).done (data) ->
+      unless data.status is 'ok'
+        alert data.status
+
+  deleteAnnouncement: (id) ->
+    $.post('announcements/delete', { id: id }).done (data) ->
+      unless data.status is 'ok'
+        alert data.status
 
 Twitarr.ApplicationController = Ember.Controller.extend
   username: null
@@ -45,7 +44,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
         @login data.user
 
   logout: ->
-    $.getJSON 'user/logout', (data) =>
+    $.getJSON('user/logout').done (data) =>
       if data.status is 'ok'
         @set 'username', null
         @set 'is_admin', false
@@ -56,7 +55,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @set 'is_admin', user.is_admin
 
   logged_in: (->
-    @get('username') != null
+    @get('username') isnt null
   ).property('username')
 
 Twitarr.ControllerMixin = Ember.Mixin.create
@@ -77,21 +76,25 @@ Twitarr.AnnouncementsController = Twitarr.ArrayController.extend
     text = @get 'newPost'
     return unless text.trim()
 
-    announcement = Twitarr.Announcements.createRecord
-      message: text
-      username: 'kvort'
-      post_time: '1373333176'
-
+    Twitarr.Message.postAnnouncement(text).done (data) =>
+      if data.status is 'ok'
+        @reload()
     @set 'newPost', ''
 
-    announcement.save()
+  reload: ->
+    Twitarr.Message.announcements().then (message) =>
+      Ember.run =>
+        @set 'model', message
+
+  deleteAnnouncement: (post_id) ->
+    Twitarr.Message.deleteAnnouncement(post_id).done (data) =>
+      if data.status is 'ok'
+        @reload()
 
 Twitarr.LoginController = Twitarr.Controller.extend
   login: ->
-    $.post('user/login', { username: @get('username'), password: @get('password') })
-      .done (data) =>
-        if data.status is 'ok'
-          @get('controllers.application').login data.user
-          @transitionToRoute 'posts'
-        else
-          alert data.status
+    $.post('user/login', { username: @get('username'), password: @get('password') }).done (data) =>
+      if data.status is 'ok'
+        @get('controllers.application').login data.user
+      else
+        alert data.status
