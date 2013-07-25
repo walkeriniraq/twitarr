@@ -15,7 +15,7 @@
             <ul class='nav'>
                 <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
                 <li>{{#linkTo "popular"}}Popular{{/linkTo}}</li>
-                <li>{{#linkTo "posts"}}My Stuff{{/linkTo}}</li>
+                <li>{{#linkTo "mine"}}My Stuff{{/linkTo}}</li>
             </ul>
             <ul class='nav pull-right'>
                 {{#unless logged_in}}
@@ -52,7 +52,7 @@
                 <span style="color: darkgray;">{{ post.username }}</span>
                 <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post.post_time"}} ></span>
 
-                <div style="font-size: larger; font-weight: bold;">{{ post.message }}</div>
+                <div style="font-size: larger; font-weight: bold;">{{{ post.process_message }}}</div>
 
                 {{#if is_admin}}
                 <div class="clearfix">
@@ -70,19 +70,19 @@
     </div>
 </script>
 <script type="text/x-handlebars" data-template-name="popular">
-    <div id='popular'>
-        <h3>Popular</h3>
-    </div>
+    <h3>Popular</h3>
+</script>
+<script type="text/x-handlebars" data-template-name="search">
+    <h3>Results for #{{ term }}</h3>
 </script>
 <script type="text/x-handlebars" data-template-name="posts">
-    <div id='my_stuff'>
-        <h3>My Stuff</h3>
-    </div>
+    <h3>@{{ account}}</h3>
+</script>
+<script type="text/x-handlebars" data-template-name="mine">
+    <h3>My Stuff</h3>
 </script>
 <script type="text/x-handlebars" data-template-name="profile">
-    <div id='profile'>
-        <h3>Profile</h3>
-    </div>
+    <h3>Profile</h3>
 </script>
 <script type="text/x-handlebars" data-template-name="login">
     <form class="form-horizontal">

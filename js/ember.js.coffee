@@ -1,11 +1,13 @@
 window.Twitarr = Ember.Application.create()
 
 Twitarr.Router.map ->
-  @resource 'announcements'
-  @resource 'posts'
-  @resource 'popular'
-  @resource 'profile'
-  @resource 'login'
+  @route 'announcements'
+  @route 'mine'
+  @resource 'posts', { path: '/posts/:account' }
+  @route 'popular'
+  @resource 'search', { path: '/search/:term' }
+  @route 'profile'
+  @route 'login'
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
@@ -15,7 +17,20 @@ Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->
     Twitarr.Message.announcements()
 
-Twitarr.Message = Ember.Object.extend()
+Twitarr.Message = Ember.Object.extend
+  process_message: (->
+    msg = ''
+    msg += @process_part(part) for part in @get('message').split /([@#]\w+)/
+    msg
+  ).property 'message'
+
+  process_part: (part) ->
+    switch part[0]
+      when '@'
+        "<a href='#/posts/#{part.substring 1}'>#{part}</a>"
+      when '#'
+        "<a href='#/search/#{part.substring 1}'>#{part}</a>"
+      else part
 
 Twitarr.Message.reopenClass
   announcements: ->
