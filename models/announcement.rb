@@ -13,8 +13,7 @@ class Announcement < Message
     DbConnectionPool.instance.connection do |db|
       val = db.get "announcement:#{id}"
       db.del "announcement:#{id}"
-      count = db.lrem 'announcements', 0, val
-      puts "Removed #{count} elements"
+      db.lrem 'announcements', 0, val
     end
   end
 

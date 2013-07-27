@@ -1,5 +1,3 @@
-window.Twitarr = Ember.Application.create()
-
 Twitarr.Router.map ->
   @route 'announcements'
   @route 'mine'
@@ -13,42 +11,6 @@ Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo 'announcements'
 
-Twitarr.AnnouncementsRoute = Ember.Route.extend
-  model: ->
-    Twitarr.Message.announcements()
-
-Twitarr.Message = Ember.Object.extend
-  process_message: (->
-    msg = ''
-    msg += @process_part(part) for part in @get('message').split /([@#]\w+)/
-    msg
-  ).property 'message'
-
-  process_part: (part) ->
-    switch part[0]
-      when '@'
-        "<a href='#/posts/#{part.substring 1}'>#{part}</a>"
-      when '#'
-        "<a href='#/search/#{part.substring 1}'>#{part}</a>"
-      else part
-
-Twitarr.Message.reopenClass
-  announcements: ->
-    $.getJSON('announcements/list').then (data) =>
-      links = Ember.A()
-      links.pushObject(Twitarr.Message.create(announcement)) for announcement in data.list
-      links
-
-  postAnnouncement: (text) ->
-    $.post('announcements/submit', { message: text }).done (data) ->
-      unless data.status is 'ok'
-        alert data.status
-
-  deleteAnnouncement: (id) ->
-    $.post('announcements/delete', { id: id }).done (data) ->
-      unless data.status is 'ok'
-        alert data.status
-
 Twitarr.ApplicationController = Ember.Controller.extend
   username: null
   is_admin: false
@@ -57,6 +19,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $.getJSON('user/username').done (data) =>
       if data.status is 'ok'
         @login data.user
+      else
+        @transitionToRoute 'announcements'
 
   logout: ->
     $.getJSON('user/logout').done (data) =>
@@ -70,7 +34,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @set 'is_admin', user.is_admin
 
   logged_in: (->
-    @get('username') isnt null
+    @get('username')?
   ).property('username')
 
 Twitarr.ControllerMixin = Ember.Mixin.create
@@ -86,30 +50,75 @@ Twitarr.ArrayController = Ember.ArrayController.extend Twitarr.ControllerMixin
 Twitarr.Controller = Ember.Controller.extend Twitarr.ControllerMixin
 Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
 
-Twitarr.AnnouncementsController = Twitarr.ArrayController.extend
-  createAnnouncement: ->
+Twitarr.BasePostController = Twitarr.ArrayController.extend
+  can_delete: false
+
+  make_post: ->
     text = @get 'newPost'
     return unless text.trim()
 
-    Twitarr.Message.postAnnouncement(text).done (data) =>
+    Twitarr.Message.post(@url_route, text).done (data) =>
       if data.status is 'ok'
         @reload()
     @set 'newPost', ''
 
   reload: ->
-    Twitarr.Message.announcements().then (message) =>
+    Twitarr.Message.list(@url_route).then (message) =>
       Ember.run =>
-        @set 'model', message
+        @set 'content', message
 
-  deleteAnnouncement: (post_id) ->
-    Twitarr.Message.deleteAnnouncement(post_id).done (data) =>
+  delete: (post_id) ->
+    Twitarr.Message.delete(@url_route, post_id).done (data) =>
       if data.status is 'ok'
         @reload()
+
+Twitarr.AnnouncementsRoute = Ember.Route.extend
+  model: ->
+    Twitarr.Message.list('announcements')
+
+Twitarr.AnnouncementsController = Twitarr.BasePostController.extend
+  url_route: 'announcements'
+  can_delete: ->
+    @get('is_admin')
+
+Twitarr.MineRoute = Ember.Route.extend
+  model: ->
+    Twitarr.Message.list('posts')
+
+Twitarr.MineController = Twitarr.BasePostController.extend
+  can_delete: true
+  url_route: 'posts'
+
+Twitarr.PostsRoute = Ember.Route.extend
+  model: (params) ->
+    if @controllerFor('application').get('username') is params.account
+      @transitionTo 'mine'
+    else
+      Twitarr.Message.list_for_user(params.account)
+
+Twitarr.PostsController = Twitarr.ObjectController.extend
+  can_delete: false
+  reload: ->
+    Twitarr.Message.list_for_user(@get('account')).then (data) =>
+      Ember.run =>
+        @set 'posts', data.posts
+
+Twitarr.SearchRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.Message.list_for_tag(params.term)
+
+Twitarr.SearchController = Twitarr.ObjectController.extend
+  can_delete: false
+  reload: ->
+    Twitarr.Message.list_for_tag(@get('term')).then (data) =>
+      Ember.run =>
+        @set 'posts', data.posts
 
 Twitarr.LoginController = Twitarr.Controller.extend
   login: ->
     $.post('user/login', { username: @get('username'), password: @get('password') }).done (data) =>
       if data.status is 'ok'
         @get('controllers.application').login data.user
+        @transitionToRoute 'mine'
       else
         alert data.status

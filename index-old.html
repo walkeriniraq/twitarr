@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twit-arr!</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='css/bootstrap-responsive.css'/>
+    <link rel='stylesheet' type='text/css' href='css/main.css'/>
+    <script type='text/javascript' src='js/jquery-2.0.1.js'></script>
+    <script type='text/javascript' src='js/old/knockout-2.2.1.js'></script>
+    <script type='text/javascript' src='js/bootstrap.js'></script>
+    <script type='text/javascript' src='js/moment.js'></script>
+    <script type='text/javascript' src='js/livestamp.js'></script>
+    <script type='text/javascript' src='js/main.js'></script>
+</head>
+<body>
+<div class='navbar'>
+    <div class='navbar-inner'>
+        <a class='brand hidden-phone'>Twit-arr!</a>
+        <ul class='nav'>
+            <li data-bind="css: { active: screen() == 'announcements' }">
+                <a href='#' data-bind="click: set_panel" data-section='announcements'>Announcements</a>
+            </li>
+            <li data-bind="css: { active: screen() == 'popular' }">
+                <a href='#' data-bind="click: set_panel" data-section='popular'>Popular</a>
+            </li>
+            <li data-bind="css: { active: screen() == 'all' }">
+                <a href='#' data-bind="click: set_panel" data-section='all'>All</a>
+            </li>
+            <li data-bind="visible: logged_in, css: { active: screen() == 'my-stuff' }">
+                <a href='#' data-bind="click: set_panel" data-section='my-stuff'>My Stuff</a>
+            </li>
+        </ul>
+        <ul class='nav pull-right'>
+            <li data-bind="visible: !logged_in(), css: { active: screen() == 'login' }">
+                <a href='#' data-bind="click: set_panel" data-section='login'>Login</a>
+            </li>
+            <li data-bind="visible: logged_in" class='dropdown'>
+                <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                    <span data-bind='text: user.username'></span>
+                    <b class='caret'></b>
+                </a>
+                <ul class='dropdown-menu'>
+                    <li><a tabindex='-1' href='#' data-bind="click: set_panel" data-section='profile'>Profile</a></li>
+                    <li><a tabindex='-1' href='#' data-bind="click: logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class='main'>
+    <div data-bind="visible: screen() == 'announcements'">
+        <h3 class="visible-desktop">Announcements</h3>
+
+        <div data-bind="foreach: announcements">
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
+            </div>
+        </div>
+
+        <div data-bind="visible: user.is_admin" style="margin-bottom: 10px;">
+            <button type="button" class="btn" data-toggle="collapse" data-target="#announcement-post" style="margin-top: 10px;">
+                Make an announcement
+            </button>
+
+            <div id="announcement-post" class="collapse">
+                <textarea id='post-announcement-text'></textarea>
+                <button id='post-announcement-submit'>Post it</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div data-bind="visible: screen() == 'popular'">
+        <h3>Popular</h3>
+    </div>
+
+    <div data-bind="visible: screen() == 'all'">
+        <h3>All</h3>
+
+        <div data-bind="foreach: posts">
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="visible: logged_in && screen() == 'my-stuff'">
+        <h3>My Stuff</h3>
+        <div data-bind="visible: logged_in" style="margin-bottom: 10px;">
+            <button type="button" class="btn" data-toggle="collapse" data-target="#twit-post"
+                    style="margin-bottom: 10px;">
+                Make a post
+            </button>
+
+            <div id="twit-post" class="collapse">
+                <textarea id='post-text'></textarea>
+                <button id='post-submit'>Post it</button>
+            </div>
+        </div>
+
+        <div data-bind="foreach: user_posts">
+            <div class='post-entry'>
+                <span data-bind="text: username" style="color: darkgray;"></span>
+                <span data-bind="attr: { 'data-livestamp': post_time }" class="pull-right" style="color: darkgray;"></span>
+
+                <div data-bind="text: message" style="font-size: larger; font-weight: bold;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="visible: screen() == 'profile'">
+        <h3>Profile</h3>
+    </div>
+
+    <div data-bind="visible: screen() == 'login'">
+        <form class="form-horizontal">
+            <legend>I have an account</legend>
+            <div class="control-group">
+                <label class="control-label">Username</label>
+
+                <div class="controls">
+                    <input type='text' id='login-username'/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Password</label>
+
+                <div class="controls">
+                    <input type='password' id='login-password'/>
+                </div>
+            </div>
+            <div class="control-group controls">
+                <input class="btn" type="submit" id='login-submit' value="Login"/>
+            </div>
+        </form>
+        <form class="form-horizontal" style="margin-top: 20px;">
+            <legend>I don't have an account yet!</legend>
+            <div class="control-group">
+                <label class="control-label">Username</label>
+
+                <div class="controls">
+                    <input type='text' id='new-username'/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Email</label>
+                <div class="controls">
+                    <input type='text' id='new-email'/>
+                    <div style="margin-top: 5px;">
+                        Your email will be used to notify you of your account creation. It is only visible to administrators.
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Password</label>
+
+                <div class="controls">
+                    <input type='password' id='new-password'/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Repeat password</label>
+
+                <div class="controls">
+                    <input type='password' id='new-password2'/>
+                </div>
+            </div>
+            <div class="control-group controls">
+                <input class="btn" type="submit" id='new-user-submit' value="Request account"/>
+            </div>
+        </form>
+    </div>
+    <div class="pull-right">
+        <span class="visible-desktop">desktop</span>
+        <span class="visible-tablet">tablet</span>
+        <span class="visible-phone">phone</span>
+    </div>
+</div>
+</body>
+</html>
