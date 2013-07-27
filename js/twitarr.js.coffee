@@ -78,8 +78,9 @@ Twitarr.AnnouncementsRoute = Ember.Route.extend
 
 Twitarr.AnnouncementsController = Twitarr.BasePostController.extend
   url_route: 'announcements'
-  can_delete: ->
+  can_delete: (->
     @get('is_admin')
+  ).property('is_admin')
 
 Twitarr.MineRoute = Ember.Route.extend
   model: ->
