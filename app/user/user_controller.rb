@@ -25,7 +25,7 @@ module UserController
 
   post 'new' do
     user = User.new
-    user.username = params[:username]
+    user.username = params[:username].downcase
     user.email = params[:email]
     user.status = 'inactive'
     user.is_admin = false

@@ -5,20 +5,32 @@ module PostsController
   include ControllerHelpers
 
   post 'submit' do
-    return render_json status: 'Not logged in.' if @session[:username].nil?
-    post = Post.new_post(@params[:message], @session[:username])
+    return render_json status: 'Not logged in.' unless logged_in?
+    post = Post.new_post(@params[:message], current_username)
     post.save
     render_json status: 'ok'
   end
 
-  get 'list' do
-    # TODO: fix this
-    #return render_json list: [{ message: 'No posts!' }] if data.empty?
-    render_json list: Post.recent
+  post 'delete' do
+    return login_required unless logged_in?
+    unless is_admin?
+      post = Post.new(Post.find(@params[:id]))
+      return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username
+    end
+    Post.delete(@params[:id])
+    render_json status: 'ok'
   end
 
-  get 'mine' do
-    render_json list: Post.tagged("@#{@session[:username]}")
+  get 'list' do
+    return render_json(list: Post.tagged("@#{@params[:username].downcase}")) if @params[:username]
+    render_json list: Post.tagged("@#{current_username}")
   end
+
+  get 'search' do
+    list = Post.tagged("##{@params[:term].downcase}") + Post.tagged("@#{@params[:term]}")
+    render_json(list: list)
+  end
+
+
 
 end

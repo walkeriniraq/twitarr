@@ -8,7 +8,7 @@ module AnnouncementsController
   post 'submit' do
     return login_required unless logged_in?
     return render_json status: 'Announcements can only be created by admins.' unless is_admin?
-    post = Announcement.new_post(@params[:message], @session[:username])
+    post = Announcement.new_post(@params[:message], current_username)
     post.save
     render_json status: 'ok'
   end
