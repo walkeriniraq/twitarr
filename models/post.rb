@@ -2,56 +2,79 @@ require_relative 'message'
 
 class Post < Message
 
+  TAG_PREFIX = 'tag:%s'
+  POST_PREFIX = 'post:%s'
+  FAVORITES_PREFIX = 'post-favorites:%s'
+  POPULAR_KEY = 'system:popular'
+
   def tags
     (%W(@#{username}) + message.scan(/[@#]\w+/)).map { |x| x.downcase }.uniq.select { |x| x.length > 2 }
   end
 
+  def score
+    DbConnectionPool.instance.connection do |db|
+      post_time.to_i / 60 + db.scard(FAVORITES_PREFIX % post_id)
+    end
+  end
+
+  def ui_json_hash
+    DbConnectionPool.instance.connection do |db|
+      { message: message, user: username, post_time: post_time.to_i, post_id: post_id, likes: db.smembers(FAVORITES_PREFIX % post_id) }
+    end
+  end
+
+  def save
+    DbConnectionPool.instance.connection do |db|
+      db.set POST_PREFIX % post_id, to_json
+      db.zadd POPULAR_KEY, score, post_id
+      tags.each do |tag|
+        db.zadd TAG_PREFIX % tag, Time.now.to_i, post_id
+      end
+    end
+  end
+
+  def self.add_favorite(id, username)
+    DbConnectionPool.instance.connection do |db|
+      post = find(id)
+      db.sadd FAVORITES_PREFIX % id, username
+      db.zadd POPULAR_KEY, post.score, id
+    end
+  end
+
   def self.find(post_ids)
+    return if post_ids.nil?
+    return [] if post_ids.empty?
     DbConnectionPool.instance.connection do |db|
       if post_ids.respond_to? :map
         post_ids.map do |id|
-          data = db.get("post:#{id}")
-          #TODO: figure out how to get this not to explode if data is nil or malformed
-          JSON.parse data
+          Post.new JSON.parse(db.get(POST_PREFIX % id))
         end
       else
-        JSON.parse db.get("post:#{post_ids}")
+        Post.new JSON.parse(db.get(POST_PREFIX % post_ids))
       end
     end
   end
 
   def self.tagged(tag, start = 0, count = 20)
     DbConnectionPool.instance.connection do |db|
-      find(db.zrange("tag:#{tag}", 0 - start - count, -1 - start).reverse)
+      find db.zrevrange(TAG_PREFIX % tag, start, start + count)
     end
   end
-
-  #def self.recent(start = 0, count = 20)
-  #  DbConnectionPool.instance.connection do |db|
-  #    data = db.lrange 'posts', start, count
-  #    data.map { |x| JSON.parse x }
-  #  end
-  #end
 
   def self.delete(id)
     DbConnectionPool.instance.connection do |db|
-      #post_json = db.get "post:#{id}"
-      post = Post.new(find(id))
-      db.del "post:#{id}"
+      post = find(id)
+      db.del POST_PREFIX % id
+      db.zrem POPULAR_KEY, id
       post.tags.each do |tag|
-        db.zrem "tag:#{tag}", id
+        db.zrem TAG_PREFIX % tag, id
       end
-      #db.lrem 'posts', 0, post_json
     end
   end
 
-  def save
+  def self.popular(start = 0, count = 20)
     DbConnectionPool.instance.connection do |db|
-      db.set "post:#{post_id}", to_json
-      #db.lpush 'posts', to_json
-      tags.each do |tag|
-        db.zadd "tag:#{tag}", Time.now.to_i, post_id
-      end
+      find db.zrevrange(POPULAR_KEY, start, start + count)
     end
   end
 

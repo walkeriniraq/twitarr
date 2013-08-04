@@ -4,6 +4,9 @@ require 'json'
 class User
   include HashInitialize
 
+  USER_KEY = 'system:users'
+  USER_PREFIX = 'user:%s'
+
   attr_accessor :username, :password, :is_admin, :status, :email
 
   def empty_password
@@ -21,8 +24,8 @@ class User
     end
   end
 
-  def to_json
-    to_hash([:username, :password, :is_admin, :status, :email]).to_json
+  def to_json(params = {})
+    to_hash([:username, :password, :is_admin, :status, :email]).to_json(params)
   end
 
   def update(values)
@@ -39,26 +42,26 @@ class User
 
   def save
     DbConnectionPool.instance.connection do |db|
-      db.sadd('users', username)
-      db.set("user:#{username}", to_json)
+      db.sadd(USER_KEY, username)
+      db.set(USER_PREFIX % username, to_json)
     end
   end
 
   def self.list_usernames
     DbConnectionPool.instance.connection do |db|
-      db.smembers 'users'
+      db.smembers USER_KEY
     end
   end
 
   def self.exist?(username)
     DbConnectionPool.instance.connection do |db|
-      db.sismember('users', username)
+      db.sismember(USER_KEY, username)
     end
   end
 
   def self.get(username)
     DbConnectionPool.instance.connection do |db|
-      data = db.get("user:#{username}")
+      data = db.get(USER_PREFIX % username)
       return if data.nil?
       User.new(JSON.parse(data))
     end

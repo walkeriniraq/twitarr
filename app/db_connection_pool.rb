@@ -1,9 +1,6 @@
 require 'redis'
 require 'singleton'
 
-# r.zadd 'tag:@kvort', Time.now.to_i, '12348'
-# r.zrange('tag:@kvort', -10, -1, { :with_scores => true }).map { |k, v| [k, Time.at(v)] }
-
 class DbConnectionPool
   include Singleton
 
