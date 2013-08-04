@@ -124,7 +124,10 @@ Twitarr.PostsRoute = Ember.Route.extend
     if @controllerFor('application').get('username') is params.account
       @transitionTo 'mine'
     else
-      Twitarr.Message.list_for_user(params.account)
+      params.account
+  setupController: (controller, model) =>
+    Twitarr.Message.list_for_user(model).done (data) ->
+      controller.set('content', data)
 
 Twitarr.PostsController = Twitarr.ObjectController.extend
   can_delete: false

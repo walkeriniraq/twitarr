@@ -11,30 +11,42 @@
 <script type="text/x-handlebars" data-template-name="application">
     <div class='navbar'>
         <div class='navbar-inner'>
-            <a class='brand hidden-phone'>Twit-arr!</a>
-            <ul class='nav'>
-                <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
-                <li>{{#linkTo "popular"}}Popular{{/linkTo}}</li>
-                {{#if logged_in}}
-                <li>{{#linkTo "mine"}}My Stuff{{/linkTo}}</li>
-                {{/if}}
-            </ul>
-            <ul class='nav pull-right'>
-                {{#unless logged_in}}
-                <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
-                {{else}}
-                <li class='dropdown'>
-                    <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-                        <span>{{ username }}</span>
-                        <b class='caret'></b>
-                    </a>
-                    <ul class='dropdown-menu'>
-                        <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
-                        <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
-                    </ul>
-                </li>
-                {{/unless}}
-            </ul>
+            <div class="navbar-center">
+                <a class='brand hidden-phone'>Twit-arr!</a>
+                <ul class='nav'>
+                    <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
+                    <li class='dropdown visible-phone'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                            <span>Posts</span>
+                            <b class='caret'></b>
+                        </a>
+                        <ul class='dropdown-menu'>
+                            <li>{{#linkTo "popular"}}Popular{{/linkTo}}</li>
+                            <li>{{#linkTo "mine"}}My Stuff{{/linkTo}}</li>
+                        </ul>
+                    </li>
+                    <li class="hidden-phone">{{#linkTo "popular"}}Popular{{/linkTo}}</li>
+                    {{#if logged_in}}
+                    <li class="hidden-phone">{{#linkTo "mine"}}My Stuff{{/linkTo}}</li>
+                    {{/if}}
+                </ul>
+                <ul class='nav pull-right'>
+                    {{#unless logged_in}}
+                    <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
+                    {{else}}
+                    <li class='dropdown'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+                            <span>{{ username }}</span>
+                            <b class='caret'></b>
+                        </a>
+                        <ul class='dropdown-menu'>
+                            <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
+                            <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
+                        </ul>
+                    </li>
+                    {{/unless}}
+                </ul>
+            </div>
         </div>
     </div>
     <div class='main'>
@@ -50,17 +62,7 @@
     <div id='announcements'>
         <h3>Announcements</h3>
         {{#each post in controller}}
-            <div class='post-entry'>
-                <span style="color: darkgray;">{{ post.username }}</span>
-                <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post.post_time"}} ></span>
-
-                <div style="font-size: larger; font-weight: bold;">{{{ post.process_message }}}</div>
-                {{#if can_delete}}
-                    <div class="clearfix">
-                        <a href="#" class="pull-right" {{ action 'delete' post.post_id }}>delete</a>
-                    </div>
-                {{/if}}
-            </div>
+            {{ partial "post" }}
         {{else}}
             <div>
                 No announcements yet!
@@ -85,7 +87,7 @@
 
 <script type="text/x-handlebars" data-template-name="postDetails">
     <div class='post-entry'>
-        <span style="color: darkgray;">{{ username }}</span>
+        {{#linkTo "posts" post.username style="color: darkgray;"}}{{ post.username }}{{/linkTo}}
         <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
 
         <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
