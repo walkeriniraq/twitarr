@@ -31,11 +31,7 @@ Twitarr.Message.reopenClass
     $.getJSON(url).then (data) =>
       links = Ember.A()
       links.pushObject(@create(post)) for post in data.list
-      links
-
-  list_for_user: (username) ->
-    @get_list("posts/list?username=#{encodeURIComponent username}").then (data) ->
-      { account: username, posts: data }
+      { status: data.status, posts: links }
 
   list_for_tag: (tag) ->
     @get_list("posts/search?term=#{encodeURIComponent tag}").then (data) ->
@@ -46,7 +42,27 @@ Twitarr.Post = Twitarr.Message.extend
     alert 'hi'
 
 Twitarr.Post.reopenClass
+
+  new: (text) ->
+    @post('posts', text)
+
+  popular: (params) ->
+    @get_list("posts/popular?page=#{encodeURIComponent params.page}").then (data) ->
+      data
+
+  user: (params) ->
+    @get_list("posts/list?username=#{encodeURIComponent params.username}&page=#{encodeURIComponent params.page}").then (data) ->
+      data.username = params.username
+      data
+
+  mine: (params) ->
+    @get_list("posts/list").then (data) ->
+      data
+
   favorite: (id) ->
     $.ajax(type: 'PUT', url: 'posts/favorite', data: { id: id }).done (data) ->
       unless data.status is 'ok'
         alert data.status
+
+  delete: (id) ->
+    Twitarr.Message.delete('posts', id)

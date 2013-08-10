@@ -16,7 +16,7 @@ class Message
   end
 
   def to_json(params = {})
-    { message: message, user: username, post_time: post_time.to_i, post_id: post_id }.to_json params
+    { message: message, username: username, post_time: post_time.to_i, post_id: post_id }.to_json params
   end
 
 end

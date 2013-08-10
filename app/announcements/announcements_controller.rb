@@ -21,9 +21,7 @@ module AnnouncementsController
   end
 
   get 'list' do
-    # TODO: fix this too
-    #return render_json list: [{ message: 'No announcements!' }] if data.empty?
-    render_json list: Announcement.recent(0, 20)
+    render_json status: 'ok', list: Announcement.recent(0, 20)
   end
 
 end

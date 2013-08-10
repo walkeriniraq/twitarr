@@ -21,13 +21,13 @@
                             <b class='caret'></b>
                         </a>
                         <ul class='dropdown-menu'>
-                            <li>{{#linkTo "popular"}}Popular{{/linkTo}}</li>
-                            <li>{{#linkTo "mine"}}My Stuff{{/linkTo}}</li>
+                            <li>{{#linkTo "posts.popular"}}Popular{{/linkTo}}</li>
+                            <li>{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
                         </ul>
                     </li>
-                    <li class="hidden-phone">{{#linkTo "popular"}}Popular{{/linkTo}}</li>
+                    <li class="hidden-phone">{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
                     {{#if logged_in}}
-                    <li class="hidden-phone">{{#linkTo "mine"}}My Stuff{{/linkTo}}</li>
+                    <li class="hidden-phone">{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
                     {{/if}}
                 </ul>
                 <ul class='nav pull-right'>
@@ -36,7 +36,7 @@
                     {{else}}
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-                            <span>{{ username }}</span>
+                            <span>{{ login_user }}</span>
                             <b class='caret'></b>
                         </a>
                         <ul class='dropdown-menu'>
@@ -61,8 +61,18 @@
 <script type="text/x-handlebars" data-template-name="announcements">
     <div id='announcements'>
         <h3>Announcements</h3>
-        {{#each post in controller}}
-            {{ partial "post" }}
+        {{#each post in controller.posts}}
+            <div class='post-entry'>
+                <span style="color: darkgray;">{{ post.username }}</span>
+                <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post.post_time"}} ></span>
+
+                <div style="font-size: larger; font-weight: bold;">{{{ post.process_message }}}</div>
+                {{#if can_delete}}
+                    <div class="clearfix">
+                        <a href="#" class="pull-right" {{ action 'delete' post.post_id }}>delete</a>
+                    </div>
+                {{/if}}
+            </div>
         {{else}}
             <div>
                 No announcements yet!
@@ -74,9 +84,14 @@
         {{/if}}
     </div>
 </script>
-<script type="text/x-handlebars" data-template-name="popular">
-    <h3>Popular</h3>
-    {{#each post in controller}}
+<script type="text/x-handlebars" data-template-name="posts">
+
+    {{view Ember.TextArea placeholder='Say something!' valueBinding='newPost'}}
+    <button {{ action 'make_post' }}>Post it</button>
+
+    <h3>{{ title }}</h3>
+
+    {{#each post in controller.posts}}
         {{ render "postDetails" post }}
     {{else}}
         <div>
@@ -87,7 +102,7 @@
 
 <script type="text/x-handlebars" data-template-name="postDetails">
     <div class='post-entry'>
-        {{#linkTo "posts" post.username style="color: darkgray;"}}{{ post.username }}{{/linkTo}}
+        {{#linkTo "posts.user" username style="color: darkgray;"}}{{ username }}{{/linkTo}}
         <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
 
         <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
@@ -104,40 +119,6 @@
     </div>
 </script>
 
-<script type="text/x-handlebars" data-template-name="search">
-    <h3>Results for #{{ term }}</h3>
-    {{#each post in controller.posts}}
-        {{ render "postDetails" post }}
-    {{else}}
-        <div>
-            No results!
-        </div>
-    {{/each}}
-</script>
-
-<script type="text/x-handlebars" data-template-name="posts">
-    <h3>@{{ account }}</h3>
-    {{#each post in controller.posts}}
-        {{ render "postDetails" post }}
-    {{else}}
-        <div>
-            No posts by that user
-        </div>
-    {{/each}}
-</script>
-<script type="text/x-handlebars" data-template-name="mine">
-    <h3>My Stuff</h3>
-    {{view Ember.TextArea placeholder='Say something!' valueBinding='newPost'}}
-    <button {{ action 'make_post' }}>Post it</button>
-
-    {{#each post in controller}}
-        {{ render "postDetails" post }}
-    {{else}}
-        <div>
-            No posts yet!
-        </div>
-    {{/each}}
-</script>
 <script type="text/x-handlebars" data-template-name="profile">
     <h3>Profile</h3>
 </script>
@@ -210,6 +191,7 @@
     window.Twitarr = Ember.Application.create();
 </script>
 <script type='text/javascript' src='js/message.js'></script>
+<script type='text/javascript' src='js/routes.js'></script>
 <script type='text/javascript' src='js/twitarr.js'></script>
 
 </body>

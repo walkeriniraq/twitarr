@@ -22,7 +22,7 @@ module PostsController
   end
 
   get 'popular' do
-    render_json list: Post.popular.map { |x| x.ui_json_hash }
+    render_json status: 'ok', list: Post.popular.map { |x| x.ui_json_hash }
   end
 
   put 'favorite' do
@@ -32,8 +32,8 @@ module PostsController
   end
 
   get 'list' do
-    return render_json(list: Post.tagged("@#{@params[:username].downcase}")) if @params[:username]
-    render_json list: Post.tagged("@#{current_username}").map { |x| x.ui_json_hash }
+    return render_json(status: 'ok', list: Post.tagged("@#{@params[:username].downcase}")) if @params[:username]
+    render_json status: 'ok', list: Post.tagged("@#{current_username}").map { |x| x.ui_json_hash }
   end
 
   get 'search' do

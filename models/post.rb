@@ -19,7 +19,7 @@ class Post < Message
 
   def ui_json_hash
     DbConnectionPool.instance.connection do |db|
-      { message: message, user: username, post_time: post_time.to_i, post_id: post_id, likes: db.smembers(FAVORITES_PREFIX % post_id) }
+      { message: message, username: username, post_time: post_time.to_i, post_id: post_id, likes: db.smembers(FAVORITES_PREFIX % post_id) }
     end
   end
 
@@ -64,11 +64,11 @@ class Post < Message
   def self.delete(id)
     DbConnectionPool.instance.connection do |db|
       post = find(id)
-      db.del POST_PREFIX % id
-      db.zrem POPULAR_KEY, id
       post.tags.each do |tag|
         db.zrem TAG_PREFIX % tag, id
       end
+      db.zrem POPULAR_KEY, id
+      db.del POST_PREFIX % id
     end
   end
 
