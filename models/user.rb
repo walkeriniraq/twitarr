@@ -6,6 +6,7 @@ class User
 
   USER_KEY = 'system:users'
   USER_PREFIX = 'user:%s'
+  USER_FRIENDS_PREFIX = 'user-friends:%s'
 
   attr_accessor :username, :password, :is_admin, :status, :email
 
@@ -24,6 +25,10 @@ class User
     end
   end
 
+  def gui_hash
+    { username: username, is_admin: is_admin, friends: friends }
+  end
+
   def to_json(params = {})
     to_hash([:username, :password, :is_admin, :status, :email]).to_json(params)
   end
@@ -37,6 +42,25 @@ class User
         #TODO: replace this with some sort of logging
         puts "Invalid parameter passed to class #{self.class.to_s} initialize: #{k.to_s} - value: #{v.to_s}"
       end
+    end
+  end
+
+  def is_friend?(friend)
+    DbConnectionPool.instance.connection do |db|
+      db.sismember(USER_FRIENDS_PREFIX % username, friend)
+    end
+  end
+
+  def add_friend(friend)
+    return "User #{friend} does not exist in the database" unless User.exist? friend
+    DbConnectionPool.instance.connection do |db|
+      db.sadd(USER_FRIENDS_PREFIX % username, friend)
+    end
+  end
+
+  def friends
+    DbConnectionPool.instance.connection do |db|
+      db.smembers USER_FRIENDS_PREFIX % username
     end
   end
 

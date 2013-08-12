@@ -13,14 +13,42 @@ class Post < Message
 
   def score
     DbConnectionPool.instance.connection do |db|
-      post_time.to_i / 60 + db.scard(FAVORITES_PREFIX % post_id)
+      post_time.to_i / 3600 + db.scard(FAVORITES_PREFIX % post_id)
     end
   end
 
-  def ui_json_hash
+  def favorites_sentence(user)
     DbConnectionPool.instance.connection do |db|
-      { message: message, username: username, post_time: post_time.to_i, post_id: post_id, likes: db.smembers(FAVORITES_PREFIX % post_id) }
+      likes = []
+      unless user.nil?
+        likes << 'You' if db.sismember FAVORITES_PREFIX % post_id, user
+        friends_like = db.sinter(FAVORITES_PREFIX % post_id, User::USER_FRIENDS_PREFIX % user)
+        likes += friends_like
+      end
+      other_likes = db.scard(FAVORITES_PREFIX % post_id) - likes.count
+      likes << "#{other_likes} people" if other_likes > 1
+      likes << '1 other person' if other_likes == 1
+      return case
+               when likes.count > 1
+                 "#{likes[0..-2].join ', '} and #{likes.last} like this."
+               when likes.count > 0
+                 if likes.first == 'You'
+                   'You like this.'
+                 else
+                   "#{likes.first} likes this."
+                 end
+      end
     end
+  end
+
+  def liked?(user)
+    DbConnectionPool.instance.connection do |db|
+      db.sismember FAVORITES_PREFIX % post_id, user
+    end
+  end
+
+  def ui_json_hash(user)
+    { message: message, username: username, post_time: post_time.to_i, post_id: post_id, liked: liked?(user), liked_sentence: favorites_sentence(user) }
   end
 
   def save

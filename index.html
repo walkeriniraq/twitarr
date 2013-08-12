@@ -8,6 +8,7 @@
     <link rel='stylesheet' type='text/css' href='css/main.css'/>
 </head>
 <body>
+
 <script type="text/x-handlebars" data-template-name="application">
     <div class='navbar'>
         <div class='navbar-inner'>
@@ -58,6 +59,7 @@
         <span class="visible-phone">phone</span>
     </div>
 </script>
+
 <script type="text/x-handlebars" data-template-name="announcements">
     <div id='announcements'>
         <h3>Announcements</h3>
@@ -84,12 +86,20 @@
         {{/if}}
     </div>
 </script>
-<script type="text/x-handlebars" data-template-name="posts">
 
+<script type="text/x-handlebars" data-template-name="_user_route">
+    <h3>{{route.username}}</h3>
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts">
     {{view Ember.TextArea placeholder='Say something!' valueBinding='newPost'}}
     <button {{ action 'make_post' }}>Post it</button>
 
-    <h3>{{ title }}</h3>
+    {{#if route_has_template}}
+        {{dynPartial route.template}}
+    {{else}}
+        <h3>{{ title }}</h3>
+    {{/if}}
 
     {{#each post in controller.posts}}
         {{ render "postDetails" post }}
@@ -103,25 +113,34 @@
 <script type="text/x-handlebars" data-template-name="postDetails">
     <div class='post-entry'>
         {{#linkTo "posts.user" username style="color: darkgray;"}}{{ username }}{{/linkTo}}
+        {{#if post_by_friend}}
+        FRIEND
+        {{/if}}
         <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
 
         <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
-        <div class="clearfix"><div class="pull-right">
-            {{#if can_delete}}
-                <a href="#" {{ action 'delete' post_id }}>delete</a>
+        <div class="post-details">
+            {{#if liked_sentence}}
+            <div class="pull-left">{{liked_sentence}}</div>
             {{/if}}
-            {{#if logged_in}}
-                <a href="#" {{ action 'favorite' post_id }}>
-                    <i {{bindAttr class="liked_class"}}></i>
-                </a>
-            {{/if}}
-        </div></div>
+            <div class="clearfix"><div class="pull-right">
+                {{#if can_delete}}
+                    <a href="#" {{ action 'delete' post_id }}>delete</a>
+                {{/if}}
+                {{#if logged_in}}
+                    <a href="#" {{ action 'favorite' post_id }}>
+                        <i {{bindAttr class="liked_class"}}></i>
+                    </a>
+                {{/if}}
+            </div></div>
+        </div>
     </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="profile">
     <h3>Profile</h3>
 </script>
+
 <script type="text/x-handlebars" data-template-name="login">
     <form class="form-horizontal">
         <legend>I have an account</legend>
@@ -180,6 +199,7 @@
         </div>
     </form>
 </script>
+
 <script type='text/javascript' src='js/jquery-2.0.1.min.js'></script>
 <script type='text/javascript' src='js/underscore-min.js'></script>
 <script type='text/javascript' src='js/handlebars-1.0.0-rc.4.js'></script>

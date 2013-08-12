@@ -22,7 +22,7 @@ module PostsController
   end
 
   get 'popular' do
-    render_json status: 'ok', list: Post.popular.map { |x| x.ui_json_hash }
+    render_json status: 'ok', list: Post.popular.map { |x| x.ui_json_hash(current_username) }
   end
 
   put 'favorite' do
@@ -32,12 +32,16 @@ module PostsController
   end
 
   get 'list' do
-    return render_json(status: 'ok', list: Post.tagged("@#{@params[:username].downcase}")) if @params[:username]
-    render_json status: 'ok', list: Post.tagged("@#{current_username}").map { |x| x.ui_json_hash }
+    if @params[:username]
+      user = User.get(@params[:username])
+      return render_json(status: 'Could not find user!') if user.nil?
+      return render_json(status: 'ok', list: Post.tagged("@#{@params[:username].downcase}"))
+    end
+    render_json status: 'ok', list: Post.tagged("@#{current_username}").map { |x| x.ui_json_hash(current_username) }
   end
 
   get 'search' do
-    list = Post.tagged("##{@params[:term].downcase}") + Post.tagged("@#{@params[:term]}").map { |x| x.ui_json_hash }
+    list = Post.tagged("##{@params[:term].downcase}") + Post.tagged("@#{@params[:term]}").map { |x| x.ui_json_hash(current_username) }
     render_json(list: list)
   end
 

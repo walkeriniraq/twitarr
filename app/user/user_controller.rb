@@ -19,7 +19,12 @@ module UserController
   end
 
   get 'username' do
-    return render_json status: 'ok', user: { username: @session[:username], is_admin: @session[:is_admin] } unless @session[:username].nil?
+    unless @session[:username].nil?
+      user = User.get(@session[:username])
+      return render_json status: 'User does not exist.' if user.nil?
+      return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
+      return render_json status: 'ok', user: user.gui_hash
+    end
     render_json status: 'logout'
   end
 

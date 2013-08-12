@@ -38,8 +38,7 @@ Twitarr.Message.reopenClass
       { term: tag, posts: data }
 
 Twitarr.Post = Twitarr.Message.extend
-  foo: ->
-    alert 'hi'
+  foo: null
 
 Twitarr.Post.reopenClass
 

@@ -1,6 +1,10 @@
+Ember.Handlebars.helper 'dynPartial', (name, options) ->
+  Ember.Handlebars.helpers.partial.apply(@, arguments)
+
 Twitarr.ApplicationController = Ember.Controller.extend
   login_user: null
   is_admin: false
+  friends: []
 
   init: ->
     $.getJSON('user/username').done (data) =>
@@ -20,6 +24,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
   login: (user) ->
     @set 'login_user', user.username
     @set 'is_admin', user.is_admin
+    @set 'friends', user.friends
 
   logged_in: (->
     @get('login_user')?
@@ -36,26 +41,39 @@ Twitarr.ControllerMixin = Ember.Mixin.create
   is_admin: (->
     @get('controllers.application.is_admin')
   ).property('controllers.application.is_admin')
+  friends: (->
+    @get('controllers.application.friends')
+  ).property('controllers.application.friends')
 
 Twitarr.ArrayController = Ember.ArrayController.extend Twitarr.ControllerMixin
 Twitarr.Controller = Ember.Controller.extend Twitarr.ControllerMixin
 Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
 
 Twitarr.PostsController = Twitarr.ObjectController.extend
-  title: 'Posts'
-  current_route: null
-  route_data: null
-
-  set_route: (route, data = {}) ->
-    data.page ||= 0
-    @setProperties 'current_route': route, 'route_data': data
+  route: null
 
   reload: ( ->
-    Twitarr.Post[@get('current_route')](@get('route_data')).done (data) =>
+    route = @get('route')
+    return unless route? || route.url?
+    Twitarr.Post[route.url](route).done (data) =>
       return alert(data.status) unless data.status is 'ok'
       Ember.run =>
         @set 'content', data
-  ).observes('route_data')
+  ).observes('route')
+
+  title: ( ->
+    route = @get('route')
+    return 'Loading...' unless route?
+    return if route.template
+    return route.title if route.title
+    route.url
+  ).property('route')
+
+  route_has_template: ( ->
+    route = @get('route')
+    return false unless route? || route.template?
+    true
+  ).property('route')
 
   make_post: ->
     text = @get 'newPost'
@@ -67,7 +85,9 @@ Twitarr.PostsController = Twitarr.ObjectController.extend
     @set 'newPost', ''
 
   favorite: (id) ->
-    Twitarr.Post.favorite id
+    Twitarr.Post.favorite(id).done (data) =>
+      alert(data.status) unless data.status is 'ok'
+      @reload()
 
   delete: (id) ->
     Twitarr.Post.delete(id).done (data) =>
@@ -76,14 +96,10 @@ Twitarr.PostsController = Twitarr.ObjectController.extend
 
 
 Twitarr.PostDetailsController = Twitarr.ObjectController.extend
-  liked: (->
-    _(@get('likes')).contains(@get('login_user'))
-  ).property('likes', 'login_user')
-
   liked_class: (->
-    return 'icon-star' if _(@get('likes')).contains(@get('login_user'))
+    return 'icon-star' if @get('liked')
     'icon-star-empty'
-  ).property('likes', 'login_user')
+  ).property('liked')
 
   can_delete: (->
     return false unless @get('logged_in')
@@ -91,22 +107,23 @@ Twitarr.PostDetailsController = Twitarr.ObjectController.extend
     @get('login_user') is @get('username')
   ).property('logged_in', 'login_user', 'is_admin')
 
+  post_by_friend: (->
+    _(@get('friends')).contains @get('username')
+  ).property('friends', 'username')
+
 Twitarr.PostsPopularRoute = Ember.Route.extend
   setupController: ->
-    @controllerFor('posts').set 'title', 'Popular'
-    @controllerFor('posts').set_route 'popular'
+    @controllerFor('posts').set 'route', { title: 'popular', url: 'popular' }
 
 Twitarr.PostsMineRoute = Ember.Route.extend
   setupController: ->
-    @controllerFor('posts').set 'title', null
-    @controllerFor('posts').set_route 'mine'
+    @controllerFor('posts').set 'route', { title: null, url: 'mine' }
 
 Twitarr.PostsUserRoute = Ember.Route.extend
   model: (params) ->
     params
   setupController: (controller, params) ->
-    @controllerFor('posts').set 'title', params.user
-    @controllerFor('posts').set_route 'user', { username: params.user }
+    @controllerFor('posts').set 'route', { username: params.user, url: 'user', template: 'user_route' }
 
 Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->
