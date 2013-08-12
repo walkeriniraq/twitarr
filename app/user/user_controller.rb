@@ -18,6 +18,18 @@ module UserController
     render_json status: 'ok', user: user.to_hash([:username, :is_admin])
   end
 
+  post 'follow' do
+    return render_json status: 'User does not exist.' unless User.exist?(params[:username])
+    User.add_friend(@session[:username], params[:username])
+    render_json status: 'ok'
+  end
+
+  post 'unfollow' do
+    return render_json status: 'User does not exist.' unless User.exist?(params[:username])
+    User.remove_friend(@session[:username], params[:username])
+    render_json status: 'ok'
+  end
+
   get 'username' do
     unless @session[:username].nil?
       user = User.get(@session[:username])

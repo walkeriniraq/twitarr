@@ -51,10 +51,17 @@ class User
     end
   end
 
-  def add_friend(friend)
+  def self.add_friend(username, friend)
     return "User #{friend} does not exist in the database" unless User.exist? friend
     DbConnectionPool.instance.connection do |db|
       db.sadd(USER_FRIENDS_PREFIX % username, friend)
+    end
+  end
+
+  def self.remove_friend(username, friend)
+    return "User #{friend} does not exist in the database" unless User.exist? friend
+    DbConnectionPool.instance.connection do |db|
+      db.srem(USER_FRIENDS_PREFIX % username, friend)
     end
   end
 

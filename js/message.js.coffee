@@ -45,13 +45,12 @@ Twitarr.Post.reopenClass
   new: (text) ->
     @post('posts', text)
 
-  popular: (params) ->
-    @get_list("posts/popular?page=#{encodeURIComponent params.page}").then (data) ->
+  popular: (page = 0) ->
+    @get_list("posts/popular?page=#{encodeURIComponent page}").then (data) ->
       data
 
-  user: (params) ->
-    @get_list("posts/list?username=#{encodeURIComponent params.username}&page=#{encodeURIComponent params.page}").then (data) ->
-      data.username = params.username
+  user: (username, page = 0) ->
+    @get_list("posts/list?username=#{encodeURIComponent username}&page=#{encodeURIComponent page}").then (data) ->
       data
 
   mine: (params) ->

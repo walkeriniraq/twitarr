@@ -95,12 +95,10 @@
     {{view Ember.TextArea placeholder='Say something!' valueBinding='newPost'}}
     <button {{ action 'make_post' }}>Post it</button>
 
-    {{#if route_has_template}}
-        {{dynPartial route.template}}
-    {{else}}
-        <h3>{{ title }}</h3>
-    {{/if}}
+    {{outlet}}
+</script>
 
+<script type="text/x-handlebars" data-template-name="_post_list">
     {{#each post in controller.posts}}
         {{ render "postDetails" post }}
     {{else}}
@@ -110,11 +108,36 @@
     {{/each}}
 </script>
 
+<script type="text/x-handlebars" data-template-name="posts/user">
+    <div>
+        <div class="pull-right">
+            {{#if is_friend}}
+            <i class="icon-heart"></i>
+            <a href="#" {{ action 'unfollow' }}>Following</a>
+            {{else}}
+            <a href="#" {{ action 'follow' }}>Not following</a>
+            {{/if}}
+        </div>
+        <h3>{{user}}</h3>
+    </div>
+    {{ partial 'post_list' }}
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts/mine">
+    <h3>Mine</h3>
+    {{ partial 'post_list' }}
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts/popular">
+    <h3>Popular</h3>
+    {{ partial 'post_list' }}
+</script>
+
 <script type="text/x-handlebars" data-template-name="postDetails">
     <div class='post-entry'>
         {{#linkTo "posts.user" username style="color: darkgray;"}}{{ username }}{{/linkTo}}
         {{#if post_by_friend}}
-        FRIEND
+            <i class="icon-heart"></i>
         {{/if}}
         <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
 

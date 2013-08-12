@@ -34,10 +34,12 @@ class Post < Message
                when likes.count > 0
                  if likes.first == 'You'
                    'You like this.'
+                 elsif other_likes > 1
+                   "#{likes.first} like this."
                  else
                    "#{likes.first} likes this."
                  end
-      end
+             end
     end
   end
 
@@ -85,7 +87,7 @@ class Post < Message
 
   def self.tagged(tag, start = 0, count = 20)
     DbConnectionPool.instance.connection do |db|
-      find db.zrevrange(TAG_PREFIX % tag, start, start + count)
+      find db.zrevrange(TAG_PREFIX % tag.downcase, start, start + count)
     end
   end
 
