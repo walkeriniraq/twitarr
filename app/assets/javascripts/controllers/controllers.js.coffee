@@ -82,7 +82,8 @@ Twitarr.BasePostChildController = Twitarr.ObjectController.extend
     return unless text.trim()
 
     Twitarr.Post.new(text).done (data) =>
-      alert(data.status) unless data.status is 'ok'
+      return alert(data.status) unless data.status is 'ok'
+      @reload()
     @set 'newPost', ''
 
 Twitarr.PostsPopularController = Twitarr.BasePostChildController.extend
@@ -92,15 +93,6 @@ Twitarr.PostsPopularController = Twitarr.BasePostChildController.extend
         @set 'model', data
 
 Twitarr.PostsMineController = Twitarr.BasePostChildController.extend
-  make_post: ->
-    text = @get 'newPost'
-    return unless text.trim()
-
-    Twitarr.Post.new(text).done (data) =>
-      return alert(data.status) unless data.status is 'ok'
-      @reload()
-    @set 'newPost', ''
-
   reload: ->
     Twitarr.Post.mine().done (data) =>
       Ember.run =>

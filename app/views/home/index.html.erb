@@ -80,10 +80,6 @@
     {{outlet}}
 </script>
 
-<script type="text/x-handlebars" data-template-name="_user_route">
-    <h3>{{route.username}}</h3>
-</script>
-
 <script type="text/x-handlebars" data-template-name="_post_create">
     {{view Ember.TextArea placeholder='Say something!' valueBinding='newPost'}}
     <button {{ action 'make_post' }}>Post it</button>
@@ -109,7 +105,7 @@
               <a href="#" {{ action 'follow' }}>Not following</a>
             {{/if}}
         </div>
-        <h3>{{user}}</h3>
+        <h3>@{{user}}</h3>
     </div>
     {{ partial 'post_list' }}
 </script>
