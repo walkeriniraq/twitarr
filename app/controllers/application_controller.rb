@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def logged_in?
-    puts "CURRENT USERNAME: #{current_username}"
     !current_username.nil?
   end
 
