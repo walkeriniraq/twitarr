@@ -1,3 +1,3 @@
 require 'lib/db_connection_pool'
 
-DbConnectionPool.instance.configure(host: 'gremlin')
+DbConnectionPool.instance.configure(Rails.application.config.db)
