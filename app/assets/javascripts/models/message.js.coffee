@@ -8,9 +8,9 @@ Twitarr.Message = Ember.Object.extend
   process_part: (part) ->
     switch part[0]
       when '@'
-        "<a href='#/posts/#{part.substring 1}'>#{part}</a>"
+        "<a href='#/posts/user/#{part.substring 1}'>#{part}</a>"
       when '#'
-        "<a href='#/search/#{part.substring 1}'>#{part}</a>"
+        "<a href='#/posts/search/#{part.substring 1}'>#{part}</a>"
       else part
 
 Twitarr.Message.reopenClass
@@ -33,29 +33,24 @@ Twitarr.Message.reopenClass
       links.pushObject(@create(post)) for post in data.list
       { status: data.status, posts: links }
 
-  list_for_tag: (tag) ->
-    @get_list("posts/search?term=#{encodeURIComponent tag}").then (data) ->
-      { term: tag, posts: data }
-
-Twitarr.Post = Twitarr.Message.extend
-  foo: null
+Twitarr.Post = Twitarr.Message.extend()
 
 Twitarr.Post.reopenClass
 
   new: (text) ->
     @post('posts', text)
 
+  search: (tag) ->
+    @get_list("posts/search?term=#{encodeURIComponent tag}")
+
   popular: (page = 0) ->
-    @get_list("posts/popular?page=#{encodeURIComponent page}").then (data) ->
-      data
+    @get_list("posts/popular?page=#{encodeURIComponent page}")
 
   user: (username, page = 0) ->
-    @get_list("posts/list?username=#{encodeURIComponent username}&page=#{encodeURIComponent page}").then (data) ->
-      data
+    @get_list("posts/list?username=#{encodeURIComponent username}&page=#{encodeURIComponent page}")
 
   mine: (params) ->
-    @get_list("posts/list").then (data) ->
-      data
+    @get_list("posts/list")
 
   favorite: (id) ->
     $.ajax(type: 'PUT', url: 'posts/favorite', data: { id: id }).done (data) ->

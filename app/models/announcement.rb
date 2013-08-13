@@ -1,5 +1,3 @@
-require_relative 'message'
-
 class Announcement < Message
 
   ANNOUNCEMENT_KEY = 'system:announcements'

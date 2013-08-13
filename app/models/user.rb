@@ -1,5 +1,4 @@
 require 'bcrypt'
-require 'json'
 
 class User
   include HashInitialize

@@ -1,38 +1,32 @@
 require 'bcrypt'
 require 'json'
 
-require_relative '../controller_helpers.rb'
+class UserController < ApplicationController
 
-module UserController
-  actionize!
-
-  include ControllerHelpers
-
-  post 'login' do
+  def login
     user = User.get(params[:username])
     return render_json status: 'User does not exist.' if user.nil?
     return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
-    return render_json status: 'Invalid username or password.' if BCrypt::Password.new(user.password) != @params[:password]
-    @session[:username] = user.username
-    @session[:is_admin] = user.is_admin
-    render_json status: 'ok', user: user.to_hash([:username, :is_admin])
+    return render_json status: 'Invalid username or password.' if BCrypt::Password.new(user.password) != params[:password]
+    login_user(user)
+    render_json status: 'ok', user: user.gui_hash
   end
 
-  post 'follow' do
+  def follow
     return render_json status: 'User does not exist.' unless User.exist?(params[:username])
-    User.add_friend(@session[:username], params[:username])
+    User.add_friend(current_username, params[:username])
     render_json status: 'ok'
   end
 
-  post 'unfollow' do
+  def unfollow
     return render_json status: 'User does not exist.' unless User.exist?(params[:username])
-    User.remove_friend(@session[:username], params[:username])
+    User.remove_friend(current_username, params[:username])
     render_json status: 'ok'
   end
 
-  get 'username' do
-    unless @session[:username].nil?
-      user = User.get(@session[:username])
+  def username
+    if logged_in?
+      user = User.get(current_username)
       return render_json status: 'User does not exist.' if user.nil?
       return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
       return render_json status: 'ok', user: user.gui_hash
@@ -40,7 +34,7 @@ module UserController
     render_json status: 'logout'
   end
 
-  post 'new' do
+  def new
     user = User.new
     user.username = params[:username].downcase
     user.email = params[:email]
@@ -50,27 +44,26 @@ module UserController
     return render_json status: 'Username cannot contain : character.' if user.username.include? ':'
     return render_json status: 'Username already exists.' if server.user_exist? user.username
     return render_json status: 'Email address is not valid.' if (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
-    return render_json status: 'Password must be at least six characters long.' if @params[:password].length < 6
-    return render_json status: 'Passwords do not match.' if @params[:password] != @params[:password2]
-    user.set_password @params[:password]
+    return render_json status: 'Password must be at least six characters long.' if params[:password].length < 6
+    return render_json status: 'Passwords do not match.' if params[:password] != params[:password2]
+    user.set_password params[:password]
     user.save
     render_json status: 'ok'
   end
 
-  get 'logout' do
-    @session[:username] = nil
-    @session[:is_admin] = false
+  def logout
+    logout_user
     render_json status: 'ok'
   end
 
-  post 'change_password' do
+  def change_password
     return login_required unless logged_in?
-    return render_json status: 'Password must be at least six characters long.' if @params[:new_password].length < 6
-    return render_json status: 'New passwords do not match.' if @params[:new_password] != @params[:new_password2]
+    return render_json status: 'Password must be at least six characters long.' if params[:new_password].length < 6
+    return render_json status: 'New passwords do not match.' if params[:new_password] != params[:new_password2]
     user = User.get(username)
     return render_json status: 'User does not exist.' if user.nil?
-    return render_json status: 'Invalid username or password.' if BCrypt::Password.new(user.password) != @params[:old_password]
-    user.password = BCrypt::Password.create @params[:new_password]
+    return render_json status: 'Invalid username or password.' if BCrypt::Password.new(user.password) != params[:old_password]
+    user.password = BCrypt::Password.create params[:new_password]
     user.save
   end
 

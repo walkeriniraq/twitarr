@@ -1,5 +1,3 @@
-require_relative 'message'
-
 class Post < Message
 
   TAG_PREFIX = 'tag:%s'

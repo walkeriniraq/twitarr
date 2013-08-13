@@ -1,10 +1,14 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+
 *.gem
 *.rbc
-.bundle
 .config
 coverage
-InstalledFiles
-lib/bundler/man
 pkg
 rdoc
 spec/reports
@@ -15,9 +19,4 @@ tmp
 *.iml
 .sass-cache
 *.tmp
-
-# YARD artifacts
-.yardoc
-_yardoc
-doc/
 temp/
