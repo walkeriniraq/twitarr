@@ -9,6 +9,8 @@ gem 'therubyrhino'
 gem 'kul', '~> 0.2.0'
 gem 'redis', '~> 3.0.0'
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'connection_pool'
+gem 'peach'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

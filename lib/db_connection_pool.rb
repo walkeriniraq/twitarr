@@ -9,7 +9,10 @@ class DbConnectionPool
   end
 
   def connection
-    yield Redis.new(@connection_hash)
+    @pool = ConnectionPool.new(:size => 20, :timeout => 5) { Redis.new(@connection_hash) } if @pool.nil?
+    @pool.with do |conn|
+      yield conn
+    end
   end
 
   def configure(connection_hash)
