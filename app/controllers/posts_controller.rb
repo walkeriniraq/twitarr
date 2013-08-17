@@ -38,8 +38,7 @@ class PostsController < ApplicationController
   end
 
   def search
-    render_json status: 'ok',
-                list: Post.posts_hash(Post.tagged("##{params[:term]}") + Post.tagged("@#{params[:term]}"))
+    render_json status: 'ok', list: Post.posts_hash(Post.tagged("##{params[:term]}") + Post.tagged("@#{params[:term]}"), current_username)
   end
 
 

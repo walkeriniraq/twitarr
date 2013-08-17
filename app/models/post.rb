@@ -38,25 +38,17 @@ class Post < Message
            end
   end
 
-  def db_pipeline(db = nil, &block)
-    self.class.db_pipeline(db, &block)
-  end
-
   def db_score(db = nil)
-    puts db.object_id
     db_pipeline(db) do |db|
-      puts db.object_id
       likes = db_likes(db)
       -> { score(likes.call) }
     end
   end
 
   def db_save
-    score = db_score.call
     db_pipeline do |db|
-      puts db.object_id
       db.set POST_PREFIX % post_id, to_json
-      db.zadd POPULAR_KEY, score, post_id
+      db.zadd POPULAR_KEY, db_score.call, post_id
       tags.each do |tag|
         db.zadd TAG_PREFIX % tag, Time.now.to_i, post_id
       end
@@ -65,7 +57,6 @@ class Post < Message
 
   def db_likes(db = nil)
     db_pipeline(db) do |db|
-      puts db.object_id
       ret = db.scard(FAVORITES_PREFIX % post_id)
       -> { ret.value }
     end
@@ -80,23 +71,11 @@ class Post < Message
     end
   end
 
-  def self.db_pipeline(db = nil)
-    ret = nil
-    if db.nil?
-      DbConnectionPool.instance.connection do |db|
-        db.pipelined { ret = yield db }
-      end
-    elsif db.client.is_a? Redis::Pipeline
-      ret = yield db
-    else
-      db.pipelined { ret = yield db }
-    end
-    ret
-  end
-
-  def self.db_call
-    DbConnectionPool.instance.connection do |db|
-      yield db
+  def self.all(params = {})
+    db_call do |db|
+      keys = db.keys.select { |x| x.start_with? 'post:' }.map { |x| x.gsub 'post:', '' }
+      return keys if params[:only_keys]
+      find keys
     end
   end
 
@@ -109,10 +88,9 @@ class Post < Message
 
   def self.add_favorite(id, username)
     post = find(id)
-    score = post.db_score.call
     db_pipeline do |db|
       db.sadd FAVORITES_PREFIX % id, username
-      db.zadd POPULAR_KEY, score, id
+      db.zadd POPULAR_KEY, post.db_score.call, id
     end
   end
 
@@ -147,9 +125,11 @@ class Post < Message
     end
   end
 
-  def self.popular(start = 0, count = 20)
+  def self.popular(params = {})
     db_call do |db|
-      find db.zrevrange(POPULAR_KEY, start, start + count)
+      keys = db.zrevrange(POPULAR_KEY, params[:start] || 0, params[:stop] || 20)
+      return keys if params[:only_keys]
+      find keys
     end
   end
 

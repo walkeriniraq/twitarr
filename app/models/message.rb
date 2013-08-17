@@ -1,6 +1,6 @@
 require 'securerandom'
 
-class Message
+class Message < BaseModel
   include HashInitialize
 
   attr_accessor :message, :username, :post_time, :post_id
