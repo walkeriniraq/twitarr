@@ -7,9 +7,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $.getJSON('user/username').done (data) =>
       if data.status is 'ok'
         @login data.user
-#      else
-        #TODO: only transition if the current route is "mine"
-#        @transitionToRoute 'announcements'
+      else if @get('currentPath') is 'posts.mine'
+        @transitionToRoute 'announcements'
 
   logout: ->
     $.getJSON('user/logout').done (data) =>
