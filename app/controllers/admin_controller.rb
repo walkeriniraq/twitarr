@@ -1,4 +1,4 @@
-module AdminController
+class AdminController < ApplicationController
   def no_access
     return login_required unless logged_in?
     return render_json status: 'Restricted to admin.' unless is_admin?
@@ -8,6 +8,12 @@ module AdminController
   def has_access?
     logged_in? && is_admin?
   end
+
+  def users
+    return no_access unless has_access?
+    render_json status: 'ok', list: User.list_usernames.map { |x| User.get(x).to_hash [:username, :is_admin, :status, :email, :empty_password] }
+  end
+
 
   #post 'activate' do
   #  return no_access unless has_access?
@@ -61,15 +67,6 @@ module AdminController
   #get 'index' do
   #  return render_file 'app/admin/unauthorized.html' unless has_access?
   #  render_file 'app/admin/admin_index.html'
-  #end
-  #
-  #get 'users' do
-  #  return no_access unless has_access?
-  #  redis = server.redis_connection
-  #  users = redis.smembers('users').map do |username|
-  #    server.get_user(username).to_hash [:username, :is_admin, :status, :email, :empty_password]
-  #  end
-  #  render_json list: users
   #end
 
 end

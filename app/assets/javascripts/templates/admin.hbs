@@ -1,0 +1,46 @@
+<h3>Users</h3>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th style="text-align: center;">Status</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    {{#each user in controller.users}}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.email }}</td>
+      <td style="text-align: center;">
+        {{#if user.is_locked}}
+          <i title="User is deactivated" class="icon-lock"></i>
+        {{/if}}
+        {{#if user.is_admin}}
+          <i title="User is an admin" class="icon-eye-open"></i>
+        {{/if}}
+        {{#if user.empty_password}}
+          <i title="User has an empty password" class="icon-warning-sign"></i>
+        {{/if}}
+      </td>
+      <td style="text-align: right;">
+        <a href="#" class="user_activate" style="padding-right: 20px;" data-bind="visible: not_active, attr: { 'data-name': username }">unlock</a>
+        <a href="#" class="user_delete" style="padding-right: 20px;" data-bind="attr: { 'data-name': username }">delete</a>
+        <a href="#" class="reset_password" style="padding-right: 20px;" data-bind="attr: { 'data-name': username }">reset password</a>
+        <a href="#" class="user_edit" data-bind="attr: { 'data-name': username }">edit</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+  <tfoot>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="text-align: right;">
+    <a href="#" id="user_add">add new</a>
+  </td>
+  </tfoot>
+</table>
+

@@ -29,6 +29,9 @@
               <b class='caret'></b>
             </a>
             <ul class='dropdown-menu'>
+              {{#if is_admin}}
+                <li>{{#linkTo "admin"}}Admin{{/linkTo}}</li>
+              {{/if}}
               <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
               <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
             </ul>

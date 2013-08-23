@@ -20,6 +20,5 @@ Twitarr::Application.routes.draw do
   get 'user/logout' => 'user#logout'
   post 'user/change_password' => 'user#change_password'
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  get 'admin/users' => 'admin#users'
 end

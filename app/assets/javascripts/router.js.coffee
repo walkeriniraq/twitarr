@@ -1,5 +1,6 @@
 Twitarr.Router.map ()->
   @route 'announcements'
+  @route 'admin'
   @resource 'posts', ->
     @route 'popular'
     @route 'mine'

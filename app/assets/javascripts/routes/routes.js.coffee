@@ -8,6 +8,10 @@ Twitarr.PostsChildRoute = Ember.Route.extend
   setupController: (controller) ->
     controller.reload()
 
+Twitarr.AdminRoute = Ember.Route.extend
+  model: ->
+    Twitarr.User.list()
+
 Twitarr.PostsPopularRoute = Twitarr.PostsChildRoute.extend()
 Twitarr.PostsMineRoute = Twitarr.PostsChildRoute.extend()
 Twitarr.PostsSearchRoute = Twitarr.PostsChildRoute.extend
