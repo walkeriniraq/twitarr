@@ -1,6 +1,3 @@
 Twitarr.PostsPopularController = Twitarr.BasePostChildController.extend
-  reload: ->
-    Twitarr.Post.popular().done (data) =>
-      Ember.run =>
-        @set 'model', data
-
+  get_data_ajax: ->
+    Twitarr.Post.popular()

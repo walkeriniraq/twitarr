@@ -21,8 +21,5 @@ Twitarr.PostsUserController = Twitarr.BasePostChildController.extend
         friends = _(@get('friends')).reject (x) -> x is user
         @set_friends friends
 
-  reload: ->
-    Twitarr.Post.user(@get('user')).done (data) =>
-      Ember.run =>
-        @set 'model', data
-
+  get_data_ajax: ->
+    Twitarr.Post.user(@get('user'))

@@ -1,6 +1,3 @@
 Twitarr.PostsMineController = Twitarr.BasePostChildController.extend
-  reload: ->
-    Twitarr.Post.mine().done (data) =>
-      Ember.run =>
-        @set 'model', data
-
+  get_data_ajax: ->
+    Twitarr.Post.mine()

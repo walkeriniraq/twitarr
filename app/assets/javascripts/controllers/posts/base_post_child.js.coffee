@@ -1,4 +1,17 @@
 Twitarr.BasePostChildController = Twitarr.ObjectController.extend
+  loading: false
+
+  reload: ->
+    @set 'loading', true
+    @get_data_ajax().done((data) =>
+      Ember.run =>
+        @set 'loading', false
+        @set 'model', data
+    ).fail( =>
+      alert "There was a problem loading the posts from the server."
+      @set 'loading', false
+    )
+
   delete: (id) ->
     Twitarr.Post.delete(id).done (data) =>
       return alert(data.status) unless data.status is 'ok'
