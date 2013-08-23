@@ -1,4 +1,4 @@
-Twitarr.BasePostChildController = Twitarr.ObjectController.extend
+Twitarr.BasePostController = Twitarr.ObjectController.extend
   loading: false
 
   reload: ->

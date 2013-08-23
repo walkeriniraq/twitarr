@@ -1,4 +1,4 @@
-Twitarr.PostsUserController = Twitarr.BasePostChildController.extend
+Twitarr.PostsUserController = Twitarr.BasePostController.extend
   user: null
 
   is_friend: (->

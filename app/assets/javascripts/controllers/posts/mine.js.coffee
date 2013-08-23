@@ -1,3 +1,3 @@
-Twitarr.PostsMineController = Twitarr.BasePostChildController.extend
+Twitarr.PostsMineController = Twitarr.BasePostController.extend
   get_data_ajax: ->
     Twitarr.Post.mine()
