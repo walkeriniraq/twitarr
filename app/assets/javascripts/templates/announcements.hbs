@@ -1,0 +1,24 @@
+<div id='announcements'>
+  <h3>Announcements</h3>
+  {{#each post in controller.posts}}
+    <div class='post-entry'>
+      <span style="color: darkgray;">{{ post.username }}</span>
+      <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post.post_time"}} ></span>
+
+      <div style="font-size: larger; font-weight: bold;">{{{ post.process_message }}}</div>
+      {{#if can_delete}}
+        <div class="clearfix">
+          <a href="#" class="pull-right" {{ action 'delete' post.post_id }}>delete</a>
+        </div>
+      {{/if}}
+    </div>
+  {{else}}
+    <div>
+      No announcements yet!
+    </div>
+  {{/each}}
+  {{#if is_admin}}
+    {{view Ember.TextArea placeholder='Announce something!' valueBinding='newPost'}}
+    <button {{ action 'make_post' }}>Post it</button>
+  {{/if}}
+</div>

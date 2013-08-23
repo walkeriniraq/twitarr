@@ -1,0 +1,12 @@
+<div>
+  <div class="pull-right">
+    {{#if is_friend}}
+      <i class="icon-heart"></i>
+      <a href="#" {{ action 'unfollow' }}>Following</a>
+    {{else}}
+      <a href="#" {{ action 'follow' }}>Not following</a>
+    {{/if}}
+  </div>
+  <h3>@{{user}}</h3>
+</div>
+{{ partial 'post_list' }}

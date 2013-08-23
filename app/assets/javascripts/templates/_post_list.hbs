@@ -1,0 +1,7 @@
+{{#each post in controller.posts}}
+  {{ render "post_details" post }}
+{{else}}
+  <div>
+    No posts!
+  </div>
+{{/each}}

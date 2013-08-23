@@ -45,6 +45,7 @@ body {
     margin-right: auto;
 }
 
+//  OTHER STYLES
 .post-entry {
   background-color: #EEEEEE;
   border-color: darkgray -moz-use-text-color;
@@ -59,4 +60,11 @@ body {
 .post-details {
   margin-top: 6px;
   color: #606060;
+}
+
+#app-loading {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
 }

@@ -79,4 +79,7 @@ Twitarr::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.db = {}
+
+  config.ember.variant = :development
+
 end

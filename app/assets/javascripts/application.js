@@ -12,12 +12,11 @@
 //
 //= require jquery
 //= require underscore
-//= require handlebars-1.0.0-rc.4
-//= require ember-1.0.0-rc.6.1
 //= require bootstrap
 //= require moment
 //= require livestamp
-//= require twitarr
-//= require_tree ./controllers
-//= require_tree ./models
+
+//= require handlebars
+//= require ember
 //= require_self
+//= require twitarr

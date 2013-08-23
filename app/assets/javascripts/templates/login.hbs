@@ -1,0 +1,58 @@
+<form class="form-horizontal">
+  <legend>I have an account</legend>
+  <div class="control-group">
+    <label class="control-label">Username</label>
+
+    <div class="controls">
+      {{ view Ember.TextField placeholder='username' valueBinding='username'}}
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Password</label>
+
+    <div class="controls">
+      {{ view Ember.TextField type='password' valueBinding='password'}}
+    </div>
+  </div>
+  <div class="control-group controls">
+    <button {{ action 'login' }}>Login</button>
+  </div>
+</form>
+<form class="form-horizontal" style="margin-top: 20px;">
+  <legend>I don't have an account yet!</legend>
+  <div class="control-group">
+    <label class="control-label">Username</label>
+
+    <div class="controls">
+      <input type='text' id='new-username'/>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Email</label>
+
+    <div class="controls">
+      <input type='text' id='new-email'/>
+
+      <div style="margin-top: 5px;">
+        Your email will be used to notify you of your account creation. It is only visible to administrators.
+      </div>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Password</label>
+
+    <div class="controls">
+      <input type='password' id='new-password'/>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Repeat password</label>
+
+    <div class="controls">
+      <input type='password' id='new-password2'/>
+    </div>
+  </div>
+  <div class="control-group controls">
+    <input class="btn" type="submit" id='new-user-submit' value="Request account"/>
+  </div>
+</form>
