@@ -16,6 +16,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
       if data.status is 'ok'
         @set 'login_user', null
         @set 'is_admin', false
+        @set 'friends', []
         @transitionToRoute 'announcements'
 
   login: (user) ->
