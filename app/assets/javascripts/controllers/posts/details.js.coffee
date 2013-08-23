@@ -1,4 +1,4 @@
-Twitarr.PostDetailsController = Twitarr.ObjectController.extend
+Twitarr.PostsDetailsController = Twitarr.ObjectController.extend
   liked_class: (->
     return 'icon-star' if @get('liked')
     'icon-star-empty'
