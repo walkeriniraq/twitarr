@@ -1,0 +1,12 @@
+{{#each post in controller.posts}}
+  {{ render "posts/details" post }}
+{{else}}
+  {{#unless loading}}
+    <div>
+      No posts!
+    </div>
+  {{/unless}}
+{{/each}}
+{{#if loading}}
+  <img src="assets/ajax-loader.gif">
+{{/if}}
