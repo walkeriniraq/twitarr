@@ -1,5 +1,3 @@
-require 'benchmark'
-
 class PostsController < ApplicationController
   def submit
     return render_json status: 'Not logged in.' unless logged_in?
