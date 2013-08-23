@@ -3,6 +3,6 @@ Twitarr.LoginController = Twitarr.Controller.extend
     $.post('user/login', { username: @get('username'), password: @get('password') }).done (data) =>
       if data.status is 'ok'
         @get('controllers.application').login data.user
-        @transitionToRoute 'posts.mine'
+        history.go -1
       else
         alert data.status
