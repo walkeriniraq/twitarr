@@ -14,12 +14,12 @@ module BaseModelInstanceMethods
       ret = nil
       if db.nil?
         DbConnectionPool.instance.connection do |db|
-          db.pipelined { ret = yield db }
+          db.pipelined { |pipeline| ret = yield pipeline }
         end
       elsif db.client.is_a? RubyRedis::Pipeline
         ret = yield db
       else
-        db.pipelined { ret = yield db }
+        db.pipelined { |pipeline| ret = yield pipeline }
       end
       ret
     end
