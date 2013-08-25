@@ -38,13 +38,6 @@ class Post < Message
            end
   end
 
-  def db_score(db = nil)
-    db_pipeline(db) do |db|
-      likes = db_likes(db)
-      -> { score(likes.call) }
-    end
-  end
-
   def db_save
     db_pipeline do |db|
       db.set POST_PREFIX % post_id, to_json
@@ -52,6 +45,13 @@ class Post < Message
       tags.each do |tag|
         db.zadd TAG_PREFIX % tag, Time.now.to_i, post_id
       end
+    end
+  end
+
+  def db_score(db = nil)
+    db_pipeline(db) do |db|
+      likes = db_likes(db)
+      -> { score(likes.call) }
     end
   end
 
