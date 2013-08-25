@@ -2,8 +2,8 @@ Twitarr.AnnouncementsController = Twitarr.ObjectController.extend
   url_route: 'announcements'
 
   can_delete: (->
-    @get('is_admin')
-  ).property('is_admin')
+    @get('login_admin')
+  ).property('login_admin')
 
   make_post: ->
     text = @get 'newPost'

@@ -1,0 +1,31 @@
+<form class="form-horizontal">
+  <legend>Add new user</legend>
+  <div class="control-group">
+    <label class="control-label">Username</label>
+
+    <div class="controls">
+      {{input value=username}}
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Email address</label>
+
+    <div class="controls">
+      {{input value=email}}
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Status</label>
+
+    <div class="controls">
+      {{input value=status}}
+    </div>
+  </div>
+  <div class="control-group controls">
+    <label class="checkbox">
+      {{view Ember.Checkbox checkedBinding=is_admin}} Is admin?
+    </label>
+    <button {{ action 'add' }}>Add</button>
+    <button {{ action 'cancel' }}>Cancel</button>
+  </div>
+</form>

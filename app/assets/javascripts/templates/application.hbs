@@ -1,46 +1,4 @@
-<div class='navbar'>
-  <div class='navbar-inner'>
-    <div class="navbar-center">
-      <a class='brand hidden-phone'>Twit-arr!</a>
-      <ul class='nav'>
-        <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
-        <li class='dropdown visible-phone'>
-          <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-            <span>Posts</span>
-            <b class='caret'></b>
-          </a>
-          <ul class='dropdown-menu'>
-            <li>{{#linkTo "posts.popular"}}Popular{{/linkTo}}</li>
-            <li>{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
-          </ul>
-        </li>
-        <li class="hidden-phone">{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
-        {{#if logged_in}}
-          <li class="hidden-phone">{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
-        {{/if}}
-      </ul>
-      <ul class='nav pull-right'>
-        {{#unless logged_in}}
-          <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
-        {{else}}
-          <li class='dropdown'>
-            <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-              <span>{{ login_user }}</span>
-              <b class='caret'></b>
-            </a>
-            <ul class='dropdown-menu'>
-              {{#if is_admin}}
-                <li>{{#linkTo "admin"}}Admin{{/linkTo}}</li>
-              {{/if}}
-              <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
-              <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
-            </ul>
-          </li>
-        {{/unless}}
-      </ul>
-    </div>
-  </div>
-</div>
+{{ partial menu }}
 <div class='main'>
   {{ outlet }}
 </div>

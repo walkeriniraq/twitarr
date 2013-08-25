@@ -1,6 +1,10 @@
 Twitarr.Router.map ()->
   @route 'announcements'
-  @route 'admin'
+  @resource 'users', ->
+    @route 'index'
+    @route 'edit', { path: '/:username/edit' }
+    @route 'reset_password', { path: '/:username/reset_password' }
+    @route 'new'
   @resource 'posts', ->
     @route 'popular'
     @route 'mine'

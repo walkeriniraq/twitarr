@@ -1,6 +1,6 @@
 Twitarr.ApplicationController = Ember.Controller.extend
   login_user: null
-  is_admin: false
+  login_admin: false
   friends: []
 
   init: ->
@@ -14,13 +14,13 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $.getJSON('user/logout').done (data) =>
       if data.status is 'ok'
         @set 'login_user', null
-        @set 'is_admin', false
+        @set 'login_admin', false
         @set 'friends', []
         @transitionToRoute 'announcements' if @get('currentPath') is 'posts.mine'
 
   login: (user) ->
     @set 'login_user', user.username
-    @set 'is_admin', user.is_admin
+    @set 'login_admin', user.is_admin
     @set 'friends', user.friends
 
   logged_in: (->

@@ -1,0 +1,26 @@
+<form class="form-horizontal">
+  <legend>{{ username }}</legend>
+  <div class="control-group">
+    <label class="control-label">Email address</label>
+
+    <div class="controls">
+      {{input value=email}}
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Status</label>
+
+    <div class="controls">
+      {{input value=status}}
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox">
+        {{view Ember.Checkbox checkedBinding=is_admin}} Is admin?
+      </label>
+      <button {{ action 'save' }}>Save</button>
+      <button {{ action 'cancel' }}>Cancel</button>
+    </div>
+  </div>
+</form>

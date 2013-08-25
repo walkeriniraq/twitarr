@@ -26,9 +26,9 @@ Twitarr.ControllerMixin = Ember.Mixin.create
   login_user: (->
     @get('controllers.application.login_user')
   ).property('controllers.application.login_user')
-  is_admin: (->
-    @get('controllers.application.is_admin')
-  ).property('controllers.application.is_admin')
+  login_admin: (->
+    @get('controllers.application.login_admin')
+  ).property('controllers.application.login_admin')
   friends: (->
     @get('controllers.application.friends')
   ).property('controllers.application.friends')

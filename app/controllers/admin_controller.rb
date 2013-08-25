@@ -14,59 +14,57 @@ class AdminController < ApplicationController
     render_json status: 'ok', list: User.list_usernames.map { |x| User.get(x).to_hash [:username, :is_admin, :status, :email, :empty_password] }
   end
 
+  def find_user
+    return no_access unless has_access?
+    return render_json status: 'User does not exist.' unless User.exist? params[:username]
+    render_json status: 'ok', user: User.get(params[:username]).to_hash([:username, :is_admin, :status, :email, :empty_password])
+  end
 
-  #post 'activate' do
-  #  return no_access unless has_access?
-  #  user = server.get_user(params[:username])
-  #  return render_json status: 'User does not exist.' if user.nil?
-  #  user.status = 'active'
-  #  server.write_user user
-  #  render_json status: 'ok'
-  #end
-  #
-  #post 'update_user' do
-  #  return no_access unless has_access?
-  #  user = server.get_user params[:data]['username']
-  #  user.update(params[:data])
-  #  # don't let the user turn off his own admin status
-  #  user.is_admin = true if user.username == current_username
-  #  server.write_user user
-  #  render_json status: 'ok'
-  #end
-  #
-  #post 'add_user' do
-  #  return no_access unless has_access?
-  #  user = User.new
-  #  user.update(params[:data])
-  #  return render_json status: 'Username already exists.' if server.user_exist? user.username
-  #  return render_json status: 'Username cannot contain : character.' if user.username.include? ':'
-  #  return render_json status: 'Username must be at least six characters.' if user.username.nil? || user.username.length < 6
-  #  server.write_user user
-  #  render_json status: 'ok'
-  #end
-  #
-  #post 'delete_user' do
-  #  return no_access unless has_access?
-  #  return render_json status: 'User does not exist.' unless server.user_exist? params[:username]
-  #  return render_json status: 'Cannot delete own account!' unless params[:username] != current_username
-  #  server.redis_connection.srem('users', params[:username])
-  #  server.redis_connection.del "user:#{params[:username]}"
-  #  render_json status: 'ok'
-  #end
-  #
-  #post 'reset_password' do
-  #  return no_access unless has_access?
-  #  return render_json status: 'Password must be at least six characters long.' if params[:new_password].length < 6
-  #  user = server.get_user(params[:username])
-  #  return render_json status: 'User does not exist.' if user.nil?
-  #  user.password = BCrypt::Password.create params[:new_password]
-  #  server.write_user user
-  #  render_json status: 'ok'
-  #end
-  #
-  #get 'index' do
-  #  return render_file 'app/admin/unauthorized.html' unless has_access?
-  #  render_file 'app/admin/admin_index.html'
-  #end
+  def update_user
+    return no_access unless has_access?
+    return render_json status: 'User does not exist.' unless User.exist? params[:username]
+    user = User.get params[:username]
+    user.is_admin = params[:is_admin] == 'true'
+    # don't let the user turn off his own admin status
+    user.is_admin = true if user.username == current_username
+    user.status = params[:status]
+    user.email = params[:email]
+    user.save
+    render_json status: 'ok'
+  end
+
+  def add_user
+    return no_access unless has_access?
+    return render_json status: 'Username already exists.' if User.exist? params[:username]
+    return render_json status: 'Username cannot contain : character.' if params[:username].include? ':'
+    return render_json status: 'Username must be at least six characters.' if params[:username].nil? || params[:username].length < 6
+    user = User.new
+    user.username = params[:username]
+    user.is_admin = params[:is_admin] == 'true'
+    user.status = params[:status]
+    user.email = params[:email]
+    user.save
+    render_json status: 'ok'
+  end
+
+  def activate
+    return no_access unless has_access?
+    return render_json status: 'User does not exist.' unless User.exist? params[:username]
+    user = User.get params[:username]
+    user.status = 'active'
+    user.save
+    render_json status: 'ok'
+  end
+
+  def reset_password
+    return no_access unless has_access?
+    puts "USERNAME: " + params[:username]
+    return render_json status: 'User does not exist.' unless User.exist? params[:username]
+    return render_json status: 'Password must be at least six characters long.' if params[:new_password].length < 6
+    user = User.get params[:username]
+    user.password = BCrypt::Password.create params[:new_password]
+    user.save
+    render_json status: 'ok'
+  end
 
 end

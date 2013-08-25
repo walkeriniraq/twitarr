@@ -89,6 +89,13 @@ class User
     end
   end
 
+  def self.delete(username)
+    db_pipeline do |db|
+      db.srem(USER_KEY, params[:username])
+      db.del USER_PREFIX % username
+    end
+  end
+
   def self.get(username)
     DbConnectionPool.instance.connection do |db|
       data = db.get(USER_PREFIX % username)

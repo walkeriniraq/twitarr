@@ -26,10 +26,11 @@
         {{/if}}
       </td>
       <td style="text-align: right;">
-        <a href="#" class="user_activate" style="padding-right: 20px;" data-bind="visible: not_active, attr: { 'data-name': username }">unlock</a>
-        <a href="#" class="user_delete" style="padding-right: 20px;" data-bind="attr: { 'data-name': username }">delete</a>
-        <a href="#" class="reset_password" style="padding-right: 20px;" data-bind="attr: { 'data-name': username }">reset password</a>
-        <a href="#" class="user_edit" data-bind="attr: { 'data-name': username }">edit</a>
+        {{#if user.is_locked}}
+          <a href="#" {{ action 'unlock' user.username }} style="padding-right: 20px;">unlock</a>
+        {{/if}}
+        {{#linkTo 'users.reset_password' user.username }}reset password{{/linkTo}}
+        {{#linkTo 'users.edit' user }}edit{{/linkTo}}
       </td>
     </tr>
     {{/each}}
@@ -39,7 +40,7 @@
   <td></td>
   <td></td>
   <td style="text-align: right;">
-    <a href="#" id="user_add">add new</a>
+    {{#linkTo 'users.new'}}new{{/linkTo}}
   </td>
   </tfoot>
 </table>

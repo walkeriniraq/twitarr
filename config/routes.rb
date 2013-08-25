@@ -21,4 +21,10 @@ Twitarr::Application.routes.draw do
   post 'user/change_password'
 
   get 'admin/users'
+  get 'admin/find_user'
+  post 'admin/update_user'
+  post 'admin/activate'
+  put 'admin/add_user'
+  post 'admin/reset_password'
+
 end

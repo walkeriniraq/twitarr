@@ -6,9 +6,9 @@ Twitarr.PostsDetailsController = Twitarr.ObjectController.extend
 
   can_delete: (->
     return false unless @get('logged_in')
-    return true if @get('is_admin')
+    return true if @get('login_admin')
     @get('login_user') is @get('username')
-  ).property('logged_in', 'login_user', 'is_admin')
+  ).property('logged_in', 'login_user', 'login_admin')
 
   post_by_friend: (->
     _(@get('friends')).contains @get('username')
