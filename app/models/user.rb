@@ -90,8 +90,8 @@ class User
   end
 
   def self.delete(username)
-    db_pipeline do |db|
-      db.srem(USER_KEY, params[:username])
+    DbConnectionPool.instance.connection do |db|
+      db.srem(USER_KEY, username)
       db.del USER_PREFIX % username
     end
   end
