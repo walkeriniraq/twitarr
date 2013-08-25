@@ -46,34 +46,34 @@ class User
 
   def is_friend?(friend)
     DbConnectionPool.instance.connection do |db|
-      db.sismember(USER_FRIENDS_PREFIX % username, friend)
+      db.sismember(USER_FRIENDS_PREFIX % username.downcase, friend)
     end
   end
 
   def self.add_friend(username, friend)
     return "User #{friend} does not exist in the database" unless User.exist? friend
     DbConnectionPool.instance.connection do |db|
-      db.sadd(USER_FRIENDS_PREFIX % username, friend)
+      db.sadd(USER_FRIENDS_PREFIX % username.downcase, friend)
     end
   end
 
   def self.remove_friend(username, friend)
     return "User #{friend} does not exist in the database" unless User.exist? friend
     DbConnectionPool.instance.connection do |db|
-      db.srem(USER_FRIENDS_PREFIX % username, friend)
+      db.srem(USER_FRIENDS_PREFIX % username.downcase, friend)
     end
   end
 
   def friends
     DbConnectionPool.instance.connection do |db|
-      db.smembers USER_FRIENDS_PREFIX % username
+      db.smembers USER_FRIENDS_PREFIX % username.downcase
     end
   end
 
   def save
     DbConnectionPool.instance.connection do |db|
-      db.sadd(USER_KEY, username)
-      db.set(USER_PREFIX % username, to_json)
+      db.sadd(USER_KEY, username.downcase)
+      db.set(USER_PREFIX % username.downcase, to_json)
     end
   end
 
@@ -83,13 +83,18 @@ class User
     end
   end
 
+  def self.valid_username?(username)
+    [':', ' ', '#', '%'].all? { |x| !username.include? x }
+  end
+
   def self.exist?(username)
     DbConnectionPool.instance.connection do |db|
-      db.sismember(USER_KEY, username)
+      db.sismember(USER_KEY, username.downcase)
     end
   end
 
   def self.delete(username)
+    username = username.downcase
     DbConnectionPool.instance.connection do |db|
       db.srem(USER_KEY, username)
       db.del USER_PREFIX % username
@@ -98,7 +103,7 @@ class User
 
   def self.get(username)
     DbConnectionPool.instance.connection do |db|
-      data = db.get(USER_PREFIX % username)
+      data = db.get(USER_PREFIX % username.downcase)
       return if data.nil?
       User.new(JSON.parse(data))
     end

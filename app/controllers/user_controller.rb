@@ -41,7 +41,7 @@ class UserController < ApplicationController
     user.status = 'inactive'
     user.is_admin = false
     return render_json status: 'Username must be at least six characters.' if user.username.nil? || user.username.length < 6
-    return render_json status: 'Username cannot contain : character.' if user.username.include? ':'
+    return render_json status: 'Username cannot contain spaces or the following characters: %#:' unless User.valid_username? params[:username]
     return render_json status: 'Username already exists.' if User.exist? user.username
     return render_json status: 'Email address is not valid.' if (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
     return render_json status: 'Password must be at least six characters long.' if params[:password].length < 6
