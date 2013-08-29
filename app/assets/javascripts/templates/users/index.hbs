@@ -27,7 +27,7 @@
       </td>
       <td style="text-align: right;">
         {{#if user.is_locked}}
-          <a href="#" {{ action 'unlock' user.username }} class="pad-right-20">unlock</a>
+          <a href="#" {{ action 'unlock' user.username }} class="margin-right-20">unlock</a>
         {{/if}}
         {{#linkTo 'users.reset_password' user.username classNames="pad-right-20"}}reset password{{/linkTo}}
         {{#linkTo 'users.edit' user }}edit{{/linkTo}}

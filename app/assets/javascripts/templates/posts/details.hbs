@@ -1,24 +1,34 @@
 <div class='post-entry'>
-    {{#linkTo "posts.user" username style="color: darkgray;"}}{{ username }}{{/linkTo}}
-    {{#if post_by_friend}}
-        <i class="icon-heart"></i>
-    {{/if}}
-    <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
+  {{#linkTo "posts.user" username style="color: darkgray;"}}{{ username }}{{/linkTo}}
+  {{#if post_by_friend}}
+    <i class="icon-heart"></i>
+  {{/if}}
+  <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
 
-    <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
-    <div class="post-details">
-        {{#if liked_sentence}}
-        <div class="pull-left">{{liked_sentence}}</div>
+  <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+  <div class="post-details">
+    {{#if liked_sentence}}
+      <div class="pull-left">{{liked_sentence}}</div>
+    {{/if}}
+    <div class="clearfix">
+      <div class="pull-right">
+        {{#if can_delete}}
+          <a href="#" class="margin-right-20" {{ action 'delete' post_id }}>delete</a>
         {{/if}}
-        <div class="clearfix"><div class="pull-right">
-            {{#if can_delete}}
-                <a href="#" {{ action 'delete' post_id }}>delete</a>
-            {{/if}}
-            {{#if logged_in}}
-                <a href="#" {{ action 'favorite' post_id }}>
-                    <i {{bindAttr class="liked_class"}}></i>
-                </a>
-            {{/if}}
-        </div></div>
+        {{#if logged_in}}
+          {{#unless replying}}
+            <a href="#" class="margin-right-20" {{ action 'reply' username }}>reply</a>
+          {{/unless}}
+          <a href="#" {{ action 'favorite' post_id }}>
+            <i {{bindAttr class="liked_class"}}></i>
+          </a>
+        {{/if}}
+      </div>
     </div>
+  </div>
+  {{#if replying}}
+    <div class="post-reply clearfix">
+      {{ partial 'posts/create' }}
+    </div>
+  {{/if}}
 </div>

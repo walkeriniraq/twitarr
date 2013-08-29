@@ -1,4 +1,6 @@
-Twitarr.PostsDetailsController = Twitarr.ObjectController.extend
+Twitarr.PostsDetailsController = Twitarr.ObjectController.extend Twitarr.PostsMixin,
+  replying: false
+
   liked_class: (->
     return 'icon-star' if @get('liked')
     'icon-star-empty'
@@ -20,3 +22,9 @@ Twitarr.PostsDetailsController = Twitarr.ObjectController.extend
       return alert(data.status) unless data.status is 'ok'
       @set('model.liked', true)
 
+  reply: (username) ->
+    @set 'newPost', "@#{username} "
+    @set 'replying', true
+
+  reload: ->
+    @target.reload()
