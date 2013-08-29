@@ -84,7 +84,7 @@ class User
   end
 
   def self.valid_username?(username)
-    [':', ' ', '#', '%'].all? { |x| !username.include? x }
+    [':', ' ', '#', '%', '@'].all? { |x| !username.include? x }
   end
 
   def self.exist?(username)
