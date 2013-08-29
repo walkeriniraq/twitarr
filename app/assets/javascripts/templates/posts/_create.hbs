@@ -1,4 +1,2 @@
-<div>
-  {{view Ember.TextArea class='full-width' placeholder='Say something!' valueBinding='newPost'}}
-</div>
-<button class='pull-right' {{ action 'make_post' }}>Post it</button>
+{{view Ember.TextArea class='full-width box-sizing-border' placeholder='Say something!' valueBinding='newPost'}}
+<button class='pull-right' style="display: block" {{ action 'make_post' }}>Post it</button>

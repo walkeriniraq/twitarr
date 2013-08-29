@@ -63,7 +63,7 @@ body {
 }
 
 .post-reply {
-  margin: 10px 20px 10px auto;
+  margin: 10px auto;
 }
 
 #app-loading {
@@ -85,4 +85,10 @@ body {
 
 .full-width {
   width: 100%;
+}
+
+.box-sizing-border {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }

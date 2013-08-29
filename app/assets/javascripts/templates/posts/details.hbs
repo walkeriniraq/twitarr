@@ -29,6 +29,7 @@
   {{#if replying}}
     <div class="post-reply clearfix">
       {{ partial 'posts/create' }}
+      <button class='pull-right margin-right-20' style="display: block" {{ action 'cancel_post' }}>Cancel</button>
     </div>
   {{/if}}
 </div>

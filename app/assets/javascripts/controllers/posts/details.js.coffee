@@ -26,5 +26,8 @@ Twitarr.PostsDetailsController = Twitarr.ObjectController.extend Twitarr.PostsMi
     @set 'newPost', "@#{username} "
     @set 'replying', true
 
+  cancel_post: ->
+    @set 'replying', false
+
   reload: ->
     @target.reload()
