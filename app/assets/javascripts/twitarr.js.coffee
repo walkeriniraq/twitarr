@@ -7,6 +7,8 @@
 #= require_tree ./routes
 #= require ./router
 
+window.console = { log: -> } unless window.console?
+
 window.Twitarr = Ember.Application.create(
   LOG_TRANSITIONS: true
   LOG_BINDINGS: true
