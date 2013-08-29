@@ -29,6 +29,7 @@ Twitarr.Message.reopenClass
 
   get_list: (url) ->
     $.getJSON(url).then (data) =>
+      return data unless data.list?
       links = Ember.A()
       links.pushObject(@create(post)) for post in data.list
       { status: data.status, posts: links }

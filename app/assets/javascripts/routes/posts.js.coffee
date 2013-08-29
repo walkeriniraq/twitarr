@@ -5,7 +5,9 @@ Twitarr.PostsChildRoute = Ember.Route.extend
     controller.reload()
 
 Twitarr.PostsPopularRoute = Twitarr.PostsChildRoute.extend()
+
 Twitarr.PostsMineRoute = Twitarr.PostsChildRoute.extend()
+
 Twitarr.PostsSearchRoute = Twitarr.PostsChildRoute.extend
   setupController: (controller, params) ->
     if typeof params is 'string'
@@ -13,6 +15,7 @@ Twitarr.PostsSearchRoute = Twitarr.PostsChildRoute.extend
     else
       controller.set 'tag', params.tag
     @_super(controller, params)
+
 Twitarr.PostsUserRoute = Twitarr.PostsChildRoute.extend
   redirect: (params) ->
     @transitionTo 'posts.mine' if @controllerFor('application').get('login_user') is @get_user(params)

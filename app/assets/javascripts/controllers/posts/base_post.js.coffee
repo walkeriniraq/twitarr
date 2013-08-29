@@ -14,6 +14,7 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend Twitarr.PostsMixin,
   reload: ->
     @set 'loading', true
     @get_data_ajax().done((data) =>
+      alert(data.status) unless data.status is 'ok'
       Ember.run =>
         @set 'loading', false
         @set 'model', data
