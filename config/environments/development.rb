@@ -25,7 +25,8 @@ Twitarr::Application.configure do
   config.assets.debug = true
 
   config.db = {
-      host: 'gremlin'
+      host: 'gremlin',
+      db: 1
   }
 
   config.ember.variant = :development
