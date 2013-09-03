@@ -1,7 +1,3 @@
-class BaseModel
-  include BaseModelInstanceMethods
-end
-
 module BaseModelInstanceMethods
 
   def self.included(klass)
@@ -36,4 +32,8 @@ module BaseModelInstanceMethods
 
   end
 
+end
+
+class BaseModel
+  include BaseModelInstanceMethods
 end
