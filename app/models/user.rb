@@ -7,6 +7,10 @@ class User
   USER_PREFIX = 'user:%s'
   USER_FRIENDS_PREFIX = 'user-friends:%s'
 
+  STATUS_ACTIVE = 'active'
+  STATUS_INACTIVE = 'inactive'
+  STATUS_DISABLED = 'disabled'
+
   attr_accessor :username, :password, :is_admin, :status, :email
 
   def empty_password
