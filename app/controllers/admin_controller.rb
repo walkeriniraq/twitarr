@@ -11,7 +11,7 @@ class AdminController < ApplicationController
 
   def users
     return no_access unless has_access?
-    render_json status: 'ok', list: User.list_usernames.map { |x| User.get(x).to_hash [:username, :is_admin, :status, :email, :empty_password] }
+    render_json status: 'ok', list: User.list_usernames.map { |x| User.get(x).to_hash :username, :is_admin, :status, :email, :empty_password }
   end
 
   def find_user
