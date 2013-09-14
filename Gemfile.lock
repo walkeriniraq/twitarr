@@ -61,6 +61,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fattr (2.2.1)
     handlebars-source (1.0.12)
     hike (1.2.3)
     i18n (0.6.4)
@@ -155,6 +156,7 @@ DEPENDENCIES
   connection_pool
   ember-rails
   ember-source (= 1.0.0.rc7)
+  fattr
   jbuilder (~> 1.2)
   jquery-rails
   minitest-spec-rails

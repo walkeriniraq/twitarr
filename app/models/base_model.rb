@@ -25,42 +25,42 @@ module BaseModelInstanceMethods
     end
   end
 
-  def indexing
-    self.class.indexing
-  end
-
-  def storage
-    self.class.storage
-  end
-
-  def twitarr=(twitarr)
-    @twitarr = twitarr
-  end
-
-  def twitarr
-    @twitarr ||= Twitarr.new
-  end
+  #def indexing
+  #  self.class.indexing
+  #end
+  #
+  #def storage
+  #  self.class.storage
+  #end
+  #
+  #def twitarr=(twitarr)
+  #  @twitarr = twitarr
+  #end
+  #
+  #def twitarr
+  #  @twitarr ||= Twitarr.new
+  #end
 
   #def db_pipeline(db = nil, &block)
   #  self.class.db_pipeline(db, &block)
   #end
 
   module BaseModelClassMethods
-    def storage=(storage)
-      @storage = storage
-    end
-
-    def indexing=(indexing)
-      @indexing = indexing
-    end
-
-    def storage
-      @storage ||= RedisStorageStrategy.new(self)
-    end
-
-    def indexing
-      @indexing ||= RedisIndexingStrategy.new(self)
-    end
+    #def storage=(storage)
+    #  @storage = storage
+    #end
+    #
+    #def indexing=(indexing)
+    #  @indexing = indexing
+    #end
+    #
+    #def storage
+    #  @storage ||= RedisStorageStrategy.new(self)
+    #end
+    #
+    #def indexing
+    #  @indexing ||= RedisIndexingStrategy.new(self)
+    #end
 
 
     #def db_pipeline(db = nil)
