@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  fattr :user, :post_text, :tag_cloud, :popular_index, :object_store
+  fattr :user, :post_text, :tag_factory, :popular_index, :object_store
 
   class UserRole < SimpleDelegator
     def new_post(message)
@@ -13,28 +13,44 @@ class CreatePostContext
     def tags
       (%W(@#{username}) + message.scan(/[@#]\w+/)).map { |x| x.downcase }.uniq.select { |x| x.length > 2 }
     end
-  end
-  # post role - #tags
-  # tag_cloud role - #add_post
-  # popular_index role - #add_post
 
-  #def call
-  #  post = @user.new_post
-  #  post.message = @post_text
-  #  @object_store.save post
-  #  @post = PostRole.new post
-  #  @tag_cloud.add_post @post, @post.tags
-  #  @popular_index.add_post @post
-  #end
+    def time_hack
+      post_time.to_i
+    end
+
+    def score_hack
+      post_time.to_i
+    end
+  end
+
+  class TagFactoryRole < SimpleDelegator
+  end
+
+  class TagRole < SimpleDelegator
+    def add_post(post)
+      self[post.post_id] = post.time_hack
+    end
+  end
+
+  class PopularIndexRole < SimpleDelegator
+    def add_post(post)
+      self[post.post_id] = post.score_hack
+    end
+  end
+
+  def call
+    post = @user.new_post
+    post.message = @post_text
+    @object_store.save post
+    @post = PostRole.new post
+    self.post.tags.each do |tag|
+      tag = TagRole.new self.tag_factory.get_tag(tag)
+      tag.add_post post
+    end
+    @popular_index.add_post @post
+  end
 
 end
-
-# BASICS
-# create post
-
-# create the post / save the post
-# add the post to popular posts
-# add the post to tags
 
 =begin
   Okay

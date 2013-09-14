@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user post_text tag_cloud popular_index object_store) }
+  let(:attributes) { %w(user post_text tag_factory popular_index object_store) }
 
   include AttributesTest
 
@@ -22,10 +22,56 @@ class CreatePostContextTest < ActiveSupport::TestCase
     end
   end
 
+  class TagFactoryRoleTest < ActiveSupport::TestCase
+    subject { CreatePostContext::TagFactoryRole }
+
+    include DelegatorTest
+  end
+
+  class TagRoleTest < ActiveSupport::TestCase
+    subject { CreatePostContext::TagRole }
+
+    include DelegatorTest
+
+    it 'adds post according to time hack' do
+      post = OpenStruct.new time_hack: 4, post_id: 1
+      tag = {}
+      role = subject.new(tag)
+      role.add_post(post)
+      tag[1].must_equal post.time_hack
+    end
+  end
+
+  class PopularIndexRoleTest < ActiveSupport::TestCase
+    subject { CreatePostContext::PopularIndexRole }
+
+    include DelegatorTest
+
+    it 'adds post according to score hack' do
+      post = OpenStruct.new score_hack: 4, post_id: 1
+      tag = {}
+      role = subject.new(tag)
+      role.add_post(post)
+      tag[1].must_equal post.score_hack
+    end
+  end
+
   class PostRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::PostRole }
 
     include DelegatorTest
+
+    it 'time_hack is based on the post_time' do
+      post = OpenStruct.new post_time: DateTime.now
+      role = subject.new(post)
+      role.time_hack.must_equal post.post_time.to_i
+    end
+
+    it 'score_hack is based on the post_time' do
+      post = OpenStruct.new post_time: DateTime.now
+      role = subject.new(post)
+      role.score_hack.must_equal post.post_time.to_i
+    end
 
     it 'includes the post username in the tags' do
       post = OpenStruct.new username: 'foo', message: ''
@@ -59,6 +105,17 @@ class CreatePostContextTest < ActiveSupport::TestCase
       role.tags.wont_include '@BAR'
     end
 
+    it 'rejects duplicates' do
+      post = OpenStruct.new username: 'foo', message: 'foo #bar #bar baz'
+      role = subject.new(post)
+      role.tags.uniq.count.must_equal role.tags.count
+    end
+
+    it 'rejects tags shorter than two characters' do
+      post = OpenStruct.new username: 'foo', message: 'foo #b baz'
+      role = subject.new(post)
+      role.tags.wont_include '#b'
+    end
   end
 
 end
