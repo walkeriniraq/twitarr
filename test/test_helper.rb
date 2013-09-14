@@ -44,3 +44,12 @@ module UpdateTest
     end
   end
 end
+
+module DelegatorTest
+  def test_delegate_to_object
+    obj = OpenStruct.new thing: 'foo', other_thing: 'bar'
+    role = subject.new(obj)
+    role.thing.must_equal 'foo'
+    role.other_thing.must_equal 'bar'
+  end
+end

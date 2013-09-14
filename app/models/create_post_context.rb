@@ -3,13 +3,17 @@ class CreatePostContext
 
   fattr :user, :post_text, :tag_cloud, :popular_index, :object_store
 
-  #class UserRole < SimpleDelegator
-  #  def new_post(message)
-  #    Post.new message: message, username: username, post_time: Time.now, post_id: SecureRandom.uuid
-  #  end
-  #end
+  class UserRole < SimpleDelegator
+    def new_post(message)
+      Post.new message: message, username: username, post_time: Time.now, post_id: SecureRandom.uuid
+    end
+  end
 
-  # user role - #new_post
+  class PostRole < SimpleDelegator
+    def tags
+      (%W(@#{username}) + message.scan(/[@#]\w+/)).map { |x| x.downcase }.uniq.select { |x| x.length > 2 }
+    end
+  end
   # post role - #tags
   # tag_cloud role - #add_post
   # popular_index role - #add_post
@@ -25,12 +29,12 @@ class CreatePostContext
 
 end
 
-  # BASICS
-  # create post
+# BASICS
+# create post
 
-  # create the post / save the post
-  # add the post to popular posts
-  # add the post to tags
+# create the post / save the post
+# add the post to popular posts
+# add the post to tags
 
 =begin
   Okay
