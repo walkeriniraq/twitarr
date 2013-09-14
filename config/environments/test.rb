@@ -33,4 +33,10 @@ Twitarr::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  config.db = {
+      host: 'gremlin',
+      db: 3
+  }
+
 end

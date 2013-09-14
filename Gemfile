@@ -30,5 +30,11 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :test do
+  gem 'minitest-spec-rails'
+  gem 'turn'
+  gem 'mocha'
+end
+
 # Use unicorn as the app server
 # gem 'unicorn'

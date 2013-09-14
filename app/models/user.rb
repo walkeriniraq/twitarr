@@ -1,8 +1,6 @@
 require 'bcrypt'
-require_relative 'redis_storage_strategy'
 
-class User
-  include HashInitialize
+class User < BaseModel
 
   USER_KEY = 'system:users'
   USER_PREFIX = 'user:%s'
@@ -13,42 +11,6 @@ class User
   STATUS_DISABLED = 'disabled'
 
   attr_accessor :username, :password, :is_admin, :status, :email
-
-  #TODO: move this into a common base class
-  def to_hash(*keys)
-    keys.reduce({}) do |hash, key|
-      hash[key] = send(key)
-      hash
-    end
-  end
-
-  def update(values)
-    values.each do |k, v|
-      if respond_to? k.to_s
-        # this lets us initialize classes with attr_reader
-        instance_variable_set "@#{k.to_s}", v
-      else
-        #TODO: replace this with some sort of logging
-        puts "Invalid parameter passed to class #{self.class.to_s} initialize: #{k.to_s} - value: #{v.to_s}"
-      end
-    end
-  end
-
-  def self.storage=(storage)
-    @storage = storage
-  end
-
-  def self.indexing=(indexing)
-    @indexing = indexing
-  end
-
-  def self.storage
-    @storage ||= RedisStorageStrategy.new(self)
-  end
-
-  def self.indexing
-    @indexing ||= RedisIndexingStrategy.new(self)
-  end
 
   def username
     @username.downcase
@@ -71,14 +33,14 @@ class User
   end
 
   def save
-    self.class.storage.save username, to_hash(:username, :password, :is_admin, :status, :email)
-    self.class.indexing.id_index username
+    storage.save username, to_hash(:username, :password, :is_admin, :status, :email)
+    indexing.id_index username
   end
 
   def delete
     following.each { |x| unfollow x }
-    self.class.indexing.remove_id_index username
-    self.class.storage.delete username
+    indexing.remove_id_index username
+    storage.delete username
   end
 
   def self.get(username)
@@ -95,20 +57,20 @@ class User
 
   def follow_user(user)
     return "User #{user} does not exist in the database" unless User.exist? user
-    self.class.indexing.index username, :following, user
+    indexing.index username, :following, user
   end
 
   def unfollow(user)
     return "User #{user} does not exist in the database" unless User.exist? user
-    self.class.indexing.un_index username, :following, user
+    indexing.un_index username, :following, user
   end
 
   def following
-    self.class.indexing.indexed_values username, :following
+    indexing.indexed_values username, :following
   end
 
   def is_following?(user)
-    self.class.indexing.is_indexed_value? username, :following, user
+    indexing.is_indexed_value? username, :following, user
   end
 
 end
