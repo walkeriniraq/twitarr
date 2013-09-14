@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr_accessor :user, :post_text, :tag_cloud, :popular_index, :object_store
+  fattr :user, :post_text, :tag_cloud, :popular_index, :object_store
 
   #class UserRole < SimpleDelegator
   #  def new_post(message)

@@ -1,5 +1,5 @@
-class Post
-  attr_accessor :message, :post_id, :post_time, :username
+class Post < BaseModel
+  fattr :message, :post_id, :post_time, :username
 end
 
 #class Post < Message

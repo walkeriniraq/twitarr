@@ -2,6 +2,8 @@ require 'bcrypt'
 
 class User < BaseModel
 
+  fattr %w(username password is_admin status email)
+
   #USER_KEY = 'system:users'
   #USER_PREFIX = 'user:%s'
   #USER_FRIENDS_PREFIX = 'user-friends:%s'
@@ -9,8 +11,6 @@ class User < BaseModel
   #STATUS_ACTIVE = :active
   #STATUS_INACTIVE = :inactive
   #STATUS_DISABLED = :disabled
-
-  fattr %w(username password is_admin status email)
 
   #def username
   #  @username.downcase
