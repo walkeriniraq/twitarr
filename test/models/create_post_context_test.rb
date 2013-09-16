@@ -6,6 +6,22 @@ class CreatePostContextTest < ActiveSupport::TestCase
 
   include AttributesTest
 
+  it 'creates a post' do
+    object_store = mock
+    object_store.expects(:save).with(kind_of Post)
+    tag = {}
+    context = CreatePostContext.new user: mock(:username => 'foo'),
+                                    post_text: 'This is a test',
+                                    tag_factory: lambda { |_| tag },
+                                    popular_index: popular_index = {},
+                                    object_store: object_store
+    post = context.call
+    post.username.must_equal 'foo'
+    post.message.must_equal 'This is a test'
+    popular_index.keys.first.must_equal post.post_id
+    tag.keys.first.must_equal post.post_id
+  end
+
   class UserRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::UserRole }
 
@@ -20,12 +36,6 @@ class CreatePostContextTest < ActiveSupport::TestCase
       test.post_time.to_i.must_be_close_to DateTime.now.to_i, 1
       test.post_id.wont_be_nil
     end
-  end
-
-  class TagFactoryRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::TagFactoryRole }
-
-    include DelegatorTest
   end
 
   class TagRoleTest < ActiveSupport::TestCase
