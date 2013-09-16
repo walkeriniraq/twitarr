@@ -23,9 +23,6 @@ class CreatePostContext
     end
   end
 
-  class TagFactoryRole < SimpleDelegator
-  end
-
   class TagRole < SimpleDelegator
     def add_post(post)
       self[post.post_id] = post.time_hack
@@ -44,26 +41,10 @@ class CreatePostContext
     @object_store.save post
     @post = PostRole.new post
     self.post.tags.each do |tag|
-      tag = TagRole.new self.tag_factory.get_tag(tag)
+      tag = TagRole.new self.tag_factory.call(tag)
       tag.add_post post
     end
     @popular_index.add_post @post
   end
 
 end
-
-=begin
-  Okay
-
-  So state testing is good. But there's actually very little state here. Using DCI all of the functionality will be on the
-  roles. We can unit test the roles I suppose. But those are going to be very dependent on the delegation functionality, which
-  will make the unit testing a bear. I could use that magic hash-to-object ruby thing to make that easier I suppose.
-
-  The context itself is just a bundle of method calls on the role objects. I mean I can stub those out but that sounds miserable.
-  Basically we're talking about the inverse of the method itself, which is kind of fucking pointless.
-
-  Alternately we can test the state of the various elements. There's kind of a subltle difference between the factories passed in that
-  don't have a state and the indexes, which WOULD have state. We can test the state change on those indexes.
-
-  Maybe that's why we keep the twitarr object around - it holds the posts. I can then test the state changes on the twitarr object.
-=end
