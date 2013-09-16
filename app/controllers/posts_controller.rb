@@ -1,8 +1,14 @@
 class PostsController < ApplicationController
   def submit
     return render_json status: 'Not logged in.' unless logged_in?
-    post = Post.new_post(params[:message], current_username)
-    post.db_save
+    # TODO: actually set these parameters up correctly
+    # TODO: handle errors
+    context = CreatePostContext.new user: User.new(current_username),
+                                    post_text: params[:message],
+                                    tag_factory: lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") },
+                                    popular_index: Redis::SortedSet.new('System:Popular_index'),
+                                    object_store: object_store
+    context.call
     render_json status: 'ok'
   end
 
