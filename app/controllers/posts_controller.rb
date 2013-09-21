@@ -14,11 +14,15 @@ class PostsController < ApplicationController
 
   def delete
     return login_required unless logged_in?
-    unless is_admin?
-      post = Post.find(params[:id])
-      return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username
-    end
-    Post.delete(params[:id])
+    post = object_store.get(Post, params[:id])
+    return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username || is_admin?
+    # TODO: actually set these parameters up correctly
+    # TODO: handle errors
+    context = DeletePostContext.new post: post,
+                                    tag_factory: lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") },
+                                    popular_index: Redis::SortedSet.new('System:Popular_index'),
+                                    object_store: object_store
+    context.call
     render_json status: 'ok'
   end
 
