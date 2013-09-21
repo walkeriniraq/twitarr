@@ -16,9 +16,7 @@ class CreatePostContext
   end
 
   class PostRole < SimpleDelegator
-    def tags
-      (%W(@#{username}) + message.scan(/[@#]\w+/)).map { |x| x.downcase }.uniq.select { |x| x.length > 2 }
-    end
+    include PostTags
 
     def time_hack
       post_time.to_i

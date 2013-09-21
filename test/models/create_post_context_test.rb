@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'models/post_role_tag_tests'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
@@ -70,6 +71,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
     subject { CreatePostContext::PostRole }
 
     include DelegatorTest
+    include PostRoleTagTests
 
     it 'time_hack is based on the post_time' do
       post = OpenStruct.new post_time: DateTime.now
@@ -83,49 +85,6 @@ class CreatePostContextTest < ActiveSupport::TestCase
       role.score_hack.must_equal post.post_time.to_i
     end
 
-    it 'includes the post username in the tags' do
-      post = OpenStruct.new username: 'foo', message: ''
-      role = subject.new(post)
-      role.tags.must_include '@foo'
-    end
-
-    it 'includes @usernames included in the message' do
-      post = OpenStruct.new username: 'foo', message: 'foo @bar baz'
-      role = subject.new(post)
-      role.tags.must_include '@bar'
-    end
-
-    it 'includes #tags included in the message' do
-      post = OpenStruct.new username: 'foo', message: 'foo #bar baz'
-      role = subject.new(post)
-      role.tags.must_include '#bar'
-    end
-
-    it 'lowercases tags' do
-      post = OpenStruct.new username: 'foo', message: 'foo #BAR baz'
-      role = subject.new(post)
-      role.tags.must_include '#bar'
-      role.tags.wont_include '#BAR'
-    end
-
-    it 'lowercases usernames' do
-      post = OpenStruct.new username: 'foo', message: 'foo @BAR baz'
-      role = subject.new(post)
-      role.tags.must_include '@bar'
-      role.tags.wont_include '@BAR'
-    end
-
-    it 'rejects duplicates' do
-      post = OpenStruct.new username: 'foo', message: 'foo #bar #bar baz'
-      role = subject.new(post)
-      role.tags.uniq.count.must_equal role.tags.count
-    end
-
-    it 'rejects tags shorter than two characters' do
-      post = OpenStruct.new username: 'foo', message: 'foo #b baz'
-      role = subject.new(post)
-      role.tags.wont_include '#b'
-    end
   end
 
 end
