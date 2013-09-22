@@ -1,12 +1,22 @@
 class PostsController < ApplicationController
+
+  TAG_FACTORY = lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") }
+
+  def popular_index
+    Redis::SortedSet.new('System:Popular_index')
+  end
+
+  def object_store
+    RedisObjectStore.new
+  end
+
   def submit
     return render_json status: 'Not logged in.' unless logged_in?
-    # TODO: actually set these parameters up correctly
     # TODO: handle errors
     context = CreatePostContext.new user: User.new(current_username),
                                     post_text: params[:message],
-                                    tag_factory: lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") },
-                                    popular_index: Redis::SortedSet.new('System:Popular_index'),
+                                    tag_factory: TAG_FACTORY,
+                                    popular_index: popular_index,
                                     object_store: object_store
     context.call
     render_json status: 'ok'
@@ -16,11 +26,10 @@ class PostsController < ApplicationController
     return login_required unless logged_in?
     post = object_store.get(Post, params[:id])
     return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username || is_admin?
-    # TODO: actually set these parameters up correctly
     # TODO: handle errors
     context = DeletePostContext.new post: post,
-                                    tag_factory: lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") },
-                                    popular_index: Redis::SortedSet.new('System:Popular_index'),
+                                    tag_factory: TAG_FACTORY,
+                                    popular_index: popular_index,
                                     object_store: object_store
     context.call
     render_json status: 'ok'
