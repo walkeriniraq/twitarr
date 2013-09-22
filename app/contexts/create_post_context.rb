@@ -9,6 +9,18 @@ class CreatePostContext
     @popular_index = PopularIndexRole.new(@popular_index)
   end
 
+  def call
+    post = user.new_post(post_text)
+    self.object_store.save post
+    post_role = PostRole.new post
+    post_role.tags.each do |tag|
+      tag = TagRole.new self.tag_factory.call(tag)
+      tag.add_post post_role
+    end
+    self.popular_index.add_post post_role
+    post
+  end
+
   class UserRole < SimpleDelegator
     def new_post(message)
       Post.new message: message, username: username, post_time: Time.now, post_id: SecureRandom.uuid
@@ -16,7 +28,7 @@ class CreatePostContext
   end
 
   class PostRole < SimpleDelegator
-    include PostTags
+    include PostTagsTrait
 
     def time_hack
       post_time.to_i
@@ -37,18 +49,6 @@ class CreatePostContext
     def add_post(post)
       self[post.post_id] = post.score_hack
     end
-  end
-
-  def call
-    post = user.new_post(post_text)
-    self.object_store.save post
-    post_role = PostRole.new post
-    post_role.tags.each do |tag|
-      tag = TagRole.new self.tag_factory.call(tag)
-      tag.add_post post_role
-    end
-    self.popular_index.add_post post_role
-    post
   end
 
 end

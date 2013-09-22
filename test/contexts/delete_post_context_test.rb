@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'models/post_role_tests'
+require 'traits/post_role_trait_tests'
 
 class DeletePostContextTest < ActiveSupport::TestCase
   subject { DeletePostContext }
@@ -25,7 +25,7 @@ class DeletePostContextTest < ActiveSupport::TestCase
   class PostRoleTest < ActiveSupport::TestCase
     subject { DeletePostContext::PostRole }
     include DelegatorTest
-    include PostRoleTests
+    include PostRoleTraitTests
   end
 
   class PopularIndexRoleTest < ActiveSupport::TestCase

@@ -10,7 +10,7 @@ class DeletePostContext
   end
 
   class PostRole < SimpleDelegator
-    include PostTags
+    include PostTagsTrait
   end
 
   class PopularIndexRole < SimpleDelegator

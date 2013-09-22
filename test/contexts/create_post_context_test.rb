@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'models/post_role_tests'
+require 'traits/post_role_trait_tests'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
@@ -71,7 +71,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
     subject { CreatePostContext::PostRole }
 
     include DelegatorTest
-    include PostRoleTests
+    include PostRoleTraitTests
 
     it 'time_hack is based on the post_time' do
       post = OpenStruct.new post_time: DateTime.now

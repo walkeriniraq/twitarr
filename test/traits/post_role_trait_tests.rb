@@ -1,4 +1,4 @@
-module PostRoleTests
+module PostRoleTraitTests
 
   def test_includes_post_username
     post = OpenStruct.new username: 'foo', message: ''

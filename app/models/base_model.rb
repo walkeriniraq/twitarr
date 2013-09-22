@@ -1,5 +1,3 @@
-require_relative 'redis_storage_strategy'
-
 module BaseModelInstanceMethods
 
   def self.included(klass)
