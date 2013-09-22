@@ -30,24 +30,24 @@ class CreatePostContext
   class PostRole < SimpleDelegator
     include PostTagsTrait
 
-    def time_hack
-      post_time.to_i
+    def time_index
+      post_time.to_f
     end
 
-    def score_hack
-      post_time.to_i
+    def score
+      post_time.to_f
     end
   end
 
   class TagRole < SimpleDelegator
     def add_post(post)
-      self[post.post_id] = post.time_hack
+      self[post.post_id] = post.time_index
     end
   end
 
   class PopularIndexRole < SimpleDelegator
     def add_post(post)
-      self[post.post_id] = post.score_hack
+      self[post.post_id] = post.score
     end
   end
 

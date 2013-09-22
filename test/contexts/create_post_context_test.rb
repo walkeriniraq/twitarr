@@ -34,7 +34,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
       test = role.new_post 'this is a post'
       test.message.must_equal 'this is a post'
       test.username.must_equal 'foo'
-      test.post_time.to_i.must_be_close_to DateTime.now.to_i, 1
+      test.post_time.to_i.must_be_close_to Time.now.to_i, 1
       test.post_id.wont_be_nil
     end
   end
@@ -45,11 +45,11 @@ class CreatePostContextTest < ActiveSupport::TestCase
     include DelegatorTest
 
     it 'adds post according to time hack' do
-      post = OpenStruct.new time_hack: 4, post_id: 1
+      post = OpenStruct.new time_index: 4, post_id: 1
       tag = {}
       role = subject.new(tag)
       role.add_post(post)
-      tag[1].must_equal post.time_hack
+      tag[1].must_equal post.time_index
     end
   end
 
@@ -59,11 +59,11 @@ class CreatePostContextTest < ActiveSupport::TestCase
     include DelegatorTest
 
     it 'adds post according to score hack' do
-      post = OpenStruct.new score_hack: 4, post_id: 1
-      tag = {}
-      role = subject.new(tag)
+      post = OpenStruct.new score: 4, post_id: 1
+      index = {}
+      role = subject.new(index)
       role.add_post(post)
-      tag[1].must_equal post.score_hack
+      index[1].must_equal post.score
     end
   end
 
@@ -73,16 +73,16 @@ class CreatePostContextTest < ActiveSupport::TestCase
     include DelegatorTest
     include PostRoleTraitTests
 
-    it 'time_hack is based on the post_time' do
-      post = OpenStruct.new post_time: DateTime.now
+    it 'time_index is based on the post_time' do
+      post = OpenStruct.new post_time: Time.now
       role = subject.new(post)
-      role.time_hack.must_equal post.post_time.to_i
+      role.time_index.must_equal post.post_time.to_f
     end
 
-    it 'score_hack is based on the post_time' do
-      post = OpenStruct.new post_time: DateTime.now
+    it 'score is based on the post_time' do
+      post = OpenStruct.new post_time: Time.now
       role = subject.new(post)
-      role.score_hack.must_equal post.post_time.to_i
+      role.score.must_equal post.post_time.to_f
     end
 
   end
