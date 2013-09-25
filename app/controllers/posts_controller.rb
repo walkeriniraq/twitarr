@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   TAG_FACTORY = lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") }
 
   def popular_index
-    Redis::SortedSet.new('System:Popular_index')
+    Redis::SortedSet.new('System:popular_index')
   end
 
   def object_store
@@ -12,7 +12,6 @@ class PostsController < ApplicationController
 
   def submit
     return render_json status: 'Not logged in.' unless logged_in?
-    # TODO: handle errors
     context = CreatePostContext.new user: User.new(current_username),
                                     post_text: params[:message],
                                     tag_factory: TAG_FACTORY,
@@ -26,7 +25,6 @@ class PostsController < ApplicationController
     return login_required unless logged_in?
     post = object_store.get(Post, params[:id])
     return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username || is_admin?
-    # TODO: handle errors
     context = DeletePostContext.new post: post,
                                     tag_factory: TAG_FACTORY,
                                     popular_index: popular_index,
@@ -37,26 +35,33 @@ class PostsController < ApplicationController
 
   def favorite
     return login_required unless logged_in?
-    Post.add_favorite params[:id], current_username
+    post = object_store.get(Post, params[:id])
+    context = LikePostContext.new post: post,
+                                  post_likes: Redis::Set.new("System:post_likes:#{post.post_id}"),
+                                  username: current_username,
+                                  popular_index: popular_index
+    context.call
     render_json status: 'ok'
   end
 
   def popular
-    render_json status: 'ok', list: Post.posts_hash(Post.popular, current_username)
+    list = object_store.get(Post, popular_index[0, 20])
+    render_json status: 'ok', list: list
   end
 
   def list
-    if params[:username]
-      user = User.get(params[:username])
-      return render_json(status: 'Could not find user!') if user.nil?
-      return render_json(status: 'ok', list: Post.posts_hash(Post.tagged("@#{params[:username]}"), current_username))
-    end
-    render_json status: 'ok', list: Post.posts_hash(Post.tagged("@#{current_username}"), current_username)
+    tag = if params[:username]
+            user = object_store.get(User, params[:username])
+            return render_json(status: 'Could not find user!') if user.nil?
+            "@#{params[:username]}"
+          else
+            "@#{current_username}"
+          end
+    render_json status: 'ok', list: object_store.get(Post, TAG_FACTORY.call(tag)[0, 20])
   end
 
   def search
-    render_json status: 'ok', list: Post.posts_hash(Post.tagged("##{params[:term]}") + Post.tagged("@#{params[:term]}"), current_username)
+    render_json status: 'ok', list: object_store.get(Post, TAG_FACTORY.call("##{params[:term]}")[0, 20])
   end
-
 
 end
