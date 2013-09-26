@@ -26,6 +26,7 @@ gem 'ember-rails'
 gem 'ember-source'
 
 gem 'fattr'
+gem 'draper'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

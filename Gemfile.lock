@@ -46,6 +46,10 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     connection_pool (1.1.0)
+    draper (1.2.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     ember-data-source (0.13)
       ember-source
     ember-rails (0.13.0)
@@ -108,6 +112,7 @@ GEM
     redis (3.0.5)
     redis-objects (0.7.0)
       redis (>= 3.0.2)
+    request_store (1.0.5)
     sass (3.2.10)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -153,6 +158,7 @@ DEPENDENCIES
   bcrypt-ruby
   coffee-rails (~> 4.0.0)
   connection_pool
+  draper
   ember-rails
   ember-source
   fattr
