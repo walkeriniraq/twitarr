@@ -6,10 +6,6 @@ class PostsController < ApplicationController
     Redis::SortedSet.new('System:popular_index')
   end
 
-  def object_store
-    RedisObjectStore.new
-  end
-
   def submit
     return render_json status: 'Not logged in.' unless logged_in?
     context = CreatePostContext.new user: User.new(current_username),

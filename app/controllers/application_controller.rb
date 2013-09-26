@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  def object_store
+    RedisObjectStore.new
+  end
+
   def logged_in?
     !current_username.nil?
   end
