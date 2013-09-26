@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
 
+  #TAG_FACTORY_FACTORY = lambda { |connection_pool| lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}", connection_pool) } }
   TAG_FACTORY = lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") }
 
   def popular_index
@@ -41,8 +42,9 @@ class PostsController < ApplicationController
   end
 
   def popular
-    # TODO: need decorator for the posts
-    render_json status: 'ok', list: object_store.get(Post, popular_index[0, 20])
+    context = PostFavoriteInfoContext.new
+    #render_json status: 'ok', list: popular_index[0, 20]
+    render_json status: 'ok', list: context.call
   end
 
   def list
@@ -53,13 +55,15 @@ class PostsController < ApplicationController
           else
             "@#{current_username}"
           end
-    # TODO: need decorator for the posts
-    render_json status: 'ok', list: object_store.get(Post, TAG_FACTORY.call(tag)[0, 20])
+    context = PostFavoriteInfoContext.new
+    #render_json status: 'ok', list: TAG_FACTORY.call(tag)[0, 20]
+    render_json status: 'ok', list: context.call
   end
 
   def search
-    # TODO: need decorator for the posts
-    render_json status: 'ok', list: object_store.get(Post, TAG_FACTORY.call("##{params[:term]}")[0, 20])
+    context = PostFavoriteInfoContext.new
+    #render_json status: 'ok', list: TAG_FACTORY.call("##{params[:term]}")[0, 20]
+    render_json status: 'ok', list: context.call
   end
 
 end

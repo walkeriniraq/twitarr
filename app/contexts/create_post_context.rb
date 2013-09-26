@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  fattr :user, :post_text, :tag_factory, :popular_index, :object_store
+  fattr %w(user post_text tag_factory popular_index object_store)
 
   def initialize(attrs = {})
     super
