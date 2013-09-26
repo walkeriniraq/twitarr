@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   TAG_FACTORY = lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") }
 
   def popular_index
-    Redis::SortedSet.new('System:popular_index')
+    Redis::SortedSet.new('System:popular_posts_index')
   end
 
   def submit
@@ -41,8 +41,7 @@ class PostsController < ApplicationController
   end
 
   def popular
-    list = object_store.get(Post, popular_index[0, 20])
-    render_json status: 'ok', list: list
+    render_json status: 'ok', list: object_store.get(Post, popular_index[0, 20])
   end
 
   def list
