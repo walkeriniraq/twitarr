@@ -2,7 +2,7 @@ require 'bcrypt'
 
 class User < BaseModel
 
-  fattr %w(username password is_admin status email)
+  fattr %w(username password is_admin status email friends)
 
   #USER_KEY = 'system:users'
   #USER_PREFIX = 'user:%s'

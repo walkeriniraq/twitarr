@@ -88,4 +88,5 @@ end
 class BaseModel
   include BaseModelInstanceMethods
   include HashInitialize
+  include Draper::Decoratable
 end
