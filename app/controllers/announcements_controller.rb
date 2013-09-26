@@ -5,6 +5,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def submit
+    # TODO: need context
     #return login_required unless logged_in?
     #return render json: { status: 'Announcements can only be created by admins.' } unless is_admin?
     #post = Announcement.new_post(params[:message], current_username)
@@ -13,6 +14,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def delete
+    # TODO: need context
     #return login_required unless logged_in?
     #return render json: { status: 'Announcements can only be created by admins.' } unless is_admin?
     #Announcement.delete(params[:id])
@@ -20,7 +22,6 @@ class AnnouncementsController < ApplicationController
   end
 
   def list
-    #render json: { status: 'ok', list: Announcement.recent(0, 20) }
     render_json status: 'ok', list: object_store.get(Post, recent_index[0, 20])
   end
 

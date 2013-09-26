@@ -41,6 +41,7 @@ class PostsController < ApplicationController
   end
 
   def popular
+    # TODO: need decorator for the posts
     render_json status: 'ok', list: object_store.get(Post, popular_index[0, 20])
   end
 
@@ -52,10 +53,12 @@ class PostsController < ApplicationController
           else
             "@#{current_username}"
           end
+    # TODO: need decorator for the posts
     render_json status: 'ok', list: object_store.get(Post, TAG_FACTORY.call(tag)[0, 20])
   end
 
   def search
+    # TODO: need decorator for the posts
     render_json status: 'ok', list: object_store.get(Post, TAG_FACTORY.call("##{params[:term]}")[0, 20])
   end
 
