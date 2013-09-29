@@ -18,7 +18,7 @@ Twitarr.PostsDetailsController = Twitarr.ObjectController.extend Twitarr.PostsMi
   liked_class: (->
     return 'icon-star' if @get('user_liked')
     'icon-star-empty'
-  ).property('liked')
+  ).property('user_liked')
 
   can_delete: (->
     return false unless @get('logged_in')
