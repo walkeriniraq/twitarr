@@ -27,6 +27,7 @@ gem 'ember-source'
 
 gem 'fattr'
 gem 'draper'
+gem 'andand'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -36,7 +37,7 @@ end
 group :test do
   gem 'minitest-spec-rails'
   gem 'turn'
-  gem 'mocha'
+  gem 'mocha', :require => false
 end
 
 # Use unicorn as the app server
