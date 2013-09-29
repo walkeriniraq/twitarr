@@ -63,6 +63,14 @@ a:hover, a:focus {
   color: #606060;
 }
 
+.validation-error-group {
+  margin-bottom: 2px;
+}
+
+.validation-error {
+  color: red;
+}
+
 .post-reply {
   margin: 10px auto;
 }

@@ -16,6 +16,7 @@ Twitarr::Application.routes.draw do
   post 'user/follow'
   post 'user/unfollow'
   get 'user/username'
+  put 'user/message'
   post 'user/new'
   get 'user/logout'
   post 'user/change_password'

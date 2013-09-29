@@ -1,13 +1,17 @@
 <div>
   {{#if logged_in}}
     <div class="pull-right">
+      <a href="#" class="margin-right-20" {{ action 'message' }}>
+        <span class="glyphicon glyphicon-send"></span>
+        Send Message
+      </a>
       {{#if is_friend}}
         <a href="#" {{ action 'unfollow' }}>
-          Following
-          <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
+          <span class="glyphicon glyphicon-bookmark"></span>
+          Unfollow
         </a>
       {{else}}
-        <a href="#" {{ action 'follow' }}>Not following</a>
+        <a href="#" {{ action 'follow' }}>Follow</a>
       {{/if}}
     </div>
   {{/if}}

@@ -27,6 +27,11 @@ class UserController < ApplicationController
     render_json status: 'ok'
   end
 
+  def message
+    puts "PASSED MESSAGE: #{params[:message].inspect}"
+    render_json status: 'ok'
+  end
+
   def username
     if logged_in?
       user = object_store.get(User, current_username)

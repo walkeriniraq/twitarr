@@ -12,3 +12,4 @@ Twitarr.Router.map ()->
     @route 'search', { path: '/search/:tag' }
   @route 'profile'
   @route 'login'
+  @route 'message'

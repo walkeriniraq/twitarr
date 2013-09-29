@@ -4,5 +4,8 @@ Twitarr.IndexRoute = Ember.Route.extend
 
 Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->
-    Twitarr.Message.list('announcements')
+    Twitarr.BasePost.list('announcements')
 
+Twitarr.MessageRoute = Ember.Route.extend
+  model: ->
+    Twitarr.Message.create()

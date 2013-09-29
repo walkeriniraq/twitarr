@@ -1,4 +1,4 @@
-Twitarr.Post = Twitarr.Message.extend()
+Twitarr.Post = Twitarr.BasePost.extend()
 
 Twitarr.Post.reopenClass
 
@@ -23,4 +23,4 @@ Twitarr.Post.reopenClass
         alert data.status
 
   delete: (id) ->
-    Twitarr.Message.delete('posts', id)
+    Twitarr.BasePost.delete('posts', id)

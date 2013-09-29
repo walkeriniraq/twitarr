@@ -1,7 +1,13 @@
 Twitarr.PostsUserController = Twitarr.BasePostController.extend
+  needs: 'message'
+
   user: null
 
   actions:
+    message: ->
+      @set('controllers.message.message_to', @get('user'))
+      @transitionToRoute 'message'
+
     follow: ->
       return if @get('is_friend')
       user = @get('user')

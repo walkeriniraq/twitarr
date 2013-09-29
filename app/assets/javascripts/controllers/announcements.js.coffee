@@ -10,18 +10,18 @@ Twitarr.AnnouncementsController = Twitarr.ObjectController.extend
       text = @get 'newPost'
       return unless text.trim()
 
-      Twitarr.Message.post(@url_route, text).done (data) =>
+      Twitarr.BasePost.post(@url_route, text).done (data) =>
         if data.status is 'ok'
           @reload()
       @set 'newPost', ''
 
     delete: (post_id) ->
-      Twitarr.Message.delete(@url_route, post_id).done (data) =>
+      Twitarr.BasePost.delete(@url_route, post_id).done (data) =>
         if data.status is 'ok'
           @reload()
 
   reload: ->
-    Twitarr.Message.list(@url_route).then (message) =>
+    Twitarr.BasePost.list(@url_route).then (message) =>
       Ember.run =>
         @set 'model', message
 
