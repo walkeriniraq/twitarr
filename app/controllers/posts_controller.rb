@@ -1,18 +1,11 @@
 class PostsController < ApplicationController
 
-  #TAG_FACTORY_FACTORY = lambda { |connection_pool| lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}", connection_pool) } }
-  TAG_FACTORY = lambda { |tag| Redis::SortedSet.new("System:tag_index:#{tag}") }
-
-  def popular_index
-    Redis::SortedSet.new('System:popular_posts_index')
-  end
-
   def submit
-    return render_json status: 'Not logged in.' unless logged_in?
-    context = CreatePostContext.new user: User.new(current_username),
+    return login_required unless logged_in?
+    context = CreatePostContext.new user: current_username,
                                     post_text: params[:message],
-                                    tag_factory: TAG_FACTORY,
-                                    popular_index: popular_index,
+                                    tag_factory: tag_factory(redis),
+                                    popular_index: redis.popular_posts_index,
                                     object_store: object_store
     context.call
     render_json status: 'ok'
@@ -23,8 +16,8 @@ class PostsController < ApplicationController
     post = object_store.get(Post, params[:id])
     return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username || is_admin?
     context = DeletePostContext.new post: post,
-                                    tag_factory: TAG_FACTORY,
-                                    popular_index: popular_index,
+                                    tag_factory: tag_factory(redis),
+                                    popular_index: redis.popular_posts_index,
                                     object_store: object_store
     context.call
     render_json status: 'ok'
@@ -34,17 +27,15 @@ class PostsController < ApplicationController
     return login_required unless logged_in?
     post = object_store.get(Post, params[:id])
     context = LikePostContext.new post: post,
-                                  post_likes: Redis::Set.new("System:post_likes:#{post.post_id}"),
+                                  post_likes: redis.post_favorites_set(post.post_id),
                                   username: current_username,
-                                  popular_index: popular_index
+                                  popular_index: redis.popular_posts_index
     context.call
     render_json status: 'ok'
   end
 
   def popular
-    context = PostFavoriteInfoContext.new
-    #render_json status: 'ok', list: popular_index[0, 20]
-    render_json status: 'ok', list: context.call
+    render_json status: 'ok', list: post_hash(redis.popular_posts_index.revrange(0, 20))
   end
 
   def list
@@ -55,15 +46,16 @@ class PostsController < ApplicationController
           else
             "@#{current_username}"
           end
-    context = PostFavoriteInfoContext.new
-    #render_json status: 'ok', list: TAG_FACTORY.call(tag)[0, 20]
-    render_json status: 'ok', list: context.call
+    render_json status: 'ok', list: post_hash(redis.tag_index(tag).revrange(0, 20))
   end
 
   def search
-    context = PostFavoriteInfoContext.new
-    #render_json status: 'ok', list: TAG_FACTORY.call("##{params[:term]}")[0, 20]
-    render_json status: 'ok', list: context.call
+    render_json status: 'ok', list: post_hash(redis.tag_index(params[:term]).revrange(0, 20))
+  end
+
+  def post_hash(ids)
+    favorites = UserFavorites.new(redis, current_username, ids)
+    object_store.get(Post, ids).map { |x| x.decorate.gui_hash(favorites) }
   end
 
 end

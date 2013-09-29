@@ -1,16 +1,14 @@
 class AnnouncementsController < ApplicationController
 
-  def recent_index
-    Redis::SortedSet.new('System:recent_accouncements_index')
-  end
-
   def submit
-    # TODO: need context
-    #return login_required unless logged_in?
-    #return render json: { status: 'Announcements can only be created by admins.' } unless is_admin?
-    #post = Announcement.new_post(params[:message], current_username)
-    #post.save
-    render json: { status: 'ok' }
+    return login_required unless logged_in?
+    context = CreateAnnouncementContext.new user: current_username,
+                                    post_text: params[:message],
+                                    tag_factory: tag_factory(redis),
+                                    announcement_index: redis.announcements_index,
+                                    object_store: object_store
+    context.call
+    render_json status: 'ok'
   end
 
   def delete
@@ -22,7 +20,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def list
-    render_json status: 'ok', list: object_store.get(Post, recent_index[0, 20])
+    list = object_store.get(Post, redis.announcements_index.revrange(0, 20)).map { |x| x.decorate.announcement_hash }
+    render_json status: 'ok', list: list
   end
 
 end

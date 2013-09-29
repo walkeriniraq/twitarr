@@ -1,17 +1,15 @@
 require 'test_helper'
 
-class RedisObjectStoreTest < ActiveSupport::TestCase
+class RedisObjectStoreTest < BaseTestCase
   subject { RedisObjectStore }
 
-  DbConnectionPool.instance.configure(host: 'gremlin', db: 15)
-
   class ObjectStoreTestModel < BaseModel
-    fattr :foo, :bar, :baz
+    attr :foo, :bar, :baz
   end
 
   it 'can store and get objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    object_store = subject.new
+    object_store = subject.new redis
     object_store.save model, 1
     test = object_store.get ObjectStoreTestModel, 1
     test.must_be_instance_of ObjectStoreTestModel
@@ -22,7 +20,7 @@ class RedisObjectStoreTest < ActiveSupport::TestCase
 
   it 'can get a list of objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    object_store = subject.new
+    object_store = subject.new redis
     object_store.save model, 1
     object_store.save model, 2
     test = object_store.get ObjectStoreTestModel, [1, 2]
@@ -31,14 +29,26 @@ class RedisObjectStoreTest < ActiveSupport::TestCase
   end
 
   it 'returns nil if the object does not exist' do
-    object_store = subject.new
+    object_store = subject.new redis
     test = object_store.get ObjectStoreTestModel, 'thing that does not exist'
+    test.must_be_nil
+  end
+
+  it 'returns empty array if an empty array passed in' do
+    object_store = subject.new redis
+    test = object_store.get ObjectStoreTestModel, []
+    test.must_be_empty
+  end
+
+  it 'returns nil if nil passed in' do
+    object_store = subject.new redis
+    test = object_store.get ObjectStoreTestModel, nil
     test.must_be_nil
   end
 
   it 'removes missing objects from return array' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    object_store = subject.new
+    object_store = subject.new redis
     object_store.save model, 1
     object_store.save model, 2
     test = object_store.get ObjectStoreTestModel, [1, 2, 3]
@@ -48,7 +58,7 @@ class RedisObjectStoreTest < ActiveSupport::TestCase
 
   it 'can delete objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    object_store = subject.new
+    object_store = subject.new redis
     object_store.save model, 1
     object_store.save model, 2
     test = object_store.get ObjectStoreTestModel, [1, 2]

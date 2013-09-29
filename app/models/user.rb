@@ -2,7 +2,19 @@ require 'bcrypt'
 
 class User < BaseModel
 
-  fattr %w(username password is_admin status email friends)
+  attr :username, :password, :is_admin, :status, :email
+
+  def self.valid_username?(username)
+    [':', ' ', '#', '%', '@'].all? { |x| !username.include? x }
+  end
+
+  def set_password(pass)
+    @password = BCrypt::Password.create pass
+  end
+
+  def correct_password(pass)
+    BCrypt::Password.new(password) == pass
+  end
 
   #USER_KEY = 'system:users'
   #USER_PREFIX = 'user:%s'
@@ -26,10 +38,6 @@ class User < BaseModel
   #
   #def gui_hash
   #  to_hash :username, :is_admin, :following
-  #end
-  #
-  #def self.valid_username?(username)
-  #  [':', ' ', '#', '%', '@'].all? { |x| !username.include? x }
   #end
   #
   #def save

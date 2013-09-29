@@ -1,7 +1,7 @@
 class DeletePostContext
   include HashInitialize
 
-  fattr :post, :tag_factory, :popular_index, :object_store
+  attr :post, :tag_factory, :popular_index, :object_store
 
   def initialize(attrs = {})
     super
@@ -26,12 +26,12 @@ class DeletePostContext
   end
 
   def call
-    self.popular_index.delete_post post
-    self.post.tags.each do |tag|
-      tag = TagRole.new self.tag_factory.call(tag)
+    popular_index.delete_post post
+    post.tags.each do |tag|
+      tag = TagRole.new tag_factory.call(tag)
       tag.delete_post post
     end
-    self.object_store.delete post
+    object_store.delete post, post.post_id
   end
 
 end

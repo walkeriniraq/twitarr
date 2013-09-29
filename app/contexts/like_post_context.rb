@@ -1,7 +1,7 @@
 class LikePostContext
   include HashInitialize
 
-  fattr :post, :post_likes, :username, :popular_index
+  attr :post, :post_likes, :username, :popular_index
 
   def initialize(attrs = {})
     super
@@ -10,9 +10,9 @@ class LikePostContext
   end
 
   def call
-    self.post_likes << username
-    self.popular_index.add_post post, post_likes.size
-    self.post.score(post_likes.size)
+    post_likes << username
+    popular_index.add_post post, post_likes.size
+    post.score(post_likes.size)
   end
 
   class PostRole < SimpleDelegator

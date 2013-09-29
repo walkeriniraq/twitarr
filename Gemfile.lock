@@ -109,7 +109,7 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    redis (3.0.5)
+    redis (4.0.0.walker)
     redis-objects (0.7.0)
       redis (>= 3.0.2)
     request_store (1.0.5)
@@ -168,7 +168,7 @@ DEPENDENCIES
   mocha
   peach
   rails (= 4.0.0)
-  redis (~> 3.0.0)
+  redis (~> 4.0.0.walker)
   redis-objects (= 0.7.0)
   sass-rails (~> 4.0.0)
   sdoc

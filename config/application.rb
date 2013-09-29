@@ -11,6 +11,11 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+# this is here because intellij doesn't recognize fattr for some reason
+class Module
+  alias_method :attr, :fattr
+end
+
 module Twitarr
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
