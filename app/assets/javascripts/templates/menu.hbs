@@ -1,43 +1,45 @@
-<div class='navbar'>
-  <div class='navbar-inner'>
-    <div class="navbar-center">
-      <a class='brand hidden-phone'>Twit-arr!</a>
-      <ul class='nav'>
-        <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
-        <li class='dropdown visible-phone'>
+<div class='navbar navbar-default navbar-fixed-top'>
+  <div class="navbar-center">
+
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Twit-arr!</a>
+  </div>
+
+
+  <!--<div class='navbar-inner'>-->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class='nav navbar-nav'>
+      <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
+      <li>{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
+      {{#if logged_in}}
+        <li>{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
+      {{/if}}
+    </ul>
+    <ul class='nav navbar-nav navbar-right'>
+      {{#unless logged_in}}
+        <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
+      {{else}}
+        <li class='dropdown'>
           <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-            <span>Posts</span>
+            <span>{{ login_user }}</span>
             <b class='caret'></b>
           </a>
           <ul class='dropdown-menu'>
-            <li>{{#linkTo "posts.popular"}}Popular{{/linkTo}}</li>
-            <li>{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
+            {{#if login_admin}}
+              <li>{{#linkTo "users.index"}}Admin{{/linkTo}}</li>
+            {{/if}}
+            <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
+            <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
           </ul>
         </li>
-        <li class="hidden-phone">{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
-        {{#if logged_in}}
-          <li class="hidden-phone">{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
-        {{/if}}
-      </ul>
-      <ul class='nav pull-right'>
-        {{#unless logged_in}}
-          <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
-        {{else}}
-          <li class='dropdown'>
-            <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-              <span>{{ login_user }}</span>
-              <b class='caret'></b>
-            </a>
-            <ul class='dropdown-menu'>
-              {{#if login_admin}}
-                <li>{{#linkTo "users.index"}}Admin{{/linkTo}}</li>
-              {{/if}}
-              <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
-              <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
-            </ul>
-          </li>
-        {{/unless}}
-      </ul>
-    </div>
+      {{/unless}}
+    </ul>
+  </div>
   </div>
 </div>

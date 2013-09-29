@@ -1,8 +1,10 @@
 <div class='post-entry'>
-  {{#linkTo "posts.user" username style="color: darkgray;"}}{{ username }}{{/linkTo}}
-  {{#if post_by_friend}}
-    <i class="icon-heart"></i>
-  {{/if}}
+  {{#linkTo "posts.user" username style="color: darkgray;"}}
+    {{ username }}
+    {{#if post_by_friend}}
+      <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
+    {{/if}}
+  {{/linkTo}}
   <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
 
   <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
@@ -16,12 +18,15 @@
           {{#if can_delete}}
             <a href="#" class="margin-right-20" {{ action 'delete' post_id }}>delete</a>
           {{/if}}
-          {{#unless replying}}
-            <a href="#" class="margin-right-20" {{ action 'reply' username }}>reply</a>
+          {{#unless user_liked}}
+            <a href="#" class="margin-right-20" {{ action 'favorite' post_id }}>
+              <span class="glyphicon glyphicon-thumbs-up"></span>
+              like
+            </a>
           {{/unless}}
-          <a href="#" {{ action 'favorite' post_id }}>
-            <i {{bindAttr class="liked_class"}}></i>
-          </a>
+          {{#unless replying}}
+            <a href="#" {{ action 'reply' username }}>reply</a>
+          {{/unless}}
         </div>
       </div>
     {{/if}}
@@ -29,7 +34,7 @@
   {{#if replying}}
     <div class="post-reply clearfix">
       {{ partial 'posts/create' }}
-      <button class='pull-right margin-right-20' style="display: block" {{ action 'cancel_post' }}>Cancel</button>
+      <button class="btn btn-primary pull-right margin-right-20" style="display: block" {{ action 'cancel_post' }}>Cancel</button>
     </div>
   {{/if}}
 </div>

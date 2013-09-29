@@ -1,19 +1,6 @@
 //  BOOTSTRAP OVERRIDES
 body {
-  padding: 0;
-}
-
-@media (max-width: 480px) {
-  .main {
-    padding: 0;
-  }
-}
-
-@media (max-width: 767px) {
-  .main {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+  padding: 50px 0 0;
 }
 
 .main {
@@ -24,11 +11,16 @@ body {
   max-width: 1000px;
 }
 
-.dialog {
-  //display: none;
+@media (max-width: 767px) and (min-width: 480px) {
+  .main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
 
-  &.active {
-    //display: inline;
+@media (max-width: 480px) {
+  .main {
+    padding: 0;
   }
 }
 
@@ -47,7 +39,7 @@ body {
 
 //  OTHER STYLES
 .post-entry {
-  background-color: #EEEEEE;
+  background-color: #F6F6F6;
   border-color: darkgray -moz-use-text-color;
   border-left: medium solid;
   border-right: medium solid;

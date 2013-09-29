@@ -1,4 +1,7 @@
 <div id='announcements'>
+  {{#if login_admin}}
+    {{ partial 'posts/create' }}
+  {{/if}}
   <h3>Announcements</h3>
   {{#each post in controller.posts}}
     <div class='post-entry'>
@@ -17,8 +20,4 @@
       No announcements yet!
     </div>
   {{/each}}
-  {{#if login_admin}}
-    {{view Ember.TextArea placeholder='Announce something!' valueBinding='newPost'}}
-    <button {{ action 'make_post' }}>Post it</button>
-  {{/if}}
 </div>

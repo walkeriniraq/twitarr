@@ -2,8 +2,10 @@
   {{#if logged_in}}
     <div class="pull-right">
       {{#if is_friend}}
-        <i class="icon-heart"></i>
-        <a href="#" {{ action 'unfollow' }}>Following</a>
+        <a href="#" {{ action 'unfollow' }}>
+          Following
+          <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
+        </a>
       {{else}}
         <a href="#" {{ action 'follow' }}>Not following</a>
       {{/if}}

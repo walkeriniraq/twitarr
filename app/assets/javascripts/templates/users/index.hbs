@@ -16,20 +16,20 @@
       <td>{{ user.email }}</td>
       <td style="text-align: center;">
         {{#if user.is_locked}}
-          <i title="User is deactivated" class="icon-lock"></i>
+          <span title="User is deactivated" class="glyphicon glyphicon-lock" style="margin-left: 5px;"></span>
         {{/if}}
         {{#if user.is_admin}}
-          <i title="User is an admin" class="icon-eye-open"></i>
+          <span title="User is an admin" class="glyphicon glyphicon-bullhorn" style="margin-left: 5px;"></span>
         {{/if}}
         {{#if user.empty_password}}
-          <i title="User has an empty password" class="icon-warning-sign"></i>
+          <span title="User has an empty password" class="glyphicon glyphicon-warning-sign" style="margin-left: 5px;"></span>
         {{/if}}
       </td>
       <td style="text-align: right;">
         {{#if user.is_locked}}
           <a href="#" {{ action 'unlock' user.username }} class="margin-right-20">unlock</a>
         {{/if}}
-        {{#linkTo 'users.reset_password' user.username classNames="pad-right-20"}}reset password{{/linkTo}}
+        {{#linkTo 'users.reset_password' user.username classNames="margin-right-20"}}reset password{{/linkTo}}
         {{#linkTo 'users.edit' user }}edit{{/linkTo}}
       </td>
     </tr>
