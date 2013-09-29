@@ -5,7 +5,15 @@
       <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
     {{/if}}
   {{/linkTo}}
-  <span class="pull-right" style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
+  <div class="pull-right">
+    {{#if can_delete}}
+      <a href="#" class="margin-right-20" {{ action 'delete' post_id }}>
+        <span class="glyphicon glyphicon-trash" style="margin-left: 5px;"></span>
+        delete
+      </a>
+    {{/if}}
+    <span style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
+  </div>
 
   <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
   <div class="post-details clearfix">
@@ -15,9 +23,6 @@
     {{#if logged_in}}
       <div class="clearfix">
         <div class="pull-right">
-          {{#if can_delete}}
-            <a href="#" class="margin-right-20" {{ action 'delete' post_id }}>delete</a>
-          {{/if}}
           {{#unless user_liked}}
             <a href="#" class="margin-right-20" {{ action 'favorite' post_id }}>
               <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -34,7 +39,7 @@
   {{#if replying}}
     <div class="post-reply clearfix">
       {{ partial 'posts/create' }}
-      <button class="btn btn-primary pull-right margin-right-20" style="display: block" {{ action 'cancel_post' }}>Cancel</button>
+      <button class="btn btn-primary pull-right margin-right-20" style="margin-top: 5px;" {{ action 'cancel_post' }}>Cancel</button>
     </div>
   {{/if}}
 </div>
