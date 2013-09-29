@@ -35,7 +35,7 @@ class PostsController < ApplicationController
   end
 
   def popular
-    render_json status: 'ok', list: post_hash(redis.popular_posts_index.revrange(0, 20))
+    render_json status: 'ok', list: post_hash(redis.popular_posts_index.revrange(0, 50))
   end
 
   def list

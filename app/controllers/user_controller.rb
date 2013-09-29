@@ -22,7 +22,7 @@ class UserController < ApplicationController
 
   def unfollow
     user = object_store.get(User, params[:username])
-    return render_json status: 'User does not exist.' unless User.exist?(params[:username])
+    return render_json status: 'User does not exist.' unless user
     redis.user_friends_set(current_username).delete user.username
     render_json status: 'ok'
   end

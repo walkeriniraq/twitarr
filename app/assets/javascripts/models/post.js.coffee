@@ -8,8 +8,8 @@ Twitarr.Post.reopenClass
   search: (tag) ->
     @get_list("posts/search?term=#{encodeURIComponent tag}")
 
-  popular: (page = 0) ->
-    @get_list("posts/popular?page=#{encodeURIComponent page}")
+  popular: ->
+    @get_list("posts/popular")
 
   user: (username, page = 0) ->
     @get_list("posts/list?username=#{encodeURIComponent username}&page=#{encodeURIComponent page}")
