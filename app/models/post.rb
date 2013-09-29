@@ -21,27 +21,6 @@ end
 #    { message: message, username: username, post_time: post_time.to_i, post_id: post_id, liked: user_liked, liked_sentence: liked_sentence(user_liked, friends_like, other_like) }
 #  end
 #
-#  def liked_sentence(user_liked, friends_like, other_likes)
-#    likes = []
-#    likes << 'You' if user_liked
-#    likes += friends_like
-#    other_likes = other_likes - likes.count
-#    likes << "#{other_likes} people" if other_likes > 1
-#    likes << '1 other person' if other_likes == 1
-#    return case
-#             when likes.count > 1
-#               "#{likes[0..-2].join ', '} and #{likes.last} like this."
-#             when likes.count > 0
-#               if likes.first == 'You'
-#                 'You like this.'
-#               elsif other_likes > 1
-#                 "#{likes.first} like this."
-#               else
-#                 "#{likes.first} likes this."
-#               end
-#           end
-#  end
-#
 #  def save
 #    storage.save post_id, { message: message, username: username, post_time: post_time.to_i, post_id: post_id }
 #    twitarr.popular_posts.add_post self
