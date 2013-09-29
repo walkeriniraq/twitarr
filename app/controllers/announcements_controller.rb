@@ -2,21 +2,26 @@ class AnnouncementsController < ApplicationController
 
   def submit
     return login_required unless logged_in?
-    return render json: { status: 'Announcements can only be created by admins.' } unless is_admin?
-    post = Announcement.new_post(params[:message], current_username)
-    post.save
-    render json: { status: 'ok' }
+    context = CreateAnnouncementContext.new user: current_username,
+                                    post_text: params[:message],
+                                    tag_factory: tag_factory(redis),
+                                    announcement_index: redis.announcements_index,
+                                    object_store: object_store
+    context.call
+    render_json status: 'ok'
   end
 
   def delete
-    return login_required unless logged_in?
-    return render json: { status: 'Announcements can only be created by admins.' } unless is_admin?
-    Announcement.delete(params[:id])
+    # TODO: need context
+    #return login_required unless logged_in?
+    #return render json: { status: 'Announcements can only be created by admins.' } unless is_admin?
+    #Announcement.delete(params[:id])
     render json: { status: 'ok' }
   end
 
   def list
-    render json: { status: 'ok', list: Announcement.recent(0, 20) }
+    list = object_store.get(Post, redis.announcements_index.revrange(0, 20)).map { |x| x.decorate.announcement_hash }
+    render_json status: 'ok', list: list
   end
 
 end

@@ -1,10 +1,24 @@
 Twitarr.PostsDetailsController = Twitarr.ObjectController.extend Twitarr.PostsMixin,
   replying: false
 
+  actions:
+    reply: (username) ->
+      @set 'newPost', "@#{username} "
+      @set 'replying', true
+
+    cancel_post: ->
+      @set 'replying', false
+
+    favorite: (id) ->
+      return if @get('model.user_liked')
+      Twitarr.Post.favorite(id).done (data) =>
+        return alert(data.status) unless data.status is 'ok'
+        @set('model.user_liked', true)
+
   liked_class: (->
-    return 'icon-star' if @get('liked')
+    return 'icon-star' if @get('user_liked')
     'icon-star-empty'
-  ).property('liked')
+  ).property('user_liked')
 
   can_delete: (->
     return false unless @get('logged_in')
@@ -15,19 +29,6 @@ Twitarr.PostsDetailsController = Twitarr.ObjectController.extend Twitarr.PostsMi
   post_by_friend: (->
     _(@get('friends')).contains @get('username')
   ).property('friends', 'username')
-
-  favorite: (id) ->
-    return if @get('model.liked')
-    Twitarr.Post.favorite(id).done (data) =>
-      return alert(data.status) unless data.status is 'ok'
-      @set('model.liked', true)
-
-  reply: (username) ->
-    @set 'newPost', "@#{username} "
-    @set 'replying', true
-
-  cancel_post: ->
-    @set 'replying', false
 
   reload: ->
     @target.reload()

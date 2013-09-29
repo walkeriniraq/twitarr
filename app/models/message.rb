@@ -8,7 +8,7 @@ class Message < BaseModel
   def initialize(hash = {})
     super(hash)
     # convert this back from an integer
-    self.post_time = Time.at(self.post_time) unless self.post_time.is_a? Time
+    @post_time = Time.at(@post_time) unless @post_time.is_a?(Time) || @post_time.nil?
   end
 
   def self.new_post(message, username)

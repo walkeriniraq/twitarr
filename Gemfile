@@ -6,9 +6,9 @@ gem 'rails', '4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'sass-rails', '~> 4.0.0'
 gem 'therubyrhino'
-gem 'redis', '~> 3.0.0'
+gem 'redis', '~> 4.0.0.walker'
 gem 'redis-objects', '0.7.0'
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby'
 gem 'connection_pool'
 gem 'peach'
 
@@ -20,14 +20,24 @@ gem 'jquery-rails'
 gem 'underscore-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder'
 
 gem 'ember-rails'
-gem 'ember-source', '1.0.0.rc7'
+gem 'ember-source'
+
+gem 'fattr'
+gem 'draper'
+gem 'andand'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
+end
+
+group :test do
+  gem 'minitest-spec-rails'
+  gem 'turn'
+  gem 'mocha', :require => false
 end
 
 # Use unicorn as the app server

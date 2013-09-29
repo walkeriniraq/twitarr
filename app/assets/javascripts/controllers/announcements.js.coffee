@@ -5,19 +5,20 @@ Twitarr.AnnouncementsController = Twitarr.ObjectController.extend
     @get('login_admin')
   ).property('login_admin')
 
-  make_post: ->
-    text = @get 'newPost'
-    return unless text.trim()
+  actions:
+    make_post: ->
+      text = @get 'newPost'
+      return unless text.trim()
 
-    Twitarr.Message.post(@url_route, text).done (data) =>
-      if data.status is 'ok'
-        @reload()
-    @set 'newPost', ''
+      Twitarr.Message.post(@url_route, text).done (data) =>
+        if data.status is 'ok'
+          @reload()
+      @set 'newPost', ''
 
-  delete: (post_id) ->
-    Twitarr.Message.delete(@url_route, post_id).done (data) =>
-      if data.status is 'ok'
-        @reload()
+    delete: (post_id) ->
+      Twitarr.Message.delete(@url_route, post_id).done (data) =>
+        if data.status is 'ok'
+          @reload()
 
   reload: ->
     Twitarr.Message.list(@url_route).then (message) =>

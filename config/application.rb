@@ -11,6 +11,11 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
+# this is here because intellij doesn't recognize fattr for some reason
+class Module
+  alias_method :attr, :fattr
+end
+
 module Twitarr
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -24,5 +29,7 @@ module Twitarr
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    config.autoload_paths += Dir[Rails.root.join('app', 'contexts', '{**}')]
   end
 end
