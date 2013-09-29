@@ -16,6 +16,7 @@
   </div>
 
   <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+
   <div class="post-details clearfix">
     {{#if liked_sentence}}
       <div class="pull-left">{{liked_sentence}}</div>
@@ -30,7 +31,10 @@
             </a>
           {{/unless}}
           {{#unless replying}}
-            <a href="#" {{ action 'reply' username }}>reply</a>
+            <a href="#" {{ action 'reply' username }}>
+              <span class="glyphicon glyphicon-pencil"></span>
+              reply
+            </a>
           {{/unless}}
         </div>
       </div>
