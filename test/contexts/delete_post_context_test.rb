@@ -8,10 +8,9 @@ class DeletePostContextTest < ActiveSupport::TestCase
   include AttributesTest
 
   it 'creates a post' do
-    post = mock username: 'foo', message: 'This is my test'
-    post.expects(:post_id).twice.returns(3)
+    post = OpenStruct.new username: 'foo', message: 'This is my test', post_id: 3
     object_store = mock
-    object_store.expects(:delete).with(post)
+    object_store.expects(:delete).with(Post, 3)
     tag = { 3 => 123 }
     context = DeletePostContext.new post: post,
                                     tag_factory: lambda { |_| tag },

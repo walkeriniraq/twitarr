@@ -50,7 +50,7 @@ class PostsController < ApplicationController
   end
 
   def search
-    render_json status: 'ok', list: post_hash(redis.tag_index(params[:term]).revrange(0, 20))
+    render_json status: 'ok', list: post_hash(redis.tag_index("##{params[:term]}").revrange(0, 20))
   end
 
   def post_hash(ids)

@@ -12,6 +12,12 @@ module PostRoleTraitTests
     role.tags.must_include '@bar'
   end
 
+  def test_includes_usernames_as_hashes
+    post = OpenStruct.new username: 'foo', message: 'foo @bar baz'
+    role = subject.new(post)
+    role.tags.must_include '#bar'
+  end
+
   def test_includes_tags
     post = OpenStruct.new username: 'foo', message: 'foo #bar baz'
     role = subject.new(post)

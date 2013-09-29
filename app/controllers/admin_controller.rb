@@ -38,7 +38,7 @@ class AdminController < ApplicationController
 
   def add_user
     return no_access unless has_access?
-    return render_json status: 'Username already exists.' if object_store.get(User, user.username)
+    return render_json status: 'Username already exists.' if object_store.get(User, params[:username])
     return render_json status: 'Username cannot contain spaces or the following characters: %#:' unless User.valid_username? params[:username]
     return render_json status: 'Username must be at least six characters.' if params[:username].nil? || params[:username].length < 6
     user = User.new

@@ -1,9 +1,9 @@
 require 'test_helper'
 require 'traits/post_role_trait_tests'
 
-class CreatePostContextTest < ActiveSupport::TestCase
-  subject { CreatePostContext }
-  let(:attributes) { %w(user post_text tag_factory popular_index object_store) }
+class CreateAnnouncementContextTest < ActiveSupport::TestCase
+  subject { CreateAnnouncementContext }
+  let(:attributes) { %w(user post_text tag_factory announcement_index object_store) }
 
   include AttributesTest
 
@@ -11,20 +11,20 @@ class CreatePostContextTest < ActiveSupport::TestCase
     object_store = mock
     object_store.expects(:save).with(kind_of(Post), kind_of(String))
     tag = {}
-    context = CreatePostContext.new user: 'foo',
+    context = CreateAnnouncementContext.new user: 'foo',
                                     post_text: 'This is a test',
                                     tag_factory: lambda { |_| tag },
-                                    popular_index: popular_index = {},
+                                    announcement_index: announcement_index = {},
                                     object_store: object_store
     post = context.call
     post.username.must_equal 'foo'
     post.message.must_equal 'This is a test'
-    popular_index.keys.first.must_equal post.post_id
+    announcement_index.keys.first.must_equal post.post_id
     tag.keys.first.must_equal post.post_id
   end
 
   class UserRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::UserRole }
+    subject { CreateAnnouncementContext::UserRole }
 
     include DelegatorTest
 
@@ -40,7 +40,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
   end
 
   class TagRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::TagRole }
+    subject { CreateAnnouncementContext::TagRole }
 
     include DelegatorTest
 
@@ -53,8 +53,8 @@ class CreatePostContextTest < ActiveSupport::TestCase
     end
   end
 
-  class PopularIndexRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::PopularIndexRole }
+  class AnnouncementIndexRoleTest < ActiveSupport::TestCase
+    subject { CreateAnnouncementContext::AnnouncementIndexRole }
 
     include DelegatorTest
 
@@ -68,7 +68,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
   end
 
   class PostRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::PostRole }
+    subject { CreateAnnouncementContext::PostRole }
 
     include DelegatorTest
     include PostRoleTraitTests

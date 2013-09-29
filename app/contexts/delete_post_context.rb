@@ -31,7 +31,7 @@ class DeletePostContext
       tag = TagRole.new tag_factory.call(tag)
       tag.delete_post post
     end
-    object_store.delete post, post.post_id
+    object_store.delete Post, post.post_id
   end
 
 end

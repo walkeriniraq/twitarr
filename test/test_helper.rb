@@ -30,7 +30,7 @@ module AttributesTest
   def test_send_attributes
     attributes.each do |attr|
       instance = subject.new
-      instance.send(attr, 'bar')
+      instance.send("#{attr}=", 'bar')
       instance.send(attr).must_equal 'bar'
     end
   end

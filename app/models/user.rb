@@ -16,6 +16,14 @@ class User < BaseModel
     BCrypt::Password.new(password) == pass
   end
 
+  def username
+    @username.andand.downcase
+  end
+
+  def empty_password
+    password.nil? || password.empty?
+  end
+
   #USER_KEY = 'system:users'
   #USER_PREFIX = 'user:%s'
   #USER_FRIENDS_PREFIX = 'user-friends:%s'
@@ -24,14 +32,6 @@ class User < BaseModel
   #STATUS_INACTIVE = :inactive
   #STATUS_DISABLED = :disabled
 
-  #def username
-  #  @username.downcase
-  #end
-  #
-  #def empty_password
-  #  password.nil? || password.empty?
-  #end
-  #
   #def set_password(unencrypted_password)
   #  @password = BCrypt::Password.create unencrypted_password
   #end
