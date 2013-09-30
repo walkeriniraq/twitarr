@@ -43,4 +43,3 @@ Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
 
 Ember.TextField = Ember.TextField.extend
   classNames: ['form-control']
-
