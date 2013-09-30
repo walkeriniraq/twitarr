@@ -15,15 +15,15 @@
   <!--<div class='navbar-inner'>-->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class='nav navbar-nav'>
-      <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
-      <li>{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
+      <li data-toggle="collapse" data-target=".navbar-ex1-collapse">{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
+      <li data-toggle="collapse" data-target=".navbar-ex1-collapse">{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
       {{#if logged_in}}
-        <li>{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
+        <li data-toggle="collapse" data-target=".navbar-ex1-collapse">{{#linkTo "posts.mine"}}My Stuff{{/linkTo}}</li>
       {{/if}}
     </ul>
     <ul class='nav navbar-nav navbar-right'>
       {{#unless logged_in}}
-        <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
+        <li data-toggle="collapse" data-target=".navbar-ex1-collapse">{{#linkTo "login"}}Login{{/linkTo}}</li>
       {{else}}
         <li class='dropdown'>
           <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
@@ -32,10 +32,10 @@
           </a>
           <ul class='dropdown-menu'>
             {{#if login_admin}}
-              <li>{{#linkTo "users.index"}}Admin{{/linkTo}}</li>
+              <li data-toggle="collapse" data-target=".navbar-ex1-collapse">{{#linkTo "users.index"}}Admin{{/linkTo}}</li>
             {{/if}}
-            <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
-            <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
+            <li data-toggle="collapse" data-target=".navbar-ex1-collapse">{{#linkTo "profile"}}Profile{{/linkTo}}</li>
+            <li data-toggle="collapse" data-target=".navbar-ex1-collapse"><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
           </ul>
         </li>
       {{/unless}}
