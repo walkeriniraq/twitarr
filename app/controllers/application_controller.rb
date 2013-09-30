@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     !current_username.nil?
   end
 
+  def current_user
+    @user ||= object_store.get(User, current_username)
+  end
+
   def current_username
     session[:username]
   end

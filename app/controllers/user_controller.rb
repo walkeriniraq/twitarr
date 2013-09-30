@@ -5,7 +5,7 @@ class UserController < ApplicationController
   skip_around_action :redis_context_filter, only: [:logout]
 
   def login
-    user = object_store.get(User, params[:username])
+    user = object_store.get(User, params[:username].downcase)
     return render_json status: 'User does not exist.' if user.nil?
     return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
     return render_json status: 'Invalid username or password.' unless user.correct_password params[:password]
@@ -14,14 +14,14 @@ class UserController < ApplicationController
   end
 
   def follow
-    user = object_store.get(User, params[:username])
+    user = object_store.get(User, params[:username].downcase)
     return render_json status: 'User does not exist.' unless user
     redis.user_friends_set(current_username) << user.username
     render_json status: 'ok'
   end
 
   def unfollow
-    user = object_store.get(User, params[:username])
+    user = object_store.get(User, params[:username].downcase)
     return render_json status: 'User does not exist.' unless user
     redis.user_friends_set(current_username).delete user.username
     render_json status: 'ok'
@@ -34,10 +34,13 @@ class UserController < ApplicationController
 
   def username
     if logged_in?
-      user = object_store.get(User, current_username)
-      return render_json status: 'User does not exist.' if user.nil?
-      return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
-      return render_json status: 'ok', user: user.decorate.gui_hash, friends: redis.user_friends_set(user.username).members
+      if current_user.nil?
+        # this is a special case - need to log the current user out
+        logout_user
+        return render_json status: 'User does not exist.'
+      end
+      return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
+      return render_json status: 'ok', user: current_user.decorate.gui_hash, friends: redis.user_friends_set(current_user.username).members
     end
     render_json status: 'logout'
   end
@@ -69,11 +72,10 @@ class UserController < ApplicationController
     return login_required unless logged_in?
     return render_json status: 'Password must be at least six characters long.' if params[:new_password].length < 6
     return render_json status: 'New passwords do not match.' if params[:new_password] != params[:new_password2]
-    user = object_store.get User, current_username
-    return render_json status: 'User does not exist.' if user.nil?
-    return render_json status: 'Invalid username or password.' unless user.correct_password params[:old_password]
-    user.set_password params[:new_password]
-    object_store.save user, user.username
+    return render_json status: 'User does not exist.' if current_user.nil?
+    return render_json status: 'Invalid username or password.' unless current_user.correct_password params[:old_password]
+    current_user.set_password params[:new_password]
+    object_store.save current_user, current_user.username
   end
 
 end
