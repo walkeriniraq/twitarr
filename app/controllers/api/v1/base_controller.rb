@@ -1,12 +1,14 @@
 class API::V1::BaseController < BaseRedisController
 
-  before_filter :authenticate_user
+  #before_filter :authenticate_user
 
   def authenticate_user
-    return render_json( status: 'API Key required for access' ) unless valid_api_key?
-    return render_json( status: 'Username and password required for API access' ) unless params[:username] && params[:password]
-    @user = object_store.get(User, params[:username])
-    return render_json( status: 'Incorrect password' ) unless @user.correct_password(params[:password])
+    #return render_json( status: 'API Key required for access' ) unless valid_api_key?
+    authenticate_or_request_with_http_basic do |username, password|
+      return false unless username && password
+      @user = object_store.get(User, username)
+      @user.correct_password(password)
+    end
   end
 
   def valid_api_key?
