@@ -15,7 +15,7 @@ class LikePostContextTest < ActiveSupport::TestCase
     score = context.call
     popular_index.keys.first.must_equal post.post_id
     post_likes.must_include 'steve'
-    assert_operator score, :>, Time.now.to_i
+    assert_operator score, :>, Time.now.to_f
   end
 
   class PopularIndexRoleTest < ActiveSupport::TestCase

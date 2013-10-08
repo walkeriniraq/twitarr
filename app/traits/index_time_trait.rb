@@ -1,5 +1,5 @@
 module IndexTimeTrait
   def add_post(post)
-    self[post.post_id] = post.time_index.to_f
+    self[post.post_id] = post.time_index
   end
 end

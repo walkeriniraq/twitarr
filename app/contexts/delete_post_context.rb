@@ -1,12 +1,13 @@
 class DeletePostContext
   include HashInitialize
 
-  attr :post, :tag_factory, :popular_index, :object_store
+  attr :post, :tag_factory, :post_index, :popular_index, :object_store
 
   def initialize(attrs = {})
     super
     @post = PostRole.new @post
     @popular_index = PopularIndexRole.new @popular_index
+    @post_index = PostIndexRole.new @post_index
   end
 
   class PostRole < SimpleDelegator
@@ -14,6 +15,12 @@ class DeletePostContext
   end
 
   class PopularIndexRole < SimpleDelegator
+    def delete_post(post)
+      delete(post.post_id)
+    end
+  end
+
+  class PostIndexRole < SimpleDelegator
     def delete_post(post)
       delete(post.post_id)
     end

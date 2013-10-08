@@ -21,7 +21,7 @@ class BaseCreatePostContext
 
   class UserRole < SimpleDelegator
     def new_post(message)
-      Post.new message: message, username: to_s, post_time: Time.now.to_f, post_id: SecureRandom.uuid
+      Post.new message: message, username: to_s, post_time: Time.now, post_id: SecureRandom.uuid
     end
   end
 

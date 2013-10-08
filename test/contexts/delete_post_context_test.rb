@@ -40,6 +40,19 @@ class DeletePostContextTest < ActiveSupport::TestCase
     end
   end
 
+  class PostIndexRoleTest < ActiveSupport::TestCase
+    subject { DeletePostContext::PostIndexRole }
+    include DelegatorTest
+
+    it 'deletes the post id from the index' do
+      post = OpenStruct.new score_hack: 4, post_id: 1
+      index = { 1 => 4 }
+      role = subject.new(index)
+      role.delete_post(post)
+      index.must_be_empty
+    end
+  end
+
   class TagRoleTest < ActiveSupport::TestCase
     subject { DeletePostContext::TagRole }
     include DelegatorTest

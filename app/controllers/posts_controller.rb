@@ -19,6 +19,7 @@ class PostsController < ApplicationController
     context = DeletePostContext.new post: post,
                                     tag_factory: tag_factory(redis),
                                     popular_index: redis.popular_posts_index,
+                                    post_index: redis.post_index,
                                     object_store: object_store
     context.call
     render_json status: 'ok'

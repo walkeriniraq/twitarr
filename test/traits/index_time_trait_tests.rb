@@ -1,7 +1,7 @@
 module IndexTimeTraitTests
 
   def test_index_according_to_time
-    post = OpenStruct.new time_index: DateTime.now, post_id: 1
+    post = OpenStruct.new time_index: Time.now.to_f, post_id: 1
     index = {}
     role = subject.new(index)
     role.add_post(post)
