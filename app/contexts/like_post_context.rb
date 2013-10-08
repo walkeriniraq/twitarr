@@ -16,15 +16,11 @@ class LikePostContext
   end
 
   class PostRole < SimpleDelegator
-    def score(likes_count)
-      post_time.to_f + likes_count * 3600
-    end
+    include PostScoreTrait
   end
 
   class PopularIndexRole < SimpleDelegator
-    def add_post(post, likes_count)
-      self[post.post_id] = post.score(likes_count)
-    end
+    include IndexScoreTrait
   end
 
 end

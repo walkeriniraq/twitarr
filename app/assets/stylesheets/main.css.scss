@@ -11,6 +11,10 @@ body {
   max-width: 1000px;
 }
 
+h1, h2, h3 {
+  margin-top: 10px;
+}
+
 @media (max-width: 767px) and (min-width: 480px) {
   .main {
     padding-left: 10px;
@@ -21,6 +25,14 @@ body {
 @media (max-width: 480px) {
   .main {
     padding: 0;
+  }
+
+  h1, h2, h3 {
+    margin: 10px;
+  }
+
+  .form-horizontal {
+    margin: 0 10px;
   }
 }
 

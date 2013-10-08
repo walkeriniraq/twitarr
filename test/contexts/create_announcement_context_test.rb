@@ -43,28 +43,14 @@ class CreateAnnouncementContextTest < ActiveSupport::TestCase
     subject { CreateAnnouncementContext::TagRole }
 
     include DelegatorTest
-
-    it 'adds post according to time hack' do
-      post = OpenStruct.new time_index: 4, post_id: 1
-      tag = {}
-      role = subject.new(tag)
-      role.add_post(post)
-      tag[1].must_equal post.time_index
-    end
+    include IndexTimeTraitTests
   end
 
   class AnnouncementIndexRoleTest < ActiveSupport::TestCase
     subject { CreateAnnouncementContext::AnnouncementIndexRole }
 
     include DelegatorTest
-
-    it 'adds post according to score hack' do
-      post = OpenStruct.new score: 4, post_id: 1
-      index = {}
-      role = subject.new(index)
-      role.add_post(post)
-      index[1].must_equal post.time_index
-    end
+    include IndexTimeTraitTests
   end
 
   class PostRoleTest < ActiveSupport::TestCase
@@ -72,12 +58,7 @@ class CreateAnnouncementContextTest < ActiveSupport::TestCase
 
     include DelegatorTest
     include PostRoleTraitTests
-
-    it 'time_index is based on the post_time' do
-      post = OpenStruct.new post_time: Time.now.to_f
-      role = subject.new(post)
-      role.time_index.must_equal post.post_time.to_f
-    end
+    include PostTimeIndexTrait
 
   end
 

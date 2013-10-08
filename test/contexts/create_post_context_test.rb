@@ -1,9 +1,8 @@
 require 'test_helper'
-require 'traits/post_role_trait_tests'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user post_text tag_factory popular_index object_store) }
+  let(:attributes) { %w(user post_text tag_factory popular_index post_index object_store) }
 
   include AttributesTest
 
@@ -15,11 +14,13 @@ class CreatePostContextTest < ActiveSupport::TestCase
                                     post_text: 'This is a test',
                                     tag_factory: lambda { |_| tag },
                                     popular_index: popular_index = {},
+                                    post_index: post_index = {},
                                     object_store: object_store
     post = context.call
     post.username.must_equal 'foo'
     post.message.must_equal 'This is a test'
     popular_index.keys.first.must_equal post.post_id
+    post_index.keys.first.must_equal post.post_id
     tag.keys.first.must_equal post.post_id
   end
 
@@ -43,28 +44,21 @@ class CreatePostContextTest < ActiveSupport::TestCase
     subject { CreatePostContext::TagRole }
 
     include DelegatorTest
-
-    it 'adds post according to time hack' do
-      post = OpenStruct.new time_index: 4, post_id: 1
-      tag = {}
-      role = subject.new(tag)
-      role.add_post(post)
-      tag[1].must_equal post.time_index
-    end
+    include IndexTimeTraitTests
   end
 
   class PopularIndexRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::PopularIndexRole }
 
     include DelegatorTest
+    include IndexTimeTraitTests
+  end
 
-    it 'adds post according to score hack' do
-      post = OpenStruct.new score: 4, post_id: 1
-      index = {}
-      role = subject.new(index)
-      role.add_post(post)
-      index[1].must_equal post.time_index
-    end
+  class PostIndexRoleTest < ActiveSupport::TestCase
+    subject { CreatePostContext::PostIndexRole }
+
+    include DelegatorTest
+    include IndexTimeTraitTests
   end
 
   class PostRoleTest < ActiveSupport::TestCase
@@ -72,12 +66,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
 
     include DelegatorTest
     include PostRoleTraitTests
-
-    it 'time_index is based on the post_time' do
-      post = OpenStruct.new post_time: Time.now.to_f
-      role = subject.new(post)
-      role.time_index.must_equal post.post_time.to_f
-    end
+    include PostTimeIndexTraitTests
 
   end
 

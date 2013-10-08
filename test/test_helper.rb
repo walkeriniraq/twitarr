@@ -4,6 +4,11 @@ require File.expand_path('../../config/environment', __FILE__)
 
 require 'rails/test_help'
 require 'mocha/setup'
+require 'traits/index_score_trait_tests'
+require 'traits/index_time_trait_tests'
+require 'traits/post_role_trait_tests'
+require 'traits/post_score_trait_tests'
+require 'traits/post_time_index_trait_tests'
 
 class BaseTestCase < ActiveSupport::TestCase
 

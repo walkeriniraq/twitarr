@@ -11,6 +11,7 @@ Twitarr::Application.routes.draw do
   put 'posts/favorite'
   get 'posts/list'
   get 'posts/search'
+  get 'posts/all'
 
   post 'user/login'
   post 'user/follow'

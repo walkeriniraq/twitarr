@@ -11,6 +11,12 @@ Twitarr.Post.reopenClass
   popular: ->
     @get_list("posts/popular")
 
+  all: (before_time = null) ->
+    unless before_time
+      @get_list("posts/all")
+    else
+      @get_list("posts/all?before=#{encodeURIComponent before_time}")
+
   user: (username, page = 0) ->
     @get_list("posts/list?username=#{encodeURIComponent username}&page=#{encodeURIComponent page}")
 

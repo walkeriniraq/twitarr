@@ -6,6 +6,8 @@ Twitarr.PostsChildRoute = Ember.Route.extend
 
 Twitarr.PostsPopularRoute = Twitarr.PostsChildRoute.extend()
 
+Twitarr.PostsAllRoute = Twitarr.PostsChildRoute.extend()
+
 Twitarr.PostsMineRoute = Twitarr.PostsChildRoute.extend()
 
 Twitarr.PostsSearchRoute = Twitarr.PostsChildRoute.extend

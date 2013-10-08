@@ -6,6 +6,7 @@ class PostsController < ApplicationController
                                     post_text: params[:message],
                                     tag_factory: tag_factory(redis),
                                     popular_index: redis.popular_posts_index,
+                                    post_index: redis.post_index,
                                     object_store: object_store
     context.call
     render_json status: 'ok'
@@ -36,6 +37,10 @@ class PostsController < ApplicationController
 
   def popular
     render_json status: 'ok', list: post_hash(redis.popular_posts_index.revrange(0, 50))
+  end
+
+  def all
+    render_json status: 'ok', list: post_hash(redis.post_index.revrange(0, 50))
   end
 
   def list
