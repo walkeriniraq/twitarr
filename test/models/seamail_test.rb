@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class EmailTest < ActiveSupport::TestCase
-  subject { Email }
-  let(:attributes) { %w(email_id from to subject text) }
+class SeamailTest < ActiveSupport::TestCase
+  subject { Seamail }
+  let(:attributes) { %w(seamail_id from subject text) }
 
   include AttributesTest
   include UpdateTest
@@ -14,7 +14,13 @@ class EmailTest < ActiveSupport::TestCase
 
   it 'lowercases a single TO name' do
     test = subject.new(to: 'FOO')
-    test.to.must_equal 'foo'
+    test.to.must_include 'foo'
+  end
+
+  it 'returns an array for a single TO name' do
+    test = subject.new(to: 'foo')
+    test.to.must_be_kind_of Enumerable
+    test.to.must_include 'foo'
   end
 
   it 'lowercases multiple TO names' do

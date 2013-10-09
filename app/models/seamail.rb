@@ -1,5 +1,5 @@
-class Email < BaseModel
-  attr :email_id, :from, :to, :subject, :text, :sent_time
+class Seamail < BaseModel
+  attr :seamail_id, :from, :to, :subject, :text, :sent_time
 
   def from
     @from.downcase if @from
@@ -11,7 +11,7 @@ class Email < BaseModel
   end
 
   def to
-    return @to.downcase if @to.respond_to? :downcase
+    return [ @to.downcase ] if @to.respond_to? :downcase
     return @to.map { |x| x.downcase } if @to.respond_to? :each
     @to
   end
