@@ -16,11 +16,11 @@ class CreatePostContext < BaseCreatePostContext
   end
 
   class PopularIndexRole < SimpleDelegator
-    include IndexTimeTrait
+    include IndexPostTimeTrait
   end
 
   class PostIndexRole < SimpleDelegator
-    include IndexTimeTrait
+    include IndexPostTimeTrait
   end
 
 end

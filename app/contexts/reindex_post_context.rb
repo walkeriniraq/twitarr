@@ -30,7 +30,7 @@ class ReindexPostContext
   end
 
   class PostIndexRole < SimpleDelegator
-    include IndexTimeTrait
+    include IndexPostTimeTrait
   end
 
   class PopularIndexRole < SimpleDelegator

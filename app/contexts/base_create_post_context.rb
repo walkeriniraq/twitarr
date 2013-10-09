@@ -31,7 +31,7 @@ class BaseCreatePostContext
   end
 
   class TagRole < SimpleDelegator
-    include IndexTimeTrait
+    include IndexPostTimeTrait
   end
 
 end

@@ -14,7 +14,7 @@ class CreateAnnouncementContext < BaseCreatePostContext
   end
 
   class AnnouncementIndexRole < SimpleDelegator
-    include IndexTimeTrait
+    include IndexPostTimeTrait
   end
 
 end
