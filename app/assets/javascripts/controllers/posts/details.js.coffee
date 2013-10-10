@@ -13,7 +13,9 @@ Twitarr.PostsDetailsController = Twitarr.ObjectController.extend Twitarr.PostsMi
       return if @get('model.user_liked')
       Twitarr.Post.favorite(id).done (data) =>
         return alert(data.status) unless data.status is 'ok'
-        @set('model.user_liked', true)
+        Ember.run =>
+          @set 'model.user_liked', true
+          @set 'model.liked_sentence', data.sentence
 
   liked_class: (->
     return 'glyphicon glyphicon-star' if @get('user_liked')

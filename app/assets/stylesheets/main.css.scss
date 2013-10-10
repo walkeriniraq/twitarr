@@ -1,6 +1,6 @@
 //  BOOTSTRAP OVERRIDES
 body {
-  padding: 50px 0 0;
+  padding: 50px 0 70px;
 }
 
 .main {
@@ -9,6 +9,21 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 1000px;
+}
+
+.bottom-menu-rounded {
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-left-radius: 5px;
+  right: 0;
+  left: auto;
+  max-width: 500px;
+  min-width: 100px;
+  padding: 0 20px;
+}
+
+.new-seamail-link {
+
 }
 
 h1, h2, h3 {

@@ -6,12 +6,6 @@
     {{/if}}
   {{/linkTo}}
   <div class="pull-right">
-    {{#if can_delete}}
-      <a href="#" class="margin-right-20" {{ action 'delete' post_id }}>
-        <span class="glyphicon glyphicon-trash" style="margin-left: 5px;"></span>
-        delete
-      </a>
-    {{/if}}
     <span style="color: darkgray;" {{bindAttr data-livestamp="post_time"}} ></span>
   </div>
 
@@ -25,16 +19,28 @@
       <div class="clearfix">
         <div class="pull-right">
           {{#unless user_liked}}
-            <a href="#" class="margin-right-20" {{ action 'favorite' post_id }}>
+            <button type="button" class="btn btn-primary btn-xs" {{ action 'favorite' post_id }}>
               <span class="glyphicon glyphicon-thumbs-up"></span>
               like
-            </a>
+            </button>
           {{/unless}}
           {{#unless replying}}
-            <a href="#" {{ action 'reply' username }}>
-              <span class="glyphicon glyphicon-pencil"></span>
-              reply
-            </a>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary btn-xs" {{ action 'reply' username }}>
+                <span class="glyphicon glyphicon-pencil"></span>
+                reply
+              </button>
+              {{#if can_delete}}
+                <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">reply</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" {{ action 'delete' post_id }}>delete</a></li>
+                </ul>
+              {{/if}}
+            </div>
           {{/unless}}
         </div>
       </div>
@@ -43,7 +49,7 @@
   {{#if replying}}
     <div class="post-reply clearfix">
       {{ partial 'posts/create' }}
-      <button class="btn btn-primary pull-right margin-right-20" style="margin-top: 5px;" {{ action 'cancel_post' }}>Cancel</button>
+      <button class="btn btn-primary pull-right margin-right-20 btn-xs" style="margin-top: 5px;" {{ action 'cancel_post' }}>Cancel</button>
     </div>
   {{/if}}
 </div>

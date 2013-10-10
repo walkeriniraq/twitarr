@@ -17,29 +17,13 @@
     <!--<div class='navbar-inner'>-->
     <div class="collapse navbar-collapse auto navbar-ex1-collapse">
       <ul class='nav navbar-nav'>
-        <li>{{#linkTo "announcements"}}Announcements{{/linkTo}}</li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Posts<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            {{#if logged_in}}
-              <li>{{#linkTo "posts.mine"}}Stream{{/linkTo}}</li>
-            {{/if}}
-            <li>{{#linkTo "posts.popular" }}Popular{{/linkTo}}</li>
-            <li>{{#linkTo "posts.all" }}All posts{{/linkTo}}</li>
-            {{#if logged_in}}
-              <li>{{#linkTo "posts.mine"}}Mine{{/linkTo}}</li>
-            {{/if}}
-          </ul>
-        </li>
         {{#if logged_in}}
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Seamail<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li>{{#linkTo "seamail.inbox" }}Inbox{{/linkTo}}</li>
-              <li>{{#linkTo "seamail.outbox" }}Sent{{/linkTo}}</li>
-              <li>{{#linkTo "posts.mine"}}Archived{{/linkTo}}</li>
-            </ul>
-          </li>
+          <li>{{#linkTo "posts.mine"}}Your Feed{{/linkTo}}</li>
+        {{/if}}
+        <li>{{#linkTo "posts.popular"}}What's Popular{{/linkTo}}</li>
+        <li>{{#linkTo "posts.all"}}All Posts{{/linkTo}}</li>
+        {{#if logged_in}}
+          <li>{{#linkTo "seamail.inbox"}}Seamail{{/linkTo}}</li>
         {{/if}}
       </ul>
       <ul class='nav navbar-nav navbar-right'>

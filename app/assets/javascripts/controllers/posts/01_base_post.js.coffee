@@ -18,6 +18,8 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend Twitarr.PostsMixin,
         return alert(data.status) unless data.status is 'ok'
         posts = _(@get('posts')).reject (x) -> x.post_id is id
         @set 'posts', posts
+    reload: ->
+      @reload()
 
   reload: ->
     @set 'loading', true

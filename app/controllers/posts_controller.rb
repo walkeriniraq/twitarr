@@ -33,7 +33,8 @@ class PostsController < ApplicationController
                                   username: current_username,
                                   popular_index: redis.popular_posts_index
     context.call
-    render_json status: 'ok'
+    favorites = UserFavorites.new(redis, current_username, [ post.post_id ])
+    render_json status: 'ok', sentence: post.decorate.liked_sentence(favorites)
   end
 
   def popular

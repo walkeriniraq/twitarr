@@ -10,3 +10,15 @@
 {{#if loading}}
   <img src="img/ajax-loader.gif" class="loading-gif">
 {{/if}}
+<nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs" style="padding: 0 15px;">
+  <div class="navbar-center" style="max-width: 850px;">
+    <button class="btn btn-default navbar-btn">New Post</button>
+    <button class="btn btn-default navbar-btn pull-right" {{ action 'reload' }}>Refresh</button>
+  </div>
+</nav>
+<nav class="navbar navbar-inverse navbar-fixed-bottom hidden-xs bottom-menu-rounded">
+  {{#if logged_in}}
+    <button class="btn btn-default navbar-btn" style="margin-right: 200px;">New Post</button>
+  {{/if}}
+  <button class="btn btn-default navbar-btn pull-right" {{ action 'reload' }}>Refresh</button>
+</nav>
