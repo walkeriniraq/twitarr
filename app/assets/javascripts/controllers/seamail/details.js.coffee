@@ -1,0 +1,1 @@
+Twitarr.SeamailDetailsController = Twitarr.ObjectController.extend()

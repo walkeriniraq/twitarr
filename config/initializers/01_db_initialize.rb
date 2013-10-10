@@ -38,6 +38,14 @@ class Redis
     sorted_set "System:tag_index:#{tag}"
   end
 
+  def inbox_index(username)
+    sorted_set "System:inbox_index:#{username}"
+  end
+
+  def sent_mail_index(username)
+    sorted_set "System:sent_index:#{username}"
+  end
+
   def popular_posts_index(opts = {})
     sorted_set 'System:popular_posts_index', opts
   end

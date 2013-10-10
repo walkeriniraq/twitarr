@@ -1,0 +1,15 @@
+<div>
+  <h3>Inbox</h3>
+  {{#each mail in controller.seamail}}
+    {{ render "seamail/details" mail }}
+  {{else}}
+    {{#unless loading}}
+      <div>
+        No Seamail!
+      </div>
+    {{/unless}}
+  {{/each}}
+  {{#if loading}}
+    <img src="img/ajax-loader.gif" class="loading-gif">
+  {{/if}}
+</div>
