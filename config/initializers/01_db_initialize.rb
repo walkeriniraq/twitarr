@@ -54,6 +54,10 @@ class Redis
     sorted_set 'System:post_index', opts
   end
 
+  def post_store
+    RedisHashObjectStore.new hash('System:posts_store'), Post
+  end
+
   def user_friends_set(username)
     redis_set "System:user_friends:#{username}"
   end
@@ -62,8 +66,8 @@ class Redis
     redis_set 'System:users'
   end
 
-  def announcements_index
-    sorted_set 'System:accouncements_index'
+  def announcements_list
+    list 'System:announcements_list'
   end
 
   def reindex_posts

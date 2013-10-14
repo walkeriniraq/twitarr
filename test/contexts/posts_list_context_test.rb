@@ -2,7 +2,7 @@ require_relative '..\test_helper'
 
 class PostsListContextTest < ActiveSupport::TestCase
   subject { PostsListContext }
-  let(:attributes) { %w(announcement_store posts_index object_store) }
+  let(:attributes) { %w(announcement_list posts_index object_store) }
 
   include AttributesTest
 
@@ -14,11 +14,10 @@ class PostsListContextTest < ActiveSupport::TestCase
     def get(id)
       @hash[id]
     end
-
   end
 
   it 'returns a list' do
-    context = PostsListContext.new announcement_store: [],
+    context = PostsListContext.new announcement_list: [],
                                    posts_index: [],
                                    object_store: TestObjectStore.new
     list = context.call
@@ -26,7 +25,7 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'lists posts' do
-    context = PostsListContext.new announcement_store: [],
+    context = PostsListContext.new announcement_list: [],
                                    posts_index: [1],
                                    object_store: TestObjectStore.new({ 1 => { post_id: 1, post_time: Time.now } })
     list = context.call
@@ -36,7 +35,7 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'lists announcements' do
-    context = PostsListContext.new announcement_store: [ Announcement.new(post_id: 'a1', post_time: Time.now) ],
+    context = PostsListContext.new announcement_list: [ Announcement.new(post_id: 'a1', post_time: Time.now) ],
                                    posts_index: [],
                                    object_store: TestObjectStore.new
     list = context.call
@@ -46,7 +45,7 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'lists recent posts after old announcements' do
-    context = PostsListContext.new announcement_store: [ Announcement.new(post_id: 'a1', post_time: Time.now - 360) ],
+    context = PostsListContext.new announcement_list: [ Announcement.new(post_id: 'a1', post_time: Time.now - 360) ],
                                    posts_index: [ 'p1' ],
                                    object_store: TestObjectStore.new( 'p1' => { post_id: 'p1', post_time: Time.now } )
     list = context.call
@@ -56,7 +55,7 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'moves announcements with time_offset ahead of posts' do
-    context = PostsListContext.new announcement_store: [ Announcement.new(post_id: 'a1', post_time: Time.now - 60, time_offset: 360) ],
+    context = PostsListContext.new announcement_list: [ Announcement.new(post_id: 'a1', post_time: Time.now - 60, time_offset: 360) ],
                                    posts_index: [ 'p1' ],
                                    object_store: TestObjectStore.new( 'p1' => { post_id: 'p1', post_time: Time.now } )
     list = context.call

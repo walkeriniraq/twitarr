@@ -3,22 +3,21 @@ require 'traits/post_role_trait_tests'
 
 class DeletePostContextTest < ActiveSupport::TestCase
   subject { DeletePostContext }
-  let(:attributes) { %w(post tag_factory popular_index object_store) }
+  let(:attributes) { %w(post tag_factory popular_index posts_store) }
 
   include AttributesTest
 
   it 'creates a post' do
     post = OpenStruct.new username: 'foo', message: 'This is my test', post_id: 3
-    object_store = mock
-    object_store.expects(:delete).with(Post, 3)
     tag = { 3 => 123 }
     context = DeletePostContext.new post: post,
                                     tag_factory: lambda { |_| tag },
                                     popular_index: popular_index = { 3 => 123 },
-                                    object_store: object_store
+                                    posts_store: posts_store = { 3 => 123 }
     context.call
     popular_index.must_be_empty
     tag.must_be_empty
+    posts_store.must_be_empty
   end
 
   class PostRoleTest < ActiveSupport::TestCase

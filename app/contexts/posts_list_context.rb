@@ -1,12 +1,12 @@
 class PostsListContext
   include HashInitialize
 
-  attr :announcement_store, :posts_index, :object_store
+  attr :announcement_list, :posts_index, :object_store
 
   TIME_ZERO = 0
 
   def call
-    announcements = announcement_store[0, 20].map { |x| AnnouncementRole.new x }
+    announcements = announcement_list[0, 20].map { |x| AnnouncementRole.new x }
     posts = posts_index[0, 20].map { |x| Post.new object_store.get(x) }
     count = announcements.count + posts.count
     announcements = announcements.each

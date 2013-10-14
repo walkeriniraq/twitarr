@@ -1,20 +1,11 @@
-class CreateAnnouncementContext < BaseCreatePostContext
+class CreateAnnouncementContext
+  include HashInitialize
 
-  attr :announcement_index
+  attr :list
 
-  def initialize(attrs = {})
-    super
-    @announcement_index = AnnouncementIndexRole.new(@announcement_index)
-  end
-
-  def call
-    ret = super
-    announcement_index.add_post @post
-    ret
-  end
-
-  class AnnouncementIndexRole < SimpleDelegator
-    include IndexPostTimeTrait
+  def call(username, text, time_offset)
+    announcement = Announcement.new message: text, username: username, post_id: SecureRandom.uuid, post_time: Time.now, time_offset: time_offset
+    list.unshift announcement
   end
 
 end

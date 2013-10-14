@@ -2,25 +2,76 @@ require 'test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user post_text tag_factory popular_index post_index object_store) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store) }
 
   include AttributesTest
 
-  it 'creates a post' do
-    object_store = mock
-    object_store.expects(:save).with(kind_of(Post), kind_of(String))
-    tag = {}
-    context = CreatePostContext.new user: 'foo',
-                                    post_text: 'This is a test',
-                                    tag_factory: lambda { |_| tag },
-                                    popular_index: popular_index = {},
-                                    post_index: post_index = {},
-                                    object_store: object_store
-    post = context.call
+  class FakePostsStore
+    attr :store
+
+    def initialize
+      @store = {}
+    end
+
+    def save(post, id)
+      @store[id] = post
+    end
+
+  end
+
+  it 'creates and returns a post' do
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new
+    post = context.call 'This is a test'
     post.username.must_equal 'foo'
     post.message.must_equal 'This is a test'
+  end
+
+  it 'adds the json string to the post_store' do
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: post_store = FakePostsStore.new
+    post = context.call 'This is a test'
+    store = post_store.store
+    store.count.must_equal 1
+    store.keys.first.must_be_kind_of String
+    store.values.first.must_be_kind_of Post
+    store.values.first.must_equal post
+  end
+
+  it 'adds the post_id to the popular index' do
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: popular_index = {},
+                          post_index: {},
+                          post_store: FakePostsStore.new
+    post = context.call 'This is a test'
     popular_index.keys.first.must_equal post.post_id
+  end
+
+  it 'adds the post_id to the post_index' do
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: post_index = {},
+                          post_store: FakePostsStore.new
+    post = context.call 'This is a test'
     post_index.keys.first.must_equal post.post_id
+  end
+
+  it 'adds the post_id to the tag index' do
+    tag = {}
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| tag },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new
+    post = context.call 'This is a test'
     tag.keys.first.must_equal post.post_id
   end
 
@@ -41,7 +92,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
   end
 
   class TagRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::TagRole }
+    subject { CreatePostContext::TagIndexRole }
 
     include DelegatorTest
     include IndexTimeTraitTests
