@@ -10,7 +10,16 @@ class UserController < ApplicationController
     return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
     return render_json status: 'Invalid username or password.' unless user.correct_password params[:password]
     login_user(user)
-    render_json status: 'ok', user: user.decorate.gui_hash, friends: redis.user_friends_set(user.username).members
+    render_json user_hash(user)
+  end
+
+  def user_hash(user)
+    {
+        status: 'ok',
+        user: user.decorate.gui_hash,
+        friends: redis.user_friends_set(user.username).members,
+        new_email: redis.inbox_index(user.username).size > 0
+    }
   end
 
   def follow
@@ -40,7 +49,7 @@ class UserController < ApplicationController
         return render_json status: 'User does not exist.'
       end
       return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
-      return render_json status: 'ok', user: current_user.decorate.gui_hash, friends: redis.user_friends_set(current_user.username).members
+      return render_json user_hash(current_user)
     end
     render_json status: 'logout'
   end
