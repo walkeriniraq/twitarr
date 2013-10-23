@@ -1,11 +1,15 @@
 class PostDecorator < Draper::Decorator
   delegate_all
 
-  def gui_hash(favorites)
+  def gui_hash_with_favorites(favorites)
     ret = to_hash %w(message username post_time post_id)
     ret[:liked_sentence] = liked_sentence favorites
     ret[:user_liked] = favorites.user_like(post_id)
     ret
+  end
+
+  def gui_hash
+    to_hash %w(message username post_time post_id)
   end
 
   def liked_sentence(favorites)

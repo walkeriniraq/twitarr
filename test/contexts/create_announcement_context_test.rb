@@ -1,4 +1,4 @@
-require_relative '..\test_helper'
+require_relative '../test_helper'
 
 class CreateAnnouncementContextTest < ActiveSupport::TestCase
   subject { CreateAnnouncementContext }
@@ -11,13 +11,14 @@ class CreateAnnouncementContextTest < ActiveSupport::TestCase
     context.call('foo', 'this is a test', 0)
     list.count.must_equal 1
     list.first.must_be_kind_of Announcement
+    list.first.time_offset.wont_be_nil
   end
 
   it 'adds an announcement to the beginning of the list' do
     context = subject.new list: list = ['foo']
     context.call('foo', 'this is a test', 0)
     list.count.must_equal 2
-    list.first.must_be_kind_of Announcement
+    list.first.time_offset.wont_be_nil
   end
 
 end

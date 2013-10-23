@@ -41,7 +41,11 @@ class PostsController < ApplicationController
   end
 
   def all
-    render_json status: 'ok', list: post_hash(redis.post_index.revrange(0, 50))
+    #render_json status: 'ok', list: post_hash(redis.post_index.revrange(0, 50))
+    context = PostsListContext.new announcement_list: redis.announcements_list,
+                                   posts_index: redis.post_index.revrange(0, 50),
+                                   post_store: redis.post_store
+    render_json status: 'ok', list: post_hash(context.call)
   end
 
   def list
@@ -59,9 +63,15 @@ class PostsController < ApplicationController
     render_json status: 'ok', list: post_hash(redis.tag_index("##{params[:term]}").revrange(0, 20))
   end
 
-  def post_hash(ids)
-    favorites = UserFavorites.new(redis, current_username, ids)
-    object_store.get(Post, ids).map { |x| x.decorate.gui_hash(favorites) }
+  def post_hash(posts)
+    favorites = UserFavorites.new(redis, current_username, posts.map { |x| x.post_id })
+    posts.map(&:decorate).map do |x|
+      if x.respond_to? :gui_hash_with_favorites
+        x.gui_hash_with_favorites(favorites)
+      else
+        x.gui_hash
+      end
+    end
   end
 
 end

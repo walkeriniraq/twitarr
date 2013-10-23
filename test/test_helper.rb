@@ -11,10 +11,15 @@ require_relative 'traits/post_role_trait_tests'
 require_relative 'traits/post_score_trait_tests'
 require_relative 'traits/post_time_index_trait_tests'
 
+class ObjectStoreTestModel < BaseModel
+  attr :foo, :bar, :baz
+end
+
 class BaseTestCase < ActiveSupport::TestCase
 
   def redis
-    @redis ||= Redis.new(host: 'gremlin', db: 15)
+    #@redis ||= Redis.new(host: 'gremlin', db: 15)
+    @redis ||= Redis.new(db: 15)
   end
 
 end

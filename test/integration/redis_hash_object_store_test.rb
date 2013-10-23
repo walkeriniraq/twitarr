@@ -1,11 +1,7 @@
-require_relative '..\test_helper'
+require_relative '../test_helper'
 
 class RedisHashObjectStoreTest < BaseTestCase
   subject { RedisHashObjectStore }
-
-  class ObjectStoreTestModel < BaseModel
-    attr :foo, :bar, :baz
-  end
 
   it 'can store and get objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'

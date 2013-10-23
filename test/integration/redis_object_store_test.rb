@@ -3,10 +3,6 @@ require 'test_helper'
 class RedisObjectStoreTest < BaseTestCase
   subject { RedisObjectStore }
 
-  class ObjectStoreTestModel < BaseModel
-    attr :foo, :bar, :baz
-  end
-
   it 'can store and get objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
     object_store = subject.new redis

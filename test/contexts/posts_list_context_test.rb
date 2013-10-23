@@ -1,8 +1,8 @@
-require_relative '..\test_helper'
+require_relative '../test_helper'
 
 class PostsListContextTest < ActiveSupport::TestCase
   subject { PostsListContext }
-  let(:attributes) { %w(announcement_list posts_index object_store) }
+  let(:attributes) { %w(announcement_list posts_index post_store) }
 
   include AttributesTest
 
@@ -19,7 +19,7 @@ class PostsListContextTest < ActiveSupport::TestCase
   it 'returns a list' do
     context = PostsListContext.new announcement_list: [],
                                    posts_index: [],
-                                   object_store: TestObjectStore.new
+                                   post_store: TestObjectStore.new
     list = context.call
     list.must_be_kind_of Enumerable
   end
@@ -27,7 +27,9 @@ class PostsListContextTest < ActiveSupport::TestCase
   it 'lists posts' do
     context = PostsListContext.new announcement_list: [],
                                    posts_index: [1],
-                                   object_store: TestObjectStore.new({ 1 => { post_id: 1, post_time: Time.now } })
+                                   post_store: TestObjectStore.new(
+                                       1 => Post.new(post_id: 1, post_time: Time.now)
+                                   )
     list = context.call
     list.count.must_equal 1
     list.first.must_be_kind_of Post
@@ -35,9 +37,9 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'lists announcements' do
-    context = PostsListContext.new announcement_list: [ Announcement.new(post_id: 'a1', post_time: Time.now) ],
+    context = PostsListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now)],
                                    posts_index: [],
-                                   object_store: TestObjectStore.new
+                                   post_store: TestObjectStore.new
     list = context.call
     list.count.must_equal 1
     list.first.must_be_kind_of Announcement
@@ -45,9 +47,11 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'lists recent posts after old announcements' do
-    context = PostsListContext.new announcement_list: [ Announcement.new(post_id: 'a1', post_time: Time.now - 360) ],
-                                   posts_index: [ 'p1' ],
-                                   object_store: TestObjectStore.new( 'p1' => { post_id: 'p1', post_time: Time.now } )
+    context = PostsListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now - 360)],
+                                   posts_index: ['p1'],
+                                   post_store: TestObjectStore.new(
+                                       'p1' => Post.new(post_id: 'p1', post_time: Time.now)
+                                   )
     list = context.call
     list.count.must_equal 2
     list.first.must_be_kind_of Post
@@ -55,9 +59,11 @@ class PostsListContextTest < ActiveSupport::TestCase
   end
 
   it 'moves announcements with time_offset ahead of posts' do
-    context = PostsListContext.new announcement_list: [ Announcement.new(post_id: 'a1', post_time: Time.now - 60, time_offset: 360) ],
-                                   posts_index: [ 'p1' ],
-                                   object_store: TestObjectStore.new( 'p1' => { post_id: 'p1', post_time: Time.now } )
+    context = PostsListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now - 60, time_offset: 360)],
+                                   posts_index: ['p1'],
+                                   post_store: TestObjectStore.new(
+                                       'p1' => Post.new(post_id: 'p1', post_time: Time.now)
+                                   )
     list = context.call
     list.count.must_equal 2
     list.first.must_be_kind_of Announcement
@@ -70,7 +76,7 @@ class PostsListContextTest < ActiveSupport::TestCase
 
     it 'includes the time offset in the post_time' do
       time = Time.now
-      announcement = Announcement.new( post_time: time, time_offset: 360 )
+      announcement = Announcement.new(post_time: time, time_offset: 360)
       role = subject.new(announcement)
       role.post_time.must_be :>, time.to_f
     end

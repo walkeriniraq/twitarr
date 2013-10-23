@@ -1,0 +1,26 @@
+require 'test_helper'
+
+class AnnouncementTest < ActiveSupport::TestCase
+  subject { Announcement }
+  let(:attributes) { %w(message username post_id time_offset) }
+
+  include AttributesTest
+  include UpdateTest
+
+  def test_post_time_starts_at_zero
+    post = subject.new
+    post.post_time.must_equal 0.0
+  end
+
+  def test_post_time_converts_to_float
+    date = Time.now
+    post = subject.new post_time: date
+    post.post_time.must_equal date.to_f
+  end
+
+  def test_fattrs_include_from_base_class
+    test = Announcement.fattrs
+    test.must_include 'message'
+  end
+
+end
