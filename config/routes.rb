@@ -3,7 +3,6 @@ Twitarr::Application.routes.draw do
 
   post 'announcements/submit'
   post 'announcements/delete'
-  get 'announcements/list'
 
   post 'posts/submit'
   post 'posts/delete'
