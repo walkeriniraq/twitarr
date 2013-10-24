@@ -22,7 +22,7 @@ class RedisObjectListTest < BaseTestCase
     list = redis.list 'ObjectListTest'
     object_list = subject.new list, ObjectStoreTestModel
     object_list.unshift model
-    test = object_list.get(0)
+    test = object_list[0]
     test.first.must_be_instance_of ObjectStoreTestModel
     test.first.foo.must_equal 'one'
     test.first.bar.must_equal 'two'
@@ -36,7 +36,7 @@ class RedisObjectListTest < BaseTestCase
       model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
       object_list.unshift model
     end
-    test = object_list.get(0, 3)
+    test = object_list[0, 3]
     test.count.must_equal 3
     test.each { |x| x.must_be_instance_of ObjectStoreTestModel }
   end

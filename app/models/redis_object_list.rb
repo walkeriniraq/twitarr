@@ -10,7 +10,7 @@ class RedisObjectList
     list << obj.to_hash(obj.class.fattrs).to_json
   end
 
-  def get(from, count = 1)
+  def [](from, count = 1)
     list[from, count].map { |x| clazz.new(JSON.parse x) }
   end
 

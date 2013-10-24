@@ -35,7 +35,7 @@ Twitarr::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.db = {
-      host: 'gremlin',
+      #host: 'gremlin',
       db: 3
   }
 
