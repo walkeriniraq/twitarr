@@ -41,11 +41,10 @@ class PostsController < ApplicationController
   end
 
   def all
-    #render_json status: 'ok', list: post_hash(redis.post_index.revrange(0, 50))
-    context = PostsListContext.new announcement_list: redis.announcements_list,
+    context = CommsListContext.new announcement_list: redis.announcements_list,
                                    posts_index: redis.post_index.revrange(0, 50),
                                    post_store: redis.post_store
-    render_json status: 'ok', list: post_hash(context.call)
+    render_json status: 'ok', list: context.call.map { |x| x.decorate.gui_hash }
   end
 
   def list

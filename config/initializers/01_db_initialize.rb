@@ -67,7 +67,7 @@ class Redis
   end
 
   def announcements_list
-    list 'System:announcements_list'
+    RedisObjectList.new list('System:announcements_list'), Announcement
   end
 
   def reindex_posts

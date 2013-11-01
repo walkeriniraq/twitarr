@@ -14,6 +14,12 @@ window.Twitarr = Ember.Application.create(
   LOG_BINDINGS: true
   ready: ->
     $("#app-loading").remove()
+  feed_list: ->
+    $.getJSON('posts/all').then (data) =>
+      return data unless data.list?
+      links = Ember.A()
+      links.pushObject(post) for post in data.list
+      links
 )
 
 $.ajaxSetup
