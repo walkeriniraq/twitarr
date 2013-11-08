@@ -61,7 +61,7 @@ GEM
       execjs (>= 1.2)
       handlebars-source
       railties (>= 3.1)
-    ember-source (1.0.0)
+    ember-source (1.1.2)
       handlebars-source (= 1.0.12)
     erubis (2.7.0)
     execjs (2.0.2)
