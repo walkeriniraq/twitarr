@@ -18,7 +18,7 @@ window.Twitarr = Ember.Application.create(
     $.getJSON('posts/all').then (data) =>
       return data unless data.list?
       links = Ember.A()
-      links.pushObject(post) for post in data.list
+      links.pushObject(Twitarr.Entry.create(entry)) for entry in data.list
       links
 )
 

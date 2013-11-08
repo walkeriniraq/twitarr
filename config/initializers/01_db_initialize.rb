@@ -70,13 +70,4 @@ class Redis
     RedisObjectList.new list('System:announcements_list'), Announcement
   end
 
-  def reindex_posts
-    posts = object_store.get(Post, keys.select { |x| x.start_with? 'Post:' }.map { |x| x.sub('Post:', '')})
-    context = ReindexPostContext.new post_list: posts,
-                                     post_index: post_index,
-                                     popular_index: popular_posts_index,
-                                     post_likes_factory: lambda { |post| post_favorites_set post.post_id }
-    context.call
-  end
-
 end

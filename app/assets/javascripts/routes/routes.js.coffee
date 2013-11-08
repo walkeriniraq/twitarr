@@ -4,7 +4,7 @@ Twitarr.FeedRoute = Ember.Route.extend
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
-    @transitionTo 'announcements'
+    @transitionTo 'feed'
 
 Twitarr.AnnouncementsRoute = Ember.Route.extend
   model: ->

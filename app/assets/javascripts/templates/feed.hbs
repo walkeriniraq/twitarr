@@ -1,4 +1,4 @@
 <h3>Feed</h3>
-{{#each}}
-  {{message}}
+{{#each entry in controller}}
+  {{ render "entry/details" entry }}
 {{/each}}

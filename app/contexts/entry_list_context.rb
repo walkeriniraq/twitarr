@@ -1,4 +1,4 @@
-class CommsListContext
+class EntryListContext
   include HashInitialize
 
   attr :announcement_list, :posts_index, :post_store

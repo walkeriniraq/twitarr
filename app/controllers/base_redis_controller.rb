@@ -18,10 +18,6 @@ class BaseRedisController < ActionController::Base
     @object_store ||= redis.object_store
   end
 
-  def tag_factory(redis)
-    lambda { |tag| redis.tag_index tag }
-  end
-
   def login_required
     render json: { status: 'Not logged in.' }
   end

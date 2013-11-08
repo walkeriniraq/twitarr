@@ -2,12 +2,13 @@ class PostsController < ApplicationController
 
   def submit
     return login_required unless logged_in?
-    context = CreatePostContext.new user: current_username,
-                                    tag_factory: tag_factory(redis),
-                                    popular_index: redis.popular_posts_index,
-                                    post_index: redis.post_index,
-                                    post_store: redis.post_store
-    context.call params[:message]
+    TwitarrDb.create_post current_username, params[:message]
+    #context = CreatePostContext.new user: current_username,
+    #                                tag_factory: tag_factory(redis),
+    #                                popular_index: redis.popular_posts_index,
+    #                                post_index: redis.post_index,
+    #                                post_store: redis.post_store
+    #context.call params[:message]
     render_json status: 'ok'
   end
 
@@ -41,7 +42,7 @@ class PostsController < ApplicationController
   end
 
   def all
-    context = CommsListContext.new announcement_list: redis.announcements_list,
+    context = EntryListContext.new announcement_list: redis.announcements_list,
                                    posts_index: redis.post_index.revrange(0, 50),
                                    post_store: redis.post_store
     render_json status: 'ok', list: context.call.map { |x| x.decorate.gui_hash }

@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
-class CommsListContextTest < ActiveSupport::TestCase
-  subject { CommsListContext }
+class EntryListContextTest < ActiveSupport::TestCase
+  subject { EntryListContext }
   let(:attributes) { %w(announcement_list posts_index post_store) }
 
   include AttributesTest
@@ -17,7 +17,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   it 'returns a list' do
-    context = CommsListContext.new announcement_list: [],
+    context = EntryListContext.new announcement_list: [],
                                    posts_index: [],
                                    post_store: TestObjectStore.new
     list = context.call
@@ -25,7 +25,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   it 'includes posts' do
-    context = CommsListContext.new announcement_list: [],
+    context = EntryListContext.new announcement_list: [],
                                    posts_index: [1],
                                    post_store: TestObjectStore.new(
                                        1 => Post.new(post_id: 1, post_time: Time.now)
@@ -37,7 +37,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   it 'includes announcements' do
-    context = CommsListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now)],
+    context = EntryListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now)],
                                    posts_index: [],
                                    post_store: TestObjectStore.new
     list = context.call
@@ -47,7 +47,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   it 'lists recent posts after old announcements' do
-    context = CommsListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now - 360)],
+    context = EntryListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now - 360)],
                                    posts_index: ['p1'],
                                    post_store: TestObjectStore.new(
                                        'p1' => Post.new(post_id: 'p1', post_time: Time.now)
@@ -59,7 +59,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   it 'moves announcements with time_offset ahead of posts' do
-    context = CommsListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now - 60, time_offset: 360)],
+    context = EntryListContext.new announcement_list: [Announcement.new(post_id: 'a1', post_time: Time.now - 60, time_offset: 360)],
                                    posts_index: ['p1'],
                                    post_store: TestObjectStore.new(
                                        'p1' => Post.new(post_id: 'p1', post_time: Time.now)
@@ -71,7 +71,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   class AnnouncementRoleTest < ActiveSupport::TestCase
-    subject { CommsListContext::AnnouncementRole }
+    subject { EntryListContext::AnnouncementRole }
     include DelegatorTest
 
     it 'includes the time offset in the time_plus_offset' do
@@ -114,7 +114,7 @@ class CommsListContextTest < ActiveSupport::TestCase
   end
 
   class PostRoleTest < ActiveSupport::TestCase
-    subject { CommsListContext::PostRole }
+    subject { EntryListContext::PostRole }
     include DelegatorTest
 
     it 'puts the post_id as the entry_id' do

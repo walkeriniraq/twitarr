@@ -1,0 +1,12 @@
+<div {{bindAttr class="entry_class"}}>
+  {{#linkTo "posts.user" username style="color: darkgray;"}}
+    {{ from }}
+    {{#if post_by_friend}}
+        <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
+    {{/if}}
+  {{/linkTo}}
+    <div class="pull-right">
+        <span style="color: darkgray;" {{bindAttr data-livestamp="time"}} ></span>
+    </div>
+    <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+</div>
