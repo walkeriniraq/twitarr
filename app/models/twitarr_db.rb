@@ -3,7 +3,7 @@ class TwitarrDb
     DbConnectionPool.instance.slow_connection
   end
 
-  def tag_factory(redis)
+  def self.tag_factory(redis)
     lambda { |tag| redis.tag_index tag }
   end
 

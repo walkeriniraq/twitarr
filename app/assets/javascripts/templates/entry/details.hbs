@@ -9,4 +9,55 @@
         <span style="color: darkgray;" {{bindAttr data-livestamp="time"}} ></span>
     </div>
     <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+
+    <div class="post-details clearfix">
+      {{#if liked_sentence}}
+          <div class="pull-left">{{liked_sentence}}</div>
+      {{/if}}
+      {{#if logged_in}}
+          <div class="clearfix">
+              <div class="pull-right">
+                {{#if can_like}}
+                    <button type="button" class="btn btn-primary btn-xs" {{ action 'favorite' post_id }}>
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        like
+                    </button>
+                {{/if}}
+                  <div class="btn-group">
+                    {{#if can_reply}}
+                        <button type="button" class="btn btn-primary btn-xs" {{ action 'reply' username }}>
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            reply
+                        </button>
+                      {{#if can_delete}}
+                          <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown">
+                              <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                              <li><a href="#">reply</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#" {{ action 'delete' post_id }}>delete</a></li>
+                          </ul>
+                      {{/if}}
+                    {{else}}
+                      {{#if can_delete}}
+                          <button type="button" class="btn btn-primary btn-xs" {{ action 'delete' username }}>
+                              <span class="glyphicon glyphicon-remove"></span>
+                              delete
+                          </button>
+                      {{/if}}
+                    {{/if}}
+                  </div>
+              </div>
+          </div>
+      {{/if}}
+    </div>
+  {{#if replying}}
+      <div class="post-reply clearfix">
+        {{ partial 'posts/create' }}
+          <button class="btn btn-primary pull-right margin-right-20 btn-xs"
+                  style="margin-top: 5px;" {{ action 'cancel_post' }}>Cancel
+          </button>
+      </div>
+  {{/if}}
 </div>
