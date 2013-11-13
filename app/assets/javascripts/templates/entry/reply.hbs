@@ -1,4 +1,8 @@
 <div class="form-horizontal" style='margin-top: 10px;'>
-  {{view Ember.TextArea class='form-control' placeholder='Say something!' valueBinding='newPost'}}
-  <button class="btn btn-primary pull-right btn-xs" style="margin-top: 5px;" {{ action 'make_post' }}>Post it</button>
+  {{#if reply_post_type}}
+    {{view Ember.TextArea class='form-control' placeholder='Say something!' valueBinding='newPost'}}
+    <button class="btn btn-primary pull-right btn-xs" style="margin-top: 5px;" {{ action 'make_post' }}>Post it</button>
+  {{else}}
+    Seamail type!
+  {{/if}}
 </div>

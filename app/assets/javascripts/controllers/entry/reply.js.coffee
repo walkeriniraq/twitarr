@@ -3,3 +3,6 @@ Twitarr.EntryReplyController = Twitarr.ObjectController.extend
     @set 'newPost', "@#{@get('from')} "
   ).observes('from')
 
+  reply_post_type: (->
+    @get('type') is 'post'
+  ).property('type')
