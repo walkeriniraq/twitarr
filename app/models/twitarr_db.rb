@@ -1,5 +1,5 @@
 class TwitarrDb
-  def self.redis
+  def self.db
     DbConnectionPool.instance.slow_connection
   end
 
@@ -9,6 +9,25 @@ class TwitarrDb
 
   def self.inbox_factory(redis)
     lambda { |user| redis.inbox_index user }
+  end
+
+  def self.user(username)
+    DbConnectionPool.instance.connection do |redis|
+      username = username.downcase
+      object_store.get(User, username)
+    end
+  end
+
+  def self.follow(from, to)
+    DbConnectionPool.instance.connection do |redis|
+      FriendGraph.new(redis.following, redis.followed).add(from, to)
+    end
+  end
+
+  def self.unfollow(from, to)
+    DbConnectionPool.instance.connection do |redis|
+      FriendGraph.new(redis.following, redis.followed).remove(from, to)
+    end
   end
 
   def self.create_seamail(from, to, subject, text)

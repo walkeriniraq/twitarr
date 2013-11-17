@@ -23,16 +23,14 @@ class UserController < ApplicationController
   end
 
   def follow
-    user = object_store.get(User, params[:username].downcase)
-    return render_json status: 'User does not exist.' unless user
-    redis.user_friends_set(current_username) << user.username
+    to = params[:username].downcase
+    return render_json status: 'User does not exist.' unless TwitarrDb.user(to)
+    TwitarrDb.follow(current_username, to)
     render_json status: 'ok'
   end
 
   def unfollow
-    user = object_store.get(User, params[:username].downcase)
-    return render_json status: 'User does not exist.' unless user
-    redis.user_friends_set(current_username).delete user.username
+    TwitarrDb.unfollow(current_username, params[:username].downcase)
     render_json status: 'ok'
   end
 

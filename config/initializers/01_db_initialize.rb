@@ -58,8 +58,12 @@ class Redis
     RedisHashObjectStore.new hash('System:posts_store'), Post
   end
 
-  def user_friends_set(username)
-    redis_set "System:user_friends:#{username}"
+  def following
+    NamedSetCache.new lambda { |name| redis_set "System:user_following:#{name}" }
+  end
+
+  def followed
+    NamedSetCache.new lambda { |name| redis_set "System:user_followed:#{name}" }
   end
 
   def user_set

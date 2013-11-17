@@ -4,7 +4,7 @@ class UserFavoritesTest < BaseTestCase
   subject { UserFavorites }
 
   def setup
-    steve_friends = redis.user_friends_set 'steve'
+    steve_friends = redis.following['steve']
     favorites = (0..4).map { |x| redis.post_favorites_set(x) }
 
     steve_friends << 'sally'
@@ -62,7 +62,7 @@ class UserFavoritesTest < BaseTestCase
   end
 
   def teardown
-    redis.user_friends_set('steve').clear
+    redis.following['steve'].clear
     (0..4).each { |x| redis.post_favorites_set(x).clear }
   end
 

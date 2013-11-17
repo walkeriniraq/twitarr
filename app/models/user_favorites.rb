@@ -1,7 +1,7 @@
 class UserFavorites
 
   def initialize(redis, username, post_ids)
-    user_friends = redis.user_friends_set username
+    user_friends = redis.following[username]
     @favorites_map = Hash[
         post_ids.map do |post_id|
           favorites = redis.post_favorites_set(post_id)
