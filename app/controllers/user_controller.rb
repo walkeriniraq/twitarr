@@ -18,7 +18,7 @@ class UserController < ApplicationController
         status: 'ok',
         user: user.decorate.gui_hash,
         friends: redis.user_friends_set(user.username).members,
-        new_email: redis.inbox_index(user.username).size > 0
+        new_email: redis.inbox_index(user.username).size
     }
   end
 

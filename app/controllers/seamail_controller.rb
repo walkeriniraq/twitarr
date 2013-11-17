@@ -1,17 +1,8 @@
 class SeamailController < ApplicationController
 
-  def inbox_factory(redis)
-    lambda { |user| redis.inbox_index user }
-  end
-
   def submit
     return login_required unless logged_in?
-    mail = Seamail.new from: current_username, to: params[:to], subject: params[:subject], text: params[:text]
-    context = CreateSeamailContext.new seamail: mail,
-                                       from_user_sent_index: redis.sent_mail_index(mail.from),
-                                       inbox_index_factory: inbox_factory(redis),
-                                       object_store: object_store
-    context.call
+    TwitarrDb.create_seamail current_username, params[:to], params[:subject], params[:text]
     render_json status: 'ok'
   end
 

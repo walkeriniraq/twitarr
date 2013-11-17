@@ -9,9 +9,18 @@
         <span class="icon-bar"></span>
       </button>
       <img src="/img/joco-coconut.png" style="height: 40px; margin-top: 5px; margin-left: 10px;" class="pull-left">
-    <span class="navbar-brand">
-      Twit-arr!
-    </span>
+      <span class="navbar-brand">
+        Twit-arr!
+      </span>
+      <span class="visible-xs pull-right" style="margin-right: 20px; margin-top: 8px;">
+        {{#if display_new_email_link}}
+          {{#linkTo "seamail.inbox" classNames="btn btn-default xs-new-mail"}}
+            <span style="font-size: small;">
+              New Seamail!
+            </span>
+          {{/linkTo}}
+        {{/if}}
+      </span>
     </div>
 
     <!--<div class='navbar-inner'>-->
@@ -23,7 +32,16 @@
         <li>{{#linkTo "posts.popular"}}Popular{{/linkTo}}</li>
         <li>{{#linkTo "posts.all"}}All Posts{{/linkTo}}</li>
         {{#if logged_in}}
-          <li>{{#linkTo "seamail.inbox"}}Seamail{{/linkTo}}</li>
+          <li>
+            {{#linkTo "seamail.inbox"}}
+              Seamail
+              {{#if new_email}}
+                <span class="badge" style="margin-left: 3px; background-color: orangered;">
+                  {{email_count_display}}
+                </span>
+              {{/if}}
+            {{/linkTo}}
+          </li>
         {{/if}}
       </ul>
       <ul class='nav navbar-nav navbar-right'>

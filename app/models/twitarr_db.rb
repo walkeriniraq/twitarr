@@ -7,6 +7,21 @@ class TwitarrDb
     lambda { |tag| redis.tag_index tag }
   end
 
+  def self.inbox_factory(redis)
+    lambda { |user| redis.inbox_index user }
+  end
+
+  def self.create_seamail(from, to, subject, text)
+    DbConnectionPool.instance.connection do |redis|
+      mail = Seamail.new from: from, to: to, subject: subject, text: text
+      context = CreateSeamailContext.new seamail: mail,
+                                         from_user_sent_index: redis.sent_mail_index(mail.from),
+                                         inbox_index_factory: inbox_factory(redis),
+                                         object_store: redis.object_store
+      context.call
+    end
+  end
+
   def self.create_post(user, post_text)
     DbConnectionPool.instance.connection do |redis|
       context = CreatePostContext.new user: user,

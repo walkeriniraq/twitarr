@@ -22,10 +22,6 @@ body {
   padding: 0 20px;
 }
 
-.new-seamail-link {
-
-}
-
 h1, h2, h3 {
   margin-top: 10px;
 }
@@ -74,6 +70,12 @@ a:hover, a:focus {
 }
 
 //  OTHER STYLES
+.xs-new-mail {
+  background-color: orangered;
+  border-color: red;
+  color: white;
+}
+
 .post-entry {
   background-color: #f0f0ff;
   border-color: darkgray -moz-use-text-color;
