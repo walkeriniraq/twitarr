@@ -1,13 +1,13 @@
 class UserFavorites
 
   def initialize(redis, username, post_ids)
-    user_friends = redis.following[username]
+    user_following = redis.user_following(username)
     @favorites_map = Hash[
         post_ids.map do |post_id|
           favorites = redis.post_favorites_set(post_id)
           hash = {
               user_like: favorites.member?(username),
-              friends_like: favorites & user_friends,
+              friends_like: favorites & user_following,
               like_count: favorites.count
           }
           hash[:like_count] -= 1 if hash[:user_like]

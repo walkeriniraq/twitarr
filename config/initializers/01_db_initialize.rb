@@ -59,11 +59,19 @@ class Redis
   end
 
   def following
-    NamedSetCache.new lambda { |name| redis_set "System:user_following:#{name}" }
+    NamedSetCache.new lambda { |name| following_set(name) }
+  end
+
+  def user_following(name)
+    redis_set "System:user_following:#{name}"
   end
 
   def followed
-    NamedSetCache.new lambda { |name| redis_set "System:user_followed:#{name}" }
+    NamedSetCache.new lambda { |name| followed_set(name) }
+  end
+
+  def user_followed(name)
+    redis_set "System:user_followed:#{name}"
   end
 
   def user_set
