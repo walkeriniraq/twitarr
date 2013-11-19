@@ -11,6 +11,10 @@ class TwitarrDb
     lambda { |user| redis.inbox_index user }
   end
 
+  def self.feed_factory(redis)
+    lambda { |user| redis.feed_index user }
+  end
+
   def self.user(username)
     DbConnectionPool.instance.connection do |redis|
       username = username.downcase
@@ -47,7 +51,9 @@ class TwitarrDb
                                       tag_factory: tag_factory(redis),
                                       popular_index: redis.popular_posts_index,
                                       post_index: redis.post_index,
-                                      post_store: redis.post_store
+                                      post_store: redis.post_store,
+                                      following_list: redis.user_followed(user).entries,
+                                      feed_factory: feed_factory(redis)
       context.call post_text
     end
   end

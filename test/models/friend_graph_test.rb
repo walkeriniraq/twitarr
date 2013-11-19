@@ -16,7 +16,7 @@ class FriendGraphTest < ActiveSupport::TestCase
     followed_cache = NamedSetCache.new(lambda { |name| Set.new })
     graph = FriendGraph.new(following_cache, followed_cache)
     graph.add('steve', 'dave')
-    following_cache['dave'].must_include 'steve'
+    followed_cache['dave'].must_include 'steve'
   end
 
   def test_add_lowercases_names
@@ -49,6 +49,18 @@ class FriendGraphTest < ActiveSupport::TestCase
     graph = FriendGraph.new(following_cache, followed_cache)
     graph.remove('STEVE', 'DAVE')
     following_cache['steve'].wont_include 'dave'
+  end
+
+  def test_followed_lowercases_names
+    stored_name = ''
+    following_cache = NamedSetCache.new(lambda { |name| Set.new(['dave']) })
+    followed_cache = NamedSetCache.new(lambda do |name|
+      stored_name = name
+      Set.new(['steve'])
+    end)
+    graph = FriendGraph.new(following_cache, followed_cache)
+    graph.followed('DAVE').must_include 'steve'
+    stored_name.must_equal 'dave'
   end
 
 end

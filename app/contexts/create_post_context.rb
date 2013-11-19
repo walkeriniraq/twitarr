@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr :user, :tag_factory, :popular_index, :post_index, :post_store
+  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :following_list, :feed_factory
 
   def initialize(attrs = {})
     super
@@ -9,6 +9,7 @@ class CreatePostContext
     @post_index = PostIndexRole.new(@post_index)
     @user = UserRole.new(@user)
     @post_store = PostStoreRole.new(@post_store)
+    @following_list ||= []
   end
 
   def call(post_text)
@@ -18,6 +19,10 @@ class CreatePostContext
     @post.tags.each do |tag|
       tag = TagIndexRole.new tag_factory.call(tag)
       tag.add_post @post
+    end
+    @following_list.each do |follower|
+      feed = FeedRole.new feed_factory.call(follower)
+      feed.add_post @post
     end
     popular_index.add_post @post
     post_index.add_post @post
@@ -39,6 +44,10 @@ class CreatePostContext
   end
 
   class TagIndexRole < SimpleDelegator
+    include IndexPostTimeTrait
+  end
+
+  class FeedRole < SimpleDelegator
     include IndexPostTimeTrait
   end
 

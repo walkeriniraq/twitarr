@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user tag_factory popular_index post_index post_store) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store feed_factory) }
 
   include AttributesTest
 
@@ -16,7 +16,17 @@ class CreatePostContextTest < ActiveSupport::TestCase
     def save(post, id)
       @store[id] = post
     end
+  end
 
+  it 'defaults the following_list to empty array' do
+    test = subject.new
+    test.following_list.must_equal []
+  end
+
+  it 'has accessor for following_list' do
+    test = subject.new
+    test.following_list = 'foo'
+    test.following_list.must_equal 'foo'
   end
 
   it 'creates and returns a post' do
@@ -75,6 +85,19 @@ class CreatePostContextTest < ActiveSupport::TestCase
     tag.keys.first.must_equal post.post_id
   end
 
+  it 'adds the post_id to the feed index' do
+    feed = {}
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          following_list: ['steve'],
+                          feed_factory: lambda { |_| feed }
+    post = context.call 'This is a test'
+    feed.keys.first.must_equal post.post_id
+  end
+
   class UserRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::UserRole }
 
@@ -93,6 +116,13 @@ class CreatePostContextTest < ActiveSupport::TestCase
 
   class TagRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::TagIndexRole }
+
+    include DelegatorTest
+    include IndexTimeTraitTests
+  end
+
+  class FeedRoleTest < ActiveSupport::TestCase
+    subject { CreatePostContext::FeedRole }
 
     include DelegatorTest
     include IndexTimeTraitTests

@@ -42,6 +42,10 @@ class Redis
     sorted_set "System:inbox_index:#{username}"
   end
 
+  def feed_index(username)
+    sorted_set "System:feed_index:#{username}"
+  end
+
   def sent_mail_index(username)
     sorted_set "System:sent_index:#{username}"
   end
@@ -59,7 +63,7 @@ class Redis
   end
 
   def following
-    NamedSetCache.new lambda { |name| following_set(name) }
+    NamedSetCache.new lambda { |name| user_following(name) }
   end
 
   def user_following(name)
@@ -67,7 +71,7 @@ class Redis
   end
 
   def followed
-    NamedSetCache.new lambda { |name| followed_set(name) }
+    NamedSetCache.new lambda { |name| user_followed(name) }
   end
 
   def user_followed(name)
@@ -76,6 +80,10 @@ class Redis
 
   def user_set
     redis_set 'System:users'
+  end
+
+  def friend_graph
+    FriendGraph.new(following, followed)
   end
 
   def announcements_list
