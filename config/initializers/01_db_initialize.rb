@@ -10,11 +10,15 @@ class Redis
     RedisObjectStore.new(self)
   end
 
+  def value(name, opts = {})
+    Redis::Value.new(name, self, opts)
+  end
+
   def list(name, opts = {})
     Redis::List.new(name, self, opts)
   end
 
-  def hash(name, opts = {})
+  def redis_hash(name, opts = {})
     Redis::HashKey.new(name, self, opts)
   end
 
@@ -59,7 +63,7 @@ class Redis
   end
 
   def post_store
-    RedisHashObjectStore.new hash('System:posts_store'), Post
+    RedisHashObjectStore.new redis_hash('System:posts_store'), Post
   end
 
   def following

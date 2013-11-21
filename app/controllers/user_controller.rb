@@ -2,7 +2,6 @@ require 'bcrypt'
 require 'json'
 
 class UserController < ApplicationController
-  skip_around_action :redis_context_filter, only: [:logout]
 
   def login
     user = object_store.get(User, params[:username].downcase)

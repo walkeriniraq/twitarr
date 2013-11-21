@@ -5,7 +5,7 @@ class RedisHashObjectStoreTest < BaseTestCase
 
   it 'can store and get objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     object_store.save model, 1
     test = object_store.get 1
@@ -17,7 +17,7 @@ class RedisHashObjectStoreTest < BaseTestCase
 
   it 'can get a list of objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     object_store.save model, 1
     object_store.save model, 2
@@ -27,21 +27,21 @@ class RedisHashObjectStoreTest < BaseTestCase
   end
 
   it 'returns nil if the object does not exist' do
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     test = object_store.get 'thing that does not exist'
     test.must_be_nil
   end
 
   it 'returns empty array if an empty array passed in' do
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     test = object_store.get []
     test.must_be_empty
   end
 
   it 'returns nil if nil passed in' do
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     test = object_store.get nil
     test.must_be_nil
@@ -49,7 +49,7 @@ class RedisHashObjectStoreTest < BaseTestCase
 
   it 'removes missing objects from return array' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     object_store.save model, 1
     object_store.save model, 2
@@ -60,7 +60,7 @@ class RedisHashObjectStoreTest < BaseTestCase
 
   it 'can delete objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
-    hash = redis.hash 'HashObjectStoreTest'
+    hash = redis.redis_hash 'HashObjectStoreTest'
     object_store = subject.new hash, ObjectStoreTestModel
     object_store.save model, 1
     object_store.save model, 2
