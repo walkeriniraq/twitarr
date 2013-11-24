@@ -1,3 +1,18 @@
 <div>
-  OUTBOX
+  <span class="pull-right">
+    {{#linkTo "seamail.inbox"}}Inbox{{/linkTo}}
+  </span>
+  <h3>Sent Mail</h3>
+  {{#each mail in controller.seamail}}
+    {{ render "seamail/details" mail }}
+  {{else}}
+    {{#unless loading}}
+      <div>
+        No sent mail
+      </div>
+    {{/unless}}
+  {{/each}}
+  {{#if loading}}
+    <img src="img/ajax-loader.gif" class="loading-gif">
+  {{/if}}
 </div>

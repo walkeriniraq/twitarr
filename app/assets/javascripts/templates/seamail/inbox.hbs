@@ -1,4 +1,7 @@
 <div>
+  <span class="pull-right">
+    {{#linkTo "seamail.outbox"}}Sent mail{{/linkTo}}
+  </span>
   <h3>Inbox</h3>
   {{#each mail in controller.seamail}}
     {{ render "seamail/details" mail }}
