@@ -1,15 +1,4 @@
-Twitarr.PostsMixin = Ember.Mixin.create
-  actions:
-    make_post: ->
-      text = @get 'newPost'
-      return unless text.trim()
-
-      Twitarr.Post.new(text).done (data) =>
-        return alert(data.status) unless data.status is 'ok'
-        @reload()
-      @set 'newPost', ''
-
-Twitarr.BasePostController = Twitarr.ObjectController.extend Twitarr.PostsMixin,
+Twitarr.BasePostController = Twitarr.ObjectController.extend
   loading: false
 
   actions:
