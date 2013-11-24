@@ -6,7 +6,7 @@ module BaseModelInstanceMethods
 
   def to_hash(keys)
     keys.reduce({}) do |hash, key|
-      hash[key] = send(key)
+      hash[key] = send(key) if send(key)
       hash
     end
   end

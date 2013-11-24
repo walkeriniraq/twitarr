@@ -15,7 +15,7 @@ window.Twitarr = Ember.Application.create(
   ready: ->
     $("#app-loading").remove()
   feed_list: ->
-    $.getJSON('posts/all').then (data) =>
+    $.getJSON('posts/feed').then (data) =>
       return data unless data.list?
       links = Ember.A()
       links.pushObject(Twitarr.Entry.create(entry)) for entry in data.list

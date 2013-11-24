@@ -8,6 +8,9 @@ Twitarr.Post.reopenClass
   search: (tag) ->
     @get_list("posts/search?term=#{encodeURIComponent tag}")
 
+  feed: ->
+    @get_list('posts/feed')
+
   popular: ->
     @get_list("posts/popular")
 

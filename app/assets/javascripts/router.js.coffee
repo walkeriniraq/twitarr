@@ -1,6 +1,5 @@
 Twitarr.Router.map ()->
   @route 'announcements'
-  @route 'feed'
   @resource 'users', ->
     @route 'index'
     @route 'edit', { path: '/:username/edit' }
@@ -10,6 +9,7 @@ Twitarr.Router.map ()->
     @route 'popular'
     @route 'mine'
     @route 'all'
+    @route 'feed'
     @route 'user', { path: '/user/:user' }
     @route 'search', { path: '/search/:tag' }
   @resource 'seamail', ->

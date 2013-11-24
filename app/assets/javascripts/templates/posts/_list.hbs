@@ -1,5 +1,5 @@
 {{#each post in controller.posts}}
-  {{ render "posts/details" post }}
+  {{ render "entry/details" post }}
 {{else}}
   {{#unless loading}}
     <div>
@@ -20,5 +20,5 @@
   {{#if logged_in}}
     <button class="btn btn-default navbar-btn" style="margin-right: 200px;">New Post</button>
   {{/if}}
-  <button class="btn btn-default navbar-btn pull-right" {{ action 'reload' }}>Refresh</button>
+  <button class="btn btn-default navbar-btn" {{ action 'reload' }}>Refresh</button>
 </nav>

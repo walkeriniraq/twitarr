@@ -4,6 +4,4 @@
     Follow more people to see more posts here!
   </div>
 {{/if}}
-{{#each entry in controller}}
-  {{ render "entry/details" entry }}
-{{/each}}
+{{ partial 'posts/list' }}

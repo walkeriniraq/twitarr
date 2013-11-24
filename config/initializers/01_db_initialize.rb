@@ -47,7 +47,11 @@ class Redis
   end
 
   def feed_index(username)
-    sorted_set "System:feed_index:#{username}"
+    sorted_set feed_name(username)
+  end
+
+  def feed_name(username)
+    "System:feed_index:#{username}"
   end
 
   def sent_mail_index(username)
@@ -94,4 +98,12 @@ class Redis
     RedisObjectList.new list('System:announcements_list'), Announcement
   end
 
+end
+
+class Redis
+  class SortedSet
+    def unionstore(name, sets, opts = {})
+      redis.zunionstore(name, keys_from_objects([self] + sets), opts)
+    end
+  end
 end

@@ -18,7 +18,7 @@ class TwitarrDb
   def self.user(username)
     DbConnectionPool.instance.connection do |redis|
       username = username.downcase
-      object_store.get(User, username)
+      redis.object_store.get(User, username)
     end
   end
 

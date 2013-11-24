@@ -1,7 +1,3 @@
-Twitarr.FeedRoute = Ember.Route.extend
-  model: ->
-    Twitarr.feed_list()
-
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo 'feed'

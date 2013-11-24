@@ -25,10 +25,13 @@ class UserController < ApplicationController
     to = params[:username].downcase
     return render_json status: 'User does not exist.' unless TwitarrDb.user(to)
     TwitarrDb.follow(current_username, to)
+    feed = redis.feed_index(current_username)
+    feed.unionstore redis.feed_name(current_username), [redis.tag_index("@#{to}")], :aggregate => 'max'
     render_json status: 'ok'
   end
 
   def unfollow
+    to = params[:username].downcase
     TwitarrDb.unfollow(current_username, params[:username].downcase)
     render_json status: 'ok'
   end

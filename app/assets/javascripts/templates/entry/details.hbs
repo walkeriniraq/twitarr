@@ -1,5 +1,5 @@
 <div {{bindAttr class="entry_class"}}>
-  {{#linkTo "posts.user" username style="color: darkgray;"}}
+  {{#linkTo "posts.user" from style="color: darkgray;"}}
     {{ from }}
     {{#if post_by_friend}}
       <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
@@ -17,7 +17,7 @@
     {{#if logged_in}}
       <div class="pull-right">
         {{#if can_like}}
-          <button type="button" class="btn btn-primary btn-xs" {{ action 'favorite' post_id }}>
+          <button type="button" class="btn btn-primary btn-xs" {{ action 'favorite' entry_id }}>
             <span class="glyphicon glyphicon-thumbs-up"></span>
             like
           </button>
@@ -35,7 +35,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">reply</a></li>
                 <li class="divider"></li>
-                <li><a href="#" {{ action 'delete' post_id }}>delete</a></li>
+                <li><a href="#" {{ action 'delete' entry_id }}>delete</a></li>
               </ul>
             {{/if}}
           {{else}}

@@ -3,12 +3,6 @@ class PostsController < ApplicationController
   def submit
     return login_required unless logged_in?
     TwitarrDb.create_post current_username, params[:message]
-    #context = CreatePostContext.new user: current_username,
-    #                                tag_factory: tag_factory(redis),
-    #                                popular_index: redis.popular_posts_index,
-    #                                post_index: redis.post_index,
-    #                                post_store: redis.post_store
-    #context.call params[:message]
     render_json status: 'ok'
   end
 
@@ -27,7 +21,7 @@ class PostsController < ApplicationController
 
   def favorite
     return login_required unless logged_in?
-    post = object_store.get(Post, params[:id])
+    post = redis.post_store.get params[:id]
     context = LikePostContext.new post: post,
                                   post_likes: redis.post_favorites_set(post.post_id),
                                   username: current_username,
@@ -38,14 +32,25 @@ class PostsController < ApplicationController
   end
 
   def popular
-    render_json status: 'ok', list: post_hash(redis.popular_posts_index.revrange(0, 50))
+    context = EntryListContext.new announcement_list: redis.announcements_list,
+                                   posts_index: redis.popular_posts_index.revrange(0, 50),
+                                   post_store: redis.post_store
+    render_json status: 'ok', list: list_output(context.call)
   end
 
   def all
     context = EntryListContext.new announcement_list: redis.announcements_list,
                                    posts_index: redis.post_index.revrange(0, 50),
                                    post_store: redis.post_store
-    render_json status: 'ok', list: context.call.map { |x| x.decorate.gui_hash }
+    render_json status: 'ok', list: list_output(context.call)
+  end
+
+  def feed
+    return login_required unless logged_in?
+    context = EntryListContext.new announcement_list: redis.announcements_list,
+                                   posts_index: redis.feed_index(current_username).revrange(0, 50),
+                                   post_store: redis.post_store
+    render_json status: 'ok', list: list_output(context.call)
   end
 
   def list
@@ -56,11 +61,23 @@ class PostsController < ApplicationController
           else
             "@#{current_username}"
           end
-    render_json status: 'ok', list: post_hash(redis.tag_index(tag).revrange(0, 20))
+    context = EntryListContext.new announcement_list: [],
+                                   posts_index: redis.tag_index(tag).revrange(0, 50),
+                                   post_store: redis.post_store
+    render_json status: 'ok', list: list_output(context.call)
   end
 
   def search
-    render_json status: 'ok', list: post_hash(redis.tag_index("##{params[:term]}").revrange(0, 20))
+    context = EntryListContext.new announcement_list: [],
+                                   posts_index: redis.tag_index("##{params[:term]}").revrange(0, 50),
+                                   post_store: redis.post_store
+    render_json status: 'ok', list: list_output(context.call)
+  end
+
+  def list_output(list)
+    ids = list.reduce([]) { |list, x| list << x.entry_id if x.type == :post; list }
+    favorites = UserFavorites.new(redis, current_username, ids)
+    list.map { |x| x.decorate.gui_hash_with_favorites(favorites) }
   end
 
   def post_hash(posts)
