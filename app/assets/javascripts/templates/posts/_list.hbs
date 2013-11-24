@@ -18,7 +18,7 @@
 </nav>
 <nav class="navbar navbar-inverse navbar-fixed-bottom hidden-xs bottom-menu-rounded">
   {{#if logged_in}}
-    <button class="btn btn-default navbar-btn" style="margin-right: 200px;">New Post</button>
+    {{#linkTo "create_post" classNames="btn btn-default navbar-btn"}}New Post{{/linkTo}}
   {{/if}}
   <button class="btn btn-default navbar-btn" {{ action 'reload' }}>Refresh</button>
 </nav>

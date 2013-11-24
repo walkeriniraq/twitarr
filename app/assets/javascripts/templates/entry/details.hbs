@@ -1,8 +1,9 @@
 <div {{bindAttr class="entry_class"}}>
   {{#linkTo "posts.user" from}}
-    {{ from }}
     {{#if post_by_friend}}
-      <span class="glyphicon glyphicon-bookmark" style="margin-left: 5px;"></span>
+      <span style="border: 1px solid #77BB77; color: black; background-color: #99EE99">{{ from }}</span>
+    {{else}}
+      <span style="color: black">{{ from }}</span>
     {{/if}}
   {{/linkTo}}
   <div class="pull-right">

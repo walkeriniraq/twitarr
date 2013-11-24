@@ -16,5 +16,6 @@ Twitarr.Router.map ()->
     @route 'inbox'
     @route 'outbox'
   @route 'profile'
+  @route 'create_post'
   @route 'login'
   @route 'message'

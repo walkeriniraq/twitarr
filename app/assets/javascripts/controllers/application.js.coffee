@@ -45,6 +45,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
   ).property('logged_in', 'email_count')
 
   actions:
+    create_post: ->
+      @transitionToRoute 'create_post'
     logout: ->
       $.getJSON('user/logout').done (data) =>
         if data.status is 'ok'
