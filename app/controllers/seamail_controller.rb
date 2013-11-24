@@ -9,14 +9,14 @@ class SeamailController < ApplicationController
   def inbox
     return login_required unless logged_in?
     ids = redis.inbox_index(current_username).revrange(0, 50)
-    list = object_store.get(Seamail, ids) || []
+    list = redis.seamail_store.get(ids) || []
     render_json status: 'ok', list: list.map { |x| x.decorate.gui_hash }
   end
 
   def outbox
     return login_required unless logged_in?
     ids = redis.sent_mail_index(current_username)
-    list = object_store.get(Seamail, ids) || []
+    list = redis.seamail_store.get(ids) || []
     render_json status: 'ok', list: list.map { |x| x.decorate.gui_hash }
   end
 

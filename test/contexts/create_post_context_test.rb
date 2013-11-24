@@ -81,7 +81,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           popular_index: {},
                           post_index: {},
                           post_store: FakePostsStore.new
-    post = context.call 'This is a test'
+    post = context.call 'This is a #test'
     tag.keys.first.must_equal post.post_id
   end
 

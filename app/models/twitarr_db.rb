@@ -40,7 +40,7 @@ class TwitarrDb
       context = CreateSeamailContext.new seamail: mail,
                                          from_user_sent_index: redis.sent_mail_index(mail.from),
                                          inbox_index_factory: inbox_factory(redis),
-                                         object_store: redis.object_store
+                                         seamail_store: redis.seamail_store
       context.call
     end
   end

@@ -3,7 +3,7 @@ require Rails.root + 'lib/db_connection_pool'
 DbConnectionPool.instance.configure(Rails.application.config.db)
 
 # this is a horrible hack due to the way that redis objects are configured
-Redis::Objects.redis = Redis.new Rails.application.config.db
+#Redis::Objects.redis = Redis.new Rails.application.config.db
 
 class Redis
   def object_store
@@ -35,15 +35,15 @@ class Redis
   ###
 
   def post_favorites_set(post_id)
-    redis_set "System:post_likes:#{post_id}"
+    redis_set "post:post_likes:#{post_id}"
   end
 
   def tag_index(tag)
-    sorted_set "System:tag_index:#{tag}"
+    sorted_set "post:tag_index:#{tag}"
   end
 
   def inbox_index(username)
-    sorted_set "System:inbox_index:#{username}"
+    sorted_set "user:inbox_index:#{username}"
   end
 
   def feed_index(username)
@@ -51,23 +51,27 @@ class Redis
   end
 
   def feed_name(username)
-    "System:feed_index:#{username}"
+    "user:feed_index:#{username}"
   end
 
   def sent_mail_index(username)
-    sorted_set "System:sent_index:#{username}"
+    sorted_set "user:sent_index:#{username}"
   end
 
   def popular_posts_index(opts = {})
-    sorted_set 'System:popular_posts_index', opts
+    sorted_set 'post:popular_posts_index', opts
   end
 
   def post_index(opts = {})
-    sorted_set 'System:post_index', opts
+    sorted_set 'post:post_index', opts
   end
 
   def post_store
-    RedisHashObjectStore.new redis_hash('System:posts_store'), Post
+    RedisHashObjectStore.new redis_hash('post:store'), Post
+  end
+
+  def seamail_store
+    RedisHashObjectStore.new redis_hash('seamail:store'), Seamail
   end
 
   def following
@@ -75,7 +79,7 @@ class Redis
   end
 
   def user_following(name)
-    redis_set "System:user_following:#{name}"
+    redis_set "user:following:#{name}"
   end
 
   def followed
@@ -83,11 +87,11 @@ class Redis
   end
 
   def user_followed(name)
-    redis_set "System:user_followed:#{name}"
+    redis_set "user:followed:#{name}"
   end
 
   def user_set
-    redis_set 'System:users'
+    redis_set 'system:users'
   end
 
   def friend_graph
@@ -95,7 +99,7 @@ class Redis
   end
 
   def announcements_list
-    RedisObjectList.new list('System:announcements_list'), Announcement
+    RedisObjectList.new list('system:announcements_list'), Announcement
   end
 
 end
