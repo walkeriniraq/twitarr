@@ -1,6 +1,6 @@
 class SeamailController < ApplicationController
 
-  def submit
+  def new
     return login_required unless logged_in?
     TwitarrDb.create_seamail current_username, params[:to], params[:subject], params[:text]
     render_json status: 'ok'

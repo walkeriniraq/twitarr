@@ -1,4 +1,4 @@
-Twitarr.MessageController = Twitarr.ObjectController.extend
+Twitarr.SeamailNewController = Twitarr.ObjectController.extend
 
   actions:
     send: ->
@@ -7,6 +7,8 @@ Twitarr.MessageController = Twitarr.ObjectController.extend
       if _.keys(errors).length
         @set('errors', errors)
         return
-      $.ajax(type: 'PUT', url: 'user/message', data: { message: @get('model').to_json() }).done (data) ->
+      @get('model').post().done (data) =>
         unless data.status is 'ok'
           alert data.status
+        else
+          @transitionToRoute 'posts.feed'

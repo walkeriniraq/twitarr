@@ -15,7 +15,7 @@ Twitarr::Application.routes.draw do
 
   get 'seamail/inbox'
   get 'seamail/outbox'
-  post 'seamail/submit'
+  post 'seamail/new'
 
   post 'user/login'
   post 'user/follow'
