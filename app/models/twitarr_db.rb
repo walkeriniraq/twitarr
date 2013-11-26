@@ -18,7 +18,7 @@ class TwitarrDb
   def self.user(username)
     DbConnectionPool.instance.connection do |redis|
       username = username.downcase
-      redis.object_store.get(User, username)
+      redis.user_store.get(username)
     end
   end
 
@@ -60,7 +60,8 @@ class TwitarrDb
 
   def self.reindex_posts
     DbConnectionPool.instance.connection do |redis|
-      posts = redis.object_store.get(Post, redis.keys.
+      # TODO: fix this
+      posts = redis.post_store.get(redis.keys.
           select { |x| x.start_with? 'Post:' }.
           map { |x| x.sub('Post:', '') })
       context = ReindexPostContext.new post_list: posts,

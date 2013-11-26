@@ -74,4 +74,15 @@ class RedisHashObjectStoreTest < BaseTestCase
     test.count.must_equal 0
   end
 
+  it 'can get the list of keys' do
+    model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
+    hash = redis.redis_hash 'HashObjectStoreTest'
+    object_store = subject.new hash, ObjectStoreTestModel
+    object_store.save model, 1
+    object_store.save model, 2
+    test = object_store.keys
+    test.must_include '1'
+    test.must_include '2'
+  end
+
 end

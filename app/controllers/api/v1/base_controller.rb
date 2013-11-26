@@ -6,7 +6,7 @@ class API::V1::BaseController < BaseRedisController
     #return render_json( status: 'API Key required for access' ) unless valid_api_key?
     authenticate_or_request_with_http_basic do |username, password|
       return false unless username && password
-      @user = object_store.get(User, username)
+      @user = redis.user_store.get(username)
       @user.correct_password(password)
     end
   end

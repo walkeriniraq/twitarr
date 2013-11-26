@@ -8,13 +8,13 @@ class PostsController < ApplicationController
 
   def delete
     return login_required unless logged_in?
-    post = object_store.get(Post, params[:id])
+    post = redis.post_store.get(params[:id])
     return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username || is_admin?
     context = DeletePostContext.new post: post,
                                     tag_factory: tag_factory(redis),
                                     popular_index: redis.popular_posts_index,
                                     post_index: redis.post_index,
-                                    object_store: object_store
+                                    post_store: redis.post_store
     context.call
     render_json status: 'ok'
   end
@@ -55,7 +55,7 @@ class PostsController < ApplicationController
 
   def list
     tag = if params[:username]
-            user = object_store.get(User, params[:username])
+            user = redis.user_store.get(params[:username])
             return render_json(status: 'Could not find user!') if user.nil?
             "@#{params[:username]}"
           else

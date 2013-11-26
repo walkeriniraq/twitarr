@@ -6,9 +6,9 @@ DbConnectionPool.instance.configure(Rails.application.config.db)
 #Redis::Objects.redis = Redis.new Rails.application.config.db
 
 class Redis
-  def object_store
-    RedisObjectStore.new(self)
-  end
+  #def object_store
+  #  RedisObjectStore.new(self)
+  #end
 
   def value(name, opts = {})
     Redis::Value.new(name, self, opts)
@@ -68,6 +68,10 @@ class Redis
 
   def post_store
     RedisHashObjectStore.new redis_hash('post:store'), Post
+  end
+
+  def user_store
+    RedisHashObjectStore.new redis_hash('user:store'), User
   end
 
   def seamail_store

@@ -25,7 +25,7 @@ class ApplicationController < BaseRedisController
   end
 
   def current_user
-    @user ||= object_store.get(User, current_username)
+    @user ||= redis.user_store.get(current_username)
   end
 
   def login_user(user)

@@ -14,10 +14,6 @@ class BaseRedisController < ActionController::Base
     @redis_connection
   end
 
-  def object_store
-    @object_store ||= redis.object_store
-  end
-
   def login_required
     render json: { status: 'Not logged in.' }
   end

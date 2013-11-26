@@ -4,7 +4,7 @@ require 'json'
 class UserController < ApplicationController
 
   def login
-    user = object_store.get(User, params[:username].downcase)
+    user = redis.user_store.get(params[:username].downcase)
     return render_json status: 'User does not exist.' if user.nil?
     return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
     return render_json status: 'Invalid username or password.' unless user.correct_password params[:password]
@@ -62,12 +62,12 @@ class UserController < ApplicationController
     user.is_admin = false
     return render_json status: 'Username must be at least six characters.' if user.username.nil? || user.username.length < 6
     return render_json status: 'Username cannot contain spaces or the following characters: %#:' unless User.valid_username? params[:username]
-    return render_json status: 'Username already exists.' if object_store.get(User, user.username)
+    return render_json status: 'Username already exists.' if redis.user_store.get(user.username)
     return render_json status: 'Email address is not valid.' if (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
     return render_json status: 'Password must be at least six characters long.' if params[:password].length < 6
     return render_json status: 'Passwords do not match.' if params[:password] != params[:password2]
     user.set_password params[:password]
-    object_store.save user, user.username
+    redis.user_store.save user, user.username
     redis.user_set << user.username
     render_json status: 'ok'
   end
@@ -84,7 +84,7 @@ class UserController < ApplicationController
     return render_json status: 'User does not exist.' if current_user.nil?
     return render_json status: 'Invalid username or password.' unless current_user.correct_password params[:old_password]
     current_user.set_password params[:new_password]
-    object_store.save current_user, current_user.username
+    redis.user_store.save current_user, current_user.username
   end
 
 end

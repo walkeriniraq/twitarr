@@ -2,7 +2,11 @@ class SeamailController < ApplicationController
 
   def new
     return login_required unless logged_in?
-    TwitarrDb.create_seamail current_username, params[:to], params[:subject], params[:text]
+    context = ValidateUserListContext.new list: params[:to],
+                                          user_set: redis.user_set
+    list = context.call
+    return render_json(status: 'To names are not valid', names: context.validation) if list == nil
+    TwitarrDb.create_seamail current_username, list, params[:subject], params[:text]
     render_json status: 'ok'
   end
 
