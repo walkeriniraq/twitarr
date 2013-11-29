@@ -69,12 +69,17 @@ class UserController < ApplicationController
     user.set_password params[:password]
     redis.user_store.save user, user.username
     redis.user_set << user.username
+    redis.user_auto.add user.username, user.username, 'username'
     render_json status: 'ok'
   end
 
   def logout
     logout_user
     render_json status: 'ok'
+  end
+
+  def autocomplete
+    render_json status: 'ok', names: redis.user_auto.query(params[:string])
   end
 
   def change_password

@@ -27,13 +27,18 @@ h1, h2, h3 {
 }
 
 @media (max-width: 767px) and (min-width: 480px) {
-  .main {
+  .form-group {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
 
 @media (max-width: 480px) {
+  .form-horizontal .form-group {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
   .main {
     padding: 0;
   }
@@ -70,6 +75,22 @@ a:hover, a:focus {
 }
 
 //  OTHER STYLES
+@media (min-width: 767px) {
+  .post-autocomplete {
+    left: 13em;
+    top: 2em;
+    width: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .post-autocomplete {
+    left: 2em;
+    top: -0.5em;
+    width: 400px;
+  }
+}
+
 .xs-new-mail {
   background-color: orangered;
   border-color: red;
@@ -101,11 +122,9 @@ a:hover, a:focus {
 .seamail-entry {
   background-color: #EFFFDF;
   border-color: darkgray -moz-use-text-color;
-  border-left: medium solid;
-  border-right: medium solid;
-  border-style: solid;
+  border: medium solid;
   border-width: 1px medium;
-  margin: -1px 0;
+  margin: 12px 0;
   padding: 10px;
   width: 100%;
 }

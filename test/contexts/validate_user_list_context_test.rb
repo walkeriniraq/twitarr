@@ -24,6 +24,12 @@ class ValidateUserListContextTest < ActiveSupport::TestCase
     test.must_equal %w(foo bar)
   end
 
+  it 'removes semicolons from the list' do
+    context = subject.new list: '@foo;@bar', user_set: Set.new(['foo', 'bar'])
+    test = context.call
+    test.must_equal %w(foo bar)
+  end
+
   it 'leaves a space after a comma' do
     context = subject.new list: 'foo,bar', user_set: Set.new(['foo', 'bar'])
     test = context.call

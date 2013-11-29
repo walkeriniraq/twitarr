@@ -1,9 +1,11 @@
 <div {{bindAttr class="entry_class"}}>
   {{#linkTo "posts.user" from}}
     {{#if post_by_friend}}
-      <span style="border: 1px solid #77BB77; color: black; background-color: #99EE99">{{ from }}</span>
+      <span style="font-weight: bold;">@{{ from }}
+        <span style="color: #d3ac00; " class="glyphicon glyphicon-star"></span>
+      </span>
     {{else}}
-      <span style="color: black">{{ from }}</span>
+      <span style="">@{{ from }}</span>
     {{/if}}
   {{/linkTo}}
   <div class="pull-right">

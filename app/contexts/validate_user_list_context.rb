@@ -10,7 +10,7 @@ class ValidateUserListContext
   end
 
   def call
-    names = list.gsub(/[,@]/, ' ').split
+    names = list.gsub(/[,@;]/, ' ').split
     names.each do |name|
       @validation << name unless user_set.include? name
     end

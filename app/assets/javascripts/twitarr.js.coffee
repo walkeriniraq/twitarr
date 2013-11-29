@@ -9,18 +9,35 @@
 
 window.console = { log: -> } unless window.console?
 
-window.Twitarr = Ember.Application.create(
+(($, undefined_) ->
+  $.fn.getCursorPosition = ->
+    el = $(this).get(0)
+    pos = 0
+    if "selectionStart" of el
+      pos = el.selectionStart
+    else if "selection" of document
+      el.focus()
+      Sel = document.selection.createRange()
+      SelLength = document.selection.createRange().text.length
+      Sel.moveStart "character", -el.value.length
+      pos = Sel.text.length - SelLength
+    pos
+) jQuery
+
+window.Twitarr = Ember.Application.create
   LOG_TRANSITIONS: true
   LOG_BINDINGS: true
   ready: ->
     $("#app-loading").remove()
   feed_list: ->
-    $.getJSON('posts/feed').then (data) =>
+    $.getJSON("posts/feed").then (data) =>
       return data unless data.list?
       links = Ember.A()
       links.pushObject(Twitarr.Entry.create(entry)) for entry in data.list
       links
-)
+
+Twitarr.TextField = Ember.TextField.extend
+  attributeBindings: ["id"]
 
 $.ajaxSetup
   beforeSend: (jqXHR) ->

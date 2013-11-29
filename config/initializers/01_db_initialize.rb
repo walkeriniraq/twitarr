@@ -106,6 +106,10 @@ class Redis
     RedisObjectList.new list('system:announcements_list'), Announcement
   end
 
+  def user_auto
+    RedisAutocomplete.new sorted_set('system:autocomplete:user')
+  end
+
 end
 
 class Redis

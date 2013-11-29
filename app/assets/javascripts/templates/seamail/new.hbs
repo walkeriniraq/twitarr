@@ -7,8 +7,17 @@
     <label class="control-label col-sm-2">To</label>
 
     <div class="col-sm-8">
-      {{ view Ember.TextField valueBinding='to'}}
+      {{ view Ember.TextField valueBinding='to' id='to-autocomplete'}}
     </div>
+    {{#if searchResults}}
+      <div class="open dropdown post-autocomplete">
+        <ul class="dropdown-menu">
+          {{#each searchResults}}
+            <li><a role="menuitem" href="#" {{ action 'select' this }}>{{this}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
   </div>
   <div class="form-group validation-error-group">
     <div class="col-sm-offset-2 col-sm-8 validation-error">{{ errors.subject }}</div>

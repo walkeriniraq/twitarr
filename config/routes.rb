@@ -25,6 +25,7 @@ Twitarr::Application.routes.draw do
   post 'user/new'
   get 'user/logout'
   post 'user/change_password'
+  get 'user/autocomplete'
 
   get 'admin/users'
   get 'admin/find_user'
