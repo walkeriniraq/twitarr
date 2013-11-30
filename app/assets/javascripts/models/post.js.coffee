@@ -11,8 +11,11 @@ Twitarr.Post.reopenClass
   feed: ->
     @get_list('posts/feed')
 
-  popular: ->
-    @get_list("posts/popular")
+  popular: (info) ->
+    url = "posts/popular"
+    if info
+      url += "?dir=#{info.direction}&time=#{info.time}"
+    @get_list(url)
 
   all: (before_time = null) ->
     unless before_time

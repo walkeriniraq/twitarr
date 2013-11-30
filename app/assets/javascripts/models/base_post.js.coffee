@@ -32,4 +32,4 @@ Twitarr.BasePost.reopenClass
       return data unless data.list?
       links = Ember.A()
       links.pushObject(@create(post)) for post in data.list
-      { status: data.status, posts: links }
+      { status: data.status, posts: links, first: data.first, last: data.last }

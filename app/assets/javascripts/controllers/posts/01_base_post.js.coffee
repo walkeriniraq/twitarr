@@ -5,7 +5,8 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
     delete: (id) ->
       Twitarr.Post.delete(id).done (data) =>
         return alert(data.status) unless data.status is 'ok'
-        posts = _(@get('posts')).reject (x) -> x.post_id is id
+        posts = _(@get('posts')).reject (x) ->
+          x.post_id is id
         @set 'posts', posts
     reload: ->
       @reload()
@@ -17,7 +18,7 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
       Ember.run =>
         @set 'loading', false
         @set 'model', data
-    ).fail( =>
+    ).fail(=>
       alert "There was a problem loading the posts from the server."
       @set 'loading', false
     )

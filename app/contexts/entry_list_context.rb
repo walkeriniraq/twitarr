@@ -4,14 +4,15 @@ class EntryListContext
   attr :announcement_list, :posts_index, :post_store
 
   TIME_ZERO = 0
+  PAGE_SIZE = 5
 
   def call
-    announcements = announcement_list[0, 20].map { |x| AnnouncementRole.new x }
-    posts = posts_index[0, 20].map { |x| PostRole.new post_store.get(x) }
+    announcements = announcement_list[0, PAGE_SIZE].map { |x| AnnouncementRole.new x }
+    posts = posts_index[0, PAGE_SIZE].map { |x| PostRole.new post_store.get(x) }
     count = announcements.count + posts.count
     announcements = announcements.each
     posts = posts.each
-    [count, 20].min.times.map do
+    [count, PAGE_SIZE].min.times.map do
       announcement_time = announcements.peek.time_plus_offset rescue TIME_ZERO
       post_time = posts.peek.post_time rescue TIME_ZERO
       if post_time > announcement_time
