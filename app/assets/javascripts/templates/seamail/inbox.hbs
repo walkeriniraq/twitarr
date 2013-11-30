@@ -1,10 +1,18 @@
 <div>
   <span class="pull-right">
-    {{#linkTo "seamail.outbox"}}Sent mail{{/linkTo}}
+    {{#linkTo "seamail.outbox" class="btn btn-info btn-xs"}}Sent mail{{/linkTo}}
+    {{#linkTo "seamail.archive" class="btn btn-info btn-xs"}}Archived{{/linkTo}}
   </span>
+
   <h3>Inbox</h3>
   {{#each mail in controller.seamail}}
-    {{ render "seamail/details" mail }}
+    <div class='seamail-entry container'>
+      {{ render "seamail/details" mail }}
+      <div class="pull-right btn btn-primary btn-sm" {{action 'archive' mail.seamail_id}}>
+        <span class="glyphicon glyphicon-folder-close" style="margin-right: 5px;"></span>
+        Archive
+      </div>
+    </div>
   {{else}}
     {{#unless loading}}
       <div>
@@ -12,7 +20,6 @@
       </div>
     {{/unless}}
   {{/each}}
-  {{#if loading}}
-    <img src="img/ajax-loader.gif" class="loading-gif">
-  {{/if}}
+  {{partial 'loading'}}
 </div>
+{{partial 'bottomMenu'}}

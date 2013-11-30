@@ -28,6 +28,13 @@ Twitarr.Seamail.reopenClass
       links.pushObject(@create(seamail)) for seamail in data.list
       { status: data.status, seamail: links }
 
+  archive: ->
+    $.getJSON('seamail/archive').then (data) =>
+      return data unless data.list?
+      links = Ember.A()
+      links.pushObject(@create(seamail)) for seamail in data.list
+      { status: data.status, seamail: links }
+
   outbox: ->
     $.getJSON('seamail/outbox').then (data) =>
       return data unless data.list?

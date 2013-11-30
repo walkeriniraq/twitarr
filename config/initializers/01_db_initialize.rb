@@ -2,9 +2,6 @@ require Rails.root + 'lib/db_connection_pool'
 
 DbConnectionPool.instance.configure(Rails.application.config.db)
 
-# this is a horrible hack due to the way that redis objects are configured
-#Redis::Objects.redis = Redis.new Rails.application.config.db
-
 class Redis
   #def object_store
   #  RedisObjectStore.new(self)
@@ -46,16 +43,20 @@ class Redis
     sorted_set "user:inbox_index:#{username}"
   end
 
+  def archive_mail_index(username)
+    sorted_set "user:archive_index:#{username}"
+  end
+
+  def sent_mail_index(username)
+    sorted_set "user:sent_index:#{username}"
+  end
+
   def feed_index(username)
     sorted_set feed_name(username)
   end
 
   def feed_name(username)
     "user:feed_index:#{username}"
-  end
-
-  def sent_mail_index(username)
-    sorted_set "user:sent_index:#{username}"
   end
 
   def popular_posts_index(opts = {})

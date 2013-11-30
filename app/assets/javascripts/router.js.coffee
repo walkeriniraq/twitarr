@@ -16,6 +16,7 @@ Twitarr.Router.map ()->
   @resource 'seamail', ->
     @route 'new'
     @route 'inbox'
+    @route 'archive'
     @route 'outbox'
   @route 'profile'
   @route 'login'

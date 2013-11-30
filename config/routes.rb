@@ -16,6 +16,8 @@ Twitarr::Application.routes.draw do
   get 'seamail/inbox'
   get 'seamail/outbox'
   post 'seamail/new'
+  get 'seamail/archive'
+  post 'seamail/do_archive'
 
   post 'user/login'
   post 'user/follow'

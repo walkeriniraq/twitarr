@@ -1,26 +1,25 @@
-<div class='seamail-entry container'>
-  <div class="row">
-    <div class="col-xs-2">
-      <div style="">
-        {{#linkTo "posts.user" from}}{{ from }}{{/linkTo}}
-      </div>
-      to
-      {{#each person in to}}
-        {{#linkTo "posts.user" person}}{{ person }}{{/linkTo}}
-      {{/each}}
+<div class="row">
+  <div class="col-xs-2">
+    <div style="">
+      {{#linkTo "posts.user" from}}{{ from }}{{/linkTo}}
     </div>
-    <div class="col-xs-10">
-      <div style="border-bottom: 1px solid darkgray;">
+    to
+    {{#each person in to}}
+      {{#linkTo "posts.user" person}}{{ person }}{{/linkTo}}
+    {{/each}}
+  </div>
+  <div class="col-xs-10">
+    <div style="border-bottom: 1px solid darkgray;">
         <span class="pull-right" style="margin-left: 10px;">
           <span style="color: darkgray;" {{bindAttr data-livestamp="sent_time"}} ></span>
         </span>
-        <div style="font-size: larger; font-weight: bold;">
-          {{ subject }}
-        </div>
+
+      <div style="font-size: larger; font-weight: bold;">
+        {{ subject }}
       </div>
-      <div style="font-size: larger;">
-        {{ text }}
-      </div>
+    </div>
+    <div style="font-size: larger;">
+      {{ text }}
     </div>
   </div>
 </div>

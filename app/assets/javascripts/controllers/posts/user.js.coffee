@@ -1,12 +1,12 @@
 Twitarr.PostsUserController = Twitarr.BasePostController.extend
-  needs: 'message'
+  needs: [ 'seamailNew' ]
 
   user: null
 
   actions:
-    message: ->
-      @set('controllers.message.message_to', @get('user'))
-      @transitionToRoute 'message'
+    message: (user) ->
+      @set('controllers.seamailNew.toPeople', [user])
+      @transitionToRoute 'seamail.new'
 
     follow: ->
       return if @get('is_friend')

@@ -1,17 +1,11 @@
-Twitarr.SeamailInboxController = Twitarr.ObjectController.extend
-  loading: false
-
+Twitarr.SeamailInboxController = Twitarr.BaseSeamailController.extend
   get_data_ajax: ->
     Twitarr.Seamail.inbox()
 
-  reload: ->
-    @set 'loading', true
-    @get_data_ajax().done((data) =>
-      console.log(data.status) unless data.status is 'ok'
-      Ember.run =>
-        @set 'loading', false
-        @set 'model', data
-    ).fail( =>
-      alert "There was a problem loading the posts from the server."
-      @set 'loading', false
-    )
+  actions:
+    archive: (id) ->
+      $.post("seamail/do_archive", { id: id }).done (data) =>
+        unless data.status is 'ok'
+          alert data.status
+        else
+          @reload()
