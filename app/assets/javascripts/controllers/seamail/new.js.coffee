@@ -23,6 +23,7 @@ Twitarr.SeamailNewController = Twitarr.ObjectController.extend
       @toPeople.addObject(name.toString())
       @set 'toInput', ''
       @set 'searchResults', []
+      @last_search = ''
       $('#to-autocomplete').focus()
 
     send: ->
