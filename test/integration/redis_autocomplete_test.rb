@@ -3,6 +3,11 @@ require_relative '../test_helper'
 class RedisAutocompleteTest < BaseTestCase
   subject { RedisAutocomplete }
 
+  before do
+    list = redis.sorted_set 'RedisAutocompleteTest'
+    list.clear
+  end
+
   it 'scores "aa" higher than "a"' do
     subject.calculate_score('aa').must_be :>, subject.calculate_score('a')
   end
@@ -46,6 +51,14 @@ class RedisAutocompleteTest < BaseTestCase
   it 'calculates the next score correctly' do
     subject.calculate_next_score('foobar').must_be :>, subject.calculate_score('foobar')
     subject.calculate_next_score('foo').must_be :>, subject.calculate_score('foo')
+  end
+
+  it 'calculates the next score as the next value for long strings' do
+    subject.calculate_next_score('foobar').must_equal subject.calculate_score('foobas')
+  end
+
+  it 'calculates the next score as the next value' do
+    subject.calculate_next_score('foo').must_equal subject.calculate_score('fop')
   end
 
   it 'calculates the next score correctly when last char is a z' do
