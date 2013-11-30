@@ -36,9 +36,6 @@ window.Twitarr = Ember.Application.create
       links.pushObject(Twitarr.Entry.create(entry)) for entry in data.list
       links
 
-Twitarr.TextField = Ember.TextField.extend
-  attributeBindings: ["id"]
-
 $.ajaxSetup
   beforeSend: (jqXHR) ->
     jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
@@ -66,3 +63,4 @@ Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
 
 Ember.TextField = Ember.TextField.extend
   classNames: ['form-control']
+  attributeBindings: ['autocomplete']
