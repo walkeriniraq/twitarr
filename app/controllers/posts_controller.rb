@@ -85,22 +85,22 @@ class PostsController < ApplicationController
     list.map { |x| x.decorate.gui_hash_with_favorites(favorites) }
   end
 
-  def filter_direction_posts(posts, announcements, direction, time)
+  def filter_direction_posts(posts, direction, time)
     case
       when params[:dir] == 'before'
-        posts = redis.tag_index("##{params[:term]}").revrangebyscore(
+        posts.revrangebyscore(
             params[:time].to_f - 0.000001,
             0,
             limit: EntryListContext::PAGE_SIZE
         )
       when params[:dir] == 'after'
-        posts = redis.tag_index("##{params[:term]}").rangebyscore(
+        posts.rangebyscore(
             params[:time].to_f + 0.000001,
             Time.now.to_f,
             limit: EntryListContext::PAGE_SIZE
         )
       else
-        posts = redis.tag_index("##{params[:term]}").revrange(0, EntryListContext::PAGE_SIZE)
+        posts.revrange(0, EntryListContext::PAGE_SIZE)
     end
   end
 
