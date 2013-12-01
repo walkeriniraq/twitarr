@@ -4,7 +4,7 @@ Twitarr.SeamailNewController = Twitarr.ObjectController.extend
   toInput: ''
 
   autoComplete_change: (->
-    val = @get('toInput')
+    val = @get('toInput').trim()
     return if @last_search is val
     if !val
       @set 'searchResults', []

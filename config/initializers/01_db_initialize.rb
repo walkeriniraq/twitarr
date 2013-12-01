@@ -3,10 +3,6 @@ require Rails.root + 'lib/db_connection_pool'
 DbConnectionPool.instance.configure(Rails.application.config.db)
 
 class Redis
-  #def object_store
-  #  RedisObjectStore.new(self)
-  #end
-
   def value(name, opts = {})
     Redis::Value.new(name, self, opts)
   end

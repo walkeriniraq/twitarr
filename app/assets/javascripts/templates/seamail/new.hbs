@@ -5,23 +5,16 @@
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2">To</label>
+
     <div class="col-sm-8">
-      {{ view Ember.TextField valueBinding='toInput' id='to-autocomplete' autocomplete='off'}}
-      {{#if searchResults}}
-        <div class="open dropdown post-autocomplete">
-          <ul class="dropdown-menu">
-            {{#each searchResults}}
-              <li><a role="menuitem" href="#" {{ action 'select' this }}>{{this}}</a></li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}}
+      {{view Twitarr.SeamailAutoView}}
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-8 col-sm-offset-2">
       {{#each toPeople}}
-        <div style="float: left; margin-right: 5px; border: 1px solid darkblue; padding: 3px 6px; vertical-align: baseline;">
+        <div
+            style="float: left; margin-right: 5px; border: 1px solid darkblue; padding: 3px 6px; vertical-align: baseline;">
           {{this}}
           <a href="#" {{ action 'remove' this }} style="color: red;">
             <span class="glyphicon glyphicon-remove"></span>

@@ -54,7 +54,7 @@ class RedisAutocomplete
 
   CHAR_OFFSET = 'a'.ord - 1
   NUM_OFFSET = '0'.ord - 27
-  INDEX_CHARS = 6
+  INDEX_CHARS = 10
   CARDINALITY = 40
 
 end
