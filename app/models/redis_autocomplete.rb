@@ -18,7 +18,7 @@ class RedisAutocomplete
 
   def self.calculate_next_score(string)
     score = calculate_score(string)
-    score + 37 ** (INDEX_CHARS - [string.length, INDEX_CHARS].min)
+    score + CARDINALITY ** (INDEX_CHARS - [string.length, INDEX_CHARS].min)
   end
 
   def self.char_value(char)
@@ -29,6 +29,12 @@ class RedisAutocomplete
         char.ord - NUM_OFFSET
       when char =~ /[a-z]/
         char.ord - CHAR_OFFSET
+      when char == '_'
+        37
+      when char == '-'
+        38
+      when char == '&'
+        39
       else
         0
     end
@@ -40,7 +46,7 @@ class RedisAutocomplete
     sum = 0
     while count < INDEX_CHARS
       val = char_value string[count]
-      sum += val * (37 ** (INDEX_CHARS - count - 1))
+      sum += val * (CARDINALITY ** (INDEX_CHARS - count - 1))
       count += 1
     end
     sum
@@ -48,7 +54,7 @@ class RedisAutocomplete
 
   CHAR_OFFSET = 'a'.ord - 1
   NUM_OFFSET = '0'.ord - 27
-  LAST_VALUE = 'z'.ord
   INDEX_CHARS = 6
+  CARDINALITY = 40
 
 end

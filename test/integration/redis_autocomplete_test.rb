@@ -12,6 +12,30 @@ class RedisAutocompleteTest < BaseTestCase
     subject.calculate_score('aa').must_be :>, subject.calculate_score('a')
   end
 
+  it 'scores "_"' do
+    subject.calculate_score('_').wont_equal 0
+  end
+
+  it 'scores "9" higher than "8_"' do
+    subject.calculate_score('9').must_be :>, subject.calculate_score('8_')
+  end
+
+  it 'scores "-"' do
+    subject.calculate_score('-').must_be :>, 0
+  end
+
+  it 'scores "9" higher than "8-"' do
+    subject.calculate_score('9').must_be :>, subject.calculate_score('8-')
+  end
+
+  it 'scores "&"' do
+    subject.calculate_score('&').must_be :>, 0
+  end
+
+  it 'scores "9" higher than "8&"' do
+    subject.calculate_score('9').must_be :>, subject.calculate_score('8&')
+  end
+
   it 'scores "b" higher than "a"' do
     subject.calculate_score('b').must_be :>, subject.calculate_score('a')
   end

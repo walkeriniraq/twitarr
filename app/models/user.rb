@@ -7,7 +7,6 @@ class User < BaseModel
   attr :username, :password, :is_admin, :status, :email
 
   def self.valid_username?(username)
-    #[':', ' ', '#', '%', '@'].all? { |x| !username.include? x }
     !username.match(USERNAME_REGEX).nil?
   end
 
