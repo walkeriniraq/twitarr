@@ -2,10 +2,13 @@ require 'bcrypt'
 
 class User < BaseModel
 
+  USERNAME_REGEX = /^[\w&-]{5,}$/
+
   attr :username, :password, :is_admin, :status, :email
 
   def self.valid_username?(username)
-    [':', ' ', '#', '%', '@'].all? { |x| !username.include? x }
+    #[':', ' ', '#', '%', '@'].all? { |x| !username.include? x }
+    !username.match(USERNAME_REGEX).nil?
   end
 
   def set_password(pass)
