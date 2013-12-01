@@ -11,9 +11,10 @@ class Stats
     date = Time.now
     stats.incr('activity')
     stats.incr("activity:#{type}")
-    hourly_stats = @db.redis_hash "system:stats_hourly:#{date.strftime '%Y-%m-%d-%H'}"
-    hourly_stats.incr('activity')
-    hourly_stats.incr("activity:#{type}")
+    hourly_stats = @db.redis_hash "system:stats_hourly:activity"
+    hourly_stats.incr("#{date.strftime '%Y-%m-%d-%H'}")
+    hourly_stats = @db.redis_hash "system:stats_hourly:activity:#{type}"
+    hourly_stats.incr("#{date.strftime '%Y-%m-%d-%H'}")
     @db.list("system:log").unshift("#{date.strftime '%Y%m%d-%H:%M:%S'} #{type} #{user}")
   end
 
