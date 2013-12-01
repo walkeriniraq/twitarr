@@ -39,6 +39,7 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
       console.log(data.status) unless data.status is 'ok'
       Ember.run =>
         @set 'loading', false
+        @set 'canLoadMore', true
         @set 'model', data
     ).fail(=>
       alert "There was a problem loading the posts from the server."
