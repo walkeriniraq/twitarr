@@ -12,13 +12,15 @@ Twitarr.PostsPopularController = Twitarr.BasePostController.extend
     loadMore: ->
       return if @get('loading')
       @set 'loading', true
-      info = { direction: 'before', time: @get('last') }
+      info = { direction: 'before', time: @get('model.posts.lastObject.time') }
       @get_data_ajax(info).done((data) =>
         console.log(data.status) unless data.status is 'ok'
         Ember.run =>
           @set 'loading', false
-          @get('model.posts').addObject(post) for post in data.posts
-          @set 'model.last', data.last
+          if data.posts
+            @get('model.posts').addObject(post) for post in data.posts
+          else
+            @set 'canLoadMore', false
       ).fail(=>
         alert "There was a problem loading the posts from the server."
         @set 'loading', false

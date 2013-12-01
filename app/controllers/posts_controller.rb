@@ -34,13 +34,17 @@ class PostsController < ApplicationController
   def popular
     posts = case
               when params[:dir] == 'before'
-                redis.popular_posts_index.revrangebyscore params[:time].to_f - 0.00001,
-                                                          0,
-                                                          limit: EntryListContext::PAGE_SIZE
+                redis.popular_posts_index.revrangebyscore(
+                    params[:time].to_f - 0.000001,
+                    0,
+                    limit: EntryListContext::PAGE_SIZE
+                )
               when params[:dir] == 'after'
-                redis.popular_posts_index.
-                    revrangebyscore(Time.now + 5, params[:time].to_f + 0.00001).
-                    last(EntryListContext::PAGE_SIZE)
+                redis.popular_posts_index.rangebyscore(
+                    params[:time].to_f + 0.000001,
+                    Time.now + 5,
+                    limit: EntryListContext::PAGE_SIZE
+                ).reverse
               else
                 redis.popular_posts_index.revrange(0, EntryListContext::PAGE_SIZE)
             end
@@ -48,10 +52,7 @@ class PostsController < ApplicationController
                                    posts_index: posts,
                                    post_store: redis.post_store
     list = context.call
-    render_json status: 'ok',
-                list: list_output(list),
-                first: list.first.time,
-                last: list.last.time
+    render_json status: 'ok', list: list_output(list)
   end
 
   def all
