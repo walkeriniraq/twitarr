@@ -1,5 +1,5 @@
 Twitarr.Router.map ()->
-  @route 'announcements'
+  @route 'create_announcement'
   @resource 'users', ->
     @route 'index'
     @route 'edit', { path: '/:username/edit' }

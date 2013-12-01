@@ -1,0 +1,18 @@
+<div id='announcements'>
+  <form class="form-horizontal">
+    <legend>Make an announcement</legend>
+    <div class="form-group validation-error-group">
+      <div class="col-sm-offset-2 col-sm-8 validation-error">{{ errors.text }}</div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-8">
+        {{ view Ember.TextArea rows='6' class='form-control' placeholder='Write!' valueBinding='text' }}
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-5">
+        <button class="btn btn-primary" {{ action 'send' }}>Send</button>
+      </div>
+    </div>
+  </form>
+</div>

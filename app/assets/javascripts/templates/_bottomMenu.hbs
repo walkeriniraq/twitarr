@@ -1,16 +1,22 @@
 <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs" style="padding: 0 15px;">
-  <div class="navbar-center" style="max-width: 850px;">
+  <div class="navbar-center bottom-menu" style="max-width: 850px;">
     {{#if logged_in}}
-      {{#linkTo "posts.new" classNames="btn btn-default navbar-btn"}}New Post{{/linkTo}}
-      {{#linkTo "seamail.new" classNames="btn btn-default navbar-btn"}}New Seamail{{/linkTo}}
+      {{#if login_admin}}
+        {{#linkTo "create_announcement" classNames="btn btn-default navbar-btn"}}Announcement{{/linkTo}}
+      {{/if}}
+      {{#linkTo "posts.new" classNames="btn btn-default navbar-btn"}}Post{{/linkTo}}
+      {{#linkTo "seamail.new" classNames="btn btn-default navbar-btn"}}Seamail{{/linkTo}}
     {{/if}}
     <button class="btn btn-default navbar-btn pull-right" {{ action 'reload' }}>Refresh</button>
   </div>
 </nav>
-<nav class="navbar navbar-inverse navbar-fixed-bottom hidden-xs bottom-menu-rounded">
+<nav class="navbar navbar-inverse navbar-fixed-bottom hidden-xs bottom-menu bottom-menu-rounded">
   {{#if logged_in}}
-    {{#linkTo "posts.new" classNames="btn btn-default navbar-btn"}}New Post{{/linkTo}}
-    {{#linkTo "seamail.new" classNames="btn btn-default navbar-btn"}}New Seamail{{/linkTo}}
+    {{#if login_admin}}
+      {{#linkTo "create_announcement" classNames="btn btn-default navbar-btn"}}Announcement{{/linkTo}}
+    {{/if}}
+    {{#linkTo "posts.new" classNames="btn btn-default navbar-btn"}}Post{{/linkTo}}
+    {{#linkTo "seamail.new" classNames="btn btn-default navbar-btn"}}Seamail{{/linkTo}}
   {{/if}}
   <button class="btn btn-default navbar-btn" {{ action 'reload' }}>Refresh</button>
 </nav>
