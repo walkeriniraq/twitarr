@@ -32,23 +32,8 @@ class PostsController < ApplicationController
   end
 
   def popular
-    posts = case
-              when params[:dir] == 'before'
-                redis.popular_posts_index.revrangebyscore(
-                    params[:time].to_f - 0.000001,
-                    0,
-                    limit: EntryListContext::PAGE_SIZE
-                )
-              when params[:dir] == 'after'
-                redis.popular_posts_index.rangebyscore(
-                    params[:time].to_f + 0.000001,
-                    Time.now + 5,
-                    limit: EntryListContext::PAGE_SIZE
-                ).reverse
-              else
-                redis.popular_posts_index.revrange(0, EntryListContext::PAGE_SIZE)
-            end
-    context = EntryListContext.new announcement_list: redis.announcements_list,
+    posts, announcements = filter_direction redis.popular_posts_index, redis.announcements, params[:dir], params[:time]
+    context = EntryListContext.new announcement_list: announcements,
                                    posts_index: posts,
                                    post_store: redis.post_store
     list = context.call
@@ -56,18 +41,22 @@ class PostsController < ApplicationController
   end
 
   def all
-    context = EntryListContext.new announcement_list: redis.announcements_list,
-                                   posts_index: redis.post_index.revrange(0, EntryListContext::PAGE_SIZE),
+    posts, announcements = filter_direction redis.post_index, redis.announcements, params[:dir], params[:time]
+    context = EntryListContext.new announcement_list: announcements,
+                                   posts_index: posts,
                                    post_store: redis.post_store
-    render_json status: 'ok', list: list_output(context.call)
+    list = context.call
+    render_json status: 'ok', list: list_output(list)
   end
 
   def feed
     return login_required unless logged_in?
-    context = EntryListContext.new announcement_list: redis.announcements_list,
-                                   posts_index: redis.feed_index(current_username).revrange(0, EntryListContext::PAGE_SIZE),
+    posts, announcements = filter_direction redis.feed_index(current_username), redis.announcements, params[:dir], params[:time]
+    context = EntryListContext.new announcement_list: announcements,
+                                   posts_index: posts,
                                    post_store: redis.post_store
-    render_json status: 'ok', list: list_output(context.call)
+    list = context.call
+    render_json status: 'ok', list: list_output(list)
   end
 
   def list
@@ -78,15 +67,45 @@ class PostsController < ApplicationController
           else
             "@#{current_username}"
           end
-    context = EntryListContext.new announcement_list: [],
-                                   posts_index: redis.tag_index(tag).revrange(0, EntryListContext::PAGE_SIZE),
+    case
+      when params[:dir] == 'before'
+        posts = redis.tag_index(tag).revrangebyscore(
+            params[:time].to_f - 0.000001,
+            0,
+            limit: EntryListContext::PAGE_SIZE
+        )
+      when params[:dir] == 'after'
+        posts = redis.tag_index(tag).rangebyscore(
+            params[:time].to_f + 0.000001,
+            Time.now.to_f,
+            limit: EntryListContext::PAGE_SIZE
+        )
+      else
+        posts = redis.tag_index(tag).revrange(0, EntryListContext::PAGE_SIZE)
+    end
+    context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
     render_json status: 'ok', list: list_output(context.call)
   end
 
   def search
-    context = EntryListContext.new announcement_list: [],
-                                   posts_index: redis.tag_index("##{params[:term]}").revrange(0, EntryListContext::PAGE_SIZE),
+    case
+      when params[:dir] == 'before'
+        posts = redis.tag_index("##{params[:term]}").revrangebyscore(
+            params[:time].to_f - 0.000001,
+            0,
+            limit: EntryListContext::PAGE_SIZE
+        )
+      when params[:dir] == 'after'
+        posts = redis.tag_index("##{params[:term]}").rangebyscore(
+            params[:time].to_f + 0.000001,
+            Time.now.to_f,
+            limit: EntryListContext::PAGE_SIZE
+        )
+      else
+        posts = redis.tag_index("##{params[:term]}").revrange(0, EntryListContext::PAGE_SIZE)
+    end
+    context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
     render_json status: 'ok', list: list_output(context.call)
   end
@@ -95,6 +114,24 @@ class PostsController < ApplicationController
     ids = list.reduce([]) { |list, x| list << x.entry_id if x.type == :post; list }
     favorites = UserFavorites.new(redis, current_username, ids)
     list.map { |x| x.decorate.gui_hash_with_favorites(favorites) }
+  end
+
+  def filter_direction(posts, announcements, direction, time)
+    case
+      when params[:dir] == 'before'
+        from = params[:time].to_f - 0.000001
+        to = 0
+        return posts.revrangebyscore(from, to, limit: EntryListContext::PAGE_SIZE),
+            announcements.get(params[:time].to_f - 0.000001, 0, EntryListContext::PAGE_SIZE)
+      when params[:dir] == 'after'
+        from = params[:time].to_f + 0.000001
+        to = Time.now.to_f
+        return posts.rangebyscore(from, to, limit: EntryListContext::PAGE_SIZE),
+            announcements.get(from, to, EntryListContext::PAGE_SIZE)
+      else
+        return posts.revrange(0, EntryListContext::PAGE_SIZE),
+            announcements.get(Time.now.to_f, 0, EntryListContext::PAGE_SIZE)
+    end
   end
 
   def post_hash(posts)

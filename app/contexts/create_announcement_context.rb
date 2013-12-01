@@ -1,11 +1,17 @@
 class CreateAnnouncementContext
   include HashInitialize
 
-  attr :list
+  attr :set
 
   def call(username, text, time_offset)
-    announcement = Announcement.new message: text, username: username, post_id: SecureRandom.uuid, post_time: Time.now, time_offset: time_offset
-    list.unshift announcement
+    announcement = Announcement.new(
+        message: text,
+        username: username,
+        post_id: SecureRandom.uuid,
+        post_time: Time.now.to_f,
+        time_offset: time_offset
+    )
+    set.save announcement, announcement.post_time
   end
 
 end

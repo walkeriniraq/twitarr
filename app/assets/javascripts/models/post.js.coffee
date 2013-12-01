@@ -5,11 +5,17 @@ Twitarr.Post.reopenClass
   new: (text) ->
     @post('posts', text)
 
-  search: (tag) ->
-    @get_list("posts/search?term=#{encodeURIComponent tag}")
+  search: (tag, info) ->
+    url = "posts/search?term=#{encodeURIComponent tag}"
+    if info
+      url += "&dir=#{encodeURIComponent info.direction}&time=#{encodeURIComponent info.time}"
+    @get_list(url)
 
-  feed: ->
-    @get_list('posts/feed')
+  feed: (info) ->
+    url = "posts/feed"
+    if info
+      url += "?dir=#{info.direction}&time=#{info.time}"
+    @get_list(url)
 
   popular: (info) ->
     url = "posts/popular"
@@ -17,17 +23,21 @@ Twitarr.Post.reopenClass
       url += "?dir=#{info.direction}&time=#{info.time}"
     @get_list(url)
 
-  all: (before_time = null) ->
-    unless before_time
-      @get_list("posts/all")
-    else
-      @get_list("posts/all?before=#{encodeURIComponent before_time}")
+  all: (info) ->
+    url = "posts/all"
+    if info
+      url += "?dir=#{encodeURIComponent info.direction}&time=#{encodeURIComponent info.time}"
+    @get_list(url)
 
-  user: (username, page = 0) ->
-    @get_list("posts/list?username=#{encodeURIComponent username}&page=#{encodeURIComponent page}")
+  user: (username, info) ->
+    url = "posts/list?username=#{encodeURIComponent username}"
+    if info
+      url += "&dir=#{encodeURIComponent info.direction}&time=#{encodeURIComponent info.time}"
+    @get_list(url)
 
-  mine: (params) ->
+  mine: (info) ->
     @get_list("posts/list")
+    @get_list(url)
 
   favorite: (id) ->
     $.ajax(type: 'PUT', url: 'posts/favorite', data: { id: id }).done (data) ->

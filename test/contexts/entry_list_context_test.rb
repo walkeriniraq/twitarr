@@ -70,6 +70,16 @@ class EntryListContextTest < ActiveSupport::TestCase
     list.second.entry_id.must_equal 'p1'
   end
 
+  it 'accepts missing announcements' do
+    context = EntryListContext.new posts_index: ['p1'],
+                                   post_store: TestObjectStore.new(
+                                       'p1' => Post.new(post_id: 'p1', post_time: Time.now)
+                                   )
+    list = context.call
+    list.count.must_equal 1
+    list.first.entry_id.must_equal 'p1'
+  end
+
   class AnnouncementRoleTest < ActiveSupport::TestCase
     subject { EntryListContext::AnnouncementRole }
     include DelegatorTest

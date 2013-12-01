@@ -55,6 +55,10 @@ class Redis
     sorted_set feed_name(username)
   end
 
+  def announcements
+    RedisObjectSet.new sorted_set('system:announcements'), Announcement
+  end
+
   def feed_name(username)
     "user:feed_index:#{username}"
   end
@@ -101,10 +105,6 @@ class Redis
 
   def friend_graph
     FriendGraph.new(following, followed)
-  end
-
-  def announcements_list
-    RedisObjectList.new list('system:announcements_list'), Announcement
   end
 
   def user_auto

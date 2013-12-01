@@ -28,5 +28,5 @@ Twitarr.PostsUserController = Twitarr.BasePostController.extend
     _(@get('friends')).contains @get('user')
   ).property('user', 'friends')
 
-  get_data_ajax: ->
-    Twitarr.Post.user(@get('user'))
+  get_data_ajax: (info = null) ->
+    Twitarr.Post.user(@get('user'), info)

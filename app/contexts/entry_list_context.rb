@@ -4,10 +4,14 @@ class EntryListContext
   attr :announcement_list, :posts_index, :post_store
 
   TIME_ZERO = 0
-  PAGE_SIZE = 5
+  PAGE_SIZE = 50
 
   def call
-    announcements = announcement_list[0, PAGE_SIZE].map { |x| AnnouncementRole.new x }
+    announcements = if announcement_list
+                      announcement_list[0, PAGE_SIZE].map { |x| AnnouncementRole.new x }
+                    else
+                      []
+                    end
     posts = posts_index[0, PAGE_SIZE].map { |x| PostRole.new post_store.get(x) }
     count = announcements.count + posts.count
     announcements = announcements.each
