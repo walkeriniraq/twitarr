@@ -36,7 +36,7 @@ Twitarr::Application.routes.draw do
   put 'admin/add_user'
   post 'admin/reset_password'
 
-  post 'api/v1/user/auth'
-  post 'api/v1/user/test'
+  get 'api/v1/user/auth'
+  get 'api/v1/user/test'
 
 end
