@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :following_list, :feed_factory
+  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :following_list, :feed_factory, :tag_autocomplete
 
   def initialize(attrs = {})
     super
@@ -16,9 +16,10 @@ class CreatePostContext
     post = user.new_post(post_text)
     post_store.add post
     @post = PostRole.new post
-    @post.tags.each do |tag|
-      tag = TagIndexRole.new tag_factory.call(tag)
+    @post.tags.each do |tag_name|
+      tag = TagIndexRole.new tag_factory.call(tag_name)
       tag.add_post @post
+      tag_autocomplete.add(tag_name[1..-1], tag_name[1..-1], 'tag') if tag_name[0] == '#'
     end
     @following_list.each do |follower|
       feed = FeedRole.new feed_factory.call(follower)

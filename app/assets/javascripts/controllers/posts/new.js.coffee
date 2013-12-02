@@ -18,6 +18,12 @@ Twitarr.PostsNewController = Twitarr.Controller.extend
         if @last_search is word
           names = ("@#{name}" for name in data.names)
           @set 'searchResults', names
+    if word[0] is '#'
+      @last_search = word
+      $.getJSON("posts/tag_autocomplete?string=#{encodeURIComponent word.substr(1)}").then (data) =>
+        if @last_search is word
+          names = ("##{name}" for name in data.names)
+          @set 'searchResults', names
   ).observes 'text'
 
   get_current_word: ->
@@ -47,7 +53,7 @@ Twitarr.PostsNewController = Twitarr.Controller.extend
           text = text.substr(0, cursor_pos - word.length) + value + ' '
         Ember.run =>
           @set 'text', text
-        $('#post-autocomplete').setCursorPosition(cursor_pos - word.length + value.length)
+        $('#post-autocomplete').setCursorPosition(cursor_pos - word.length + value.length + 1)
       @set 'searchResults', []
       @last_search = ''
       $('#post-autocomplete').focus()

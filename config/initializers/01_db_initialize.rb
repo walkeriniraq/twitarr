@@ -107,6 +107,10 @@ class Redis
     RedisAutocomplete.new sorted_set('system:autocomplete:user')
   end
 
+  def tag_auto
+    RedisAutocomplete.new sorted_set('system:autocomplete:hashtag')
+  end
+
 end
 
 class Redis

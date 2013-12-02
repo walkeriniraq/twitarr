@@ -5,7 +5,9 @@ class RedisAutocomplete
   end
 
   def add(value, id, uniq)
-    @set[{'id' => id, 'uniq' => uniq}.to_json] = RedisAutocomplete.calculate_score(value)
+    val = {'id' => id, 'uniq' => uniq}.to_json
+    return if @set.member?(val)
+    @set[val] = RedisAutocomplete.calculate_score(value)
   end
 
   def query(string)

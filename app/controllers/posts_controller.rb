@@ -122,4 +122,8 @@ class PostsController < ApplicationController
     end
   end
 
+  def tag_autocomplete
+    render_json status: 'ok', names: redis.tag_auto.query(params[:string])
+  end
+
 end

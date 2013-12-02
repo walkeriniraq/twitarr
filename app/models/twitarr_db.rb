@@ -53,7 +53,8 @@ class TwitarrDb
                                       post_index: redis.post_index,
                                       post_store: redis.post_store,
                                       following_list: redis.user_followed(user).entries,
-                                      feed_factory: feed_factory(redis)
+                                      feed_factory: feed_factory(redis),
+                                      tag_autocomplete: redis.tag_auto
       context.call post_text
     end
   end

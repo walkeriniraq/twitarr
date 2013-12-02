@@ -100,6 +100,13 @@ class RedisAutocompleteTest < BaseTestCase
     auto.query('an').must_include 'anna'
   end
 
+  it 'does not add repeatedly' do
+    set = mock()
+    set.expects(:member?).with({'id' => 'anna', 'uniq' => 'name'}.to_json).once.returns true
+    auto = subject.new set
+    auto.add 'anna', 'anna', 'name'
+  end
+
   it 'stores the key with different unique values' do
     set = redis.sorted_set 'RedisAutocompleteTest'
     auto = subject.new set

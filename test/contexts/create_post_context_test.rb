@@ -1,8 +1,8 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user tag_factory popular_index post_index post_store feed_factory) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store feed_factory tag_autocomplete) }
 
   include AttributesTest
 
@@ -80,9 +80,22 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           tag_factory: lambda { |_| tag },
                           popular_index: {},
                           post_index: {},
-                          post_store: FakePostsStore.new
+                          post_store: FakePostsStore.new,
+                          tag_autocomplete: mock(:add => true)
     post = context.call 'This is a #test'
     tag.keys.first.must_equal post.post_id
+  end
+
+  it 'adds the post_id to the tag index' do
+    auto = mock()
+    auto.expects(:add).with('test', 'test', 'tag').once
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          tag_autocomplete: auto
+    post = context.call 'This is a #test'
   end
 
   it 'adds the post_id to the feed index' do

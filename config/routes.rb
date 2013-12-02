@@ -12,6 +12,7 @@ Twitarr::Application.routes.draw do
   get 'posts/search'
   get 'posts/all'
   get 'posts/feed'
+  get 'posts/tag_autocomplete'
 
   get 'seamail/inbox'
   get 'seamail/outbox'
