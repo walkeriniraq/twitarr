@@ -7,6 +7,9 @@ Twitarr.SeamailAutoView = Ember.View.extend
         return @moveDown()
       when 38
         return @moveUp()
+      when 27
+        @set('controller.searchResults', [])
+        return false
 
   moveUp: ->
     if $('.to-autocomplete-item:first').is(':focus')

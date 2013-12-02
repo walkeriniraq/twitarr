@@ -21,8 +21,18 @@ window.console = { log: -> } unless window.console?
       SelLength = document.selection.createRange().text.length
       Sel.moveStart "character", -el.value.length
       pos = Sel.text.length - SelLength
-    pos
-) jQuery
+    pos) jQuery
+
+(($, undefined_) ->
+  $.fn.setCursorPosition = (pos) ->
+    if @get(0).setSelectionRange
+      @get(0).setSelectionRange pos, pos
+    else if @get(0).createTextRange
+      range = @get(0).createTextRange()
+      range.collapse true
+      range.moveEnd "character", pos
+      range.moveStart "character", pos
+      range.select()) jQuery
 
 window.Twitarr = Ember.Application.create
   LOG_TRANSITIONS: true
@@ -64,3 +74,13 @@ Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
 Ember.TextField = Ember.TextField.extend
   classNames: ['form-control']
   attributeBindings: ['autocomplete']
+
+Twitarr.DefaultTextField = Ember.TextField.extend
+  becomeFocused: (->
+    @$().focus()
+  ).on('didInsertElement')
+
+Twitarr.DefaultTextArea = Ember.TextArea.extend
+  becomeFocused: (->
+    @$().focus()
+  ).on('didInsertElement')
