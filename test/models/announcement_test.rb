@@ -23,4 +23,10 @@ class AnnouncementTest < ActiveSupport::TestCase
     test.must_include 'message'
   end
 
+  it 'includes the time offset in the time_plus_offset' do
+    time = Time.now
+    announcement = Announcement.new(post_time: time, time_offset: 360)
+    announcement.time_plus_offset.must_be :>, time.to_f
+  end
+
 end
