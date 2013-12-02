@@ -31,8 +31,8 @@ class CreateAnnouncementContextTest < ActiveSupport::TestCase
 
   it 'adds an announcement with the time as the key' do
     context = subject.new set: set = MockSet.new
-    context.call('foo', 'this is a test', 0)
-    set.saved_data.keys.first.must_equal set.saved_data.values.first.post_time
+    context.call('foo', 'this is a test', 1)
+    set.saved_data.keys.first.must_equal set.saved_data.values.first.time_plus_offset
   end
 
 end

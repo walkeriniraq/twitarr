@@ -7,4 +7,8 @@ class Announcement < Post
     old_fattrs + superclass.fattrs
   end
 
+  def time_plus_offset
+    post_time + (time_offset || 0)
+  end
+
 end

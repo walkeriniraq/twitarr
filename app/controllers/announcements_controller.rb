@@ -2,8 +2,9 @@ class AnnouncementsController < ApplicationController
 
   def submit
     return login_required unless logged_in?
+    offset = params[:offset].to_i || 0
     context = CreateAnnouncementContext.new set: redis.announcements
-    context.call(current_username, params[:message], params[:offset] || 0)
+    context.call(current_username, params[:message], offset)
     render_json status: 'ok'
   end
 

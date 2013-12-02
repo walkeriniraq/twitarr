@@ -1,5 +1,6 @@
 Twitarr.CreateAnnouncementController = Twitarr.ObjectController.extend
   text: ''
+  offset: 1
   errors: {}
   url_route: 'announcements'
 
@@ -10,7 +11,7 @@ Twitarr.CreateAnnouncementController = Twitarr.ObjectController.extend
       unless text
         errors = { text: 'Type something before clicking send!' }
       else
-        Twitarr.BasePost.post('announcements', text).done (data) =>
+        $.post("announcements/submit", { message: text, offset: @get('offset') }).done (data) =>
           if data.status is 'ok'
             @set 'text', ''
             @transitionToRoute 'posts.feed'

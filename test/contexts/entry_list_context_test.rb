@@ -84,6 +84,7 @@ class EntryListContextTest < ActiveSupport::TestCase
     subject { EntryListContext::AnnouncementRole }
     include DelegatorTest
 
+    # TODO: move this to announcement test
     it 'includes the time offset in the time_plus_offset' do
       time = Time.now
       announcement = Announcement.new(post_time: time, time_offset: 360)

@@ -45,10 +45,6 @@ class EntryListContext
     def type
       :announcement
     end
-
-    def time_plus_offset
-      __getobj__.post_time + (time_offset || 0)
-    end
   end
 
 end

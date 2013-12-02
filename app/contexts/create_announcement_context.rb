@@ -11,7 +11,7 @@ class CreateAnnouncementContext
         post_time: Time.now.to_f,
         time_offset: time_offset
     )
-    set.save announcement, announcement.post_time
+    set.save announcement, announcement.time_plus_offset
   end
 
 end
