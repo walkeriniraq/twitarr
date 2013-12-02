@@ -25,8 +25,14 @@ class AnnouncementTest < ActiveSupport::TestCase
 
   it 'includes the time offset in the time_plus_offset' do
     time = Time.now
-    announcement = Announcement.new(post_time: time, time_offset: 360)
+    announcement = Announcement.new(post_time: time, time_offset: 1)
     announcement.time_plus_offset.must_be :>, time.to_f
+  end
+
+  it 'translates the time offset into hours' do
+    time = Time.now
+    announcement = Announcement.new(post_time: time, time_offset: 1)
+    announcement.time_plus_offset.must_equal time.to_f + 360
   end
 
 end
