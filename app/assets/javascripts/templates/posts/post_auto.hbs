@@ -1,9 +1,9 @@
 {{ view Twitarr.DefaultTextArea rows='3' id='post-autocomplete' class='form-control' placeholder='Write!' valueBinding='text' }}
-{{#if searchResults}}
+{{#if view.searchResults}}
   <div class="open dropdown post-autocomplete">
     <ul class="dropdown-menu" id="post-autocomplete-dropdown">
-      {{#each searchResults}}
-        <li><a role="menuitem" class="post-autocomplete-item" href="#" {{ action 'select' this }}>{{this}}</a></li>
+      {{#each view.searchResults}}
+        <li><a role="menuitem" class="post-autocomplete-item" href="#" {{ action 'select' this target='view' }}>{{this}}</a></li>
       {{/each}}
     </ul>
   </div>

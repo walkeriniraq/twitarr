@@ -1,16 +1,16 @@
 Twitarr.EntryReplyController = Twitarr.ObjectController.extend
   actions:
     make_post: ->
-      text = @get 'newPost'
+      text = @get 'text'
       return unless text.trim()
 
       Twitarr.Post.new(text.trim()).done (data) =>
         return alert(data.status) unless data.status is 'ok'
         @send('reload')
-      @set 'newPost', ''
+      @set 'text', ''
 
   set_replying_name: (->
-    @set 'newPost', "@#{@get('from')} "
+    @set 'text', "@#{@get('from')} "
   ).observes('from')
 
   reply_post_type: (->
