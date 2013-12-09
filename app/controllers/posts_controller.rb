@@ -25,7 +25,8 @@ class PostsController < ApplicationController
     context = LikePostContext.new post: post,
                                   post_likes: redis.post_favorites_set(post.post_id),
                                   username: current_username,
-                                  popular_index: redis.popular_posts_index
+                                  popular_index: redis.popular_posts_index,
+                                  user_feed: redis.feed_index(current_username)
     context.call
     favorites = UserFavorites.new(redis, current_username, [post.post_id])
     render_json status: 'ok', sentence: post.decorate.liked_sentence(favorites)
