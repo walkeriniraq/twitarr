@@ -98,7 +98,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
     post = context.call 'This is a #test'
   end
 
-  it 'adds the post_id to the feed index' do
+  it 'adds the post_id to follower feed index' do
     feed = {}
     context = subject.new user: 'foo',
                           tag_factory: lambda { |_| {} },
@@ -106,6 +106,19 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           post_index: {},
                           post_store: FakePostsStore.new,
                           following_list: ['steve'],
+                          feed_factory: lambda { |_| feed }
+    post = context.call 'This is a test'
+    feed.keys.first.must_equal post.post_id
+  end
+
+  it 'adds the post_id to user feed index' do
+    feed = {}
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          following_list: [],
                           feed_factory: lambda { |_| feed }
     post = context.call 'This is a test'
     feed.keys.first.must_equal post.post_id

@@ -21,8 +21,12 @@ class CreatePostContext
       tag.add_post @post
       tag_autocomplete.add(tag_name[1..-1], tag_name[1..-1], 'tag') if tag_name[0] == '#'
     end
-    @following_list.each do |follower|
-      feed = FeedRole.new feed_factory.call(follower)
+    if feed_factory
+      @following_list.each do |follower|
+        feed = FeedRole.new feed_factory.call(follower)
+        feed.add_post @post
+      end
+      feed = FeedRole.new feed_factory.call(user)
       feed.add_post @post
     end
     popular_index.add_post @post
