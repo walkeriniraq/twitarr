@@ -59,6 +59,14 @@ class TwitarrDb
     end
   end
 
+  def self.add_user(user)
+    DbConnectionPool.instance.connection do |redis|
+      redis.user_store.save user, user.username
+      redis.user_set << user.username
+      redis.user_auto.add user.username, user.username, 'username'
+    end
+  end
+
   def self.reindex_posts
     DbConnectionPool.instance.connection do |redis|
       # TODO: fix this

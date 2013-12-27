@@ -1,10 +1,9 @@
 Twitarr.BasePostController = Twitarr.ObjectController.extend
   loading: false
-  canLoadMore: true
 
   showMore: (->
-    @.get('canLoadMore') && !@get('loading')
-  ).property('canLoadMore', 'loading')
+    @.get('more') && !@get('loading')
+  ).property('more', 'loading')
 
   actions:
     delete: (id) ->
@@ -23,11 +22,10 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
       @get_data_ajax(info).done((data) =>
         console.log(data.status) unless data.status is 'ok'
         Ember.run =>
+          @set 'more', data.more
           @set 'loading', false
           if data.posts.length
             @get('model.posts').addObject(post) for post in data.posts
-          else
-            @set 'canLoadMore', false
       ).fail(=>
         alert "There was a problem loading the posts from the server."
         @set 'loading', false
@@ -39,7 +37,6 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
       console.log(data.status) unless data.status is 'ok'
       Ember.run =>
         @set 'loading', false
-        @set 'canLoadMore', true
         @set 'model', data
     ).fail(=>
       alert "There was a problem loading the posts from the server."

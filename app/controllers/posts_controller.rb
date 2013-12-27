@@ -51,12 +51,12 @@ class PostsController < ApplicationController
 
   def feed
     return login_required unless logged_in?
-    posts, announcements = filter_direction_both redis.feed_index(current_username), redis.announcements, params[:dir], params[:time]
+    posts, announcements, more = filter_direction_both redis.feed_index(current_username), redis.announcements, params[:dir], params[:time]
     context = EntryListContext.new announcement_list: announcements,
                                    posts_index: posts,
                                    post_store: redis.post_store
     list = context.call
-    render_json status: 'ok', list: list_output(list)
+    render_json status: 'ok', more: more, list: list_output(list)
   end
 
   def list
@@ -88,15 +88,15 @@ class PostsController < ApplicationController
 
   def filter_direction_posts(posts, direction, time)
     case
-      when params[:dir] == 'before'
+      when direction == 'before'
         posts.revrangebyscore(
-            params[:time].to_f - 0.000001,
+            time.to_f - 0.000001,
             0,
             limit: EntryListContext::PAGE_SIZE
         )
-      when params[:dir] == 'after'
+      when direction == 'after'
         posts.rangebyscore(
-            params[:time].to_f + 0.000001,
+            time.to_f + 0.000001,
             Time.now.to_f,
             limit: EntryListContext::PAGE_SIZE
         )
@@ -107,20 +107,26 @@ class PostsController < ApplicationController
 
   def filter_direction_both(posts, announcements, direction, time)
     case
-      when params[:dir] == 'before'
-        from = params[:time].to_f - 0.000001
+      when direction == 'before'
+        from = time.to_f - 0.000001
         to = 0
-        return posts.revrangebyscore(from, to, limit: EntryListContext::PAGE_SIZE),
-            announcements.get(params[:time].to_f - 0.000001, 0, EntryListContext::PAGE_SIZE)
-      when params[:dir] == 'after'
-        from = params[:time].to_f + 0.000001
+        posts = posts.revrangebyscore(from, to, limit: EntryListContext::PAGE_SIZE + 1)
+      when direction == 'after'
+        from = time.to_f + 0.000001
         to = Time.now.to_f
-        return posts.rangebyscore(from, to, limit: EntryListContext::PAGE_SIZE),
-            announcements.get(from, to, EntryListContext::PAGE_SIZE)
+        posts = posts.rangebyscore(from, to, limit: EntryListContext::PAGE_SIZE + 1)
       else
-        return posts.revrange(0, EntryListContext::PAGE_SIZE),
-            announcements.get(Time.now.to_f, 0, EntryListContext::PAGE_SIZE)
+        from = Time.now.to_f
+        to = 0
+        posts = posts.revrange(0, EntryListContext::PAGE_SIZE + 1)
     end
+    announcements = announcements.get(from, to, EntryListContext::PAGE_SIZE + 1)
+    more = posts.count > EntryListContext::PAGE_SIZE || announcements.count > EntryListContext::PAGE_SIZE
+    if more
+      posts = posts.first(EntryListContext::PAGE_SIZE)
+      announcements = announcements.first(EntryListContext::PAGE_SIZE)
+    end
+    return posts, announcements, more
   end
 
   def tag_autocomplete
