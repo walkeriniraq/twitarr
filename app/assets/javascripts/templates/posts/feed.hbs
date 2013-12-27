@@ -1,3 +1,13 @@
+{{#if view.scroll_count}}
+  <div {{bind-attr class='view.display_scroll_class'}}></div>
+  <div style="text-align: center; color: darkgreen;">
+    {{#if view.is_checking}}
+      Checking for new posts
+    {{else}}
+      Keep scrolling
+    {{/if}}
+  </div>
+{{/if}}
 <h3>Feed</h3>
 {{#if few_friends}}
   <div style="color: orange; margin-bottom: 10px; margin-top: -30px; text-align: center;">

@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.mousewheel
 //= require underscore
 //= require bootstrap
 //= require moment
