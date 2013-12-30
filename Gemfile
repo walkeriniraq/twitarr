@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '~> 4.0.2'
 
-gem 'coffee-rails', '~> 4.0.0'
-gem 'sass-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.1'
+gem 'sass-rails', '~> 4.0.1'
 gem 'therubyrhino'
 gem 'redis'
 gem 'redis-objects'
@@ -22,11 +22,11 @@ gem 'underscore-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
-gem 'ember-rails'
+gem 'ember-rails', '~> 0.14.1'
 gem 'ember-source'
 
 gem 'fattr'
-gem 'draper'
+gem 'draper', '~> 1.3.0'
 gem 'andand'
 
 group :doc do
