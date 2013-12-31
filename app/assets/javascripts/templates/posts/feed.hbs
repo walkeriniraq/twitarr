@@ -8,10 +8,6 @@
     {{/if}}
   </div>
 {{/if}}
+<button class="btn btn-link pull-right" {{ action 'checkNew' }}>Check for new items</button>
 <h3>Feed</h3>
-{{#if few_friends}}
-  <div style="color: orange; margin-bottom: 10px; margin-top: -30px; text-align: center;">
-    Follow more people to see more posts here!
-  </div>
-{{/if}}
 {{ partial 'posts/list' }}

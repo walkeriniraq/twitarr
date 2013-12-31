@@ -14,6 +14,8 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
         @set 'posts', posts
     reload: ->
       @reload()
+    checkNew: ->
+      @checkNew()
 
     loadMore: ->
       return if @get('loading')
