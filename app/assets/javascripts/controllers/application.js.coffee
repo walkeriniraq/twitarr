@@ -25,10 +25,6 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @get('login_user')?
   ).property('login_user')
 
-  hide_login_link: (->
-    @get('currentPath') is 'login' or @get('logged_in') or @get('logging_in')
-  ).property('logged_in', 'logging_in', 'currentPath')
-
   display_new_email_link: (->
     if @get 'logged_in'
       on_seamail = @get('currentPath').indexOf('seamail') == 0

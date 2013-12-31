@@ -1,9 +1,4 @@
 {{ partial 'menu' }}
 <div class='main'>
-  {{#unless hide_login_link}}
-    <div style="margin-top: 15px; text-align: center; margin-bottom: -35px;">
-      {{#linkTo "login"}}Login to see your personalized Twit-arr{{/linkTo}}
-    </div>
-  {{/unless}}
   {{ outlet }}
 </div>

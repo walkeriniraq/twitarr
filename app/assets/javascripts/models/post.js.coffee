@@ -35,10 +35,6 @@ Twitarr.Post.reopenClass
       url += "&dir=#{encodeURIComponent info.direction}&time=#{encodeURIComponent info.time}"
     @get_list(url)
 
-  mine: (info) ->
-    @get_list("posts/list")
-    @get_list(url)
-
   favorite: (id) ->
     $.ajax(type: 'PUT', url: 'posts/favorite', data: { id: id }).done (data) ->
       unless data.status is 'ok'

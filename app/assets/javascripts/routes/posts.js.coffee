@@ -2,7 +2,7 @@ Twitarr.PostsChildRoute = Ember.Route.extend
   model: (params) ->
     params
   setupController: (controller) ->
-    controller.reload()
+    controller.load()
 
 Twitarr.PostsFeedRoute = Twitarr.PostsChildRoute.extend()
 

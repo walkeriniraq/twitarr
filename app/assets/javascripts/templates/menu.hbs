@@ -14,11 +14,11 @@
       </span>
       <span class="visible-xs pull-right" style="margin-right: 20px; margin-top: 8px;">
         {{#if display_new_email_link}}
-          {{#linkTo "seamail.inbox" classNames="btn btn-default xs-new-mail"}}
+          {{#link-to "seamail.inbox" classNames="btn btn-default xs-new-mail"}}
             <span style="font-size: small;">
               New Seamail!
             </span>
-          {{/linkTo}}
+          {{/link-to}}
         {{/if}}
       </span>
     </div>
@@ -27,26 +27,26 @@
     <div class="collapse navbar-collapse auto navbar-ex1-collapse">
       <ul class='nav navbar-nav'>
         {{#if logged_in}}
-          <li>{{#linkTo "posts.feed"}}Feed{{/linkTo}}</li>
+          <li>{{#link-to "posts.feed"}}Feed{{/link-to}}</li>
         {{/if}}
-        <li>{{#linkTo "posts.popular"}}Trending{{/linkTo}}</li>
-        <li>{{#linkTo "posts.all"}}All Posts{{/linkTo}}</li>
+        <li>{{#link-to "posts.popular"}}Trending{{/link-to}}</li>
+        <li>{{#link-to "posts.all"}}All Posts{{/link-to}}</li>
         {{#if logged_in}}
           <li>
-            {{#linkTo "seamail.inbox"}}
+            {{#link-to "seamail.inbox"}}
               Seamail
               {{#if new_email}}
                 <span class="badge" style="margin-left: 3px; background-color: orangered; vertical-align: top;">
                   {{email_count_display}}
                 </span>
               {{/if}}
-            {{/linkTo}}
+            {{/link-to}}
           </li>
         {{/if}}
       </ul>
       <ul class='nav navbar-nav navbar-right'>
         {{#unless logged_in}}
-          <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
+          <li>{{#link-to "login"}}Login{{/link-to}}</li>
         {{else}}
           <li class='dropdown'>
             <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
@@ -55,9 +55,9 @@
             </a>
             <ul class='dropdown-menu'>
               {{#if login_admin}}
-                <li>{{#linkTo "users.index"}}Admin{{/linkTo}}</li>
+                <li>{{#link-to "users.index"}}Admin{{/link-to}}</li>
               {{/if}}
-              <li>{{#linkTo "profile"}}Profile{{/linkTo}}</li>
+              <li>{{#link-to "profile"}}Profile{{/link-to}}</li>
               <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
             </ul>
           </li>

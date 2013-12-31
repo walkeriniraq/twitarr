@@ -15,18 +15,22 @@ Twitarr.PostsFeedView = Ember.View.extend
 
   check_for_new: (->
     clearTimeout(@timeout)
-    console.log 'CHECK FOR NEW ITEMS' if @get('scroll_count') > 2 && !@get('controller.loading')
+    Ember.run.debounce(@get('controller'), @get('controller').checkNew, 500, true) if @get('scroll_count') > 2
     if @get('scroll_count') > 0
       @timeout = setTimeout =>
         @timeout = null
         @set('scroll_count', 0)
       , @TIMER_LENGTH
-  ).observes('scroll_count', 'controller.loading')
+  ).observes('scroll_count')
 
   mouse_scrolled: (evt) ->
     return if evt.deltaY < 0
     return unless $(window).scrollTop() == 0
     @set('scroll_count', @get('scroll_count') + 1)
+
+  willDestroyElement: ->
+    @_super()
+    @clearBindings()
 
   loading_observer: (->
     # this is needed to provide a closure over the correct this reference
@@ -48,11 +52,14 @@ Twitarr.PostsFeedView = Ember.View.extend
         @loc = evt.originalEvent.changedTouches[0].screenY
 
     if @get 'controller.loading'
-      $(window).off "mousewheel"
-      $(document).unbind "touchmove"
-      $(document).unbind "touchstart"
+      @clearBindings()
     else
       $(document).bind "touchmove", touch_move
       $(document).bind "touchstart", touch_start
       $(window).on "mousewheel", mouse_proxy
   ).observes 'controller.loading'
+
+  clearBindings: ->
+    $(window).off "mousewheel"
+    $(document).unbind "touchmove"
+    $(document).unbind "touchstart"
