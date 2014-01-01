@@ -33,7 +33,7 @@ class PostsController < ApplicationController
   end
 
   def popular
-    posts, more = filter_direction_posts redis.popular_posts_index, params[:dir], params[:time]
+    posts = redis.popular_posts_index.revrange 0, EntryListContext::PAGE_SIZE
     context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
     render_json status: 'ok', more: false, list: list_output(context.call)
@@ -113,10 +113,10 @@ class PostsController < ApplicationController
         posts = posts.revrangebyscore(from, to, limit: EntryListContext::PAGE_SIZE + 1)
       when direction == 'after'
         from = time.to_f + 0.000001
-        to = Time.now.to_f
+        to = (Time.now + 7.days).to_f
         posts = posts.rangebyscore(from, to, limit: EntryListContext::PAGE_SIZE + 1)
       else
-        from = Time.now.to_f
+        from = (Time.now + 7.days).to_f
         to = 0
         posts = posts.revrange(0, EntryListContext::PAGE_SIZE + 1)
     end
