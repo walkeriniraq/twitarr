@@ -1,4 +1,4 @@
-Twitarr.PostsFeedView = Ember.View.extend
+Twitarr.BasePostsView = Ember.View.extend
   TIMER_LENGTH: 600
   scroll_count: 0
 
@@ -63,3 +63,9 @@ Twitarr.PostsFeedView = Ember.View.extend
     $(window).off "mousewheel"
     $(document).unbind "touchmove"
     $(document).unbind "touchstart"
+
+Twitarr.PostsFeedView = Twitarr.BasePostsView.extend()
+Twitarr.PostsPopularView = Twitarr.BasePostsView.extend()
+Twitarr.PostsAllView = Twitarr.BasePostsView.extend()
+Twitarr.PostsUserView = Twitarr.BasePostsView.extend()
+Twitarr.PostsSearchView = Twitarr.BasePostsView.extend()

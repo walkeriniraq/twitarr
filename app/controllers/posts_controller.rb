@@ -33,20 +33,18 @@ class PostsController < ApplicationController
   end
 
   def popular
-    posts = filter_direction_posts redis.popular_posts_index, params[:dir], params[:time]
+    posts, more = filter_direction_posts redis.popular_posts_index, params[:dir], params[:time]
     context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
-    list = context.call
-    render_json status: 'ok', list: list_output(list)
+    render_json status: 'ok', more: false, list: list_output(context.call)
   end
 
   def all
-    posts, announcements = filter_direction_both redis.post_index, redis.announcements, params[:dir], params[:time]
+    posts, announcements, more = filter_direction_both redis.post_index, redis.announcements, params[:dir], params[:time]
     context = EntryListContext.new announcement_list: announcements,
                                    posts_index: posts,
                                    post_store: redis.post_store
-    list = context.call
-    render_json status: 'ok', list: list_output(list)
+    render_json status: 'ok', more: more, list: list_output(context.call)
   end
 
   def feed
@@ -55,8 +53,7 @@ class PostsController < ApplicationController
     context = EntryListContext.new announcement_list: announcements,
                                    posts_index: posts,
                                    post_store: redis.post_store
-    list = context.call
-    render_json status: 'ok', more: more, list: list_output(list)
+    render_json status: 'ok', more: more, list: list_output(context.call)
   end
 
   def list
@@ -67,17 +64,17 @@ class PostsController < ApplicationController
           else
             "@#{current_username}"
           end
-    posts = filter_direction_posts redis.tag_index(tag), params[:dir], params[:time]
+    posts, more = filter_direction_posts redis.tag_index(tag), params[:dir], params[:time]
     context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
-    render_json status: 'ok', list: list_output(context.call)
+    render_json status: 'ok', more: more, list: list_output(context.call)
   end
 
   def search
-    posts = filter_direction_posts redis.tag_index("##{params[:term]}"), params[:dir], params[:time]
+    posts, more = filter_direction_posts redis.tag_index("##{params[:term]}"), params[:dir], params[:time]
     context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
-    render_json status: 'ok', list: list_output(context.call)
+    render_json status: 'ok', more: more, list: list_output(context.call)
   end
 
   def list_output(list)
@@ -87,22 +84,25 @@ class PostsController < ApplicationController
   end
 
   def filter_direction_posts(posts, direction, time)
-    case
+    posts = case
       when direction == 'before'
         posts.revrangebyscore(
             time.to_f - 0.000001,
             0,
-            limit: EntryListContext::PAGE_SIZE
+            limit: EntryListContext::PAGE_SIZE + 1
         )
       when direction == 'after'
         posts.rangebyscore(
             time.to_f + 0.000001,
             Time.now.to_f,
-            limit: EntryListContext::PAGE_SIZE
+            limit: EntryListContext::PAGE_SIZE + 1
         )
       else
-        posts.revrange(0, EntryListContext::PAGE_SIZE)
+        posts.revrange 0, EntryListContext::PAGE_SIZE + 1
     end
+    more = posts.count > EntryListContext::PAGE_SIZE
+    posts = posts.first(EntryListContext::PAGE_SIZE) if more
+    return posts, more
   end
 
   def filter_direction_both(posts, announcements, direction, time)
