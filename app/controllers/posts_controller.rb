@@ -19,6 +19,30 @@ class PostsController < ApplicationController
     render_json status: 'ok'
   end
 
+  def upload
+    params[:files].each do |file|
+      file_hash = Digest::MD5.hexdigest(File.read(file.tempfile))
+      if redis.file_hash_map.include? file_hash
+        new_filename = redis.file_hash_map[file_hash]
+      else
+        new_filename = Pathname.new(SecureRandom.uuid.to_s + Pathname.new(file.original_filename).extname)
+        redis.file_hash_map[file_hash] = new_filename
+        FileUtils.copy(file.tempfile, 'public/img/photos/' + new_filename.to_s)
+        ImageVoodoo.with_image file.path do |img|
+          img.thumbnail 150 do |thumb|
+            thumb.save 'public/img/photos/' + new_filename.basename('.*').to_s + '_sm' + new_filename.extname
+          end
+          img.thumbnail 400 do |thumb|
+            thumb.save 'public/img/photos/' + new_filename.basename('.*').to_s + '_md' + new_filename.extname
+          end
+        end
+      end
+      puts file.original_filename
+      puts new_filename
+    end
+    render_json 'ok'
+  end
+
   def favorite
     return login_required unless logged_in?
     post = redis.post_store.get params[:id]
@@ -85,21 +109,21 @@ class PostsController < ApplicationController
 
   def filter_direction_posts(posts, direction, time)
     posts = case
-      when direction == 'before'
-        posts.revrangebyscore(
-            time.to_f - 0.000001,
-            0,
-            limit: EntryListContext::PAGE_SIZE + 1
-        )
-      when direction == 'after'
-        posts.rangebyscore(
-            time.to_f + 0.000001,
-            Time.now.to_f,
-            limit: EntryListContext::PAGE_SIZE + 1
-        )
-      else
-        posts.revrange 0, EntryListContext::PAGE_SIZE + 1
-    end
+              when direction == 'before'
+                posts.revrangebyscore(
+                    time.to_f - 0.000001,
+                    0,
+                    limit: EntryListContext::PAGE_SIZE + 1
+                )
+              when direction == 'after'
+                posts.rangebyscore(
+                    time.to_f + 0.000001,
+                    Time.now.to_f,
+                    limit: EntryListContext::PAGE_SIZE + 1
+                )
+              else
+                posts.revrange 0, EntryListContext::PAGE_SIZE + 1
+            end
     more = posts.count > EntryListContext::PAGE_SIZE
     posts = posts.first(EntryListContext::PAGE_SIZE) if more
     return posts, more

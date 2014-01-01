@@ -71,6 +71,7 @@ GEM
     handlebars-source (1.1.2)
     hike (1.2.3)
     i18n (0.6.9)
+    image_voodoo (0.8.2)
     jbuilder (2.0.1)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -166,6 +167,7 @@ DEPENDENCIES
   ember-rails (~> 0.14.1)
   ember-source
   fattr
+  image_voodoo
   jbuilder
   jquery-rails
   minitest-spec-rails

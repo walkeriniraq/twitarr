@@ -29,6 +29,8 @@ gem 'fattr'
 gem 'draper', '~> 1.3.0'
 gem 'andand'
 
+gem 'image_voodoo'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

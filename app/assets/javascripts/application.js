@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery.mousewheel
+//= require jquery.ui.widget
+//= require jquery.iframe-transport
+//= require jquery.fileupload
 //= require underscore
 //= require bootstrap
 //= require moment
