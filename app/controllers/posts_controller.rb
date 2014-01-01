@@ -20,6 +20,7 @@ class PostsController < ApplicationController
   end
 
   def upload
+    saved_files = []
     params[:files].each do |file|
       file_hash = Digest::MD5.hexdigest(File.read(file.tempfile))
       if redis.file_hash_map.include? file_hash
@@ -37,10 +38,11 @@ class PostsController < ApplicationController
           end
         end
       end
-      puts file.original_filename
-      puts new_filename
+      new_filename = Pathname.new new_filename
+      saved_files << { file: "img/photos/#{new_filename}", thumb: "img/photos/#{new_filename.basename('.*').to_s + '_sm' + new_filename.extname}" }
+      #puts file.original_filename
     end
-    render_json 'ok'
+    render_json status: 'ok', saved_files: saved_files
   end
 
   def favorite

@@ -4,23 +4,29 @@
     <div class="col-sm-offset-2 col-sm-8 validation-error">{{ errors.text }}</div>
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8">
-      {{ view Twitarr.PostAutoView }}
-    </div>
-  </div>
-  <div>
-    <input id="fileupload" type="file" name="files[]" data-url="posts/upload" multiple>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-5">
-      <button class="btn btn-primary" {{ action 'send' }}>Post it</button>
-    </div>
-  </div>
-  <div class="form-group">
     <div class="col-sm-offset-2 col-sm-12">
       Text you post here will be visible to
       <span style="font-style: italic; font-weight: bold">EVERYONE</span>
       using the twitarr system.
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8">
+      {{ view Twitarr.PostAutoView }}
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8">
+      <div id="photo-upload-div" style="border: 1px solid #008B00; padding: 30px; text-align: center; background-color: #EEFFEE">
+        Drop photos here or click to add (optional)
+      </div>
+      <div id="photo-thumb-viewer"></div>
+    </div>
+    <input style="display: none" id="fileupload" type="file" name="files[]" data-url="posts/upload" accept="image/*" multiple>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+      <button class="btn btn-primary" {{ action 'send' }}>Post it</button>
     </div>
   </div>
 </form>
