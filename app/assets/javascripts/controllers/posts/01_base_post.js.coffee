@@ -12,8 +12,6 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
         posts = _(@get('posts')).reject (x) ->
           x.post_id is id
         @set 'posts', posts
-    reload: ->
-      @reload()
     checkNew: ->
       @checkNew()
 
@@ -40,7 +38,6 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
     @get_data_ajax(info).done((data) =>
       console.log(data.status) unless data.status is 'ok'
       Ember.run =>
-        @set 'more', data.more
         @set 'loading', false
         if data.posts.length
           @get('model.posts').unshiftObject(post) for post in data.posts
