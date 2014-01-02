@@ -48,6 +48,7 @@ class AdminController < ApplicationController
     user.email = params[:email]
     redis.user_store.save user, user.username
     redis.user_set << user.username
+    redis.user_auto.add user.username, user.username, 'username'
     render_json status: 'ok'
   end
 
