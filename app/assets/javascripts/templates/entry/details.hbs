@@ -12,6 +12,13 @@
     <span style="color: darkgray;" {{bind-attr data-livestamp="time"}} ></span>
   </div>
   <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+  <div class="text-center">
+    {{#each photo in photos}}
+      <a {{bind-attr href=photo.full}} target="_blank">
+        <img {{bind-attr src=photo.thumb}}>
+      </a>
+    {{/each}}
+  </div>
 
   <div class="post-details clearfix">
     {{#if liked_sentence}}

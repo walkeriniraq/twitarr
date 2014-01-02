@@ -45,7 +45,7 @@ class TwitarrDb
     end
   end
 
-  def self.create_post(user, post_text)
+  def self.create_post(user, post_text, photos = [])
     DbConnectionPool.instance.connection do |redis|
       context = CreatePostContext.new user: user,
                                       tag_factory: tag_factory(redis),
@@ -55,7 +55,7 @@ class TwitarrDb
                                       following_list: redis.user_followed(user).entries,
                                       feed_factory: feed_factory(redis),
                                       tag_autocomplete: redis.tag_auto
-      context.call post_text
+      context.call post_text, photos
     end
   end
 

@@ -2,8 +2,16 @@ Twitarr.Post = Twitarr.BasePost.extend()
 
 Twitarr.Post.reopenClass
 
-  new: (text) ->
-    @post('posts', text)
+  create: (params) ->
+    post = @_super(params)
+    post.set('photos', (Twitarr.Photo.create(photo) for photo in params.data.photos)) if params.data && params.data.photos
+    post
+
+  new: (text, photos) ->
+    filenames = (photo.file for photo in photos)
+    $.post("posts/submit", { message: text, photos: filenames }).done (data) ->
+      unless data.status is 'ok'
+        alert data.status
 
   search: (tag, info) ->
     url = "posts/search?term=#{encodeURIComponent tag}"

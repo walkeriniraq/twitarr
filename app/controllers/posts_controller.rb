@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 
   def submit
     return login_required unless logged_in?
-    TwitarrDb.create_post current_username, params[:message]
+    TwitarrDb.create_post current_username, params[:message], params[:photos]
     render_json status: 'ok'
   end
 
@@ -26,20 +26,19 @@ class PostsController < ApplicationController
       if redis.file_hash_map.include? file_hash
         new_filename = redis.file_hash_map[file_hash]
       else
-        new_filename = Pathname.new(SecureRandom.uuid.to_s + Pathname.new(file.original_filename).extname)
+        new_filename = SecureRandom.uuid.to_s + Pathname.new(file.original_filename).extname
         redis.file_hash_map[file_hash] = new_filename
-        FileUtils.copy(file.tempfile, 'public/img/photos/' + new_filename.to_s)
+        FileUtils.copy(file.tempfile, 'public/img/photos/' + new_filename)
         ImageVoodoo.with_image file.path do |img|
           img.thumbnail 150 do |thumb|
-            thumb.save 'public/img/photos/' + new_filename.basename('.*').to_s + '_sm' + new_filename.extname
+            thumb.save 'public/img/photos/sm_' + new_filename
           end
-          img.thumbnail 400 do |thumb|
-            thumb.save 'public/img/photos/' + new_filename.basename('.*').to_s + '_md' + new_filename.extname
+          img.thumbnail 600 do |thumb|
+            thumb.save 'public/img/photos/md_' + new_filename
           end
         end
       end
-      new_filename = Pathname.new new_filename
-      saved_files << { file: "img/photos/#{new_filename}", thumb: "img/photos/#{new_filename.basename('.*').to_s + '_sm' + new_filename.extname}" }
+      saved_files << new_filename
       #puts file.original_filename
     end
     render_json status: 'ok', saved_files: saved_files

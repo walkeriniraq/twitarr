@@ -37,7 +37,10 @@ class EntryListContext
                 type: type,
                 time: post_time,
                 from: username,
-                message: message
+                message: message,
+                data: {
+                    photos: photos
+                }
     end
   end
 
