@@ -29,6 +29,7 @@ class PostsController < ApplicationController
         new_filename = SecureRandom.uuid.to_s + Pathname.new(file.original_filename).extname
         redis.file_hash_map[file_hash] = new_filename
         FileUtils.copy(file.tempfile, 'public/img/photos/' + new_filename)
+        Pathname.new('public/img/photos/' + new_filename).chmod(0664)
         ImageVoodoo.with_image file.path do |img|
           img.thumbnail 150 do |thumb|
             thumb.save 'public/img/photos/sm_' + new_filename
