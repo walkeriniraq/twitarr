@@ -30,6 +30,7 @@ gem 'draper', '~> 1.3.0'
 gem 'andand'
 
 gem 'image_voodoo'
+gem 'puma'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
