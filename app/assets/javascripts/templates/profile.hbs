@@ -1,1 +1,18 @@
-<h3>Profile</h3>
+<form class="form-horizontal">
+  <legend>Profile</legend>
+  <div class="form-group validation-error-group">
+    <div class="col-sm-offset-2 col-sm-8 validation-error">{{ errors.text }}</div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Display Name</label>
+
+    <div class="col-sm-4">
+      {{ view Ember.TextField valueBinding='display_name'}}
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+      <button class="btn btn-primary" {{ action 'save' }}>Save</button>
+    </div>
+  </div>
+</form>

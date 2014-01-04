@@ -4,7 +4,7 @@ class User < BaseModel
 
   USERNAME_REGEX = /^[\w&-]{5,}$/
 
-  attr :username, :password, :is_admin, :status, :email
+  attr :username, :password, :is_admin, :status, :email, :display_name
 
   def self.valid_username?(username)
     !username.match(USERNAME_REGEX).nil?

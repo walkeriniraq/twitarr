@@ -21,14 +21,14 @@ Twitarr::Application.routes.draw do
   post 'seamail/do_archive'
 
   post 'user/login'
+  get 'user/logout'
+  get 'user/username'
+  post 'user/change_password'
   post 'user/follow'
   post 'user/unfollow'
-  get 'user/username'
-  put 'user/message'
   post 'user/new'
-  get 'user/logout'
-  post 'user/change_password'
   get 'user/autocomplete'
+  get 'user/profile'
 
   get 'admin/users'
   get 'admin/find_user'

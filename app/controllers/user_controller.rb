@@ -36,11 +36,6 @@ class UserController < ApplicationController
     render_json status: 'ok'
   end
 
-  def message
-    puts "PASSED MESSAGE: #{params[:message].inspect}"
-    render_json status: 'ok'
-  end
-
   def username
     if logged_in?
       if current_user.nil?
@@ -89,6 +84,11 @@ class UserController < ApplicationController
     return render_json status: 'Invalid username or password.' unless current_user.correct_password params[:old_password]
     current_user.set_password params[:new_password]
     redis.user_store.save current_user, current_user.username
+  end
+
+  def profile
+    return login_required unless logged_in?
+    render_json status: 'ok', display_name: current_user.display_name
   end
 
 end
