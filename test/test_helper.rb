@@ -19,7 +19,8 @@ class BaseTestCase < ActiveSupport::TestCase
 
   def redis
     #@redis ||= Redis.new(host: 'gremlin', db: 15)
-    @redis ||= Redis.new(db: 15)
+    #@redis ||= Redis.new(db: 15)
+    TwitarrDb.db
   end
 
 end

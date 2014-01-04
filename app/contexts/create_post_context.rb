@@ -12,8 +12,8 @@ class CreatePostContext
     @following_list ||= []
   end
 
-  def call(post_text)
-    post = user.new_post(post_text)
+  def call(post_text, photos = [])
+    post = user.new_post(post_text, photos)
     post_store.add post
     @post = PostRole.new post
     @post.tags.each do |tag_name|
@@ -57,8 +57,8 @@ class CreatePostContext
   end
 
   class UserRole < SimpleDelegator
-    def new_post(message)
-      Post.new message: message, username: to_s, post_time: Time.now, post_id: SecureRandom.uuid
+    def new_post(message, photos)
+      Post.new message: message, username: to_s, post_time: Time.now, post_id: SecureRandom.uuid, photos: photos
     end
   end
 

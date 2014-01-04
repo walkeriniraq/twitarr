@@ -132,7 +132,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
     it 'creates a post' do
       user = 'foo'
       role = subject.new(user)
-      test = role.new_post 'this is a post'
+      test = role.new_post 'this is a post', []
       test.message.must_equal 'this is a post'
       test.username.must_equal 'foo'
       test.post_time.to_i.must_be_close_to Time.now.to_i, 1

@@ -99,6 +99,10 @@ class Redis
     redis_set 'system:users'
   end
 
+  def file_hash_map
+    redis_hash 'system:file_hash_map'
+  end
+
   def friend_graph
     FriendGraph.new(following, followed)
   end

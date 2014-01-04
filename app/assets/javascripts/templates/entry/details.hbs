@@ -1,17 +1,24 @@
-<div {{bindAttr class="entry_class"}}>
-  {{#linkTo "posts.user" from}}
+<div {{bind-attr class="entry_class"}}>
+  {{#link-to "posts.user" from}}
     {{#if post_by_friend}}
       <span style="font-weight: bold;">@{{ from }}
         <span style="color: #d3ac00; " class="glyphicon glyphicon-star"></span>
       </span>
     {{else}}
-      <span style="">@{{ from }}</span>
+      <span>@{{ from }}</span>
     {{/if}}
-  {{/linkTo}}
+  {{/link-to}}
   <div class="pull-right">
-    <span style="color: darkgray;" {{bindAttr data-livestamp="time"}} ></span>
+    <span style="color: darkgray;" {{bind-attr data-livestamp="time"}} ></span>
   </div>
   <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+  <div class="text-center">
+    {{#each photo in photos}}
+      <a {{bind-attr href=photo.full}} target="_blank">
+        <img {{bind-attr src=photo.thumb}}>
+      </a>
+    {{/each}}
+  </div>
 
   <div class="post-details clearfix">
     {{#if liked_sentence}}

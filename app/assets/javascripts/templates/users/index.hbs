@@ -29,8 +29,8 @@
         {{#if user.is_locked}}
           <a href="#" {{ action 'unlock' user.username }} class="margin-right-20">unlock</a>
         {{/if}}
-        {{#linkTo 'users.reset_password' user.username classNames="margin-right-20"}}reset password{{/linkTo}}
-        {{#linkTo 'users.edit' user }}edit{{/linkTo}}
+        {{#link-to 'users.reset_password' user.username classNames="margin-right-20"}}reset password{{/link-to}}
+        {{#link-to 'users.edit' user }}edit{{/link-to}}
       </td>
     </tr>
     {{/each}}
@@ -40,7 +40,7 @@
   <td></td>
   <td></td>
   <td style="text-align: right;">
-    {{#linkTo 'users.new'}}new{{/linkTo}}
+    {{#link-to 'users.new'}}new{{/link-to}}
   </td>
   </tfoot>
 </table>

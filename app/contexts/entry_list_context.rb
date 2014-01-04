@@ -4,7 +4,7 @@ class EntryListContext
   attr :announcement_list, :posts_index, :post_store
 
   TIME_ZERO = 0
-  PAGE_SIZE = 50
+  PAGE_SIZE = 20
 
   def call
     announcements = if announcement_list
@@ -37,7 +37,10 @@ class EntryListContext
                 type: type,
                 time: post_time,
                 from: username,
-                message: message
+                message: message,
+                data: {
+                    photos: photos
+                }
     end
   end
 

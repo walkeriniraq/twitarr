@@ -7,7 +7,6 @@ Twitarr.Router.map ()->
     @route 'new'
   @resource 'posts', ->
     @route 'popular'
-    @route 'mine'
     @route 'all'
     @route 'feed'
     @route 'new'

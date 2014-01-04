@@ -39,12 +39,6 @@ window.Twitarr = Ember.Application.create
   LOG_BINDINGS: true
   ready: ->
     $("#app-loading").remove()
-  feed_list: ->
-    $.getJSON("posts/feed").then (data) =>
-      return data unless data.list?
-      links = Ember.A()
-      links.pushObject(Twitarr.Entry.create(entry)) for entry in data.list
-      links
 
 $.ajaxSetup
   beforeSend: (jqXHR) ->
