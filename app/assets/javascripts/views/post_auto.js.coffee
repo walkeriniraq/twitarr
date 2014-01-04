@@ -5,7 +5,7 @@ Twitarr.PostAutoView = Ember.View.extend
   templateName: 'posts/post_auto'
   searchResults: []
 
-  keyPress: (e) ->
+  keyUp: (e) ->
     switch e.keyCode
       when 40
         return @moveDown()
