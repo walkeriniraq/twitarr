@@ -8,7 +8,7 @@ Twitarr.ProfileController = Twitarr.Controller.extend
 #      Twitarr.Post.new(text).done (data) =>
 #        if data.status is 'ok'
 #          @set 'text', ''
-#          @transitionToRoute 'posts.feed'
+#          @transitionToRoute 'posts.all'
 #        else
 #          alert data.status
 #      @set 'errors', errors

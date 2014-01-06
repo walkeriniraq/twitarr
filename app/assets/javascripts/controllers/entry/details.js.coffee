@@ -16,10 +16,6 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
           @set 'model.user_liked', true
           @set 'model.liked_sentence', data.sentence
 
-  post_by_friend: (->
-    _(@get('friends')).contains @get('from')
-  ).property('friends', 'from')
-
   entry_class: (->
     switch @get('type')
       when 'announcement' then 'announcement-entry'

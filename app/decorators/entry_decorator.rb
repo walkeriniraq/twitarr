@@ -17,7 +17,6 @@ class EntryDecorator < Draper::Decorator
   def liked_sentence(favorites)
     likes = []
     likes << 'You' if favorites.user_like(entry_id)
-    likes += favorites.friends_like(entry_id)
     other_likes = favorites.like_count(entry_id)
     likes << "#{other_likes} people" if other_likes > 1
     likes << '1 other person' if other_likes == 1

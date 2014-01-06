@@ -83,32 +83,12 @@ class Redis
     RedisHashObjectStore.new redis_hash('seamail:store'), Seamail
   end
 
-  def following
-    NamedSetCache.new lambda { |name| user_following(name) }
-  end
-
-  def user_following(name)
-    redis_set "user:following:#{name}"
-  end
-
-  def followed
-    NamedSetCache.new lambda { |name| user_followed(name) }
-  end
-
-  def user_followed(name)
-    redis_set "user:followed:#{name}"
-  end
-
   def user_set
     redis_set 'system:users'
   end
 
   def file_hash_map
     redis_hash 'system:file_hash_map'
-  end
-
-  def friend_graph
-    FriendGraph.new(following, followed)
   end
 
   def user_auto

@@ -14,7 +14,7 @@ Twitarr.PostsNewController = Twitarr.Controller.extend
           if data.status is 'ok'
             @set 'text', ''
             @get('photos').clear()
-            @transitionToRoute 'posts.feed'
+            @transitionToRoute 'posts.all'
           else
             alert data.status
       @set 'errors', errors

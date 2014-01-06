@@ -11,7 +11,6 @@ Twitarr::Application.routes.draw do
   get 'posts/list'
   get 'posts/search'
   get 'posts/all'
-  get 'posts/feed'
   post 'posts/upload'
   get 'posts/tag_autocomplete'
 
@@ -25,8 +24,6 @@ Twitarr::Application.routes.draw do
   get 'user/logout'
   get 'user/username'
   post 'user/change_password'
-  post 'user/follow'
-  post 'user/unfollow'
   post 'user/new'
   get 'user/autocomplete'
   get 'user/profile'

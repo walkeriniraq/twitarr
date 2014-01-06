@@ -4,10 +4,7 @@ class UserFavoritesTest < BaseTestCase
   subject { UserFavorites }
 
   def setup
-    steve_friends = redis.user_following('steve')
     favorites = (0..4).map { |x| redis.post_favorites_set(x) }
-
-    steve_friends << 'sally'
 
     favorites[1] << 'dave' << 'walter'
     favorites[2] << 'steve' << 'walter'
@@ -29,18 +26,6 @@ class UserFavoritesTest < BaseTestCase
     @test_obj.user_like(2).must_equal true
   end
 
-  it 'friends_like returns empty array for posts not in list' do
-    @test_obj.friends_like(4).must_equal []
-  end
-
-  it 'friends_like returns empty array for posts that no friends like' do
-    @test_obj.friends_like(1).must_equal []
-  end
-
-  it 'friends_like includes the name of friends who like a post' do
-    @test_obj.friends_like(3).must_include 'sally'
-  end
-
   it 'like_count is zero for posts not in list' do
     @test_obj.like_count(4).must_equal 0
   end
@@ -57,12 +42,7 @@ class UserFavoritesTest < BaseTestCase
     @test_obj.like_count(2).must_equal 1
   end
 
-  it 'like_count does not include friends' do
-    @test_obj.like_count(3).must_equal 1
-  end
-
   def teardown
-    redis.user_following('steve').clear
     (0..4).each { |x| redis.post_favorites_set(x).clear }
   end
 

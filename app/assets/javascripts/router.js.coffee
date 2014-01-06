@@ -8,7 +8,6 @@ Twitarr.Router.map ()->
   @resource 'posts', ->
     @route 'popular'
     @route 'all'
-    @route 'feed'
     @route 'new'
     @route 'user', { path: '/user/:user' }
     @route 'search', { path: '/search/:tag' }

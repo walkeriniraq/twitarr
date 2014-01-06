@@ -26,11 +26,8 @@
     <!--<div class='navbar-inner'>-->
     <div class="collapse navbar-collapse auto navbar-ex1-collapse">
       <ul class='nav navbar-nav'>
-        {{#if logged_in}}
-          <li>{{#link-to "posts.feed"}}Feed{{/link-to}}</li>
-        {{/if}}
-        <li>{{#link-to "posts.popular"}}Trending{{/link-to}}</li>
         <li>{{#link-to "posts.all"}}All Posts{{/link-to}}</li>
+        <li>{{#link-to "posts.popular"}}Trending{{/link-to}}</li>
         {{#if logged_in}}
           <li>
             {{#link-to "seamail.inbox"}}

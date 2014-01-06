@@ -44,4 +44,4 @@ Twitarr.SeamailNewController = Twitarr.ObjectController.extend
           @set 'toPeople', []
           @last_search = ''
           @set 'toInput', ''
-          @transitionToRoute 'posts.feed'
+          @transitionToRoute 'seamail.inbox'

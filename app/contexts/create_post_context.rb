@@ -9,7 +9,6 @@ class CreatePostContext
     @post_index = PostIndexRole.new(@post_index)
     @user = UserRole.new(@user)
     @post_store = PostStoreRole.new(@post_store)
-    @following_list ||= []
   end
 
   def call(post_text, photos = [])

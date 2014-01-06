@@ -79,15 +79,6 @@ class PostsController < ApplicationController
     render_json status: 'ok', more: more, list: list_output(context.call)
   end
 
-  def feed
-    return login_required unless logged_in?
-    posts, announcements, more = filter_direction_both redis.feed_index(current_username), redis.announcements, params[:dir], params[:time]
-    context = EntryListContext.new announcement_list: announcements,
-                                   posts_index: posts,
-                                   post_store: redis.post_store
-    render_json status: 'ok', more: more, list: list_output(context.call)
-  end
-
   def list
     tag = if params[:username]
             user = redis.user_store.get(params[:username])

@@ -19,12 +19,6 @@ Twitarr.Post.reopenClass
       url += "&dir=#{encodeURIComponent info.direction}&time=#{encodeURIComponent info.time}"
     @get_list(url)
 
-  feed: (info) ->
-    url = "posts/feed"
-    if info
-      url += "?dir=#{info.direction}&time=#{info.time}"
-    @get_list(url)
-
   popular: (info) ->
     url = "posts/popular"
     if info

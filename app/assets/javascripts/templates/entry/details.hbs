@@ -1,12 +1,6 @@
 <div {{bind-attr class="entry_class"}}>
   {{#link-to "posts.user" from}}
-    {{#if post_by_friend}}
-      <span style="font-weight: bold;">@{{ from }}
-        <span style="color: #d3ac00; " class="glyphicon glyphicon-star"></span>
-      </span>
-    {{else}}
-      <span>@{{ from }}</span>
-    {{/if}}
+    <span>@{{ from }}</span>
   {{/link-to}}
   <div class="pull-right">
     <span style="color: darkgray;" {{bind-attr data-livestamp="time"}} ></span>

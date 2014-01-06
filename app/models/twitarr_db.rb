@@ -22,18 +22,6 @@ class TwitarrDb
     end
   end
 
-  def self.follow(from, to)
-    DbConnectionPool.instance.connection do |redis|
-      FriendGraph.new(redis.following, redis.followed).add(from, to)
-    end
-  end
-
-  def self.unfollow(from, to)
-    DbConnectionPool.instance.connection do |redis|
-      FriendGraph.new(redis.following, redis.followed).remove(from, to)
-    end
-  end
-
   def self.create_seamail(from, to, subject, text)
     DbConnectionPool.instance.connection do |redis|
       mail = Seamail.new from: from, to: to, subject: subject, text: text
@@ -52,7 +40,6 @@ class TwitarrDb
                                       popular_index: redis.popular_posts_index,
                                       post_index: redis.post_index,
                                       post_store: redis.post_store,
-                                      following_list: redis.user_followed(user).entries,
                                       feed_factory: feed_factory(redis),
                                       tag_autocomplete: redis.tag_auto
       context.call post_text, photos
