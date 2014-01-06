@@ -34,8 +34,8 @@ class ApplicationController < BaseRedisController
   end
 
   def logout_user
-    session[:username] = nil
-    session[:is_admin] = false
+    session.delete :username
+    session.delete :is_admin
   end
 
   def is_admin?
