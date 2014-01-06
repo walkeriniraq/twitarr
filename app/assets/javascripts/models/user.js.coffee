@@ -27,6 +27,11 @@ Twitarr.User = Ember.Object.extend
       result[key] = this[key]
     result
 
+  last_login_readable: ( ->
+    return '' unless @last_login
+    moment.unix(@last_login).calendar()
+  ).property('last_login')
+
 Twitarr.User.reopenClass
   list: ->
     $.getJSON('admin/users').then (data) =>

@@ -31,7 +31,7 @@ class User < BaseModel
     self
   end
 
-  def last_login
+  def last_login_readable
     return Time.at(@last_login) unless @last_login.nil?
     @last_login
   end

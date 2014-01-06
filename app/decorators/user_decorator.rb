@@ -6,7 +6,7 @@ class UserDecorator < Draper::Decorator
   end
   
   def admin_hash
-    to_hash %w(username is_admin status email empty_password)
+    to_hash %w(username is_admin status last_login email empty_password)
   end
 
 end

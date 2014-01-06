@@ -4,6 +4,7 @@
   <tr>
     <th>Username</th>
     <th>Email</th>
+    <th>Last Login</th>
     <th style="text-align: center;">Status</th>
     <th></th>
   </tr>
@@ -14,6 +15,7 @@
     <tr>
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
+      <td>{{ user.last_login_readable }}</td>
       <td style="text-align: center;">
         {{#if user.is_locked}}
           <span title="User is deactivated" class="glyphicon glyphicon-lock" style="margin-left: 5px;"></span>
@@ -36,6 +38,7 @@
     {{/each}}
   </tbody>
   <tfoot>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
