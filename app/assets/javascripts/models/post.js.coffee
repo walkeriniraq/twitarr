@@ -4,7 +4,9 @@ Twitarr.Post.reopenClass
 
   create: (params) ->
     post = @_super(params)
-    post.set('photos', (Twitarr.Photo.create(photo) for photo in params.data.photos)) if params.data && params.data.photos
+    if params.data
+      post.set('photos', (Twitarr.Photo.create(photo) for photo in params.data.photos)) if params.data.photos
+      post.set('replies', (Twitarr.Reply.create(reply) for reply in params.data.replies)) if params.data.replies
     post
 
   new: (text, photos) ->
@@ -40,6 +42,13 @@ Twitarr.Post.reopenClass
   favorite: (id) ->
     $.ajax(type: 'PUT', url: 'posts/favorite', data: { id: id }).done (data) ->
       unless data.status is 'ok'
+        alert data.status
+
+  reply: (text, id) ->
+    $.post('posts/reply', { message: text, id: id }).done (data) ->
+      if data.status is 'ok'
+        console.log 'updated'
+      else
         alert data.status
 
   delete: (id) ->

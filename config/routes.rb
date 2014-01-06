@@ -11,6 +11,7 @@ Twitarr::Application.routes.draw do
   get 'posts/list'
   get 'posts/search'
   get 'posts/all'
+  post 'posts/reply'
   post 'posts/upload'
   get 'posts/tag_autocomplete'
 

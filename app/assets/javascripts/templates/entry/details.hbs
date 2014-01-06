@@ -54,9 +54,20 @@
       </div>
     {{/if}}
   </div>
+  {{#each reply in replies}}
+    <div style="border: 1px solid darkgray; margin: 0.5em; padding: 0.5em;">
+      {{#link-to "posts.user" reply.username}}
+        <span>@{{ reply.username }}</span>
+      {{/link-to}}
+      {{ reply.message }}
+    </div>
+  {{/each}}
   {{#if replying}}
     <div class="post-reply clearfix">
-      {{ render 'entry/reply' model }}
+      <div class="form-horizontal" style='margin-top: 10px;'>
+        {{ view Twitarr.PostAutoView }}
+        <button class="btn btn-primary pull-right btn-xs" style="margin-top: 5px;" {{ action 'make_post' }}>Post it</button>
+      </div>
       <button class="btn btn-primary pull-right margin-right-20 btn-xs"
               style="margin-top: 5px;" {{ action 'cancel_reply' }}>Cancel
       </button>

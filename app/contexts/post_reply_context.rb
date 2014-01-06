@@ -18,7 +18,7 @@ class PostReplyContext
       tag_autocomplete.add(tag_name[1..-1], tag_name[1..-1], 'tag') if tag_name[0] == '#'
     end
     popular_index.update_score post
-    post
+    reply
   end
 
   class PopularIndexRole < SimpleDelegator

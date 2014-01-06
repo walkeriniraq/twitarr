@@ -6,6 +6,16 @@ class PostReplyContextTest < ActiveSupport::TestCase
 
   include AttributesTest
 
+  it 'returns the reply' do
+    post = Post.new(post_id: 'foo')
+    context = subject.new post: post,
+                          tag_factory: lambda { |_| {} },
+                          post_store: FakePostsStore.new,
+                          popular_index: {}
+    ret = context.call 'steve', 'text'
+    ret.must_equal post.replies.last
+  end
+
   it 'adds the comment to the post comments' do
     post = Post.new(post_id: 'foo')
     context = subject.new post: post,

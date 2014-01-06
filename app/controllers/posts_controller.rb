@@ -21,8 +21,8 @@ class PostsController < ApplicationController
 
   def reply
     return login_required unless logged_in?
-    TwitarrDb.add_post_reply current_username, params[:message], params[:id]
-    render_json status: 'ok'
+    reply = TwitarrDb.add_post_reply current_username, params[:message], params[:id]
+    render_json status: 'ok', reply: reply
   end
 
   def upload

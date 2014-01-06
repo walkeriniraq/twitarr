@@ -16,6 +16,16 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
           @set 'model.user_liked', true
           @set 'model.liked_sentence', data.sentence
 
+    make_post: ->
+      text = @get 'text'
+      return unless text.trim()
+
+      Twitarr.Post.reply(text.trim(), @get('entry_id')).done (data) =>
+        return alert(data.status) unless data.status is 'ok'
+        @get('replies').addObject(Twitarr.Reply.create(data.reply))
+        @set 'text', ''
+        @set 'replying', false
+
   entry_class: (->
     switch @get('type')
       when 'announcement' then 'announcement-entry'
