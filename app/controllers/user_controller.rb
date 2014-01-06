@@ -28,6 +28,7 @@ class UserController < ApplicationController
         return render_json status: 'User does not exist.'
       end
       return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
+      redis.user_store.save current_user.update_last_login, current_username
       return render_json user_hash(current_user)
     end
     render_json status: 'logout'

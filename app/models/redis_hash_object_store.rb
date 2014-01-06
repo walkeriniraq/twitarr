@@ -34,4 +34,8 @@ class RedisHashObjectStore
     hash.keys
   end
 
+  def all
+    keys.map { |x| get x }
+  end
+
 end
