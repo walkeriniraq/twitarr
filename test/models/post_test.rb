@@ -1,8 +1,8 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class PostTest < ActiveSupport::TestCase
   subject { Post }
-  let(:attributes) { %w(message username post_id) }
+  let(:attributes) { %w(message username post_id photos) }
 
   include AttributesTest
   include UpdateTest
@@ -16,6 +16,11 @@ class PostTest < ActiveSupport::TestCase
     date = Time.now
     post = Post.new post_time: date
     post.post_time.must_equal date.to_f
+  end
+
+  it 'adds an empty replies if not set' do
+    post = Post.new
+    post.replies.must_equal []
   end
 
 end

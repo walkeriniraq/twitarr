@@ -94,8 +94,6 @@ GEM
     multi_json (1.8.2)
     peach (0.5.1)
     polyglot (0.3.3)
-    puma (2.7.1)
-      rack (>= 1.1, < 2.0)
     puma (2.7.1-java)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)

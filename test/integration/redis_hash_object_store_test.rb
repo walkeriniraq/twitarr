@@ -15,6 +15,15 @@ class RedisHashObjectStoreTest < BaseTestCase
     test.baz.must_equal 'three'
   end
 
+  it 'can tell if an object exists' do
+    model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
+    hash = redis.redis_hash 'HashObjectStoreTest'
+    object_store = subject.new hash, ObjectStoreTestModel
+    object_store.save model, 1
+    object_store.has_key?(1).must_equal true
+    object_store.has_key?(123).must_equal false
+  end
+
   it 'can get a list of objects' do
     model = ObjectStoreTestModel.new foo: 'one', bar: 'two', baz: 'three'
     hash = redis.redis_hash 'HashObjectStoreTest'

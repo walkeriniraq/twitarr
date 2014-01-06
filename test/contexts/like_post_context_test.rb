@@ -26,7 +26,7 @@ class LikePostContextTest < ActiveSupport::TestCase
                           popular_index: {},
                           user_feed: feed = {}
 
-    score = context.call
+    context.call
     feed.keys.first.must_equal post.post_id
   end
 

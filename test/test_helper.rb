@@ -25,6 +25,18 @@ class BaseTestCase < ActiveSupport::TestCase
 
 end
 
+class FakePostsStore
+  attr :store
+
+  def initialize
+    @store = {}
+  end
+
+  def save(post, id)
+    @store[id] = post
+  end
+end
+
 module AttributesTest
   def test_attributes_start_blank
     attributes.each do |attr|

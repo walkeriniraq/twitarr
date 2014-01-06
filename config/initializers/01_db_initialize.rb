@@ -23,6 +23,10 @@ class Redis
     Redis::SortedSet.new(name, self, opts)
   end
 
+  def lock(name, opts = {})
+    Redis::Lock.new(name, self, opts)
+  end
+
   ###
   # Custom initializers for twitarr
   ###

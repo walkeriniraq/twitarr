@@ -17,8 +17,12 @@ class RedisHashObjectStore
     hash.bulk_get(*id_or_ids).values.compact.map { |x| clazz.new(JSON.parse x) }
   end
 
+  def has_key?(id)
+    hash.has_key? id
+  end
+
   def save(obj, id)
-    hash[id] = obj.to_hash(obj.class.fattrs).to_json
+    hash[id] = obj.to_hash.to_json
   end
 
   def delete(id)

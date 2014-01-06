@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :following_list, :feed_factory, :tag_autocomplete
+  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete
 
   def initialize(attrs = {})
     super
@@ -20,14 +20,6 @@ class CreatePostContext
       tag = TagIndexRole.new tag_factory.call(tag_name)
       tag.add_post @post
       tag_autocomplete.add(tag_name[1..-1], tag_name[1..-1], 'tag') if tag_name[0] == '#'
-    end
-    if feed_factory
-      @following_list.each do |follower|
-        feed = FeedRole.new feed_factory.call(follower)
-        feed.add_post @post
-      end
-      feed = FeedRole.new feed_factory.call(user)
-      feed.add_post @post
     end
     popular_index.add_post @post
     post_index.add_post @post
@@ -49,10 +41,6 @@ class CreatePostContext
   end
 
   class TagIndexRole < SimpleDelegator
-    include IndexPostTimeTrait
-  end
-
-  class FeedRole < SimpleDelegator
     include IndexPostTimeTrait
   end
 

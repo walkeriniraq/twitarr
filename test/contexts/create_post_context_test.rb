@@ -2,32 +2,9 @@ require_relative '../test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user tag_factory popular_index post_index post_store feed_factory tag_autocomplete) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete) }
 
   include AttributesTest
-
-  class FakePostsStore
-    attr :store
-
-    def initialize
-      @store = {}
-    end
-
-    def save(post, id)
-      @store[id] = post
-    end
-  end
-
-  it 'defaults the following_list to empty array' do
-    test = subject.new
-    test.following_list.must_equal []
-  end
-
-  it 'has accessor for following_list' do
-    test = subject.new
-    test.following_list = 'foo'
-    test.following_list.must_equal 'foo'
-  end
 
   it 'creates and returns a post' do
     context = subject.new user: 'foo',
@@ -40,7 +17,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
     post.message.must_equal 'This is a test'
   end
 
-  it 'adds the json string to the post_store' do
+  it 'adds the post to the post_store' do
     context = subject.new user: 'foo',
                           tag_factory: lambda { |_| {} },
                           popular_index: {},
@@ -86,7 +63,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
     tag.keys.first.must_equal post.post_id
   end
 
-  it 'adds the post_id to the tag index' do
+  it 'adds the tag to the autocomplete index' do
     auto = mock()
     auto.expects(:add).with('test', 'test', 'tag').once
     context = subject.new user: 'foo',
@@ -95,33 +72,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           post_index: {},
                           post_store: FakePostsStore.new,
                           tag_autocomplete: auto
-    post = context.call 'This is a #test'
-  end
-
-  it 'adds the post_id to follower feed index' do
-    feed = {}
-    context = subject.new user: 'foo',
-                          tag_factory: lambda { |_| {} },
-                          popular_index: {},
-                          post_index: {},
-                          post_store: FakePostsStore.new,
-                          following_list: ['steve'],
-                          feed_factory: lambda { |_| feed }
-    post = context.call 'This is a test'
-    feed.keys.first.must_equal post.post_id
-  end
-
-  it 'adds the post_id to user feed index' do
-    feed = {}
-    context = subject.new user: 'foo',
-                          tag_factory: lambda { |_| {} },
-                          popular_index: {},
-                          post_index: {},
-                          post_store: FakePostsStore.new,
-                          following_list: [],
-                          feed_factory: lambda { |_| feed }
-    post = context.call 'This is a test'
-    feed.keys.first.must_equal post.post_id
+    context.call 'This is a #test'
   end
 
   class UserRoleTest < ActiveSupport::TestCase
@@ -142,13 +93,6 @@ class CreatePostContextTest < ActiveSupport::TestCase
 
   class TagRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::TagIndexRole }
-
-    include DelegatorTest
-    include IndexTimeTraitTests
-  end
-
-  class FeedRoleTest < ActiveSupport::TestCase
-    subject { CreatePostContext::FeedRole }
 
     include DelegatorTest
     include IndexTimeTraitTests

@@ -39,6 +39,7 @@ class EntryListContext
                 from: username,
                 message: message,
                 data: {
+                    replies: replies,
                     photos: photos
                 }
     end

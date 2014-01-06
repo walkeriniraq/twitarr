@@ -19,6 +19,12 @@ class PostsController < ApplicationController
     render_json status: 'ok'
   end
 
+  def reply
+    return login_required unless logged_in?
+    TwitarrDb.add_post_reply current_username, params[:message], params[:id]
+    render_json status: 'ok'
+  end
+
   def upload
     saved_files = []
     params[:files].each do |file|

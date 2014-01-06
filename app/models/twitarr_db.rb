@@ -71,13 +71,28 @@ class TwitarrDb
     DbConnectionPool.instance.connection do |redis|
       # TODO: fix this
       posts = redis.post_store.get(redis.keys.
-          select { |x| x.start_with? 'Post:' }.
-          map { |x| x.sub('Post:', '') })
+                                       select { |x| x.start_with? 'Post:' }.
+                                       map { |x| x.sub('Post:', '') })
       context = ReindexPostContext.new post_list: posts,
                                        post_index: redis.post_index,
                                        popular_index: redis.popular_posts_index,
                                        post_likes_factory: lambda { |post| redis.post_favorites_set post.post_id }
       context.call
+    end
+  end
+
+  def self.add_post_reply(user, text, id)
+    DbConnectionPool.instance.connection do |redis|
+      lock_context = LockPostContext.new post_lock_factory: lambda { |post_id| redis.lock post_id },
+                                         post_store: redis.post_store
+      lock_context.call(id) do |post|
+        context = PostReplyContext.new post: post,
+                                       tag_factory: tag_factory(redis),
+                                       tag_autocomplete: redis.tag_auto,
+                                       popular_index: redis.popular_posts_index,
+                                       post_store: redis.post_store
+        context.call user, text
+      end
     end
   end
 

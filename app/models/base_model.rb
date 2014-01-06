@@ -4,7 +4,8 @@ module BaseModelInstanceMethods
     klass.extend BaseModelClassMethods
   end
 
-  def to_hash(keys)
+  def to_hash(keys = nil)
+    keys ||= self.class.fattrs
     keys.reduce({}) do |hash, key|
       hash[key] = send(key) if send(key)
       hash
