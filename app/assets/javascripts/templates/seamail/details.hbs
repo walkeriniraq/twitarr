@@ -4,9 +4,13 @@
       {{#link-to "posts.user" from}}{{ from }}{{/link-to}}
     </div>
     to
-    {{#each person in to}}
-      {{#link-to "posts.user" person}}{{ person }}{{/link-to}}
-    {{/each}}
+    <ul class="to-users-list">
+      {{#each person in to}}
+        <li>
+          {{#link-to "posts.user" person}}{{ person }}{{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
   </div>
   <div class="col-xs-10">
     <div style="border-bottom: 1px solid darkgray;">
