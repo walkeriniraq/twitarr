@@ -57,7 +57,7 @@
   {{#each reply in replies}}
     <div style="border: 1px solid darkgray; margin: 0.5em; padding: 0.5em;">
       {{#link-to "posts.user" reply.username}}
-        <span>@{{ reply.username }}</span>
+        <span>@{{ reply.username }}</span> -
       {{/link-to}}
       {{ reply.message }}
     </div>
