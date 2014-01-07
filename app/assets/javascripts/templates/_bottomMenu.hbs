@@ -2,14 +2,14 @@
   <div class="navbar-center bottom-menu" style="max-width: 850px;">
     {{#if logged_in}}
       {{#if login_admin}}
-        {{#link-to "create_announcement" classNames="btn btn-default navbar-btn"}}Announcement{{/link-to}}
+        {{#link-to "create_announcement" classNames="btn btn-xs btn-default navbar-btn"}}Announcement{{/link-to}}
       {{/if}}
     <div class="pull-right">
-      {{#link-to "posts.new" classNames="btn btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
-      {{#link-to "seamail.new" classNames="btn btn-default navbar-btn"}}Seamail{{/link-to}}
+      {{#link-to "posts.new" classNames="btn btn-xs btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
+      {{#link-to "seamail.new" classNames="btn btn-xs btn-default navbar-btn"}}Seamail{{/link-to}}
     </div>
     {{else}}
-      {{#link-to "login" classNames="btn btn-default navbar-btn pull-right"}}Login{{/link-to}}
+      {{#link-to "login" classNames="btn btn-xs btn-default navbar-btn pull-right"}}Login{{/link-to}}
     {{/if}}
   </div>
 </nav>
