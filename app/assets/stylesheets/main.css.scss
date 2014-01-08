@@ -58,6 +58,14 @@ h1, h2, h3 {
   font-size: 20px;
 }
 
+.navbar-default {
+  background-color: #D8F8F0;
+}
+
+.navbar .nav > li > a.active, .navbar .nav > li > a.active:hover, .navbar .nav > li > a.active:focus {
+    background-color: #D0F0E0;
+}
+
 a:hover, a:focus {
   text-decoration: none;
   background-color: #F6F0F6;
@@ -83,7 +91,7 @@ a:hover, a:focus {
 }
 
 .post-entry {
-  background-color: #f0f0ff;
+  background-color: #E0F6FF;
   border-color: darkgray -moz-use-text-color;
   border-left: medium solid;
   border-right: medium solid;
@@ -105,7 +113,7 @@ a:hover, a:focus {
 }
 
 .seamail-entry {
-  background-color: #EFFFDF;
+  background-color: #E6FFE6;
   border-color: darkgray -moz-use-text-color;
   border: medium solid;
   border-width: 1px medium;
@@ -136,12 +144,6 @@ a:hover, a:focus {
   margin-left: auto;
   margin-right: auto;
   margin-top: 200px;
-}
-
-.loading-gif {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .margin-right-20 {
@@ -255,6 +257,15 @@ a:hover, a:focus {
   color: darkgray;
 }
 
+.post-text {
+  font-size: larger;
+}
+
+.post-user {
+  font-weight: bold;
+  font-size: larger;
+}
+
 .reply {
   border: 1px solid darkgray;
   margin: 0.5em;
@@ -263,4 +274,21 @@ a:hover, a:focus {
 
 .post-reply .form-horizontal {
   margin: 10px 6px;
+}
+
+.loading-gif {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20%;
+}
+
+.loading-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
 }

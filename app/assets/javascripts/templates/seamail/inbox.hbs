@@ -8,7 +8,7 @@
   {{#each mail in controller.seamail}}
     <div class='seamail-entry container'>
       {{ render "seamail/details" mail }}
-      <div class="pull-right btn btn-primary btn-sm" {{action 'archive' mail.seamail_id}}>
+      <div class="pull-right btn btn-primary btn-xs" {{action 'archive' mail.seamail_id}}>
         <span class="glyphicon glyphicon-folder-close" style="margin-right: 5px;"></span>
         Archive
       </div>

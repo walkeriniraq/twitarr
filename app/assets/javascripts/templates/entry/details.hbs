@@ -1,11 +1,11 @@
 <div {{bind-attr class="entry_class"}}>
   {{#link-to "posts.user" from}}
-    <span>@{{ from }}</span>
+    <span class="post-user">@{{ from }}</span>
   {{/link-to}}
   <div class="pull-right post-time">
     <span {{bind-attr data-livestamp="time"}} ></span>
   </div>
-  <div style="font-size: larger; font-weight: bold;">{{ view Twitarr.ParsedTextView contentBinding="message" }}</div>
+  <div class="post-text">{{ view Twitarr.ParsedTextView contentBinding="message" }}</div>
   <div class="text-center">
     {{#each photo in photos}}
       <a {{bind-attr href=photo.full}} target="_blank">
@@ -26,31 +26,12 @@
             like
           </button>
         {{/if}}
-        <div class="btn-group">
-          {{#if can_reply}}
-            <button type="button" class="btn btn-primary btn-xs" {{ action 'reply' }}>
-              <span class="glyphicon glyphicon-pencil"></span>
-              reply
-            </button>
-            {{#if can_delete}}
-              <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown">
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">reply</a></li>
-                <li class="divider"></li>
-                <li><a href="#" {{ action 'delete' entry_id }}>delete</a></li>
-              </ul>
-            {{/if}}
-          {{else}}
-            {{#if can_delete}}
-              <button type="button" class="btn btn-primary btn-xs" {{ action 'delete' username }}>
-                <span class="glyphicon glyphicon-remove"></span>
-                delete
-              </button>
-            {{/if}}
-          {{/if}}
-        </div>
+        {{#if can_reply}}
+          <button type="button" class="btn btn-primary btn-xs" {{ action 'reply' }}>
+            <span class="glyphicon glyphicon-pencil"></span>
+            reply
+          </button>
+        {{/if}}
       </div>
     {{/if}}
   </div>
