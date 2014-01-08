@@ -60,6 +60,9 @@
         <span>@{{ reply.username }}</span> -
       {{/link-to}}
       {{ reply.message }}
+      <div class="pull-right">
+        <span style="color: darkgray;" {{bind-attr data-livestamp="reply.timestamp"}} ></span>
+      </div>
     </div>
   {{/each}}
   {{#if replying}}
