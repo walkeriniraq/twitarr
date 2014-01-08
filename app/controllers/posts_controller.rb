@@ -143,13 +143,22 @@ class PostsController < ApplicationController
         to = 0
         posts = posts.revrange(0, EntryListContext::PAGE_SIZE + 1)
     end
-    announcements = announcements.get(from, to, EntryListContext::PAGE_SIZE + 1)
+    announcements = get_announcements(announcements, from, to)
     more = posts.count > EntryListContext::PAGE_SIZE || announcements.count > EntryListContext::PAGE_SIZE
     if more
       posts = posts.first(EntryListContext::PAGE_SIZE)
       announcements = announcements.first(EntryListContext::PAGE_SIZE)
     end
     return posts, announcements, more
+  end
+
+  # this ugliness is because announcements are indexed with the time_offset included
+  def get_announcements(index, from, to)
+    if from < to
+      index.get(from - 5.days, to + 5.days, EntryListContext::PAGE_SIZE).select { |x| x.post_time > from && x.post_time < to }
+    else
+      index.get(from + 5.days, to - 5.days, EntryListContext::PAGE_SIZE).select { |x| x.post_time < from && x.post_time > to }
+    end
   end
 
   def tag_autocomplete

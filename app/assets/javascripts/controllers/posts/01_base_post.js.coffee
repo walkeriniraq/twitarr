@@ -32,24 +32,10 @@ Twitarr.BasePostController = Twitarr.ObjectController.extend
       )
 
   checkNew: ->
-    return if @get('loading')
-    @set 'loading', true
-    info = { direction: 'after', time: @get('model.posts.firstObject.time') }
-    @get_data_ajax(info).done((data) =>
-      console.log(data.status) unless data.status is 'ok'
-      Ember.run =>
-        @set 'loading', false
-        if data.posts.length
-          @get('model.posts').unshiftObject(post) for post in data.posts
-    ).fail(=>
-      alert "There was a problem loading the posts from the server."
-      @set 'loading', false
-    )
+    @load()
 
   load: ->
-    if @get('model')?
-      @checkNew()
-      return
+    return if @get('loading')
     @set 'loading', true
     @get_data_ajax().done((data) =>
       console.log(data.status) unless data.status is 'ok'
