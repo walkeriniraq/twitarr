@@ -9,6 +9,7 @@ class UserController < ApplicationController
     return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
     return render_json status: 'Invalid username or password.' unless user.correct_password params[:password]
     login_user(user)
+    redis.user_store.save user.update_last_login, current_username
     render_json user_hash(user)
   end
 
