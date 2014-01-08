@@ -3,6 +3,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
   login_admin: false
   new_email: false
   email_count: 0
+  new_posts: false
+  posts_count: 0
 
   init: ->
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
@@ -33,6 +35,15 @@ Twitarr.ApplicationController = Ember.Controller.extend
       else
         return null
   ).property('logged_in', 'email_count')
+
+  posts_count_display: (->
+    if @get 'logged_in'
+      count = @get('posts_count')
+      if count > 0
+        return count
+      else
+        return null
+  ).property('logged_in', 'posts_count')
 
   actions:
     create_post: ->
