@@ -2,10 +2,10 @@
   {{#link-to "posts.user" from}}
     <span>@{{ from }}</span>
   {{/link-to}}
-  <div class="pull-right">
-    <span style="color: darkgray;" {{bind-attr data-livestamp="time"}} ></span>
+  <div class="pull-right post-time">
+    <span {{bind-attr data-livestamp="time"}} ></span>
   </div>
-  <div style="font-size: larger; font-weight: bold;">{{{ process_message }}}</div>
+  <div style="font-size: larger; font-weight: bold;">{{ view Twitarr.ParsedTextView contentBinding="message" }}</div>
   <div class="text-center">
     {{#each photo in photos}}
       <a {{bind-attr href=photo.full}} target="_blank">
@@ -55,24 +55,26 @@
     {{/if}}
   </div>
   {{#each reply in replies}}
-    <div style="border: 1px solid darkgray; margin: 0.5em; padding: 0.5em;">
+    <div class="reply">
       {{#link-to "posts.user" reply.username}}
-        <span>@{{ reply.username }}</span> -
-      {{/link-to}}
-      {{ reply.message }}
-      <div class="pull-right">
-        <span style="color: darkgray;" {{bind-attr data-livestamp="reply.timestamp"}} ></span>
+        <span>@{{ reply.username }}</span>
+      {{/link-to}} -
+      {{ view Twitarr.ParsedTextView contentBinding="reply.message" }}
+      <div class="pull-right post-time">
+        <span {{bind-attr data-livestamp="reply.timestamp"}} ></span>
       </div>
     </div>
   {{/each}}
   {{#if replying}}
     <div class="post-reply clearfix">
-      <div class="form-horizontal" style='margin-top: 10px;'>
+      <div class="form-horizontal">
         {{ view Twitarr.PostAutoView }}
-        <button class="btn btn-primary pull-right btn-xs" style="margin-top: 5px;" {{ action 'make_post' }}>Post it</button>
       </div>
-      <button class="btn btn-primary pull-right margin-right-20 btn-xs"
-              style="margin-top: 5px;" {{ action 'cancel_reply' }}>Cancel
+      <button class="btn btn-primary pull-right btn-xs" {{ action 'cancel_reply' }}>
+        Cancel
+      </button>
+      <button class="btn btn-primary pull-right margin-right-20 btn-xs" {{ action 'make_post' }}>
+        Post it
       </button>
     </div>
   {{/if}}

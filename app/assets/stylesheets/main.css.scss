@@ -250,3 +250,17 @@ a:hover, a:focus {
 .navbar {
   min-height: 35px;
 }
+
+.post-time {
+  color: darkgray;
+}
+
+.reply {
+  border: 1px solid darkgray;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.post-reply .form-horizontal {
+  margin: 10px 6px;
+}

@@ -1,18 +1,4 @@
 Twitarr.Entry = Ember.Object.extend
-  process_message: (->
-    msg = ''
-    msg += @process_part(part) for part in @get('message').split /([@#]\w+)/
-    msg
-  ).property 'message'
-
-  process_part: (part) ->
-    switch part[0]
-      when '@'
-        "<a href='#/posts/user/#{part.substring 1}'>#{part}</a>"
-      when '#'
-        "<a href='#/posts/search/#{part.substring 1}'>#{part}</a>"
-      else part
-
 #Twitarr.Entry.reopenClass
 #
 #  new: (text) ->
