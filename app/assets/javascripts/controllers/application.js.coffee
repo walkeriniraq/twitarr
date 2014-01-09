@@ -9,13 +9,15 @@ Twitarr.ApplicationController = Ember.Controller.extend
   init: ->
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
-        @login data.user, data.new_email
+        @login data.user, data.new_email, data.new_posts
 
-  login: (user, new_email) ->
+  login: (user, new_email, new_posts) ->
     @set 'login_user', user.username
     @set 'login_admin', user.is_admin
     @set 'new_email', new_email > 0
     @set 'email_count', new_email
+    @set 'new_posts', new_posts > 0
+    @set 'posts_count', new_posts
 
   logged_in: (->
     @get('login_user')?

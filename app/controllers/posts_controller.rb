@@ -80,16 +80,16 @@ class PostsController < ApplicationController
   end
 
   def list
-    tag = if params[:username]
-            user = redis.user_store.get(params[:username])
-            return render_json(status: 'Could not find user!') if user.nil?
-            "@#{params[:username]}"
-          else
-            "@#{current_username}"
-          end
-    posts, more = filter_direction_posts redis.tag_index(tag), params[:dir], params[:time]
+    return render_json(status: 'missing username') unless params[:username]
+    user = redis.user_store.get(params[:username])
+    return render_json(status: 'Could not find user!') if user.nil?
+    posts, more = filter_direction_posts redis.tag_index("@#{user.username}"), params[:dir], params[:time]
     context = EntryListContext.new posts_index: posts,
                                    post_store: redis.post_store
+    if user.username == current_username
+      user.update_last_checked_posts
+      redis.user_store.save user, user.username
+    end
     render_json status: 'ok', more: more, list: list_output(context.call)
   end
 

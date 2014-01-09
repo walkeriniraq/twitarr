@@ -17,7 +17,8 @@ class UserController < ApplicationController
     {
         status: 'ok',
         user: user.decorate.gui_hash,
-        new_email: redis.inbox_index(user.username).size
+        new_email: redis.inbox_index(user.username).size,
+        new_posts: redis.tag_index("@#{user.username}").range_size(user.last_checked_posts, Time.now.to_f)
     }
   end
 
