@@ -16,9 +16,7 @@ class UserController < ApplicationController
   def user_hash(user)
     {
         status: 'ok',
-        user: user.decorate.gui_hash,
-        new_email: redis.inbox_index(user.username).size,
-        new_posts: redis.tag_index("@#{user.username}").range_size(user.last_checked_posts, Time.now.to_f)
+        user: user.decorate.gui_hash
     }
   end
 
@@ -52,6 +50,13 @@ class UserController < ApplicationController
     redis.user_set << user.username
     redis.user_auto.add user.username, user.username, 'username'
     render_json status: 'ok'
+  end
+
+  def update_status
+    return render_json(status: 'logout') unless logged_in?
+    render_json status: 'ok',
+                new_email: redis.inbox_index(current_user.username).size,
+                new_posts: redis.tag_index("@#{current_user.username}").range_size(current_user.last_checked_posts, Time.now.to_f)
   end
 
   def logout

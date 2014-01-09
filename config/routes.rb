@@ -28,6 +28,7 @@ Twitarr::Application.routes.draw do
   post 'user/new'
   get 'user/autocomplete'
   get 'user/profile'
+  get 'user/update_status'
 
   get 'admin/users'
   get 'admin/find_user'

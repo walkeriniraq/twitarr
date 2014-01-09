@@ -9,15 +9,21 @@ Twitarr.ApplicationController = Ember.Controller.extend
   init: ->
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
-        @login data.user, data.new_email, data.new_posts
+        @login data.user
 
-  login: (user, new_email, new_posts) ->
+  login: (user) ->
     @set 'login_user', user.username
     @set 'login_admin', user.is_admin
-    @set 'new_email', new_email > 0
-    @set 'email_count', new_email
-    @set 'new_posts', new_posts > 0
-    @set 'posts_count', new_posts
+    @tick()
+
+  tick: ->
+    $.ajax('user/update_status', dataType: 'json', cache: false).done (data) =>
+      if data.status is 'ok'
+        @set 'new_email', data.new_email > 0
+        @set 'email_count', data.new_email
+        @set 'new_posts', data.new_posts > 0
+        @set 'posts_count', data.new_posts
+        @timer = setTimeout (=> @tick()), 60000
 
   logged_in: (->
     @get('login_user')?
@@ -51,9 +57,9 @@ Twitarr.ApplicationController = Ember.Controller.extend
     create_post: ->
       @transitionToRoute 'create_post'
     logout: ->
+      clearTimeout(@timer)
       $.getJSON('user/logout').done (data) =>
         if data.status is 'ok'
           @set 'login_user', null
           @set 'login_admin', false
           @transitionToRoute 'announcements' if @get('currentPath') is 'posts.mine'
-
