@@ -8,7 +8,7 @@ Twitarr.ParsedTextView = Ember.View.extend
 
   process_message: (message)->
     msg = ''
-    msg += @process_part(part) for part in message.split /([@#]\w+)/
+    msg += @process_part(part) for part in message.split /([@#][\w&-]+)/
     msg
 
   process_part: (part) ->

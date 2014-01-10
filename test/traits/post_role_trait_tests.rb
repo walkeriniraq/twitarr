@@ -24,6 +24,24 @@ module PostRoleTraitTests
     role.tags.must_include '#bar'
   end
 
+  def test_includes_tags_with_dash
+    post = OpenStruct.new username: 'foo', message: 'foo #bar-baz bash'
+    role = subject.new(post)
+    role.tags.must_include '#bar-baz'
+  end
+
+  def test_includes_tags_with_ampersand
+    post = OpenStruct.new username: 'foo', message: 'foo #bar&baz bash'
+    role = subject.new(post)
+    role.tags.must_include '#bar&baz'
+  end
+
+  def test_includes_tags_with_underscore
+    post = OpenStruct.new username: 'foo', message: 'foo #bar_baz bash'
+    role = subject.new(post)
+    role.tags.must_include '#bar_baz'
+  end
+
   def test_lowercases_tags
     post = OpenStruct.new username: 'foo', message: 'foo #BAR baz'
     role = subject.new(post)
