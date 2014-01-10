@@ -1,3 +1,5 @@
+require 'rmagick'
+
 class PostsController < ApplicationController
 
   def submit
@@ -32,18 +34,28 @@ class PostsController < ApplicationController
       if redis.file_hash_map.include? file_hash
         new_filename = redis.file_hash_map[file_hash]
       else
-        new_filename = SecureRandom.uuid.to_s + Pathname.new(file.original_filename).extname
-        redis.file_hash_map[file_hash] = new_filename
+        ext = Pathname.new(file.original_filename).extname
+        new_filename = SecureRandom.uuid.to_s + ext
         FileUtils.copy(file.tempfile, 'public/img/photos/' + new_filename)
         Pathname.new('public/img/photos/' + new_filename).chmod(0664)
-        ImageVoodoo.with_image file.path do |img|
-          img.thumbnail 150 do |thumb|
-            thumb.save 'public/img/photos/sm_' + new_filename
-          end
-          img.thumbnail 600 do |thumb|
-            thumb.save 'public/img/photos/md_' + new_filename
-          end
+        img = Magick::Image::read('public/img/photos/' + new_filename).first
+        if ext == '.jpg'
+          puts 'ROTATING'
+          img = EXIFR::JPEG.new('public/img/photos/' + new_filename).orientation.transform_rmagick(img)
         end
+        # also png
+        img.write('public/img/photos/' + new_filename)
+        img.resize_to_fit(150, 150).write('public/img/photos/sm_' + new_filename)
+        img.resize_to_fit(600, 600).write('public/img/photos/md_' + new_filename)
+        #ImageVoodoo.with_image file.path do |img|
+        #  img.thumbnail 150 do |thumb|
+        #    thumb.save 'public/img/photos/sm_' + new_filename
+        #  end
+        #  img.thumbnail 600 do |thumb|
+        #    thumb.save 'public/img/photos/md_' + new_filename
+        #  end
+        #end
+        redis.file_hash_map[file_hash] = new_filename
       end
       saved_files << new_filename
       #puts file.original_filename

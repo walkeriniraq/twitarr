@@ -29,7 +29,8 @@ gem 'fattr'
 gem 'draper', '~> 1.3.0'
 gem 'andand'
 
-gem 'image_voodoo'
+gem 'rmagick4j'
+gem 'exifr'
 gem 'puma'
 
 group :doc do
