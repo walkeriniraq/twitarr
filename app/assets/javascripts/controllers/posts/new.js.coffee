@@ -1,14 +1,14 @@
 Twitarr.PostsNewController = Twitarr.Controller.extend
   text: ''
-  errors: {}
+  errors: []
   photos: []
 
   actions:
     send: ->
-      errors = {}
+      @errors.clear()
       text = @get('text').trim()
       unless text
-        errors = { text: 'Type something before clicking send!' }
+        @errors.addObject { text: 'Type something before clicking send!' }
       else
         Twitarr.Post.new(text, @get('photos')).done (data) =>
           if data.status is 'ok'
@@ -17,10 +17,12 @@ Twitarr.PostsNewController = Twitarr.Controller.extend
             @transitionToRoute 'posts.all'
           else
             alert data.status
-      @set 'errors', errors
 
     photo_delete: (photo) ->
       @photos.removeObject(photo)
 
   addPhoto: (photo) ->
     @photos.addObject photo
+
+  addPhotoError: (filename, error) ->
+    @errors.addObject { text: "Error uploading #{filename}: #{error}" }

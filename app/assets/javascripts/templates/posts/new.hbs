@@ -1,7 +1,9 @@
 <form class="form-horizontal">
   <legend>Make a post</legend>
   <div class="form-group validation-error-group">
-    <div class="col-sm-offset-2 col-sm-8 validation-error">{{ errors.text }}</div>
+    {{#each errors}}
+      <div class="col-sm-offset-2 col-sm-8 validation-error">{{ text }}</div>
+    {{/each}}
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-12">
@@ -28,7 +30,7 @@
         {{/each}}
       </div>
       <div id="photo-upload-div" style="border: 1px solid #008B00; padding: 30px; text-align: center; background-color: #EEFFEE">
-        Drop photos here or click to add (optional)
+        Drop photos here or click to add - accepts jpg, png, and gif
       </div>
     </div>
     <input style="display: none" id="fileupload" type="file" name="files[]" data-url="posts/upload" accept="image/*" multiple>

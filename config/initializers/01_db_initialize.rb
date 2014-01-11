@@ -51,16 +51,8 @@ class Redis
     sorted_set "user:sent_index:#{username}"
   end
 
-  def feed_index(username)
-    sorted_set feed_name(username)
-  end
-
   def announcements
     RedisObjectSet.new sorted_set('system:announcements'), Announcement
-  end
-
-  def feed_name(username)
-    "user:feed_index:#{username}"
   end
 
   def popular_posts_index(opts = {})
@@ -87,16 +79,16 @@ class Redis
     redis_set 'system:users'
   end
 
-  def file_hash_map
-    redis_hash 'system:file_hash_map'
-  end
-
   def user_auto
     RedisAutocomplete.new sorted_set('system:autocomplete:user')
   end
 
   def tag_auto
     RedisAutocomplete.new sorted_set('system:autocomplete:hashtag')
+  end
+
+  def photo_metadata_store
+    RedisHashObjectStore.new redis_hash('photo_metadata:store'), PhotoMetadata
   end
 
 end
