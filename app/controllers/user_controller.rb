@@ -46,9 +46,7 @@ class UserController < ApplicationController
     return render_json status: 'Password must be at least six characters long.' if params[:password].length < 6
     return render_json status: 'Passwords do not match.' if params[:password] != params[:password2]
     user.set_password params[:password]
-    redis.user_store.save user, user.username
-    redis.user_set << user.username
-    redis.user_auto.add user.username, user.username, 'username'
+    TwitarrDb.add_user user
     render_json status: 'ok'
   end
 

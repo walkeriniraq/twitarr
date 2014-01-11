@@ -12,7 +12,7 @@ class AdminController < ApplicationController
 
   def users
     return no_access unless has_access?
-    users = redis.user_store.get(redis.user_set.members)
+    users = redis.user_store.get(redis.users.members)
     render_json status: 'ok', list: UserDecorator.decorate_collection(users).map { |x| x.admin_hash }
   end
 
@@ -46,9 +46,7 @@ class AdminController < ApplicationController
     user.is_admin = params[:is_admin] == 'true'
     user.status = params[:status]
     user.email = params[:email]
-    redis.user_store.save user, user.username
-    redis.user_set << user.username
-    redis.user_auto.add user.username, user.username, 'username'
+    TwitarrDb.add_user user
     render_json status: 'ok'
   end
 

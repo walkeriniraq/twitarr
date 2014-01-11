@@ -40,7 +40,6 @@ class TwitarrDb
                                       popular_index: redis.popular_posts_index,
                                       post_index: redis.post_index,
                                       post_store: redis.post_store,
-                                      feed_factory: feed_factory(redis),
                                       tag_autocomplete: redis.tag_auto
       context.call post_text, photos
     end
