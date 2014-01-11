@@ -11,9 +11,7 @@ Twitarr.Post.reopenClass
 
   new: (text, photos) ->
     filenames = (photo.file for photo in photos)
-    $.post("posts/submit", { message: text, photos: filenames }).done (data) ->
-      unless data.status is 'ok'
-        alert data.status
+    $.post("posts/submit", { message: text, photos: filenames })
 
   search: (tag, info) ->
     url = "posts/search?term=#{encodeURIComponent tag}"

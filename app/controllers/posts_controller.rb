@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
   def submit
     return login_required unless logged_in?
+    return render_json status: 'Photo upload is limited to five per post' if params[:photos].count > 5
     TwitarrDb.create_post current_username, params[:message], params[:photos]
     render_json status: 'ok'
   end
