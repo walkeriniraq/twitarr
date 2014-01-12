@@ -75,7 +75,7 @@ class Redis
     RedisHashObjectStore.new redis_hash('seamail:store'), Seamail
   end
 
-  def user_set
+  def users
     redis_set 'system:users'
   end
 
