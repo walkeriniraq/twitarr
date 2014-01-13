@@ -76,12 +76,6 @@ a:hover, a:focus {
   }
 }
 
-.xs-new-mail {
-  background-color: orangered;
-  border-color: red;
-  color: white;
-}
-
 .post-entry {
   background-color: #E0F6FF;
   border-color: darkgray -moz-use-text-color;
@@ -283,6 +277,13 @@ a:hover, a:focus {
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 9999;
+}
+
+.navbar-default .new-email-border {
+  background-color: orangered;
+  &:hover, &:focus {
+    background-color: orangered;
+  }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
