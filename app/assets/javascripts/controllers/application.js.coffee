@@ -9,11 +9,11 @@ Twitarr.ApplicationController = Ember.Controller.extend
       if data.status is 'ok'
         @login data.user
 
-  new_email: (
+  new_email: (->
     @get('logged_in') && @get('email_count') > 0
   ).property('logged_in', 'email_count')
 
-  new_posts: (
+  new_posts: (->
     @get('logged_in') && @get('posts_count') > 0
   ).property('logged_in', 'posts_count')
 
