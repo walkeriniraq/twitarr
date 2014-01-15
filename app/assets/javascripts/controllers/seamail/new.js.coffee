@@ -2,6 +2,9 @@ Twitarr.SeamailNewController = Twitarr.ObjectController.extend
   searchResults: []
   toPeople: []
   toInput: ''
+  subject: ''
+  text: ''
+  errors: ''
 
   autoComplete_change: (->
     val = @get('toInput').trim()
@@ -27,16 +30,17 @@ Twitarr.SeamailNewController = Twitarr.ObjectController.extend
       $('#to-autocomplete').focus()
 
     send: ->
+      seamail = Twitarr.Seamail.create subject: @get('subject'), text: @get('text')
       val = @get('toInput')
       if !!val
         @toPeople.addObject val.toString()
-      @set 'model.to', @get('toPeople').join(' ')
+      seamail.to = @get('toPeople').join(' ')
       @set('errors', {})
-      errors = @get('model').validate()
+      errors = seamail.validate()
       if _.keys(errors).length
         @set('errors', errors)
         return
-      @get('model').post().done (data) =>
+      seamail.post().done (data) =>
         unless data.status is 'ok'
           alert data.status
         else
@@ -44,4 +48,6 @@ Twitarr.SeamailNewController = Twitarr.ObjectController.extend
           @set 'toPeople', []
           @last_search = ''
           @set 'toInput', ''
+          @set 'subject', ''
+          @set 'text', ''
           @transitionToRoute 'seamail.inbox'

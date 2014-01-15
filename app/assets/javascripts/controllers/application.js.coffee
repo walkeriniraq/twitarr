@@ -66,4 +66,4 @@ Twitarr.ApplicationController = Ember.Controller.extend
         if data.status is 'ok'
           @set 'login_user', null
           @set 'login_admin', false
-          @transitionToRoute 'posts.all' unless is_all_users_path(@get('currentPath'))
+          @transitionToRoute 'posts.all' unless @is_all_users_path(@get('currentPath'))
