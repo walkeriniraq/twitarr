@@ -291,3 +291,26 @@ a:hover, a:focus {
     font-size: 16px;
   }
 }
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1400;
+}
+
+.modal-dialog {
+  width: auto;
+  text-align: center;
+}
+
+.modal-content {
+  display: inline-block;
+}
+
+.modal-body {
+  padding: 5px;
+}

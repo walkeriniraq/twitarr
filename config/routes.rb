@@ -37,6 +37,8 @@ Twitarr::Application.routes.draw do
   put 'admin/add_user'
   post 'admin/reset_password'
 
+  get 'photo/preview/*photo', { to: 'photo#preview', :format => false }
+
   get 'api/v1/user/auth'
   get 'api/v1/user/test'
 

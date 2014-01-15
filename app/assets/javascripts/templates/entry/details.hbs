@@ -8,9 +8,7 @@
   <div class="post-text">{{ view Twitarr.ParsedTextView contentBinding="message" }}</div>
   <div class="text-center">
     {{#each photo in photos}}
-      <a {{bind-attr href=photo.full}} target="_blank">
-        <img {{bind-attr src=photo.thumb}}>
-      </a>
+      <img {{bind-attr src=photo.thumb}} {{action 'preview' photo}}>
     {{/each}}
   </div>
 

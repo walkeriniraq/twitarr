@@ -2,6 +2,12 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
   replying: false
 
   actions:
+    preview: (photo) ->
+      if(window.innerWidth < 600 || window.innerHeight < 600)
+        window.open "/photo/preview/#{photo.file}"
+      else
+        @send 'openModal', 'photo_view', photo
+
     reply: ->
       @set 'replying', not @get('replying')
 

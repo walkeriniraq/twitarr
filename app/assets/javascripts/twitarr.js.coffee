@@ -73,3 +73,8 @@ Twitarr.DefaultTextArea = Ember.TextArea.extend
   becomeFocused: (->
     @$().focus()
   ).on('didInsertElement')
+
+Twitarr.ModalDialogComponent = Ember.Component.extend
+  actions:
+    close: ->
+      @sendAction()

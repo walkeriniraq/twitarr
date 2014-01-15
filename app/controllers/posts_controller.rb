@@ -56,7 +56,7 @@ class PostsController < ApplicationController
       end
     end
     img.resize_to_fit(150, 150).write('public/img/photos/sm_' + new_filename)
-    img.resize_to_fit(600, 600).write('public/img/photos/md_' + new_filename)
+    img.resize_to_fit(500, 500).write('public/img/photos/md_' + new_filename)
     metadata = PhotoMetadata.create current_username, file.original_filename, new_filename
     redis.photo_metadata_store.save metadata, new_filename
     { status: 'ok', filename: new_filename }
