@@ -21,7 +21,7 @@ Twitarr.LoginController = Twitarr.Controller.extend
         if data.status is 'ok'
           @set('username', @get('new-username'))
           @set('new-username', '')
-          @set('username', '')
+          @set('email', '')
           @set('new-password', '')
           @set('new-password2', '')
           alert "Account has been created. Please login and have fun!"
