@@ -12,7 +12,7 @@ class AdminController < ApplicationController
 
   def users
     return no_access unless has_access?
-    users = redis.user_store.get(redis.users.members)
+    users = redis.user_store.get(redis.users.members.sort!)
     render_json status: 'ok', list: UserDecorator.decorate_collection(users).map { |x| x.admin_hash }
   end
 
