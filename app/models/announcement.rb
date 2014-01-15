@@ -8,7 +8,7 @@ class Announcement < Post
   end
 
   def time_plus_offset
-    post_time + (time_offset || 0) * 360
+    post_time + (time_offset || 0).hours
   end
 
 end
