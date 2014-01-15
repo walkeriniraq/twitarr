@@ -38,7 +38,7 @@ class UserController < ApplicationController
     user = User.new
     user.username = params[:username].downcase
     user.email = params[:email]
-    user.status = 'inactive'
+    user.status = 'active'
     user.is_admin = false
     return render_json status: 'Username must be five or more characters and only include letters, numbers, underscore, dash, and ampersand' unless User.valid_username? params[:username]
     return render_json status: 'Username already exists.' if redis.user_store.get(user.username)

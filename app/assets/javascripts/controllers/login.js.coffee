@@ -19,7 +19,12 @@ Twitarr.LoginController = Twitarr.Controller.extend
       }
       ).done (data) =>
         if data.status is 'ok'
-          alert "Account has been requested. You should recieve an email with account confirmation in 24-48 hours."
+          @set('username', @get('new-username'))
+          @set('new-username', '')
+          @set('username', '')
+          @set('new-password', '')
+          @set('new-password2', '')
+          alert "Account has been created. Please login and have fun!"
           history.go -1
         else
           alert data.status
