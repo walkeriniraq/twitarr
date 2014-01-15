@@ -303,8 +303,10 @@ a:hover, a:focus {
 }
 
 .modal-dialog {
-  width: auto;
+  margin-top: -270px;
+  padding: 0;
   text-align: center;
+  top: 50%;
 }
 
 .modal-content {
