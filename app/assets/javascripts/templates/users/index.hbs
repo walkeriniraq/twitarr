@@ -11,7 +11,7 @@
   </thead>
 
   <tbody>
-    {{#each user in controller.users}}
+  {{#each user in controller.users}}
     <tr>
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
@@ -35,7 +35,7 @@
         {{#link-to 'users.edit' user }}edit{{/link-to}}
       </td>
     </tr>
-    {{/each}}
+  {{/each}}
   </tbody>
   <tfoot>
   <td></td>

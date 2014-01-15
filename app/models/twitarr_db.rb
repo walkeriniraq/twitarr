@@ -48,7 +48,7 @@ class TwitarrDb
   def self.add_user(user)
     DbConnectionPool.instance.connection do |redis|
       redis.user_store.save user, user.username
-      redis.user_set << user.username
+      redis.users << user.username
       redis.user_auto.add user.username, user.username, 'username'
     end
   end

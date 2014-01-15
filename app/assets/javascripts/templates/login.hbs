@@ -4,19 +4,19 @@
     <label class="control-label col-sm-2">Username</label>
 
     <div class="col-sm-5">
-      {{ view Ember.TextField valueBinding='username'}}
+      {{ view Ember.TextField name="login" valueBinding='username'}}
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2">Password</label>
 
     <div class="col-sm-5">
-      {{ view Ember.TextField type='password' valueBinding='password'}}
+      {{ view Ember.TextField name="password" type='password' valueBinding='password'}}
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-5">
-      <button class="btn btn-primary" {{ action 'login' }}>Login</button>
+      <input type="submit" class="btn btn-primary" {{ action 'login' }} value="Login">
     </div>
   </div>
 </form>
