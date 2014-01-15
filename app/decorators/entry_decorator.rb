@@ -17,17 +17,19 @@ class EntryDecorator < Draper::Decorator
   def liked_sentence(favorites)
     likes = []
     likes << 'You' if favorites.user_like(entry_id)
-    other_likes = favorites.like_count(entry_id)
-    likes << "#{other_likes} people" if other_likes > 1
-    likes << '1 other person' if other_likes == 1
+    if favorites.likes(entry_id)
+      likes += favorites.likes(entry_id)
+    else
+      other_likes = favorites.like_count(entry_id)
+      likes << "#{other_likes} people" if other_likes > 1
+      likes << '1 other person' if other_likes == 1
+    end
     return case
              when likes.count > 1
                "#{likes[0..-2].join ', '} and #{likes.last} like this."
              when likes.count > 0
                if likes.first == 'You'
                  'You like this.'
-               elsif other_likes > 1
-                 "#{likes.first} like this."
                else
                  "#{likes.first} likes this."
                end

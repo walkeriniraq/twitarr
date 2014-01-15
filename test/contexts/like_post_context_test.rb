@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class LikePostContextTest < ActiveSupport::TestCase
   subject { LikePostContext }
-  let(:attributes) { %w(post post_likes username popular_index user_feed) }
+  let(:attributes) { %w(post post_likes username popular_index) }
 
   include AttributesTest
 
@@ -18,18 +18,6 @@ class LikePostContextTest < ActiveSupport::TestCase
     assert_operator score, :>, Time.now.to_f
   end
 
-  it 'adds the post_id to user feed index' do
-    post = Post.new post_id: 1, message: 'foo', post_time: Time.now, username: 'bar'
-    context = subject.new post: post,
-                          post_likes: Set.new,
-                          username: 'steve',
-                          popular_index: {},
-                          user_feed: feed = {}
-
-    context.call
-    feed.keys.first.must_equal post.post_id
-  end
-
   class PopularIndexRoleTest < ActiveSupport::TestCase
     subject { LikePostContext::PopularIndexRole }
 
@@ -43,13 +31,6 @@ class LikePostContextTest < ActiveSupport::TestCase
     include DelegatorTest
     include PostScoreTraitTests
     include PostTimeIndexTraitTests
-  end
-
-  class FeedRoleTest < ActiveSupport::TestCase
-    subject { LikePostContext::FeedRole }
-
-    include DelegatorTest
-    include IndexTimeTraitTests
   end
 
 end
