@@ -4,7 +4,7 @@ Twitarr.LoginController = Twitarr.Controller.extend
       $.post('user/login', { username: @get('username'), password: @get('password') }).done (data) =>
         if data.status is 'ok'
           @get('controllers.application').login data.user, data.new_email
-          history.go -1
+          @transitionToRoute 'posts.all'
         else
           alert data.status
 
@@ -25,6 +25,5 @@ Twitarr.LoginController = Twitarr.Controller.extend
           @set('new-password', '')
           @set('new-password2', '')
           alert "Account has been created. Please login and have fun!"
-          history.go -1
         else
           alert data.status
