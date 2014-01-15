@@ -50,6 +50,7 @@ class TwitarrDb
       redis.user_store.save user, user.username
       redis.users << user.username
       redis.user_auto.add user.username, user.username, 'username'
+      create_seamail 'kvort', user.username, 'Welcome', 'Welcome to twit-arr! Please have fun with it!'
     end
   end
 
