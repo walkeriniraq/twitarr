@@ -27,7 +27,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
       if data.status is 'ok'
         @set('email_count', data.new_email)
         @set('posts_count', data.new_posts)
-        @timer = setTimeout (=> @tick()), 60000
+        @timer = setTimeout (=> @tick()), 300000
 
   logged_in: (->
     @get('login_user')?
