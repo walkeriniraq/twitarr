@@ -287,7 +287,7 @@ a:hover, a:focus {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  select:focus, textarea:focus, input:focus {
+  .form-control {
     font-size: 16px;
   }
 }
