@@ -1,5 +1,8 @@
 Twitarr.PostsNewView = Ember.View.extend
   FOUR_MB: 4 * 1024 * 1024
+  uploadPercent: null
+  uploadPercentStyle: null
+  currentUploads: []
 
   didInsertElement: ->
     $('#fileupload').fileupload
@@ -14,8 +17,11 @@ Twitarr.PostsNewView = Ember.View.extend
         unless @isValidExtension(extension)
           @get('controller').addPhotoError(filename, 'Did not have a valid extension')
           return false
+        @currentUploads.addObject filename
         true
       done: (e, data) =>
+        @currentUploads.removeObject file.name for file in data.files
+        @set 'uploadPercent', null if @currentUploads.length < 1
         alert data.result.status unless data.result.status is 'ok'
         controller = @get('controller')
         for photo_data in data.result.files
@@ -25,6 +31,10 @@ Twitarr.PostsNewView = Ember.View.extend
             controller.addPhotoError(photo_data.filename, photo_data.status)
           null
         null
+      progress: (e, data) =>
+        val = parseInt(data.loaded / data.total * 100, 10)
+        @set 'uploadPercent', val
+        @set 'uploadPercentStyle', "width: #{val}%"
 
     $('#photo-upload-div').click ->
       $('#fileupload').click()

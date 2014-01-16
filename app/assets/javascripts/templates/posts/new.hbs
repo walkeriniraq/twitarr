@@ -28,6 +28,13 @@
             </button>
           </span>
         {{/each}}
+        {{#if view.uploadPercent}}
+          <div class="progress progress-striped" style="width: 150px; display: inline-block;">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" {{bind-attr style=view.uploadPercentStyle}} >
+              <span class="sr-only">{{view.uploadPercent}} Complete</span>
+            </div>
+          </div>
+        {{/if}}
       </div>
       <div id="photo-upload-div" style="border: 1px solid #008B00; padding: 30px; text-align: center; background-color: #EEFFEE">
         Drop photos here or click to add - accepts jpg, png, and gif
