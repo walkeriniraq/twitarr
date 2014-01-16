@@ -3,7 +3,7 @@ Twitarr.ParsedTextView = Ember.View.extend
   tagName: 'span'
 
   parsed_message: (->
-    @process_message @get('content')
+    @process_message(@get('content')).replace(new RegExp('\n', 'gm'), '<br/>')
   ).property 'content'
 
   process_message: (message)->
@@ -17,5 +17,6 @@ Twitarr.ParsedTextView = Ember.View.extend
         "<a href='#/posts/user/#{part.substring 1}'>#{part}</a>"
       when '#'
         "<a href='#/posts/search/#{part.substring 1}'>#{part}</a>"
-      else part
+      else
+        part
 
