@@ -28,7 +28,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   it 'disallows short usernames' do
-    User.valid_username?('stan').must_equal false
+    User.valid_username?('st').must_equal false
   end
 
   it 'disallows spaces' do
