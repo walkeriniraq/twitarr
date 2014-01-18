@@ -32,7 +32,7 @@ class AnnouncementTest < ActiveSupport::TestCase
   it 'translates the time offset into hours' do
     time = Time.now
     announcement = Announcement.new(post_time: time, time_offset: 1)
-    announcement.time_plus_offset.must_equal time.to_f + 360
+    announcement.time_plus_offset.must_equal time.to_f + 1.hour
   end
 
 end
