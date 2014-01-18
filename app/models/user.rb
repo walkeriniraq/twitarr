@@ -2,7 +2,7 @@ require 'bcrypt'
 
 class User < BaseModel
 
-  USERNAME_REGEX = /^[\w&-]{5,}$/
+  USERNAME_REGEX = /^[\w&-]{3,}$/
 
   attr :username, :password, :is_admin, :status, :email, :display_name, :last_login, :last_checked_posts
 
