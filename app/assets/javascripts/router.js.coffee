@@ -17,4 +17,3 @@ Twitarr.Router.map ()->
     @route 'archive'
     @route 'outbox'
   @route 'profile'
-  @route 'login'

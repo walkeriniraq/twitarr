@@ -5,12 +5,24 @@ class UserController < ApplicationController
 
   def login
     user = redis.user_store.get(params[:username].downcase)
-    return render_json status: 'User does not exist.' if user.nil?
-    return render_json status: 'User account has been disabled.' if user.status != 'active' || user.password.nil?
-    return render_json status: 'Invalid username or password.' unless user.correct_password params[:password]
-    login_user(user)
-    redis.user_store.save user.update_last_login, current_username
-    render_json user_hash(user)
+    if user.nil?
+      flash[:danger] = 'User does not exist.'
+      render :login_page, layout: false
+    elsif user.status != 'active' || user.password.nil?
+      flash[:danger] = 'User account has been disabled.'
+      render :login_page, layout: false
+    elsif !user.correct_password(params[:password])
+      flash[:danger] = 'Invalid username or password.'
+      render :login_page, layout: false
+    else
+      login_user(user)
+      redis.user_store.save user.update_last_login, current_username
+      redirect_to :root
+    end
+  end
+
+  def login_page
+    render :layout => false
   end
 
   def user_hash(user)
@@ -36,18 +48,32 @@ class UserController < ApplicationController
 
   def new
     user = User.new
-    user.username = params[:username].downcase
+    user.username = params[:new_username].downcase
     user.email = params[:email]
     user.status = 'active'
     user.is_admin = false
-    return render_json status: 'Username must be three or more characters and only include letters, numbers, underscore, dash, and ampersand' unless User.valid_username? params[:username]
-    return render_json status: 'Username already exists.' if redis.user_store.get(user.username)
-    return render_json status: 'Email address is not valid.' if (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
-    return render_json status: 'Password must be at least six characters long.' if params[:password].length < 6
-    return render_json status: 'Passwords do not match.' if params[:password] != params[:password2]
-    user.set_password params[:password]
-    TwitarrDb.add_user user
-    render_json status: 'ok'
+    if !User.valid_username? params[:new_username]
+      flash[:danger] = 'Username must be three or more characters and only include letters, numbers, underscore, dash, and ampersand'
+      render :login_page, layout: false
+    elsif redis.user_store.get(user.username)
+      flash[:danger] = 'Username already exists.'
+      render :login_page, layout: false
+    elsif (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
+      flash[:danger] = 'Email address is not valid.'
+      render :login_page, layout: false
+    elsif params[:new_password].length < 6
+      flash[:danger] = 'Password must be at least six characters long.'
+      render :login_page, layout: false
+    elsif params[:new_password] != params[:new_password2]
+      flash[:danger] = 'Passwords do not match.'
+      render :login_page, layout: false
+    else
+      user.set_password params[:new_password]
+      TwitarrDb.add_user user
+      login_user(user)
+      redis.user_store.save user.update_last_login, current_username
+      redirect_to :root
+    end
   end
 
   def update_status

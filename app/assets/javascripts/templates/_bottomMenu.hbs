@@ -9,7 +9,7 @@
       {{#link-to "seamail.new" classNames="btn btn-xs btn-default navbar-btn"}}Seamail{{/link-to}}
     </div>
     {{else}}
-      {{#link-to "login" classNames="btn btn-xs btn-default navbar-btn pull-right"}}Login{{/link-to}}
+      <a href="/login" class="btn btn-xs btn-default navbar-btn pull-right">Login</a>
     {{/if}}
   </div>
 </nav>
@@ -21,6 +21,6 @@
     {{#link-to "posts.new" classNames="btn btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
     {{#link-to "seamail.new" classNames="btn btn-default navbar-btn"}}Seamail{{/link-to}}
   {{else}}
-    {{#link-to "login" classNames="btn btn-default navbar-btn"}}Login{{/link-to}}
+    <a href="/login" class="btn btn-default navbar-btn pull-right">Login</a>
   {{/if}}
 </nav>
