@@ -42,6 +42,7 @@ Twitarr::Application.routes.draw do
   get 'photo/preview/*photo', { to: 'photo#preview', :format => false }
 
   get 'api/v1/user/auth'
+  get 'api/v1/user/new_seamail'
   get 'api/v1/user/test'
 
 end

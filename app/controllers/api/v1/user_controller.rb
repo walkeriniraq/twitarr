@@ -15,10 +15,22 @@ class API::V1::UserController < BaseRedisController
     render_json :status => 'ok'
   end
 
+  def new_seamail
+    unless valid_key?(params[:key].to_s)
+      render json: {:status => 'key not valid'}, status: 401 and return
+    end
+    username = get_username(params[:key])
+    render_json :status => 'ok', email_count: redis.inbox_index(username).size
+  end
+
+  def get_username(key)
+    username = key.split(':').first
+  end
+
   def valid_key?(key)
     return false if key.nil?
     return false unless key.include? ':'
-    username = key.split(':').first
+    username = get_username key
     CHECK_DAYS_BACK.times do |x|
       return true if build_key(username, x) == key
     end
