@@ -1,5 +1,5 @@
 module PostScoreTrait
   def score(likes_count)
-    post_time + likes_count * 3600
+    post_time + likes_count * 3.hours
   end
 end
