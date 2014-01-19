@@ -2,5 +2,5 @@
 
 Twitarr::Application.config.session_store :cookie_store, {
     key: '_twitarr_session',
-    expire_after: 3.days
+    expire_after: 7.days
 }
