@@ -13,9 +13,9 @@
   <tbody>
   {{#each user in controller.users}}
     <tr>
-      <td>{{ user.username }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.last_login_readable }}</td>
+      <td>{{ unbound user.username }}</td>
+      <td>{{ unbound user.email }}</td>
+      <td>{{ unbound user.last_login_readable }}</td>
       <td style="text-align: center;">
         {{#if user.is_locked}}
           <span title="User is deactivated" class="glyphicon glyphicon-lock" style="margin-left: 5px;"></span>
