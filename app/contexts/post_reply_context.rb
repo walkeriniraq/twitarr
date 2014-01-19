@@ -1,7 +1,7 @@
 class PostReplyContext
   include HashInitialize
 
-  attr :post, :tag_factory, :tag_autocomplete, :post_store, :popular_index
+  attr :post, :tag_factory, :tag_autocomplete, :post_store, :popular_index, :tag_scores
 
   def initialize(attrs = {})
     super
@@ -15,7 +15,11 @@ class PostReplyContext
     reply.tags.each do |tag_name|
       tag = TagIndexRole.new tag_factory.call(tag_name)
       tag.add_post reply
-      tag_autocomplete.add(tag_name[1..-1], tag_name[1..-1], 'tag') if tag_name[0] == '#'
+      if tag_name[0] == '#'
+        name_without_hash = tag_name[1..-1]
+        tag_autocomplete.add(name_without_hash, name_without_hash, 'tag')
+        tag_scores[name_without_hash] = tag.size
+      end
     end
     popular_index.update_score post
     reply

@@ -26,29 +26,6 @@ h1, h2, h3 {
   }
 }
 
-@media (max-width: 480px) {
-  .form-horizontal .form-group {
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-
-  .main {
-    padding: 0;
-  }
-
-  h1, h2, h3 {
-    margin: 10px;
-  }
-
-  .form-horizontal {
-    margin: 0 10px;
-  }
-
-  .like-button {
-    margin-right: 20px;
-  }
-}
-
 .navbar .nav > li > a.active, .navbar .nav > li > a.active:hover, .navbar .nav > li > a.active:focus {
   background-color: #E5E5E5;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.125) inset;
@@ -169,6 +146,29 @@ a:hover, a:focus {
   max-width: 600px;
   min-width: 100px;
   padding: 0 20px;
+}
+
+.image-row {
+  img {
+    border: 1px solid darkgray;
+    margin: 0 10px;
+  }
+}
+
+.popular-tag {
+  margin: 2px;
+  padding: 1px 5px;
+}
+
+.tag-cloud {
+  margin: 10px auto;
+  border: 1px solid lightgreen;
+  border-radius: 5px;
+  max-width: 500px;
+  padding: 0.3em;
+  h4 {
+    margin-top: 0;
+  }
 }
 
 .scroll-gradient-1 {
@@ -324,3 +324,31 @@ a:hover, a:focus {
 .modal-body {
   padding: 5px;
 }
+
+@media (max-width: 480px) {
+  .form-horizontal .form-group {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .main {
+    padding: 0;
+  }
+
+  h1, h2, h3 {
+    margin: 10px;
+  }
+
+  .form-horizontal {
+    margin: 0 10px;
+  }
+
+  .like-button {
+    margin-right: 20px;
+  }
+
+  .tag-cloud {
+    margin: 10px;
+  }
+}
+

@@ -40,7 +40,8 @@ class TwitarrDb
                                       popular_index: redis.popular_posts_index,
                                       post_index: redis.post_index,
                                       post_store: redis.post_store,
-                                      tag_autocomplete: redis.tag_auto
+                                      tag_autocomplete: redis.tag_auto,
+                                      tag_scores: redis.tag_scores
       context.call post_text, photos
     end
   end
@@ -77,7 +78,8 @@ class TwitarrDb
                                        tag_factory: tag_factory(redis),
                                        tag_autocomplete: redis.tag_auto,
                                        popular_index: redis.popular_posts_index,
-                                       post_store: redis.post_store
+                                       post_store: redis.post_store,
+                                       tag_scores: redis.tag_scores
         context.call user, text
       end
     end

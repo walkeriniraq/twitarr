@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete tag_scores) }
 
   include AttributesTest
 
@@ -58,9 +58,23 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           popular_index: {},
                           post_index: {},
                           post_store: FakePostsStore.new,
+                          tag_scores: mock(:incr => true),
                           tag_autocomplete: mock(:add => true)
     post = context.call 'This is a #test'
     tag.keys.first.must_equal post.post_id
+  end
+
+  it 'increases the score for the tag' do
+    scores = mock()
+    scores.expects(:incr).with('test').once
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          tag_autocomplete: mock(:add => true),
+                          tag_scores: scores
+    context.call 'This is a #test'
   end
 
   it 'adds the tag to the autocomplete index' do
@@ -71,6 +85,7 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           popular_index: {},
                           post_index: {},
                           post_store: FakePostsStore.new,
+                          tag_scores: mock(:incr => true),
                           tag_autocomplete: auto
     context.call 'This is a #test'
   end

@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class PostReplyContextTest < ActiveSupport::TestCase
   subject { PostReplyContext }
-  let(:attributes) { %w(post tag_factory tag_autocomplete post_store popular_index) }
+  let(:attributes) { %w(post tag_factory tag_autocomplete post_store popular_index tag_scores) }
 
   include AttributesTest
 
@@ -65,19 +65,32 @@ class PostReplyContextTest < ActiveSupport::TestCase
                           tag_factory: lambda { |_| tag },
                           post_store: FakePostsStore.new,
                           popular_index: {},
+                          tag_scores: {},
                           tag_autocomplete: mock(:add => true)
     context.call 'steve', 'This is a #test'
     tag.keys.first.must_equal post.post_id
   end
 
+  it 'adds the score for the tag' do
+    tag_index = {}
+    context = subject.new post: Post.new(post_id: 'foo'),
+                          tag_factory: lambda { |_| tag_index },
+                          post_store: FakePostsStore.new,
+                          popular_index: {},
+                          tag_scores: tag_scores = {},
+                          tag_autocomplete: mock(:add => true)
+    context.call 'steve', 'This is a #test'
+    tag_scores['test'].must_equal tag_index.size
+  end
+
   it 'adds the tag to the autocomplete index' do
     auto = mock()
     auto.expects(:add).with('test', 'test', 'tag').once
-    tag = {}
     context = subject.new post: Post.new(post_id: 'foo'),
-                          tag_factory: lambda { |_| tag },
+                          tag_factory: lambda { |_| {} },
                           post_store: FakePostsStore.new,
                           popular_index: {},
+                          tag_scores: {},
                           tag_autocomplete: auto
     context.call 'steve', 'This is a #test'
   end

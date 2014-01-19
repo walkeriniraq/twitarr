@@ -6,7 +6,7 @@
     <span data-livestamp="{{unbound time}}" ></span>
   </div>
   <div class="post-text">{{ view Twitarr.ParsedTextView contentBinding="message" }}</div>
-  <div class="text-center">
+  <div class="text-center image-row">
     {{#each photo in photos}}
       <img src="{{unbound photo.thumb}}" {{action 'preview' photo}}>
     {{/each}}

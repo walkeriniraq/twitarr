@@ -87,6 +87,10 @@ class Redis
     RedisAutocomplete.new sorted_set('system:autocomplete:hashtag')
   end
 
+  def tag_scores
+    sorted_set('system:hashtag_scores')
+  end
+
   def photo_metadata_store
     RedisHashObjectStore.new redis_hash('photo_metadata:store'), PhotoMetadata
   end

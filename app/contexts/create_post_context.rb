@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete
+  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete, :tag_scores
 
   def initialize(attrs = {})
     super
@@ -18,7 +18,11 @@ class CreatePostContext
     @post.tags.each do |tag_name|
       tag = TagIndexRole.new tag_factory.call(tag_name)
       tag.add_post @post
-      tag_autocomplete.add(tag_name[1..-1], tag_name[1..-1], 'tag') if tag_name[0] == '#'
+      if tag_name[0] == '#'
+        name_without_hash = tag_name[1..-1]
+        tag_autocomplete.add(name_without_hash, name_without_hash, 'tag')
+        tag_scores.incr(name_without_hash)
+      end
     end
     popular_index.add_post @post
     post_index.add_post @post

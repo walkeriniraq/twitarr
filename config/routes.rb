@@ -14,6 +14,7 @@ Twitarr::Application.routes.draw do
   post 'posts/reply'
   post 'posts/upload'
   get 'posts/tag_autocomplete'
+  get 'posts/tag_cloud'
 
   get 'seamail/inbox'
   get 'seamail/outbox'

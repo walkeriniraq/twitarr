@@ -83,6 +83,11 @@ class PostsController < ApplicationController
     render_json status: 'ok', more: false, list: list_output(context.call)
   end
 
+  def tag_cloud
+    tags = redis.tag_scores.revrangebyscore('+inf', 2, count: 10, with_scores: true).map { |x, y| { tag: x, count: y } }
+    render_json status: 'ok', tags: tags.shuffle
+  end
+
   def all
     posts, announcements, more = filter_direction_both redis.post_index, redis.announcements, params[:dir], params[:time]
     context = EntryListContext.new announcement_list: announcements,
