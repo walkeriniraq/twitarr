@@ -37,7 +37,7 @@ class Redis
   end
 
   def tag_index(tag)
-    sorted_set "post:tag_index:#{tag}"
+    sorted_set "post:tag_index:#{tag.downcase}"
   end
 
   def inbox_index(username)
