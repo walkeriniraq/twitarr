@@ -7,9 +7,14 @@
   <%= csrf_meta_tags %>
   <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
 </head>
-<body style="padding: 20px 0;">
+<body style="padding: 1em 0;">
 
 <div class="main">
+
+  <div class="clearfix">
+    <img style="height: 150px; margin-left: 0.5em;" class="pull-left" src="img/jellyfish.png" />
+    <h3 class="pull-left" style="margin: 1em 0.5em 0">Welcome to Twit-arr!</h3>
+  </div>
 
   <% flash.each do |key, value| %>
     <div class="alert alert-<%= key %>"><%= value %></div>

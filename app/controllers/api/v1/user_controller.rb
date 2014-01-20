@@ -24,7 +24,7 @@ class API::V1::UserController < BaseRedisController
   end
 
   def get_username(key)
-    username = key.split(':').first
+    key.split(':').first
   end
 
   def valid_key?(key)
