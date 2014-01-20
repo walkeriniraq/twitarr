@@ -11,6 +11,8 @@ class RedisAutocomplete
   end
 
   def query(string)
+    string = string.gsub(/[.,@]/, ' ').split.first
+    return [] if string.blank?
     list = @set.rangebyscore(
         RedisAutocomplete.calculate_score(string),
         RedisAutocomplete.calculate_next_score(string),

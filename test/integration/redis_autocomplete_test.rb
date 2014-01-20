@@ -100,6 +100,18 @@ class RedisAutocompleteTest < BaseTestCase
     auto.query('an').must_include 'anna'
   end
 
+  it 'does not query when the string is empty' do
+    subject.new(nil).query('').must_equal []
+  end
+
+  it 'does not query when the string is blank space' do
+    subject.new(nil).query(' ').must_equal []
+  end
+
+  it 'does not query when the string is @' do
+    subject.new(nil).query('@').must_equal []
+  end
+
   it 'does not add repeatedly' do
     set = mock()
     set.expects(:member?).with({'id' => 'anna', 'uniq' => 'name'}.to_json).once.returns true
