@@ -3475,9 +3475,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
     padding-top: 15px;
     padding-bottom: 15px;
   }
-  .navbar-nav.navbar-right:last-child {
-    margin-right: -15px;
-  }
 }
 @media (min-width: 768px) {
   .navbar-left {
@@ -3564,10 +3561,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-btn.btn-sm {
   margin-top: 10px;
   margin-bottom: 10px;
-}
-.navbar-btn.btn-xs {
-  margin-top: 14px;
-  margin-bottom: 14px;
 }
 .navbar-text {
   margin-top: 15px;
