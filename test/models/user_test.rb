@@ -31,12 +31,52 @@ class UserTest < ActiveSupport::TestCase
     User.valid_username?('st').must_equal false
   end
 
-  it 'disallows spaces' do
+  it 'disallows spaces in usernames' do
     User.valid_username?('stan evanston').must_equal false
   end
 
-  it 'disallows periods' do
+  it 'disallows periods in usernames' do
     User.valid_username?('stan.evanston').must_equal false
+  end
+
+  it 'allows characters in display name' do
+    User.valid_display_name?('steve').must_equal true
+  end
+
+  it 'allows numbers in display name' do
+    User.valid_display_name?('steven12').must_equal true
+  end
+
+  it 'allows underscores in display_names' do
+    User.valid_display_name?('steven_12').must_equal true
+  end
+
+  it 'allows dashes in display_names' do
+    User.valid_display_name?('steven-12').must_equal true
+  end
+
+  it 'allows ampersands in display_names' do
+    User.valid_display_name?('steven&mary').must_equal true
+  end
+
+  it 'disallows short display_names' do
+    User.valid_display_name?('st').must_equal false
+  end
+
+  it 'allows spaces in display names' do
+    User.valid_display_name?('stan evanston').must_equal true
+  end
+
+  it 'allows periods in display names' do
+    User.valid_display_name?('mr. evanston').must_equal true
+  end
+
+  it 'disallows % characters in display names' do
+    User.valid_display_name?('mr% evanston').must_equal false
+  end
+
+  it 'only allows 40 characters for display_name' do
+    User.valid_display_name?('01234567890123456789012345678901234567890').must_equal false
   end
 
   it 'updates the last_login timestamp' do

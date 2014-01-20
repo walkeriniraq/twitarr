@@ -57,6 +57,10 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
     @get('type') isnt 'announcement' and not @get('user_liked')
   ).property('user_liked', 'type')
 
+  pretty_name: (->
+    @get('display_name') || "@#{@get('from')}"
+  ).property('display_name', 'from')
+
   reply_template: (->
     'posts/create'
   ).property('type')

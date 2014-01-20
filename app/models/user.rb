@@ -3,11 +3,16 @@ require 'bcrypt'
 class User < BaseModel
 
   USERNAME_REGEX = /^[\w&-]{3,}$/
+  DISPLAY_NAME_REGEX = /^[\w\. &-]{3,40}$/
 
   attr :username, :password, :is_admin, :status, :email, :display_name, :last_login, :last_checked_posts
 
   def self.valid_username?(username)
     !username.match(USERNAME_REGEX).nil?
+  end
+
+  def self.valid_display_name?(name)
+    !name.match(DISPLAY_NAME_REGEX).nil?
   end
 
   def set_password(pass)

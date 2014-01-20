@@ -7,7 +7,15 @@ class EntryDecorator < Draper::Decorator
 
   def gui_hash_with_favorites(favorites)
     ret = to_hash %w(entry_id type time from message data)
+    unless DisplayNameCache.get_display_name(from).nil?
+      ret[:display_name] = DisplayNameCache.get_display_name from
+    end
     if type == :post
+      ret['data'][:replies].each do |reply|
+        unless DisplayNameCache.get_display_name(reply['username']).nil?
+          reply[:display_name] = DisplayNameCache.get_display_name(reply['username'])
+        end
+      end
       ret[:liked_sentence] = liked_sentence favorites
       ret[:user_liked] = favorites.user_like(entry_id)
     end

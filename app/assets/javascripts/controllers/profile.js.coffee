@@ -1,15 +1,12 @@
 Twitarr.ProfileController = Twitarr.Controller.extend
-  errors: {}
+  errors: []
+  needs: 'application'
 
   actions:
     save: ->
-      errors = {}
-#      display_name = @get('display_name').trim()
-#      Twitarr.Post.new(text).done (data) =>
-#        if data.status is 'ok'
-#          @set 'text', ''
-#          @transitionToRoute 'posts.all'
-#        else
-#          alert data.status
-#      @set 'errors', errors
-
+      display_name = @get('display_name').trim()
+      $.post("user/profile", { display_name: display_name }).done (data) =>
+        if data.status isnt 'ok'
+          alert data.status
+        else
+          @set('controllers.application.display_name', display_name)

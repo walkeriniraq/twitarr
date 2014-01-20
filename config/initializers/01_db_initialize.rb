@@ -1,4 +1,5 @@
 require Rails.root + 'lib/db_connection_pool'
+require Rails.root + 'lib/display_name_cache'
 
 DbConnectionPool.instance.configure(Rails.application.config.db)
 

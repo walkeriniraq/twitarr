@@ -3,6 +3,7 @@
   <thead>
   <tr>
     <th>Username</th>
+    <th>Display Name</th>
     <th>Email</th>
     <th>Last Login</th>
     <th style="text-align: center;">Status</th>
@@ -14,6 +15,7 @@
   {{#each user in controller.users}}
     <tr>
       <td>{{ unbound user.username }}</td>
+      <td>{{ unbound user.display_name }}</td>
       <td>{{ unbound user.email }}</td>
       <td>{{ unbound user.last_login_readable }}</td>
       <td style="text-align: center;">

@@ -25,13 +25,6 @@ class UserController < ApplicationController
     render :layout => false
   end
 
-  def user_hash(user)
-    {
-        status: 'ok',
-        user: user.decorate.gui_hash
-    }
-  end
-
   def username
     if logged_in?
       if current_user.nil?
@@ -41,7 +34,7 @@ class UserController < ApplicationController
       end
       return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
       redis.user_store.save current_user.update_last_login, current_username
-      return render_json user_hash(current_user)
+      return render_json status: 'ok', user: current_user.decorate.gui_hash
     end
     render_json status: 'logout'
   end
@@ -74,6 +67,17 @@ class UserController < ApplicationController
       redis.user_store.save user.update_last_login, current_username
       redirect_to :root
     end
+  end
+
+  def profile_save
+    return login_required unless logged_in?
+    if !User.valid_display_name? params[:display_name]
+      return render_json status: 'Display name must be three or more characters and cannot include any of ~!@#$%^*()+=<>{}[]\\|;:/?'
+    end
+    current_user.display_name = params[:display_name]
+    DisplayNameCache.set_display_name current_username, params[:display_name]
+    redis.user_store.save current_user, current_username
+    render_json status: 'ok'
   end
 
   def update_status
