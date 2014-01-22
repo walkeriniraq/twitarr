@@ -8,7 +8,7 @@ Twitarr.SeamailInboxController = Twitarr.BaseSeamailController.extend
   actions:
     reply: (seamail) ->
       users = seamail.to.slice(0)
-      users.splice(@get('login_user'), 1)
+      users.splice(users.indexOf(@get('login_user')), 1)
       users.push seamail.from
       @set('controllers.seamailNew.toPeople', users)
       @set('controllers.seamailNew.subject', "Re: #{seamail.subject}")
