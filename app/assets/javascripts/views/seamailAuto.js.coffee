@@ -1,7 +1,7 @@
 Twitarr.SeamailAutoView = Ember.View.extend
   templateName: 'seamailAuto'
 
-  keyPress: (e) ->
+  keyUp: (e) ->
     switch e.keyCode
       when 40
         return @moveDown()
@@ -9,6 +9,7 @@ Twitarr.SeamailAutoView = Ember.View.extend
         return @moveUp()
       when 27
         @set('controller.searchResults', [])
+        $('#to-autocomplete').focus()
         return false
 
   moveUp: ->

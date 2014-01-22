@@ -13,6 +13,7 @@ Twitarr.PostAutoView = Ember.View.extend
         return @moveUp()
       when 27
         @set('searchResults', [])
+        $('#post-autocomplete').focus()
         return false
 
   text_change: (->
