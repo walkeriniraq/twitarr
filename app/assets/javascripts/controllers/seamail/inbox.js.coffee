@@ -5,6 +5,9 @@ Twitarr.SeamailInboxController = Twitarr.BaseSeamailController.extend
   get_data_ajax: ->
     Twitarr.Seamail.inbox()
 
+  after_reload: ->
+    @set('controllers.application.email_count', @get('model.seamail').length)
+
   actions:
     reply: (seamail) ->
       users = seamail.to.slice(0)

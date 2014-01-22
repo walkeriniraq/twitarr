@@ -5,9 +5,6 @@ Twitarr.BaseSeamailController = Twitarr.ObjectController.extend
     reload: ->
       @reload()
 
-  get_data_ajax: ->
-    Twitarr.Seamail.archive()
-
   reload: ->
     @set 'loading', true
     @get_data_ajax().done((data) =>
@@ -15,6 +12,7 @@ Twitarr.BaseSeamailController = Twitarr.ObjectController.extend
       Ember.run =>
         @set 'loading', false
         @set 'model', data
+      @after_reload() if @after_reload
     ).fail( =>
       alert "There was a problem loading the posts from the server."
       @set 'loading', false
