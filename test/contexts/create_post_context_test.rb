@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete tag_scores) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete tag_scores photo_store) }
 
   include AttributesTest
 
@@ -88,6 +88,21 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           tag_scores: mock(:incr => true),
                           tag_autocomplete: auto
     context.call 'This is a #test'
+  end
+
+  it 'sets the post_id in the photos' do
+    photo_store = mock
+    photo = PhotoMetadata.new
+    photo_store.expects(:get).with('foo.jpg').once.returns(photo)
+    photo_store.expects(:save).with(photo, 'foo.jpg').once
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          photo_store: photo_store
+    post = context.call 'This is a test', ['foo.jpg']
+    post.post_id.must_equal photo.post_id
   end
 
   class UserRoleTest < ActiveSupport::TestCase

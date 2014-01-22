@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete, :tag_scores
+  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete, :tag_scores, :photo_store
 
   def initialize(attrs = {})
     super
@@ -22,6 +22,13 @@ class CreatePostContext
         name_without_hash = tag_name[1..-1]
         tag_autocomplete.add(name_without_hash, name_without_hash, 'tag')
         tag_scores.incr(name_without_hash)
+      end
+    end
+    photos.each do |filename|
+      photo = photo_store.get(filename)
+      if photo.post_id.nil?
+        photo.post_id = post.post_id
+        photo_store.save photo, filename
       end
     end
     popular_index.add_post @post

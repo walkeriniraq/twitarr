@@ -1,6 +1,6 @@
 class PhotoMetadata < BaseModel
 
-  attr :uploader, :original_filename, :timestamp, :store_filename
+  attr :uploader, :original_filename, :timestamp, :store_filename, :post_id
 
   def self.create(uploader, original_filename, store_filename)
     new(
