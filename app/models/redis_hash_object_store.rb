@@ -29,6 +29,10 @@ class RedisHashObjectStore
     hash.delete(id)
   end
 
+  def size
+    hash.size
+  end
+
   # this is likely to be a very slow operation - use with care
   def keys
     hash.keys
