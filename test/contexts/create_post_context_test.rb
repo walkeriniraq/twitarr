@@ -105,6 +105,24 @@ class CreatePostContextTest < ActiveSupport::TestCase
     post.post_id.must_equal photo.post_id
   end
 
+  it 'does not throw if photos is nil' do
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new
+    context.call 'This is a test', nil
+  end
+
+  it 'does not throw if photo_store is nil' do
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new
+    context.call 'This is a test', ['foo.jpg']
+  end
+
   class UserRoleTest < ActiveSupport::TestCase
     subject { CreatePostContext::UserRole }
 

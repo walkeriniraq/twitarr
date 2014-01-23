@@ -24,6 +24,9 @@ class CreatePostContext
         tag_scores.incr(name_without_hash)
       end
     end
+    popular_index.add_post @post
+    post_index.add_post @post
+    return post unless photos && photo_store
     photos.each do |filename|
       photo = photo_store.get(filename)
       if photo.post_id.nil?
@@ -31,8 +34,6 @@ class CreatePostContext
         photo_store.save photo, filename
       end
     end
-    popular_index.add_post @post
-    post_index.add_post @post
     post
   end
 
