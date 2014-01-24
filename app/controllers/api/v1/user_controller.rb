@@ -1,7 +1,7 @@
 class API::V1::UserController < BaseRedisController
 
   def auth
-    @user = redis.user_store.get(params[:username])
+    @user = redis.user_store.get(params[:username].downcase)
     unless @user && @user.correct_password(params[:password])
       render json: {:status => 'incorrect password or username'}, status: 401 and return
     end
