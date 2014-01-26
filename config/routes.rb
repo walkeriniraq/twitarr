@@ -46,4 +46,8 @@ Twitarr::Application.routes.draw do
   get 'api/v1/user/new_seamail'
   get 'api/v1/photos/list'
 
+  post 'api/v2/user/auth'
+  get 'api/v2/user/new_seamail'
+  get 'api/v2/photos/list'
+
 end
