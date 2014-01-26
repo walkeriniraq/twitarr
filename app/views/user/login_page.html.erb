@@ -12,7 +12,8 @@
 <div class="main">
 
   <div class="clearfix">
-    <img style="height: 150px; margin-left: 0.5em;" class="pull-left" src="img/jellyfish.png" />
+    <img style="height: 150px; margin-left: 0.5em;" class="pull-left" src="img/jellyfish.png"/>
+
     <h3 class="pull-left" style="margin: 1em 0.5em 0">Welcome to Twit-arr!</h3>
   </div>
 
@@ -43,48 +44,53 @@
     </div>
   <% end %>
 
-  <%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 20px;') do %>
-    <legend>I don't have an account yet!</legend>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Username</label>
+  <% if Twitarr::Application.config.allow_new_users %>
+    <%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 20px;') do %>
+      <legend>I don't have an account yet!</legend>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Username</label>
 
-      <div class="col-sm-5">
-        <%= text_field_tag :new_username, params[:new_username], class: 'form-control' %>
+        <div class="col-sm-5">
+          <%= text_field_tag :new_username, params[:new_username], class: 'form-control' %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Email</label>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Email</label>
 
-      <div class="col-sm-5">
-        <%= text_field_tag :email, params[:email], class: 'form-control' %>
-      </div>
+        <div class="col-sm-5">
+          <%= text_field_tag :email, params[:email], class: 'form-control' %>
+        </div>
 
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 5px;">
-        Your email is only visible to administrators.
       </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Password</label>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 5px;">
+          Your email is only visible to administrators.
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Password</label>
 
-      <div class="col-sm-5">
-        <%= password_field_tag :new_password, params[:new_password], class: 'form-control' %>
+        <div class="col-sm-5">
+          <%= password_field_tag :new_password, params[:new_password], class: 'form-control' %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Repeat password</label>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Repeat password</label>
 
-      <div class="col-sm-5">
-        <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
+        <div class="col-sm-5">
+          <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-5">
-        <%= submit_tag 'Create', class: 'btn btn-primary' %>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-5">
+          <%= submit_tag 'Create', class: 'btn btn-primary' %>
+        </div>
       </div>
-    </div>
+    <% end %>
+  <% else %>
+    <h3>New user creation has been temporarily disabled!</h3>
   <% end %>
+
 
 </div>
 

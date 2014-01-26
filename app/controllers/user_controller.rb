@@ -40,6 +40,9 @@ class UserController < ApplicationController
   end
 
   def new
+    unless Twitarr::Application.config.allow_new_users
+      render text: 'New user creation has been temporarily disabled!' and return
+    end
     user = User.new
     user.username = params[:new_username].downcase
     user.email = params[:email]

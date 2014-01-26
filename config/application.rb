@@ -31,5 +31,7 @@ module Twitarr
     # config.i18n.default_locale = :de
 
     config.autoload_paths += Dir[Rails.root.join('app', 'contexts', '{**}')]
+
+    config.allow_new_users = true
   end
 end

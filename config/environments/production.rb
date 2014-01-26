@@ -83,6 +83,6 @@ Twitarr::Application.configure do
       db: 4
   }
 
-  config.ember.variant = :development
+  config.ember.variant = :production
 
 end
