@@ -11,13 +11,15 @@ class API::V2::PhotosController < BaseRedisController
     render_json(status: 'no more items') and return if photos.blank?
     data = photos.map { |x| { photo: x.store_filename } }
     redis.post_store.get(photos.map { |x| x.post_id }).each_with_index do |post, idx|
+      data[idx][:time] = post.post_time
+      data[idx][:username] = post.username
       data[idx][:message] = post.message
     end
     render_json status: 'ok',
                 total_count: photo_count,
                 page: page,
                 items: data.size,
-                photos: data
+                photos: data.sort { |x,y| y[:time] <=> x[:time] }
   end
 
 end
