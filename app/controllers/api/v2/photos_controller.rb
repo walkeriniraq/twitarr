@@ -17,7 +17,7 @@ class API::V2::PhotosController < BaseRedisController
                 total_count: redis.photo_list.size,
                 page: page,
                 items: data.size,
-                photos: data.sort { |x,y| y[:time] <=> x[:time] }
+                photos: data
   end
 
 end
