@@ -92,6 +92,10 @@ class Redis
     sorted_set('system:hashtag_scores')
   end
 
+  def photo_list
+    list 'system:photo:list'
+  end
+
   def photo_metadata_store
     RedisHashObjectStore.new redis_hash('photo_metadata:store'), PhotoMetadata
   end

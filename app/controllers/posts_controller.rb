@@ -59,6 +59,7 @@ class PostsController < ApplicationController
     img.resize_to_fit(500, 500).write('public/img/photos/md_' + new_filename)
     metadata = PhotoMetadata.create current_username, file.original_filename, new_filename
     redis.photo_metadata_store.save metadata, new_filename
+    redis.photo_list.unshift new_filename
     { status: 'ok', filename: new_filename }
   rescue EXIFR::MalformedJPEG
     return { status: 'file extension is jpg but was not a jpeg', filename: file.original_filename }
