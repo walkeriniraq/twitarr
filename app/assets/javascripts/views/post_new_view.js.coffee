@@ -4,6 +4,14 @@ Twitarr.PostsNewView = Ember.View.extend
   uploadPercentStyle: null
   currentUploads: []
 
+  hasUploads: (->
+    controller = @get('controller')
+    if @get('currentUploads.length') isnt 0
+      controller.set('isUploading', true)
+    else
+      controller.set('isUploading', false)
+  ).observes('currentUploads.length')
+
   didInsertElement: ->
     $('#fileupload').fileupload
       dataType: 'json'

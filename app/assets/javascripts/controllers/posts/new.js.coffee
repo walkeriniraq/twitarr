@@ -2,10 +2,14 @@ Twitarr.PostsNewController = Twitarr.Controller.extend
   text: ''
   errors: []
   photos: []
+  isUploading: false
 
   actions:
     send: ->
       @errors.clear()
+      if @get('isUploading')
+        @errors.addObject { text: 'Please wait until the photo uploads are complete.' }
+        return
       text = @get('text').trim()
       unless text
         @errors.addObject { text: 'Type something before clicking send!' }
