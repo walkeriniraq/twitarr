@@ -3,17 +3,19 @@ require 'json'
 
 class UserController < ApplicationController
 
+  layout 'login'
+
   def login
     user = redis.user_store.get(params[:username].downcase)
     if user.nil?
-      flash[:danger] = 'User does not exist.'
-      render :login_page, layout: false
+      @error = 'User does not exist.'
+      render :login_page
     elsif user.status != 'active' || user.password.nil?
-      flash[:danger] = 'User account has been disabled.'
-      render :login_page, layout: false
+      @error = 'User account has been disabled.'
+      render :login_page
     elsif !user.correct_password(params[:password])
-      flash[:danger] = 'Invalid username or password.'
-      render :login_page, layout: false
+      @error = 'Invalid username or password.'
+      render :login_page
     else
       login_user(user)
       redis.user_store.save user.update_last_login, current_username
@@ -22,11 +24,9 @@ class UserController < ApplicationController
   end
 
   def login_page
-    render :layout => 'login'
   end
 
   def create_user
-    render :layout => 'login'
   end
 
   def username
@@ -47,40 +47,37 @@ class UserController < ApplicationController
     unless Twitarr::Application.config.allow_new_users
       render text: 'New user creation has been temporarily disabled!' and return
     end
-    user = User.new
-    user.username = params[:new_username].downcase
-    user.email = params[:email]
-    user.status = 'active'
-    user.is_admin = false
-    if !User.valid_username? params[:new_username]
-      flash[:danger] = 'Username must be three or more characters and only include letters, numbers, underscore, dash, and ampersand'
-      render :login_page, layout: false
-    elsif redis.user_store.get(user.username)
+    @user = User.new username: params[:new_username].downcase,
+                     email: params[:email],
+                     status: 'active',
+                     is_admin: false,
+                     security_question: params[:security_question],
+                     security_answer: params[:security_answer]
+    if !@user.valid?
+      render :create_user
+    elsif redis.user_store.get(@user.username)
       flash[:danger] = 'Username already exists.'
-      render :login_page, layout: false
-    elsif (user.email =~ /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) != 0
-      flash[:danger] = 'Email address is not valid.'
-      render :login_page, layout: false
+      render :create_user
     elsif params[:new_password].length < 6
       flash[:danger] = 'Password must be at least six characters long.'
-      render :login_page, layout: false
+      render :create_user
     elsif params[:new_password] != params[:new_password2]
       flash[:danger] = 'Passwords do not match.'
-      render :login_page, layout: false
+      render :create_user
     else
-      user.set_password params[:new_password]
-      TwitarrDb.add_user user
-      login_user(user)
-      redis.user_store.save user.update_last_login, current_username
+      @user.set_password params[:new_password]
+      TwitarrDb.add_user @user
+      login_user(@user)
+      redis.user_store.save @user.update_last_login, current_username
       redirect_to :root
     end
   end
 
   def profile_save
     return login_required unless logged_in?
-    if !User.valid_display_name? params[:display_name]
-      return render_json status: 'Display name must be three or more characters and cannot include any of ~!@#$%^*()+=<>{}[]\\|;:/?'
-    end
+    user = current_user.dup
+    user.display_name = params[:display_name]
+    return render_json status: 'error', errors: user.errors.full_messages unless user.valid?
     current_user.display_name = params[:display_name]
     DisplayNameCache.set_display_name current_username, params[:display_name]
     redis.user_store.save current_user, current_username

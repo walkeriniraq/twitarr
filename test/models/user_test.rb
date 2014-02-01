@@ -2,10 +2,40 @@ require_relative '../test_helper'
 
 class UserTest < ActiveSupport::TestCase
   subject { User }
-  let(:attributes) { %w(username password is_admin status email last_login) }
+  let(:attributes) { %w(username password is_admin status email last_login last_checked_posts security_question security_answer) }
 
   include AttributesTest
   include UpdateTest
+
+  it 'is not valid without username' do
+    user = User.new(email: 'foo@bar.com', security_question: 'd', security_answer: 'b')
+    user.valid?.must_equal false
+  end
+
+  it 'is not valid when username is not valid' do
+    user = User.new(username: 'a', email: 'foo@bar.com', security_question: 'd', security_answer: 'b')
+    user.valid?.must_equal false
+  end
+
+  it 'is not valid when email is not valid' do
+    user = User.new(username: 'foobar', email: 'foobar', security_question: 'd', security_answer: 'b')
+    user.valid?.must_equal false
+  end
+
+  it 'is not valid when display name not valid' do
+    user = User.new(username: 'foobar', email: 'foo@bar.com', display_name: 'a', security_question: 'd', security_answer: 'b')
+    user.valid?.must_equal false
+  end
+
+  it 'has to have a security question' do
+    user = User.new(username: 'foobar', email: 'foo@bar.com', security_answer: 'b')
+    user.valid?.must_equal false
+  end
+
+  it 'has to have a security answer' do
+    user = User.new(username: 'foobar', email: 'foo@bar.com', security_question: 'b')
+    user.valid?.must_equal false
+  end
 
   it 'allows characters in usernames' do
     User.valid_username?('steve').must_equal true

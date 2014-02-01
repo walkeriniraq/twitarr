@@ -1,3 +1,7 @@
+<% if @error %>
+  <div class="alert alert-warning"><%= @error %></div>
+<% end %>
+
 <%= form_tag(login_path, class: 'form-horizontal') do %>
   <legend>I have an account</legend>
   <div class="form-group">

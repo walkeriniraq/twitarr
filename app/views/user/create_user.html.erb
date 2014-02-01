@@ -1,3 +1,15 @@
+<div>
+
+</div>
+
+<% if @user && @user.errors.any? %>
+  <ul class="alert alert-warning" style="padding-left: 2em;">
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 20px;') do %>
   <legend>Create an account</legend>
   <div class="form-group">
@@ -13,7 +25,6 @@
     <div class="col-sm-5">
       <%= text_field_tag :email, params[:email], class: 'form-control' %>
     </div>
-
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 5px;">
@@ -32,6 +43,25 @@
 
     <div class="col-sm-5">
       <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8" style="margin-top: 5px;">
+      This password reset question and answer will be asked in case you lose your password
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Security Question</label>
+
+    <div class="col-sm-5">
+      <%= text_field_tag :security_question, params[:security_question], class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Security Answer</label>
+
+    <div class="col-sm-5">
+      <%= text_field_tag :security_answer, params[:security_answer], class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">

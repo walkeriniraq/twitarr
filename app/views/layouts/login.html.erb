@@ -17,10 +17,6 @@
     <h3 class="pull-left" style="margin: 1em 0.5em 0">Welcome to Twit-arr!</h3>
   </div>
 
-  <% flash.each do |key, value| %>
-    <div class="alert alert-<%= key %>"><%= value %></div>
-  <% end %>
-
   <%= yield %>
 
 </div>

@@ -24,64 +24,7 @@ module BaseModelInstanceMethods
     end
   end
 
-  #def indexing
-  #  self.class.indexing
-  #end
-  #
-  #def storage
-  #  self.class.storage
-  #end
-  #
-  #def twitarr=(twitarr)
-  #  @twitarr = twitarr
-  #end
-  #
-  #def twitarr
-  #  @twitarr ||= Twitarr.new
-  #end
-
-  #def db_pipeline(db = nil, &block)
-  #  self.class.db_pipeline(db, &block)
-  #end
-
   module BaseModelClassMethods
-    #def storage=(storage)
-    #  @storage = storage
-    #end
-    #
-    #def indexing=(indexing)
-    #  @indexing = indexing
-    #end
-    #
-    #def storage
-    #  @storage ||= RedisStorageStrategy.new(self)
-    #end
-    #
-    #def indexing
-    #  @indexing ||= RedisIndexingStrategy.new(self)
-    #end
-
-
-    #def db_pipeline(db = nil)
-    #  ret = nil
-    #  if db.nil?
-    #    DbConnectionPool.instance.connection do |db|
-    #      db.pipelined { |pipeline| ret = yield pipeline }
-    #    end
-    #  elsif db.client.is_a? RubyRedis::Pipeline
-    #    ret = yield db
-    #  else
-    #    db.pipelined { |pipeline| ret = yield pipeline }
-    #  end
-    #  ret
-    #end
-    #
-    #def db_call
-    #  DbConnectionPool.instance.connection do |db|
-    #    yield db
-    #  end
-    #end
-
   end
 
 end
