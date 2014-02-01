@@ -1,5 +1,28 @@
 <div>
+  <h4>Unpleasant but neccessary stuff that hopefully will not be needed:</h4>
 
+  <p>
+    By signing up and using this system, you agree to abide by the JCCC convention / harassment policy that you were
+    required to sign. Basically: follow Wheaton's Law and please don't try to ruin this for someone else, lest we
+    ruin it for you.
+  </p>
+  <p>
+    Having said this, if someone on Twit-arr is behaving in a manner that does NOT follow the harassment policy, then
+    please seek out any of the fine helper monkeys and they can assist. Helper monkeys should seek assistance from @kvort
+    on anything technical that needs doing re: Harassment.
+  </p>
+  <% if Rails.env == 'boat' %>
+    <hr />
+    <p>
+      Due to technical restrictions, the security used on this server is akin to
+      <span style="font-weight: bold;">writing your password on a post-it and placing said post-it on your forehead.</span>
+      At least, it is to anyone skilled and motivated to do such things.
+    </p>
+    <h4>
+      DO NOT USE the same password or security question for ANYTHING ELSE.
+    </h4>
+    <p>Really not kidding here. Please don't do it.</p>
+  <% end %>
 </div>
 
 <% if @user && @user.errors.any? %>
