@@ -5,7 +5,7 @@ class API::V2::PhotosController < BaseRedisController
   def list
     page = params[:page].to_i
     list = redis.photo_list[page * PAGE_LENGTH, PAGE_LENGTH]
-    photos = redis.photo_metadata_store.get(list)
+    photos = redis.photo_metadata_store.get(list).reject { |x| x.post_id.nil? }
     render_json(status: 'no more items') and return if photos.blank?
     data = photos.map { |x| { photo: x.store_filename } }
     redis.post_store.get(photos.map { |x| x.post_id }).each_with_index do |post, idx|

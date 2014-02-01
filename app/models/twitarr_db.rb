@@ -42,7 +42,8 @@ class TwitarrDb
                                       post_store: redis.post_store,
                                       tag_autocomplete: redis.tag_auto,
                                       tag_scores: redis.tag_scores,
-                                      photo_store: redis.photo_metadata_store
+                                      photo_store: redis.photo_metadata_store,
+                                      photo_list: redis.photo_list
       context.call post_text, photos
     end
   end

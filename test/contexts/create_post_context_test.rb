@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class CreatePostContextTest < ActiveSupport::TestCase
   subject { CreatePostContext }
-  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete tag_scores photo_store) }
+  let(:attributes) { %w(user tag_factory popular_index post_index post_store tag_autocomplete tag_scores photo_store photo_list) }
 
   include AttributesTest
 
@@ -100,9 +100,36 @@ class CreatePostContextTest < ActiveSupport::TestCase
                           popular_index: {},
                           post_index: {},
                           post_store: FakePostsStore.new,
-                          photo_store: photo_store
+                          photo_store: photo_store,
+                          photo_list: []
     post = context.call 'This is a test', ['foo.jpg']
     post.post_id.must_equal photo.post_id
+  end
+
+  it 'adds the photo to the photo_list' do
+    photo = PhotoMetadata.new
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          photo_store: mock(get: photo, save: nil),
+                          photo_list: photo_list = []
+    context.call 'This is a test', ['foo.jpg']
+    photo_list.first.must_equal 'foo.jpg'
+  end
+
+  it 'adds the photo to beginning of the photo_list' do
+    photo = PhotoMetadata.new
+    context = subject.new user: 'foo',
+                          tag_factory: lambda { |_| {} },
+                          popular_index: {},
+                          post_index: {},
+                          post_store: FakePostsStore.new,
+                          photo_store: mock(get: photo, save: nil),
+                          photo_list: photo_list = ['test.jpg']
+    context.call 'This is a test', ['foo.jpg']
+    photo_list.first.must_equal 'foo.jpg'
   end
 
   it 'does not throw if photos is nil' do

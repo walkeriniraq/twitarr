@@ -1,7 +1,7 @@
 class CreatePostContext
   include HashInitialize
 
-  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete, :tag_scores, :photo_store
+  attr :user, :tag_factory, :popular_index, :post_index, :post_store, :tag_autocomplete, :tag_scores, :photo_store, :photo_list
 
   def initialize(attrs = {})
     super
@@ -32,6 +32,7 @@ class CreatePostContext
       if photo.post_id.nil?
         photo.post_id = post.post_id
         photo_store.save photo, filename
+        photo_list.unshift filename
       end
     end
     post
