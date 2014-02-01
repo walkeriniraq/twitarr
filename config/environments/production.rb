@@ -79,7 +79,6 @@ Twitarr::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.db = {
-      host: 'gremlin',
       db: 4
   }
 
