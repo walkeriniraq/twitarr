@@ -22,7 +22,11 @@ class UserController < ApplicationController
   end
 
   def login_page
-    render :layout => false
+    render :layout => 'login'
+  end
+
+  def create_user
+    render :layout => 'login'
   end
 
   def username

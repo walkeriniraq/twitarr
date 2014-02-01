@@ -24,10 +24,11 @@ Twitarr::Application.routes.draw do
 
   post 'login', to: 'user#login'
   get 'login', to: 'user#login_page'
+  post 'user/new'
+  get 'user/new', to: 'user#create_user'
   get 'user/logout'
   get 'user/username'
   post 'user/change_password'
-  post 'user/new'
   get 'user/autocomplete'
   get 'user/profile'
   post 'user/profile', to: 'user#profile_save'

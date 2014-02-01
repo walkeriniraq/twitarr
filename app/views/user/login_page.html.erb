@@ -1,98 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Twit-arr Login Page</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= csrf_meta_tags %>
-  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
-</head>
-<body style="padding: 1em 0;">
+<%= form_tag(login_path, class: 'form-horizontal') do %>
+  <legend>I have an account</legend>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Username</label>
 
-<div class="main">
-
-  <div class="clearfix">
-    <img style="height: 150px; margin-left: 0.5em;" class="pull-left" src="img/jellyfish.png"/>
-
-    <h3 class="pull-left" style="margin: 1em 0.5em 0">Welcome to Twit-arr!</h3>
+    <div class="col-sm-5">
+      <%= text_field_tag :username, params[:username], class: 'form-control' %>
+    </div>
   </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Password</label>
 
-  <% flash.each do |key, value| %>
-    <div class="alert alert-<%= key %>"><%= value %></div>
-  <% end %>
-
-  <%= form_tag(login_path, class: 'form-horizontal') do %>
-    <legend>I have an account</legend>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Username</label>
-
-      <div class="col-sm-5">
-        <%= text_field_tag :username, params[:username], class: 'form-control' %>
-      </div>
+    <div class="col-sm-5">
+      <%= password_field_tag :password, params[:password], class: 'form-control' %>
     </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Password</label>
-
-      <div class="col-sm-5">
-        <%= password_field_tag :password, params[:password], class: 'form-control' %>
-      </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+      <%= submit_tag 'Login', class: 'btn btn-primary' %>
     </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-5">
-        <%= submit_tag 'Login', class: 'btn btn-primary' %>
-      </div>
-    </div>
-  <% end %>
+  </div>
+<% end %>
 
-  <% if Twitarr::Application.config.allow_new_users %>
-    <%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 20px;') do %>
-      <legend>I don't have an account yet!</legend>
-      <div class="form-group">
-        <label class="control-label col-sm-2">Username</label>
-
-        <div class="col-sm-5">
-          <%= text_field_tag :new_username, params[:new_username], class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label col-sm-2">Email</label>
-
-        <div class="col-sm-5">
-          <%= text_field_tag :email, params[:email], class: 'form-control' %>
-        </div>
-
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 5px;">
-          Your email is only visible to administrators.
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label col-sm-2">Password</label>
-
-        <div class="col-sm-5">
-          <%= password_field_tag :new_password, params[:new_password], class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label col-sm-2">Repeat password</label>
-
-        <div class="col-sm-5">
-          <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-5">
-          <%= submit_tag 'Create', class: 'btn btn-primary' %>
-        </div>
-      </div>
-    <% end %>
-  <% else %>
-    <h3>New user creation has been temporarily disabled!</h3>
-  <% end %>
-
-
-</div>
-
-</body>
-</html>
+<% if Twitarr::Application.config.allow_new_users %>
+  <h4><%= link_to 'I want to join!', user_new_path %></h4>
+<% else %>
+  <h3>New user creation has been temporarily disabled!</h3>
+<% end %>

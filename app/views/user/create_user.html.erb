@@ -1,0 +1,42 @@
+<%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 20px;') do %>
+  <legend>Create an account</legend>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Username</label>
+
+    <div class="col-sm-5">
+      <%= text_field_tag :new_username, params[:new_username], class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Email</label>
+
+    <div class="col-sm-5">
+      <%= text_field_tag :email, params[:email], class: 'form-control' %>
+    </div>
+
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 5px;">
+      Your email is only visible to administrators.
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Password</label>
+
+    <div class="col-sm-5">
+      <%= password_field_tag :new_password, params[:new_password], class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Repeat password</label>
+
+    <div class="col-sm-5">
+      <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+      <%= submit_tag 'Create', class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>
