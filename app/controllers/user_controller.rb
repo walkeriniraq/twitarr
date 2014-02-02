@@ -29,6 +29,35 @@ class UserController < ApplicationController
   def create_user
   end
 
+  def forgot_password
+  end
+
+  def security_question
+    @user = redis.user_store.get(params[:username])
+    if @user.nil?
+      @error = 'User does not exist.'
+      render :forgot_password
+    end
+  end
+
+  def security_answer
+    @user = redis.user_store.get(params[:username])
+    if @user.nil?
+      @error = 'User does not exist.'
+      render :forgot_password
+    end
+    if params[:security_answer].downcase.strip != @user.security_answer ||
+        params[:email].strip != @user.email
+      sleep 30.seconds.to_i
+      @error = 'Email or security answer did not match.'
+      render :security_question and return
+    end
+    @user.set_password 'seamonkey'
+    redis.user_store.save @user, @user.username
+    @error = 'Password has been reset to "seamonkey"'
+    render :login_page
+  end
+
   def username
     if logged_in?
       if current_user.nil?
@@ -52,7 +81,7 @@ class UserController < ApplicationController
                      status: 'active',
                      is_admin: false,
                      security_question: params[:security_question],
-                     security_answer: params[:security_answer]
+                     security_answer: params[:security_answer].downcase.strip
     if !@user.valid?
       render :create_user
     elsif redis.user_store.get(@user.username)
@@ -108,6 +137,7 @@ class UserController < ApplicationController
     return render_json status: 'Invalid username or password.' unless current_user.correct_password params[:old_password]
     current_user.set_password params[:new_password]
     redis.user_store.save current_user, current_user.username
+    render_json status: 'ok'
   end
 
   def profile

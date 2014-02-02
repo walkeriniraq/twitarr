@@ -1,7 +1,3 @@
-<% if @error %>
-  <div class="alert alert-warning"><%= @error %></div>
-<% end %>
-
 <%= form_tag(login_path, class: 'form-horizontal') do %>
   <legend>I have an account</legend>
   <div class="form-group">
@@ -30,3 +26,4 @@
 <% else %>
   <h3>New user creation has been temporarily disabled!</h3>
 <% end %>
+<h4><%= link_to 'I forgot my daggone password!', user_forgot_password_path %></h4>

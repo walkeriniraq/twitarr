@@ -1,0 +1,27 @@
+<%= form_tag(user_security_answer_path, class: 'form-horizontal') do %>
+  <legend>Password recovery: <%= @user.username %></legend>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Email address</label>
+    <div class="col-sm-5">
+      <%= text_field_tag :email, params[:email], class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12" style="margin-top: 5px;">
+      Your security question is: <%= @user.security_question %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Security Answer</label>
+    <div class="col-sm-5">
+      <%= text_field_tag :security_answer, params[:security_answer], class: 'form-control' %>
+    </div>
+  </div>
+  <%= hidden_field_tag :username, @user.username %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-5">
+      <%= submit_tag 'Reset password', class: 'btn btn-primary' %>
+      <h4><%= link_to 'Never mind, I remembered the password!', login_path %></h4>
+    </div>
+  </div>
+<% end %>

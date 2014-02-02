@@ -1,5 +1,8 @@
 Twitarr.Router.map ()->
   @route 'create_announcement'
+  @resource 'user', ->
+    @route 'change_password'
+    @route 'profile'
   @resource 'users', ->
     @route 'index'
     @route 'edit', { path: '/:username/edit' }
@@ -16,4 +19,3 @@ Twitarr.Router.map ()->
     @route 'inbox'
     @route 'archive'
     @route 'outbox'
-  @route 'profile'

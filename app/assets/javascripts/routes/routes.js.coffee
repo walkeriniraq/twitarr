@@ -12,9 +12,3 @@ Twitarr.ApplicationRoute = Ember.Route.extend
       @disconnectOutlet
         outlet: 'modal'
         parentView: 'application'
-
-Twitarr.ProfileRoute = Ember.Route.extend
-  beforeModel: ->
-    @transitionTo('posts.all') unless @controllerFor('application').get('login_user')
-  setupController: (controller) ->
-    controller.set 'display_name', @controllerFor('application').get('display_name')

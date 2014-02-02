@@ -17,6 +17,10 @@
     <h3 class="pull-left" style="margin: 1em 0.5em 0">Welcome to Twit-arr!</h3>
   </div>
 
+  <% if @error %>
+    <div class="alert alert-warning"><%= @error %></div>
+  <% end %>
+
   <%= yield %>
 
 </div>

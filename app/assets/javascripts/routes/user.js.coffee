@@ -1,3 +1,15 @@
+Twitarr.UserProfileRoute = Ember.Route.extend
+  beforeModel: ->
+    @transitionTo('posts.all') unless @controllerFor('application').get('login_user')
+  setupController: (controller) ->
+    controller.set 'display_name', @controllerFor('application').get('display_name')
+
+Twitarr.UserChangePasswordRoute = Ember.Route.extend
+  beforeModel: ->
+    @transitionTo('posts.all') unless @controllerFor('application').get('login_user')
+  setupController: (controller) ->
+    controller.set 'display_name', @controllerFor('application').get('display_name')
+
 Twitarr.UsersIndexRoute = Ember.Route.extend
   model: ->
     Twitarr.User.list()
