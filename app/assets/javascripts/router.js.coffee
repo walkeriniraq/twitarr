@@ -6,7 +6,6 @@ Twitarr.Router.map ()->
   @resource 'users', ->
     @route 'index'
     @route 'edit', { path: '/:username/edit' }
-    @route 'reset_password', { path: '/:username/reset_password' }
     @route 'new'
   @resource 'posts', ->
     @route 'popular'

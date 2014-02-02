@@ -67,7 +67,7 @@ class UserController < ApplicationController
       end
       return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
       redis.user_store.save current_user.update_last_login, current_username
-      return render_json status: 'ok', user: current_user.decorate.gui_hash
+      return render_json status: 'ok', need_password_change: current_user.correct_password('seamonkey'), user: current_user.decorate.gui_hash
     end
     render_json status: 'logout'
   end

@@ -33,7 +33,7 @@
         {{#if user.is_locked}}
           <a href="#" {{ action 'unlock' user.username }} class="margin-right-20">unlock</a>
         {{/if}}
-        {{#link-to 'users.reset_password' user.username classNames="margin-right-20"}}reset password{{/link-to}}
+        <a href="#" class="margin-right-20" {{ action 'reset_password' user.username }}>reset password</a>
         {{#link-to 'users.edit' user }}edit{{/link-to}}
       </td>
     </tr>

@@ -9,6 +9,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         @login data.user
+        if data.need_password_change
+          @transitionToRoute('user.change_password')
 
   new_email: (->
     @get('logged_in') && @get('email_count') > 0
