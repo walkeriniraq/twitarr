@@ -122,4 +122,18 @@ class UserTest < ActiveSupport::TestCase
     test.must_equal user
   end
 
+  it 'downcases the security answer' do
+    user = User.new security_answer: 'FOO'
+    user.security_answer.must_equal 'foo'
+    user.security_answer = 'BAR'
+    user.security_answer.must_equal 'bar'
+  end
+
+  it 'trims the display name' do
+    user = User.new display_name: ' foo '
+    user.display_name.must_equal 'foo'
+    user.display_name = ' bar '
+    user.display_name.must_equal 'bar'
+  end
+
 end

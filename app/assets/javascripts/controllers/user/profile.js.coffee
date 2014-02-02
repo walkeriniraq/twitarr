@@ -4,9 +4,13 @@ Twitarr.UserProfileController = Twitarr.Controller.extend
 
   actions:
     save: ->
-      display_name = @get('display_name').trim()
-      $.post("user/profile", { display_name: display_name }).done (data) =>
+      params = {}
+      params['display_name'] = (@get('display_name') || '').trim()
+      params['security_question'] = (@get('security_question') || '').trim()
+      params['security_answer'] = (@get('security_answer') || '').trim()
+      $.post("user/profile", params).done (data) =>
         if data.status isnt 'ok'
-          alert data.status
+          @set('errors', data.errors)
         else
-          @set('controllers.application.display_name', display_name)
+          @set('controllers.application.display_name', @get('display_name'))
+          @transitionToRoute('posts.all')

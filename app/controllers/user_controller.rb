@@ -67,6 +67,7 @@ class UserController < ApplicationController
       end
       return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
       redis.user_store.save current_user.update_last_login, current_username
+      puts "Successful login for user: #{current_username}"
       return render_json status: 'ok', need_password_change: current_user.correct_password('seamonkey'), user: current_user.decorate.gui_hash
     end
     render_json status: 'logout'
@@ -81,7 +82,7 @@ class UserController < ApplicationController
                      status: 'active',
                      is_admin: false,
                      security_question: params[:security_question],
-                     security_answer: params[:security_answer].downcase.strip
+                     security_answer: params[:security_answer]
     if !@user.valid?
       render :create_user
     elsif redis.user_store.get(@user.username)
@@ -102,10 +103,20 @@ class UserController < ApplicationController
     end
   end
 
+  def profile
+    return login_required unless logged_in?
+    render_json status: 'ok',
+                display_name: current_user.display_name,
+                security_question: current_user.security_question,
+                security_answer: current_user.security_answer
+  end
+
   def profile_save
     return login_required unless logged_in?
     user = current_user.dup
     user.display_name = params[:display_name]
+    user.security_question = params[:security_question]
+    user.security_answer = params[:security_answer]
     return render_json status: 'error', errors: user.errors.full_messages unless user.valid?
     current_user.display_name = params[:display_name]
     DisplayNameCache.set_display_name current_username, params[:display_name]
@@ -138,11 +149,6 @@ class UserController < ApplicationController
     current_user.set_password params[:new_password]
     redis.user_store.save current_user, current_user.username
     render_json status: 'ok'
-  end
-
-  def profile
-    return login_required unless logged_in?
-    render_json status: 'ok', display_name: current_user.display_name
   end
 
 end

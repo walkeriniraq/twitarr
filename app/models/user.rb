@@ -43,8 +43,8 @@ class User < BaseModel
     BCrypt::Password.new(password) == pass
   end
 
-  def username
-    @username.andand.downcase
+  def username=(val)
+    @username = val.andand.downcase
   end
 
   def empty_password
@@ -64,6 +64,18 @@ class User < BaseModel
   def update_last_checked_posts
     @last_checked_posts = Time.now.to_f
     self
+  end
+
+  def security_answer=(val)
+    @security_answer = val.andand.downcase.andand.strip
+  end
+
+  def security_question=(val)
+    @security_question = val.andand.strip
+  end
+
+  def display_name=(val)
+    @display_name = val.andand.strip
   end
 
 end

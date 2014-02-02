@@ -1,6 +1,5 @@
 Twitarr.UserChangePasswordController = Twitarr.Controller.extend
   errors: []
-  needs: 'application'
 
   actions:
     change: ->
