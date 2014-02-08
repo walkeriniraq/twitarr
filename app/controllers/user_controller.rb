@@ -86,13 +86,13 @@ class UserController < ApplicationController
     if !@user.valid?
       render :create_user
     elsif redis.user_store.get(@user.username)
-      flash[:danger] = 'Username already exists.'
+      @user.errors.add :username, 'already exists.'
       render :create_user
     elsif params[:new_password].length < 6
-      flash[:danger] = 'Password must be at least six characters long.'
+      @user.errors.add :password, 'must be at least six characters long.'
       render :create_user
     elsif params[:new_password] != params[:new_password2]
-      flash[:danger] = 'Passwords do not match.'
+      @user.errors.add :password, 'does not match.'
       render :create_user
     else
       @user.set_password params[:new_password]
