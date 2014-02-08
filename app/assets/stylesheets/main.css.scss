@@ -148,10 +148,19 @@ a:hover, a:focus {
   padding: 0 20px;
 }
 
+.photo-preview {
+  img {
+    max-width: 600px;
+    max-height: 600px;
+  }
+}
+
 .image-row {
   img {
     border: 1px solid darkgray;
     margin: 0 10px;
+    max-width: 150px;
+    max-height: 150px;
   }
 }
 

@@ -45,6 +45,7 @@ Twitarr::Application.routes.draw do
   post 'admin/reset_password'
 
   get 'photo/preview/*photo', { to: 'photo#preview', :format => false }
+  get 'img/photos/*photo', to: redirect('img/404_file_not_found_sign_by_zutheskunk.png')
 
   get 'api/v1/user/auth'
   get 'api/v1/user/new_seamail'
