@@ -1,5 +1,5 @@
 Twitarr.PostsNewView = Ember.View.extend
-  FOUR_MB: 4 * 1024 * 1024
+  TEN_MB: 10 * 1024 * 1024
   uploadPercent: null
   uploadPercentStyle: null
   currentUploads: []
@@ -18,7 +18,7 @@ Twitarr.PostsNewView = Ember.View.extend
       dropZone: $('#photo-upload-div')
       submit: (e, data) =>
         filename = data.files[0].name
-        if(data.files[0].size > @FOUR_MB)
+        if(data.files[0].size > @TEN_MB)
           @get('controller').addPhotoError(filename, 'File was larger than 4MB')
           return false
         extension = /\.\w+$/.exec(filename)

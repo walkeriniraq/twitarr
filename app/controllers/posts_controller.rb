@@ -33,11 +33,11 @@ class PostsController < ApplicationController
     render_json status: 'ok', files: params[:files].map { |file| process_upload file, redis }
   end
 
-  FOUR_MB = 4 * 1024 * 1024
+  TEN_MB = 10 * 1024 * 1024
 
   def process_upload(file, redis)
     ext = Pathname.new(file.original_filename).extname.downcase
-    return { status: 'file is over 4MB', filename: file.original_filename } unless file.size <= FOUR_MB
+    return { status: 'file is over 10MB', filename: file.original_filename } unless file.size <= TEN_MB
     return { status: 'file was not an allowed image type', filename: file.original_filename } unless %w(.jpg .jpeg .png .gif).include? ext
     new_filename = SecureRandom.uuid.to_s + ext
     FileUtils.copy(file.tempfile, 'public/img/photos/' + new_filename)
