@@ -42,4 +42,15 @@ class SeamailController < ApplicationController
     render_json status: 'ok'
   end
 
+  def unarchive
+    return login_required unless logged_in?
+    seamail = redis.seamail_store.get(params[:id])
+    context = UnarchiveSeamailContext.new seamail: seamail,
+                                        username: current_username,
+                                        inbox_index: redis.inbox_index(current_username),
+                                        archive_index: redis.archive_mail_index(current_username)
+    context.call
+    render_json status: 'ok'
+  end
+
 end

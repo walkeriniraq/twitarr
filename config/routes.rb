@@ -21,6 +21,7 @@ Twitarr::Application.routes.draw do
   post 'seamail/new'
   get 'seamail/archive'
   post 'seamail/do_archive'
+  post 'seamail/unarchive'
 
   get 'login', to: 'user#login_page'
   post 'login', to: 'user#login'

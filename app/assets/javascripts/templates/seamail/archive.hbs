@@ -8,6 +8,10 @@
   {{#each mail in controller.seamail}}
     <div class='seamail-entry container'>
       {{ render "seamail/details" mail }}
+      <div class="pull-right btn btn-primary btn-xs" {{action 'unarchive' mail.seamail_id}}>
+        <span class="glyphicon glyphicon-folder-open" style="margin-right: 5px;"></span>
+        Unarchive
+      </div>
     </div>
   {{else}}
     {{#unless loading}}
