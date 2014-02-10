@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @title %></title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+  <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+</head>
+<body style="padding: 1em 0;">
+
+<div class="main">
+
+  <%= yield %>
+
+</div>
+
+</body>
+</html>
