@@ -12,7 +12,7 @@ Twitarr.Router.map ()->
     @route 'all'
     @route 'new'
     @route 'user', { path: '/user/:user' }
-    @route 'search', { path: '/search/:tag' }
+    @route 'tag', { path: '/tag/:tag' }
   @resource 'seamail', ->
     @route 'new'
     @route 'inbox'

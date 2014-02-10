@@ -4,7 +4,7 @@
   <h4>Popular hashtags</h4>
   <div id="hashtag-cloud">
     {{#each tag in controller.tags}}
-      <a href="#/posts/search/{{unbound tag.tag}}" title="Posts: {{unbound tag.count}}" class="popular-tag"
+      <a href="#/posts/tag/{{unbound tag.tag}}" title="Posts: {{unbound tag.count}}" class="popular-tag"
          style="font-size: {{unbound tag.size}}; color: {{unbound tag.color}};">#{{unbound tag.tag}}</a>
     {{/each}}
   </div>

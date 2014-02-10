@@ -16,7 +16,7 @@ Twitarr.ParsedTextView = Ember.View.extend
       when '@'
         "<a href='#/posts/user/#{part.substring 1}'>#{part}</a>"
       when '#'
-        "<a href='#/posts/search/#{part.substring 1}'>#{part}</a>"
+        "<a href='#/posts/tag/#{part.substring 1}'>#{part}</a>"
       else
         part
 

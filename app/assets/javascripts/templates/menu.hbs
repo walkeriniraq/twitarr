@@ -21,11 +21,6 @@
         <li>{{#link-to "posts.popular"}}Trending{{/link-to}}</li>
         {{#if logged_in}}
           <li>
-            {{#link-to "posts.user" login_user}}
-              Mine
-            {{/link-to}}
-          </li>
-          <li>
             {{#link-to "seamail.inbox"}}
               Seamail
               {{#if new_email}}
@@ -51,6 +46,8 @@
                 <li>{{#link-to "users.index"}}Admin{{/link-to}}</li>
               {{/if}}
               <li>{{#link-to "user.profile"}}Profile{{/link-to}}</li>
+              <li>{{#link-to "posts.user" login_user}}My Posts{{/link-to}}</li>
+              <li class="divider"></li>
               <li>{{#link-to "user.change_password"}}Change Password{{/link-to}}</li>
               <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
             </ul>

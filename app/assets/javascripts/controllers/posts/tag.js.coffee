@@ -1,4 +1,4 @@
-Twitarr.PostsSearchController = Twitarr.BasePostController.extend
+Twitarr.PostsTagController = Twitarr.BasePostController.extend
   tag: null
 
   get_data_ajax: (info = null) ->

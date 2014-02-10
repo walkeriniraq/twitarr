@@ -10,7 +10,7 @@ Twitarr.PostsPopularRoute = Twitarr.PostsChildRoute.extend()
 
 Twitarr.PostsAllRoute = Twitarr.PostsChildRoute.extend()
 
-Twitarr.PostsSearchRoute = Twitarr.PostsChildRoute.extend
+Twitarr.PostsTagRoute = Twitarr.PostsChildRoute.extend
   setupController: (controller, params) ->
     if typeof params is 'string'
       controller.set 'tag', params

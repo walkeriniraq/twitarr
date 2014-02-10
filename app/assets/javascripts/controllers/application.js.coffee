@@ -64,7 +64,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
     return true if path is 'posts.all'
     return true if path is 'posts.popular'
     return true if path is 'posts.user'
-    return true if path is 'posts.search'
+    return true if path is 'posts.tag'
+    return true if path is 'search'
     false
 
   actions:
