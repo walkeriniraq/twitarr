@@ -1,6 +1,9 @@
 Twitarr.BasePostController = Twitarr.ObjectController.extend
   loading: false
 
+  init: ->
+    $('.ember-view').animate({ scrollTop: 0 }, "fast");
+
   showMore: (->
     @.get('more') && !@get('loading')
   ).property('more', 'loading')
