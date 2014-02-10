@@ -33,7 +33,7 @@ class UserController < ApplicationController
   end
 
   def security_question
-    @user = redis.user_store.get(params[:username])
+    @user = redis.user_store.get(params[:username].downcase)
     if @user.nil?
       @error = 'User does not exist.'
       render :forgot_password
@@ -41,7 +41,7 @@ class UserController < ApplicationController
   end
 
   def security_answer
-    @user = redis.user_store.get(params[:username])
+    @user = redis.user_store.get(params[:username].downcase)
     if @user.nil?
       @error = 'User does not exist.'
       render :forgot_password

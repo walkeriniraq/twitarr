@@ -98,7 +98,7 @@ class PostsController < ApplicationController
 
   def list
     return render_json(status: 'missing username') unless params[:username]
-    user = redis.user_store.get(params[:username])
+    user = redis.user_store.get(params[:username].downcase)
     return render_json(status: 'Could not find user!') if user.nil?
     posts, more = filter_direction_posts redis.tag_index("@#{user.username}"), params[:dir], params[:time]
     context = EntryListContext.new posts_index: posts,
