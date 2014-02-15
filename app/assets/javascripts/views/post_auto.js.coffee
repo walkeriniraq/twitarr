@@ -6,15 +6,16 @@ Twitarr.PostAutoView = Ember.View.extend
   searchResults: []
 
   keyDown: (e) ->
+    return true unless $('#post-autocomplete-dropdown').is(':visible')
     switch e.keyCode
       when 40
-        return @moveDown()
+        @moveDown()
       when 38
-        return @moveUp()
+        @moveUp()
       when 27
         @set('searchResults', [])
         $('#post-autocomplete').focus()
-        return false
+        false
 
   text_change: (->
     word = @get_current_word()
