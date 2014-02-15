@@ -16,6 +16,7 @@ Twitarr.PostsNewView = Ember.View.extend
     $('#fileupload').fileupload
       dataType: 'json'
       dropZone: $('#photo-upload-div')
+      formData: [ { name: 'authenticity_token', value: $('meta[name="csrf-token"]').attr('content') } ]
       submit: (e, data) =>
         filename = data.files[0].name
         if(data.files[0].size > @TEN_MB)

@@ -30,7 +30,12 @@ class PostsController < ApplicationController
 
   def upload
     return render_json status: 'Must provide photos to upload.' if params[:files].blank?
-    render_json status: 'ok', files: params[:files].map { |file| process_upload file, redis }
+    files = params[:files].map { |file| process_upload file, redis }
+    if browser.ie?
+      render text: { status: 'ok', files: files }.to_json
+    else
+      render_json status: 'ok', files: files
+    end
   end
 
   TEN_MB = 10 * 1024 * 1024
