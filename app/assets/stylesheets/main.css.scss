@@ -45,7 +45,7 @@ h1, h2, h3 {
 
 a:hover, a:focus {
   text-decoration: none;
-  background-color: #F6F0F6;
+  background-color: #eee;
 }
 
 //  OTHER STYLES
@@ -265,8 +265,7 @@ a:hover, a:focus {
 }
 
 .post-user {
-  font-weight: bold;
-  font-size: larger;
+  font-weight: 900;
   color: #444444;
 }
 
@@ -276,6 +275,7 @@ a:hover, a:focus {
   padding: 0.5em;
   .post-reply-user {
     color: #222255;
+    font-weight: bold;
   }
 }
 
