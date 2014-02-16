@@ -30,8 +30,11 @@ module Twitarr
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    config.assets.precompile += ['respond.js']
+
     config.autoload_paths += Dir[Rails.root.join('app', 'contexts', '{**}')]
 
     config.allow_new_users = true
+
   end
 end
