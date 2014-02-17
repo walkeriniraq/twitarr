@@ -273,8 +273,10 @@ a:hover, a:focus {
   border: 1px solid darkgray;
   margin: 0.5em;
   padding: 0.5em;
+  a {
+    margin-right: 0.2em;
+  }
   .post-reply-user {
-    color: #222255;
     font-weight: bold;
   }
 }

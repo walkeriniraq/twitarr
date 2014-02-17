@@ -37,9 +37,8 @@
   {{#each reply in replies}}
     <div class="reply clearfix">
       {{#link-to "posts.user" reply.username}}
-        <span class="post-reply-user">{{ unbound reply.display_name }}</span>
-        @{{ unbound reply.username }}
-      {{/link-to}} -
+        <span class="post-reply-user">{{ unbound reply.pretty_name }}</span>
+      {{/link-to}}
       {{ view Twitarr.ParsedTextView contentBinding="reply.message" }}
       <div class="pull-right post-time">
         <span data-livestamp="{{unbound reply.timestamp}}" ></span>
