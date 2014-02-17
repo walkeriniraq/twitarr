@@ -1,32 +1,16 @@
 Twitarr.BasePostsView = Ember.View.extend
   TIMER_LENGTH: 600
-  scroll_count: 0
+  SCROLL_DISTANCE: 80
+  scroll_distance: 0
+  is_checking: false
 
-  display_scroll_class: (->
-    switch @get('scroll_count')
-      when 1 then 'scroll-gradient-1'
-      when 2 then 'scroll-gradient-2'
-      else 'scroll-gradient-3'
-  ).property('scroll_count')
+  display_scroll_style: (->
+    "height: #{@get('scroll_distance')}px;"
+  ).property('scroll_distance')
 
-  is_checking: (->
-    @get('scroll_count') > 2
-  ).property('scroll_count')
-
-  check_for_new: (->
-    clearTimeout(@timeout)
-    Ember.run.debounce(@get('controller'), @get('controller').checkNew, 500, true) if @get('scroll_count') > 2
-    if @get('scroll_count') > 0
-      @timeout = setTimeout =>
-        @timeout = null
-        @set('scroll_count', 0)
-      , @TIMER_LENGTH
-  ).observes('scroll_count')
-
-  mouse_scrolled: (evt) ->
-    return if evt.deltaY < 0
-    return unless $(window).scrollTop() == 0
-    @set('scroll_count', @get('scroll_count') + 1)
+  max_distance: (->
+    @get('scroll_distance') >= @SCROLL_DISTANCE
+  ).property('scroll_distance')
 
   willDestroyElement: ->
     @_super()
@@ -34,8 +18,18 @@ Twitarr.BasePostsView = Ember.View.extend
 
   loading_observer: (->
     # this is needed to provide a closure over the correct this reference
-    mouse_proxy = (evt) =>
-      @mouse_scrolled(evt)
+    touch_end = =>
+      clearTimeout(@timeout)
+      if @get('scroll_distance') > @SCROLL_DISTANCE
+        Ember.run.debounce(@get('controller'), @get('controller').checkNew, 500, true)
+        @set('is_checking', true)
+      if @get('scroll_distance') > 0
+        @timeout = setTimeout =>
+          @set('is_checking', false)
+          @timeout = null
+          @set('scroll_distance', 0)
+        , @TIMER_LENGTH
+
     touch_move = (evt) =>
       return unless $(window).scrollTop() == 0
       if @loc == null
@@ -43,7 +37,7 @@ Twitarr.BasePostsView = Ember.View.extend
         return
       loc_diff = evt.originalEvent.changedTouches[0].screenY - @loc
       return unless loc_diff > 0
-      @set('scroll_count', Math.ceil(loc_diff / 100))
+      @set('scroll_distance', loc_diff)
       evt.preventDefault() #chrome for android does some really odd things when this is not called
     touch_start = (evt) =>
       if $(window).scrollTop() != 0
@@ -56,11 +50,10 @@ Twitarr.BasePostsView = Ember.View.extend
     else
       $(document).bind "touchmove", touch_move
       $(document).bind "touchstart", touch_start
-      $(window).on "mousewheel", mouse_proxy
+      $(document).bind "touchend", touch_end
   ).observes 'controller.loading'
 
   clearBindings: ->
-    $(window).off "mousewheel"
     $(document).unbind "touchmove"
     $(document).unbind "touchstart"
 

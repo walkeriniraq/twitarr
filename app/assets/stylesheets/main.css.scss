@@ -379,6 +379,23 @@ a:hover, a:focus {
   }
 }
 
+.scroll-display {
+  max-height: 100px;
+  background-color: #ddd;
+  position: relative;
+
+  .inner-scroll-display {
+    margin-left: 10%;
+    margin-right: 10%;
+    position: absolute;
+    text-align: center;
+    top: 40%;
+    width: 80%;
+    color: darkgreen;
+    font-weight: bold;
+  }
+}
+
 @-webkit-viewport   { width: device-width; }
 @-moz-viewport      { width: device-width; }
 @-ms-viewport       { width: device-width; }

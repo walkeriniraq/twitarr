@@ -1,11 +1,16 @@
-{{#if view.scroll_count}}
-  <div {{bind-attr class='view.display_scroll_class'}}></div>
-  <div style="text-align: center; color: darkgreen;">
-    {{#if view.is_checking}}
-      Checking for new posts
-    {{else}}
-      Keep scrolling
-    {{/if}}
+{{#if view.scroll_distance}}
+  <div class="scroll-display" {{bind-attr style="view.display_scroll_style"}}>
+    <div class="inner-scroll-display">
+      {{#if view.is_checking}}
+        Checking for new posts.
+      {{else}}
+        {{#if view.max_distance}}
+          Release to refresh.
+        {{else}}
+          Pull down to refresh.
+        {{/if}}
+      {{/if}}
+    </div>
   </div>
 {{/if}}
 <button class="btn btn-link pull-right" {{ action 'checkNew' }}>Check for new items</button>
