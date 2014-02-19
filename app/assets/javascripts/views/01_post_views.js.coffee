@@ -32,6 +32,7 @@ Twitarr.BasePostsView = Ember.View.extend
 
     touch_move = (evt) =>
       return unless $(window).scrollTop() == 0
+      return if $('.navbar-fixed-top .navbar-collapse').is(':visible')
       if @loc == null
         @loc = evt.originalEvent.changedTouches[0].screenY
         return
