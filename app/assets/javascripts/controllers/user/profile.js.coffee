@@ -1,4 +1,4 @@
-Twitarr.UserProfileController = Twitarr.Controller.extend
+Twitarr.UserProfileController = Twitarr.ObjectController.extend
   errors: []
   needs: 'application'
 

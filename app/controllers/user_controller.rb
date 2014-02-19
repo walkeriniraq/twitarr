@@ -120,7 +120,7 @@ class UserController < ApplicationController
     return render_json status: 'error', errors: user.errors.full_messages unless user.valid?
     current_user.display_name = params[:display_name]
     DisplayNameCache.set_display_name current_username, params[:display_name]
-    redis.user_store.save current_user, current_username
+    redis.user_store.save user, current_username
     render_json status: 'ok'
   end
 
