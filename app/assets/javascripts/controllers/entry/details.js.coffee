@@ -1,5 +1,6 @@
 Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetActionSupport,
   replying: false
+  reply_pending: false
 
   actions:
     preview: (photo) ->
@@ -23,10 +24,15 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
           @set 'model.liked_sentence', data.sentence
 
     make_post: ->
+      if @get('reply_pending')
+        alert "Reply currently being posted - please wait"
+        return
+      @set 'reply_pending', true
       text = @get 'text'
       return unless text.trim()
 
       Twitarr.Post.reply(text.trim(), @get('entry_id')).done (data) =>
+        @set 'reply_pending', false
         return alert(data.status) unless data.status is 'ok'
         @get('replies').addObject(Twitarr.Reply.create(data.reply))
         @set 'text', ''
