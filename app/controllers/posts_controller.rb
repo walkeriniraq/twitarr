@@ -3,6 +3,7 @@ require 'RMagick'
 class PostsController < ApplicationController
 
   def submit
+    return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
     return render_json status: 'Photo upload is limited to five per post' if params[:photos] && params[:photos].count > 5
     TwitarrDb.create_post current_username, params[:message], params[:photos]
@@ -10,6 +11,7 @@ class PostsController < ApplicationController
   end
 
   def delete
+    return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
     post = redis.post_store.get(params[:id])
     return render_json status: 'Posts can only be deleted by their owners.' unless post.username == current_username || is_admin?
@@ -23,12 +25,14 @@ class PostsController < ApplicationController
   end
 
   def reply
+    return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
     reply = TwitarrDb.add_post_reply current_username, params[:message], params[:id]
     render_json status: 'ok', reply: reply
   end
 
   def upload
+    return read_only_mode if Twitarr::Application.config.read_only
     return render_json status: 'Must provide photos to upload.' if params[:files].blank?
     files = params[:files].map { |file| process_upload file, redis }
     if browser.ie?
@@ -70,6 +74,7 @@ class PostsController < ApplicationController
   end
 
   def favorite
+    return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
     post = redis.post_store.get params[:id]
     context = LikePostContext.new post: post,
@@ -177,9 +182,9 @@ class PostsController < ApplicationController
   # this ugliness is because announcements are indexed with the time_offset included
   def get_announcements(index, from, to)
     if from < to
-      index.get(from - 5.days, to + 5.days, EntryListContext::PAGE_SIZE).select { |x| x.post_time > from && x.post_time < to }
+      index.get(from, to, EntryListContext::PAGE_SIZE).select { |x| x.post_time > from && x.post_time < to }
     else
-      index.get(from + 5.days, to - 5.days, EntryListContext::PAGE_SIZE).select { |x| x.post_time < from && x.post_time > to }
+      index.get(from, to, EntryListContext::PAGE_SIZE).select { |x| x.post_time < from && x.post_time > to }
     end
   end
 

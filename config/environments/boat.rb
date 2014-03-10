@@ -82,6 +82,9 @@ Twitarr::Application.configure do
       db: 5
   }
 
+  config.allow_new_users = false
+  config.read_only = true
+
   config.ember.variant = :production
 
 end

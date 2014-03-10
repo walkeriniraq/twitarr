@@ -18,6 +18,10 @@ class BaseRedisController < ActionController::Base
     render json: { status: 'Not logged in.' }
   end
 
+  def read_only_mode
+    render json: { status: 'Twit-arr is in storage (read-only) mode.' }
+  end
+
   def render_json(hash)
     render json: hash
   end

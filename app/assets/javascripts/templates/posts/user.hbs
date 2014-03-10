@@ -2,12 +2,14 @@
 <div>
   <h3>@{{user}}</h3>
   {{#if logged_in}}
-    <div style="margin-bottom: 0.8em;" >
-      <a href="#" {{ action 'message' user }}>
-        <span class="glyphicon glyphicon-send"></span>
-        Send Message
-      </a>
-    </div>
+    {{#unless read_only}}
+      <div style="margin-bottom: 0.8em;">
+        <a href="#" {{ action 'message' user }}>
+          <span class="glyphicon glyphicon-send"></span>
+          Send Message
+        </a>
+      </div>
+    {{/unless}}
   {{/if}}
 </div>
 {{ partial 'posts/list' }}

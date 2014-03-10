@@ -1,26 +1,28 @@
-<nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs" style="padding: 0 15px;">
-  <div class="navbar-center bottom-menu" style="max-width: 850px;">
+{{#unless read_only}}
+  <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs" style="padding: 0 15px;">
+    <div class="navbar-center bottom-menu" style="max-width: 850px;">
+      {{#if logged_in}}
+        {{#if login_admin}}
+          {{#link-to "create_announcement" classNames="btn btn-xs btn-default navbar-btn"}}Announcement{{/link-to}}
+        {{/if}}
+        <div class="pull-right">
+          {{#link-to "posts.new" classNames="btn btn-xs btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
+          {{#link-to "seamail.new" classNames="btn btn-xs btn-default navbar-btn"}}Seamail{{/link-to}}
+        </div>
+      {{else}}
+        <a href="/login" class="btn btn-xs btn-default navbar-btn pull-right">Login</a>
+      {{/if}}
+    </div>
+  </nav>
+  <nav class="navbar navbar-inverse navbar-fixed-bottom hidden-xs bottom-menu bottom-menu-rounded">
     {{#if logged_in}}
       {{#if login_admin}}
-        {{#link-to "create_announcement" classNames="btn btn-xs btn-default navbar-btn"}}Announcement{{/link-to}}
+        {{#link-to "create_announcement" classNames="btn btn-default navbar-btn margin-right-20"}}Announcement{{/link-to}}
       {{/if}}
-    <div class="pull-right">
-      {{#link-to "posts.new" classNames="btn btn-xs btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
-      {{#link-to "seamail.new" classNames="btn btn-xs btn-default navbar-btn"}}Seamail{{/link-to}}
-    </div>
+      {{#link-to "posts.new" classNames="btn btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
+      {{#link-to "seamail.new" classNames="btn btn-default navbar-btn"}}Seamail{{/link-to}}
     {{else}}
-      <a href="/login" class="btn btn-xs btn-default navbar-btn pull-right">Login</a>
+      <a href="/login" class="btn btn-default navbar-btn pull-right">Login</a>
     {{/if}}
-  </div>
-</nav>
-<nav class="navbar navbar-inverse navbar-fixed-bottom hidden-xs bottom-menu bottom-menu-rounded">
-  {{#if logged_in}}
-    {{#if login_admin}}
-      {{#link-to "create_announcement" classNames="btn btn-default navbar-btn margin-right-20"}}Announcement{{/link-to}}
-    {{/if}}
-    {{#link-to "posts.new" classNames="btn btn-default navbar-btn margin-right-20"}}Post{{/link-to}}
-    {{#link-to "seamail.new" classNames="btn btn-default navbar-btn"}}Seamail{{/link-to}}
-  {{else}}
-    <a href="/login" class="btn btn-default navbar-btn pull-right">Login</a>
-  {{/if}}
-</nav>
+  </nav>
+{{/unless}}

@@ -9,10 +9,12 @@
   {{#each mail in controller.seamail}}
     <div class='seamail-entry container'>
       {{ render "seamail/details" mail }}
-      <div class="pull-right btn btn-success btn-xs" {{action 'reply' mail}}>
-        <span class="glyphicon glyphicon-share-alt" style="margin-right: 5px;"></span>
-        Reply
-      </div>
+      {{#unless read_only}}
+        <div class="pull-right btn btn-success btn-xs" {{action 'reply' mail}}>
+          <span class="glyphicon glyphicon-share-alt" style="margin-right: 5px;"></span>
+          Reply
+        </div>
+      {{/unless}}
       <div class="pull-right btn btn-primary btn-xs margin-right-20" {{action 'archive' mail.seamail_id}}>
         <span class="glyphicon glyphicon-folder-close" style="margin-right: 5px;"></span>
         Archive

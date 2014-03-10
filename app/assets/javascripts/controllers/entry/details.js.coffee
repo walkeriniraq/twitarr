@@ -18,7 +18,7 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
     favorite: (id) ->
       return if @get('model.user_liked')
       Twitarr.Post.favorite(id).done (data) =>
-        return alert(data.status) unless data.status is 'ok'
+        return unless data.status is 'ok'
         Ember.run =>
           @set 'model.user_liked', true
           @set 'model.liked_sentence', data.sentence
@@ -33,7 +33,7 @@ Twitarr.EntryDetailsController = Twitarr.ObjectController.extend Ember.TargetAct
 
       Twitarr.Post.reply(text.trim(), @get('entry_id')).done (data) =>
         @set 'reply_pending', false
-        return alert(data.status) unless data.status is 'ok'
+        return unless data.status is 'ok'
         @get('replies').addObject(Twitarr.Reply.create(data.reply))
         @set 'text', ''
         @set 'replying', false

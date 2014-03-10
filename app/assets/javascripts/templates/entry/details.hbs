@@ -4,7 +4,7 @@
     @{{ unbound from }}
   {{/link-to}}
   <div class="pull-right post-time">
-    <span data-livestamp="{{unbound time}}" ></span>
+    <span data-livestamp="{{unbound time}}"></span>
   </div>
   <div class="post-text">{{ view Twitarr.ParsedTextView contentBinding="message" }}</div>
   <div class="text-center image-row">
@@ -18,20 +18,22 @@
       <div class="pull-left">{{liked_sentence}}</div>
     {{/if}}
     {{#if logged_in}}
-      <div class="pull-right">
-        {{#if can_like}}
-          <button type="button" class="btn btn-primary btn-xs like-button" {{ action 'favorite' entry_id }}>
-            <span class="glyphicon glyphicon-thumbs-up"></span>
-            like
-          </button>
-        {{/if}}
-        {{#if can_reply}}
-          <button type="button" class="btn btn-primary btn-xs" {{ action 'reply' }}>
-            <span class="glyphicon glyphicon-pencil"></span>
-            reply
-          </button>
-        {{/if}}
-      </div>
+      {{#unless read_only}}
+        <div class="pull-right">
+          {{#if can_like}}
+            <button type="button" class="btn btn-primary btn-xs like-button" {{ action 'favorite' entry_id }}>
+              <span class="glyphicon glyphicon-thumbs-up"></span>
+              like
+            </button>
+          {{/if}}
+          {{#if can_reply}}
+            <button type="button" class="btn btn-primary btn-xs" {{ action 'reply' }}>
+              <span class="glyphicon glyphicon-pencil"></span>
+              reply
+            </button>
+          {{/if}}
+        </div>
+      {{/unless}}
     {{/if}}
   </div>
   {{#each reply in replies}}
@@ -41,7 +43,7 @@
       {{/link-to}}
       {{ view Twitarr.ParsedTextView contentBinding="reply.message" }}
       <div class="pull-right post-time">
-        <span data-livestamp="{{unbound reply.timestamp}}" ></span>
+        <span data-livestamp="{{unbound reply.timestamp}}"></span>
       </div>
     </div>
   {{/each}}

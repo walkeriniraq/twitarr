@@ -24,6 +24,6 @@
 <% if Twitarr::Application.config.allow_new_users %>
   <h4><%= link_to 'I want to join!', user_new_path %></h4>
 <% else %>
-  <h3>New user creation has been temporarily disabled!</h3>
+  <h3>New user creation has been disabled.</h3>
 <% end %>
 <h4><%= link_to 'I forgot my daggone password!', user_forgot_password_path %></h4>

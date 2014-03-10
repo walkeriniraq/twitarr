@@ -68,12 +68,16 @@ class UserController < ApplicationController
       return render_json status: 'User account has been disabled.' if current_user.status != 'active' || current_user.password.nil?
       redis.user_store.save current_user.update_last_login, current_username
       puts "Successful login for user: #{current_username}"
-      return render_json status: 'ok', need_password_change: current_user.correct_password('seamonkey'), user: current_user.decorate.gui_hash
+      return render_json status: 'ok',
+                         user: current_user.decorate.gui_hash,
+                         need_password_change: current_user.correct_password('seamonkey'),
+                         is_read_only: Twitarr::Application.config.read_only
     end
     render_json status: 'logout'
   end
 
   def new
+    return read_only_mode if Twitarr::Application.config.read_only
     unless Twitarr::Application.config.allow_new_users
       render text: 'New user creation has been temporarily disabled!' and return
     end
@@ -112,6 +116,7 @@ class UserController < ApplicationController
   end
 
   def profile_save
+    return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
     user = current_user.dup
     user.display_name = params[:display_name]

@@ -1,6 +1,7 @@
 class SeamailController < ApplicationController
 
   def new
+    return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
     context = ValidateUserListContext.new list: params[:to],
                                           user_set: redis.users

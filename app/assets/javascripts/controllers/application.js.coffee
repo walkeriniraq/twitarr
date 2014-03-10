@@ -4,11 +4,14 @@ Twitarr.ApplicationController = Ember.Controller.extend
   email_count: 0
   posts_count: 0
   display_name: null
+  read_only: false
 
   init: ->
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         @login data.user
+        if data.is_read_only
+          @set 'read_only', true
         if data.need_password_change
           @transitionToRoute('user.change_password')
 
@@ -27,6 +30,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @tick()
 
   tick: ->
+    return if @get('read_only')
     $.ajax('user/update_status', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         @set('email_count', data.new_email)
