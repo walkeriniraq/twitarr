@@ -1,7 +1,7 @@
 twitarr
 =======
 
-Twit-arr is a micro-blogging site that is set up for the JoCo Cruise Crazy
+Twit-arr is a micro-blogging site that is set up for [JoCo Cruise Crazy](http://jococruisecrazy.com/)
 
 Description
 -----------
