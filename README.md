@@ -32,3 +32,5 @@ instance or you will get very angry controller exceptions.
 
 You will also need to generate your own secret token, because that should NEVER BE CHECKED IN TO SOURCE CONTROL. If you
 forget how, there's a secret_token_example file in the config/initializers folder that has instructions. (I always forget)
+You can also just run: `echo "Twitarr::Application.config.secret_key_base = '$(rake secret)'" > config/initializers/secret_token.rb` 
+in order to create a secret token
