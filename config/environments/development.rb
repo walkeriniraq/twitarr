@@ -25,9 +25,12 @@ Twitarr::Application.configure do
   config.assets.debug = true
 
   config.db = {
-      host: 'gremlin',
+      host: 'localhost',
       db: 4
   }
+
+  config.read_only = false
+  config.allow_new_users = true
 
   config.ember.variant = :development
 
