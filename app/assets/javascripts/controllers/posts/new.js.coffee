@@ -24,6 +24,8 @@ Twitarr.PostsNewController = Twitarr.Controller.extend
 
     photo_delete: (photo) ->
       @photos.removeObject(photo)
+      data = photo.getProperties('full', 'thumb', 'medium')
+      Twitarr.Photo.delete_photo(data.full, data.thumb, data.medium)
 
   addPhoto: (photo) ->
     @photos.addObject photo
