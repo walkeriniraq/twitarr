@@ -13,6 +13,7 @@ Twitarr::Application.routes.draw do
   get 'posts/all'
   post 'posts/reply'
   post 'posts/upload'
+  post 'posts/delete_upload'
   get 'posts/tag_autocomplete'
   get 'posts/tag_cloud'
 
