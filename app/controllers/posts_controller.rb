@@ -73,21 +73,6 @@ class PostsController < ApplicationController
     return { status: 'file extension is jpg but was not a jpeg', filename: file.original_filename }
   end
 
-  def delete_upload # Maybe this should be moved to the photo controller?
-    begin
-      location = Rails.root + '/public/' # The address ember photos return is something along the lines of "img/photos/[hash].jpg"
-      full = params[:full]
-      medium = params[:medium]
-      thumb = params[:thumb]
-      File.delete(location + full) if File.exist?(location + full)
-      File.delete(location + medium) if File.exist?(location + medium)
-      File.delete(location + thumb) if File.exist?(location + thumb)
-      render_json status: 'success' 
-    rescue Exception => e
-      render_json status: 'failure', message: e.to_s 
-    end
-  end
-
   def favorite
     return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
