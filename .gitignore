@@ -5,7 +5,7 @@
 /log/*.log
 /tmp
 
-/config/initializers/secret_token.rb
+/config/application.yml
 
 /public/img/photos/*
 
