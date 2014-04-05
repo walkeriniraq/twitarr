@@ -25,8 +25,8 @@ Twitarr::Application.configure do
   config.assets.debug = true
 
   config.db = {
-      host: 'localhost',
-      db: 4
+    host: APP_CONFIG["DATABASE"][Rails.env]["HOST"],
+    db: APP_CONFIG["DATABASE"][Rails.env]["DB"]
   }
 
   config.read_only = false

@@ -79,7 +79,8 @@ Twitarr::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.db = {
-      db: 5
+    host: APP_CONFIG["DATABASE"][Rails.env]["HOST"],
+    db: APP_CONFIG["DATABASE"][Rails.env]["DB"]
   }
 
   config.allow_new_users = false
