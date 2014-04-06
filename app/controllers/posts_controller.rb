@@ -77,15 +77,17 @@ class PostsController < ApplicationController
     begin
       location = Rails.root + '/public/' # The address ember photos return is something along the lines of "img/photos/[hash].jpg"
 
+      file = CGI.escape(params[:file].to_s) # Without to_s, CGI.Escape fails.
       full = CGI.escape(params[:full].to_s)
       medium = CGI.escape(params[:medium].to_s)
       thumb = CGI.escape(params[:thumb].to_s)
       File.delete(location + full) if File.exist?(location + full)
       File.delete(location + medium) if File.exist?(location + medium)
       File.delete(location + thumb) if File.exist?(location + thumb)
+      redis.photo_metadata_store.delete(file)
       render_json status: 'success'
-    rescue Exception => e
-      render_json status: :internal_server_error, message: e.to_s 
+    rescue Exception => e # Needs to be fixed to be more specific. I feel bad doing a root exception.
+      render_json status: :internal_server_error, error: e.to_s
     end
   end
 
