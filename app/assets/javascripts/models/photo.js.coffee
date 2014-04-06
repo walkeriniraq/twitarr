@@ -13,5 +13,5 @@ Twitarr.Photo.reopenClass
     photo.medium = "img/photos/md_#{filename}"
     photo
     
-  delete: (full, thumb, medium, file) ->
-    $.post("posts/delete_upload", { full: full, thumb: thumb, medium: medium, file: file } )
+  delete: (file) ->
+    $.post("posts/delete_upload", { file: file } )

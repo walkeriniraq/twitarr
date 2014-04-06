@@ -75,13 +75,12 @@ class PostsController < ApplicationController
 
   def delete_upload
     begin
-      location = Rails.root + '/public/' # The address ember photos return is something along the lines of "img/photos/[hash].jpg"
+      location = Rails.root + '/public/img/photos/' # The address ember photos return is something along the lines of "img/photos/[hash].jpg"
 
       file = CGI.escape(params[:file].to_s) # Without to_s, CGI.Escape fails.
-      full = CGI.escape(params[:full].to_s)
-      medium = CGI.escape(params[:medium].to_s)
-      thumb = CGI.escape(params[:thumb].to_s)
-      File.delete(location + full) if File.exist?(location + full)
+      medium = "md_" + file
+      thumb = "sm_" + file
+      File.delete(location + file) if File.exist?(location + file)
       File.delete(location + medium) if File.exist?(location + medium)
       File.delete(location + thumb) if File.exist?(location + thumb)
       redis.photo_metadata_store.delete(file)
