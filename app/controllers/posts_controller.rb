@@ -73,18 +73,19 @@ class PostsController < ApplicationController
     return { status: 'file extension is jpg but was not a jpeg', filename: file.original_filename }
   end
 
-  def delete_upload # Maybe this should be moved to the photo controller?
+  def delete_upload
     begin
       location = Rails.root + '/public/' # The address ember photos return is something along the lines of "img/photos/[hash].jpg"
-      full = params[:full]
-      medium = params[:medium]
-      thumb = params[:thumb]
+
+      full = CGI.escape(params[:full].to_s)
+      medium = CGI.escape(params[:medium].to_s)
+      thumb = CGI.escape(params[:thumb].to_s)
       File.delete(location + full) if File.exist?(location + full)
       File.delete(location + medium) if File.exist?(location + medium)
       File.delete(location + thumb) if File.exist?(location + thumb)
-      render_json status: 'success' 
+      render_json status: 'success'
     rescue Exception => e
-      render_json status: 'failure', message: e.to_s 
+      render_json status: :internal_server_error, message: e.to_s 
     end
   end
 
