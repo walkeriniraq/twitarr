@@ -73,6 +73,23 @@ class PostsController < ApplicationController
     return { status: 'file extension is jpg but was not a jpeg', filename: file.original_filename }
   end
 
+  def delete_upload
+    begin
+      location = Rails.root + '/public/img/photos/' # The address ember photos return is something along the lines of "img/photos/[hash].jpg"
+
+      file = CGI.escape(params[:file].to_s) # Without to_s, CGI.Escape fails.
+      medium = "md_" + file
+      thumb = "sm_" + file
+      File.delete(location + file) if File.exist?(location + file)
+      File.delete(location + medium) if File.exist?(location + medium)
+      File.delete(location + thumb) if File.exist?(location + thumb)
+      redis.photo_metadata_store.delete(file)
+      render_json status: 'success'
+    rescue Exception => e # Needs to be fixed to be more specific. I feel bad doing a root exception.
+      render_json status: :internal_server_error, error: e.to_s
+    end
+  end
+
   def favorite
     return read_only_mode if Twitarr::Application.config.read_only
     return login_required unless logged_in?
