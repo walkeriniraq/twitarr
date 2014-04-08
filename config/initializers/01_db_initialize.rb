@@ -101,11 +101,3 @@ class Redis
   end
 
 end
-
-class Redis
-  class SortedSet
-    def unionstore(name, sets, opts = {})
-      redis.zunionstore(name, keys_from_objects([self] + sets), opts)
-    end
-  end
-end
