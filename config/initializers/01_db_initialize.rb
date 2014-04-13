@@ -100,4 +100,8 @@ class Redis
     RedisHashObjectStore.new redis_hash('photo_metadata:store'), PhotoMetadata
   end
 
+  def photo_metadata_index
+    RedisObjectIndex.new self, PhotoMetadata, PhotoMetadata.attr
+  end
+
 end

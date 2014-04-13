@@ -36,6 +36,7 @@ Twitarr::Application.configure do
 
   config.db = {
     host: APP_CONFIG["DATABASE"][Rails.env]["HOST"],
+    port: APP_CONFIG["DATABASE"][Rails.env]["PORT"],
     db: APP_CONFIG["DATABASE"][Rails.env]["DB"]
   }
 
