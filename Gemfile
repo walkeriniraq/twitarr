@@ -39,6 +39,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'pry-rails', :group => :development
+
 group :test do
   gem 'minitest-spec-rails'
   gem 'turn'

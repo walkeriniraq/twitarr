@@ -2,13 +2,17 @@ SECRET_TOKEN: 'SOME_super_SECRET_token_GOES_here'
 DATABASE:
     development:
         HOST: 'localhost'
+        PORT: 6379
         DB: 4
     boat:
         HOST: 'localhost'
+        PORT: 6379
         DB: 5
     production:
         HOST: 'localhost'
+        PORT: 6379
         DB: 4
     test:
         HOST: 'localhost'
+        PORT: 6379
         DB: 15
