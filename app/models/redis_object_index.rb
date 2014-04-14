@@ -20,7 +20,7 @@ class RedisObjectIndex
     obj_key = "#{obj.class.to_s}:index|#{id}"
     db.multi do
       fields_to_index.each { |field|
-        db.hset obj_key, field, obj[field]
+        db.hset obj_key, field, obj.send(field)
       }
     end
   end
