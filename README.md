@@ -26,13 +26,11 @@ mobile environment - Android 2.3 devices in particular were incredibly slow.
 Setup
 -----
 
-In order to get this codebase running, you will need a Redis instance. Redis has the single best installation instructions
-ever, and they are [here](http://redis.io/topics/quickstart). Don't forget to point your development config at your Redis
-instance or you will get very angry controller exceptions.
+Mongo
 
-You will need to make the config/application.yml file. 
-There's already an example with some good defaults in config/application_example.yml, you just change the secret_token. You
-can generate one using the command "rake secret".
+You will need to make the config/application.yml and config/mongoid.yml files.
+There's already an example with some good defaults in config/*_example.yml, you just values for your isntance. You
+can generate a rails secret token using the command "rake secret".
 
 This was originally compatible in both MRI and JRuby - in theory it still is although it might require a little effort to
 get the image gems working in both. Anyone who wants to put in the effort is welcome to.

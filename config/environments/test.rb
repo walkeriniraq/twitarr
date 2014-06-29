@@ -34,10 +34,4 @@ Twitarr::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  config.db = {
-    host: APP_CONFIG["DATABASE"][Rails.env]["HOST"],
-    port: APP_CONFIG["DATABASE"][Rails.env]["PORT"],
-    db: APP_CONFIG["DATABASE"][Rails.env]["DB"]
-  }
-
 end

@@ -12,9 +12,9 @@ require "rails/test_unit/railtie"
 Bundler.require(:default, Rails.env)
 
 # this is here because intellij doesn't recognize fattr for some reason
-class Module
-  alias_method :attr, :fattr
-end
+# class Module
+#   alias_method :attr, :fattr
+# end
 
 module Twitarr
   class Application < Rails::Application
