@@ -34,7 +34,7 @@ Twitarr::Application.routes.draw do
   # post 'user/forgot_password', to: 'user#security_question'
   # post 'user/security_answer'
   # get 'user/logout'
-  # get 'user/username'
+  get 'user/username'
   # post 'user/change_password'
   # get 'user/autocomplete'
   # get 'user/profile'

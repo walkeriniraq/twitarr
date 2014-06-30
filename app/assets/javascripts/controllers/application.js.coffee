@@ -1,20 +1,20 @@
-Twitarr.ApplicationController = Ember.Controller.extend()
-#  login_user: null
-#  login_admin: false
-#  email_count: 0
-#  posts_count: 0
-#  display_name: null
-#  read_only: false
-#
-#  init: ->
-#    $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
-#      if data.status is 'ok'
-#        @login data.user
+Twitarr.ApplicationController = Ember.Controller.extend
+  login_user: null
+  login_admin: false
+  email_count: 0
+  posts_count: 0
+  display_name: null
+  read_only: false
+
+  init: ->
+    $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
+      if data.status is 'ok'
+        @login data.user
 #        if data.is_read_only
 #          @set 'read_only', true
-#        if data.need_password_change
-#          @transitionToRoute('user.change_password')
-#
+        if data.need_password_change
+          @transitionToRoute('user.change_password')
+
 #  new_email: (->
 #    @get('logged_in') && @get('email_count') > 0
 #  ).property('logged_in', 'email_count')

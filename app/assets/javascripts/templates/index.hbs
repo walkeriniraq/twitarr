@@ -1,1 +1,5 @@
-HI
+{{#unless logged_in}}
+  Not logged in.
+{{else}}
+  Hello {{ username_pretty }}!
+{{/unless}}
