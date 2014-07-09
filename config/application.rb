@@ -36,5 +36,6 @@ module Twitarr
 
     config.allow_new_users = true
 
+    config.action_dispatch.perform_deep_munge = false
   end
 end
