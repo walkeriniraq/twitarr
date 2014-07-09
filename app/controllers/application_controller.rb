@@ -24,9 +24,9 @@ class ApplicationController < BaseRedisController
     session[:username]
   end
 
-  # def current_user
-  #   @user ||= redis.user_store.get(current_username)
-  # end
+  def current_user
+    @user ||= User.where(username: current_username).first
+  end
 
   def login_user(user)
     session[:username] = user.username

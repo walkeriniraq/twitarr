@@ -22,13 +22,13 @@ Twitarr.ApplicationController = Ember.Controller.extend
 #  new_posts: (->
 #    @get('logged_in') && @get('posts_count') > 0
 #  ).property('logged_in', 'posts_count')
-#
-#  login: (user) ->
-#    @set 'login_user', user.username
-#    @set 'login_admin', user.is_admin
-#    @set 'display_name', user.display_name
+
+  login: (user) ->
+    @set 'login_user', user.username
+    @set 'login_admin', user.is_admin
+    @set 'display_name', user.display_name
 #    @tick()
-#
+
 #  tick: ->
 #    return if @get('read_only')
 #    $.ajax('user/update_status', dataType: 'json', cache: false).done (data) =>
@@ -36,11 +36,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
 #        @set('email_count', data.new_email)
 #        @set('posts_count', data.new_posts)
 #        @timer = setTimeout (=> @tick()), 300000
-#
-#  username_pretty: (->
-#    @get('display_name') || @get('login_user')
-#  ).property('login_user', 'display_name')
-#
+
 #  logged_in: (->
 #    @get('login_user')?
 #  ).property('login_user')

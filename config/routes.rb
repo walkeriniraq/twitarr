@@ -1,6 +1,12 @@
 Twitarr::Application.routes.draw do
   root 'home#index'
 
+  get 'login', to: 'user#login_page'
+  post 'login', to: 'user#login'
+  get 'user/new', to: 'user#create_user'
+  get 'user/username'
+  get 'user/forgot_password'
+
   # post 'announcements/submit'
   # post 'announcements/delete'
   #
@@ -25,16 +31,11 @@ Twitarr::Application.routes.draw do
   # post 'seamail/unarchive'
   #
   # get 'help', to: 'home#help'
-  #
-  # get 'login', to: 'user#login_page'
-  # post 'login', to: 'user#login'
-  # get 'user/new', to: 'user#create_user'
+
   # post 'user/new'
-  # get 'user/forgot_password'
   # post 'user/forgot_password', to: 'user#security_question'
   # post 'user/security_answer'
   # get 'user/logout'
-  get 'user/username'
   # post 'user/change_password'
   # get 'user/autocomplete'
   # get 'user/profile'

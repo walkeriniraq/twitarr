@@ -1,5 +1,5 @@
 {{#unless logged_in}}
-  Not logged in.
+  Not logged in. <a href="/login">Login.</a>
 {{else}}
-  Hello {{ username_pretty }}!
+  Hello {{ controllers.application.display_name }}!
 {{/unless}}
