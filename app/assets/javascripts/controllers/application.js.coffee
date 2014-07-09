@@ -29,6 +29,11 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @set 'display_name', user.display_name
 #    @tick()
 
+  logout: ->
+    @set 'login_user', null
+    @set 'login_admin', false
+    @set 'display_name', null
+
 #  tick: ->
 #    return if @get('read_only')
 #    $.ajax('user/update_status', dataType: 'json', cache: false).done (data) =>
@@ -37,10 +42,10 @@ Twitarr.ApplicationController = Ember.Controller.extend
 #        @set('posts_count', data.new_posts)
 #        @timer = setTimeout (=> @tick()), 300000
 
-#  logged_in: (->
-#    @get('login_user')?
-#  ).property('login_user')
-#
+  logged_in: (->
+    @get('login_user')?
+  ).property('login_user')
+
 #  new_email_class: (->
 #    if @get('new_email')
 #      'new-email-border'
@@ -67,13 +72,3 @@ Twitarr.ApplicationController = Ember.Controller.extend
 #    return true if path is 'posts.tag'
 #    return true if path is 'search'
 #    false
-#
-#  actions:
-#    logout: ->
-#      clearTimeout(@timer)
-#      $.getJSON('user/logout').done (data) =>
-#        if data.status is 'ok'
-#          @set 'login_user', null
-#          @set 'login_admin', false
-#          @set 'display_name', null
-#          @transitionToRoute 'posts.all' unless @is_all_users_path(@get('currentPath'))

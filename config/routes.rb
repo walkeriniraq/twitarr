@@ -6,6 +6,7 @@ Twitarr::Application.routes.draw do
   get 'user/new', to: 'user#create_user'
   get 'user/username'
   get 'user/forgot_password'
+  get 'user/logout'
 
   # post 'announcements/submit'
   # post 'announcements/delete'
@@ -35,7 +36,6 @@ Twitarr::Application.routes.draw do
   # post 'user/new'
   # post 'user/forgot_password', to: 'user#security_question'
   # post 'user/security_answer'
-  # get 'user/logout'
   # post 'user/change_password'
   # get 'user/autocomplete'
   # get 'user/profile'
