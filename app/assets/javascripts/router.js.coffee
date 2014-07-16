@@ -1,6 +1,8 @@
 Twitarr.Router.map ()->
+  @route 'seamail'
+  @route 'forums'
 #  @route 'start'
-  @route 'create_announcement'
+#  @route 'create_announcement'
 #  @resource 'user', ->
 #    @route 'change_password'
 #    @route 'profile'

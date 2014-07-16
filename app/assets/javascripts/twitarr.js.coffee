@@ -22,29 +22,26 @@ Twitarr.ControllerMixin = Ember.Mixin.create
   login_admin: (->
     @get('controllers.application.login_admin')
   ).property('controllers.application.login_admin')
-  login_admin: (->
-    @get('controllers.application.login_admin')
-  ).property('controllers.application.login_admin')
 
 Twitarr.ArrayController = Ember.ArrayController.extend Twitarr.ControllerMixin
 Twitarr.Controller = Ember.Controller.extend Twitarr.ControllerMixin
 Twitarr.ObjectController = Ember.ObjectController.extend Twitarr.ControllerMixin
 
-Ember.TextField = Ember.TextField.extend
-  classNames: ['form-control']
-  attributeBindings: ['autocomplete']
-
-Twitarr.DefaultTextField = Ember.TextField.extend
-  becomeFocused: (->
-    @$().focus()
-  ).on('didInsertElement')
-
-Twitarr.DefaultTextArea = Ember.TextArea.extend
-  becomeFocused: (->
-    @$().focus()
-  ).on('didInsertElement')
-
-Twitarr.ModalDialogComponent = Ember.Component.extend
-  actions:
-    close: ->
-      @sendAction()
+#Ember.TextField = Ember.TextField.extend
+#  classNames: ['form-control']
+#  attributeBindings: ['autocomplete']
+#
+#Twitarr.DefaultTextField = Ember.TextField.extend
+#  becomeFocused: (->
+#    @$().focus()
+#  ).on('didInsertElement')
+#
+#Twitarr.DefaultTextArea = Ember.TextArea.extend
+#  becomeFocused: (->
+#    @$().focus()
+#  ).on('didInsertElement')
+#
+#Twitarr.ModalDialogComponent = Ember.Component.extend
+#  actions:
+#    close: ->
+#      @sendAction()

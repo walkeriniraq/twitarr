@@ -15,15 +15,15 @@ h1, h2, h3 {
   margin-top: 10px;
 }
 
-.like-button {
-  margin-right: 10px;
-}
-
 @media (max-width: 767px) and (min-width: 480px) {
   .form-group {
     padding-left: 10px;
     padding-right: 10px;
   }
+}
+
+.navbar {
+  min-height: 35px;
 }
 
 .navbar .nav > li > a.active, .navbar .nav > li > a.active:hover, .navbar .nav > li > a.active:focus {
@@ -61,6 +61,11 @@ a:hover, a:focus {
   margin-right: inherit;
 }
 
+//  OTHER STYLES
+.like-button {
+  margin-right: 10px;
+}
+
 .row {
   margin-right: 0px;
   margin-left: 0px;
@@ -74,7 +79,6 @@ a:hover, a:focus {
   }
 }
 
-//  OTHER STYLES
 @media (min-width: 767px) {
   .post-autocomplete {
     position: absolute;
@@ -251,10 +255,6 @@ a:hover, a:focus {
   }
 }
 
-.navbar {
-  min-height: 35px;
-}
-
 .post-time {
   color: darkgray;
 }
@@ -410,11 +410,9 @@ a:hover, a:focus {
 @-ms-viewport {
   width: device-width;
 }
-
 @-o-viewport {
   width: device-width;
 }
-
 @viewport {
   width: device-width;
 }
