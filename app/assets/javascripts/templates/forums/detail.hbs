@@ -1,1 +1,6 @@
 FORUM DETAIL
+{{#each post in posts}}
+  <div>
+    {{post.author}} {{post.text}} {{post.date}}
+  </div>
+{{/each}}

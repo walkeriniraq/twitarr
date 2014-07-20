@@ -9,6 +9,7 @@ Twitarr::Application.routes.draw do
   get 'user/logout'
 
   get 'forum_topics', to: 'forums#index'
+  get 'forums/:id', to: 'forums#show'
 
   # get 'seamail', to: redirect('/#/seamail')
   # get 'forums', to: redirect('/#/forums')

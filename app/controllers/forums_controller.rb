@@ -12,4 +12,22 @@ class ForumsController < ApplicationController
                                }]
   end
 
+  def show
+    render_json forum: {
+        id: params[:id],
+        subject: 'hi',
+        posts: [
+            {
+                author: 'steve',
+                text: 'some text',
+                date: DateTime.now
+            }, {
+                author: 'dave',
+                text: 'more text',
+                date: DateTime.now
+            }
+        ]
+    }
+  end
+
 end
