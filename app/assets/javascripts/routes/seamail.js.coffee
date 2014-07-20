@@ -15,3 +15,7 @@
 #    params
 #  setupController: (controller) ->
 #    controller.reload()
+
+Twitarr.SeamailIndexRoute = Ember.Route.extend
+  redirect: ->
+    @transitionTo 'seamail.page', 1

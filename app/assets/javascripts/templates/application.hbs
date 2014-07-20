@@ -1,4 +1,18 @@
 <div class='main'>
+  {{#unless logged_in}}
+    Not logged in. <a href="/login">Login.</a>
+  {{else}}
+    Hello {{ display_name }}! <a tabindex='-1' href='#' {{ action logout }}>Logout</a>
+    <div>
+      {{#link-to "seamail"}}Seamail{{/link-to}}
+    </div>
+  {{/unless}}
+  <div>
+    {{#link-to "forums"}}Forums{{/link-to}}
+  </div>
+  <div>
+    {{#link-to "posts"}}Posts{{/link-to}}
+  </div>
   {{ outlet }}
   {{ outlet modal }}
 </div>

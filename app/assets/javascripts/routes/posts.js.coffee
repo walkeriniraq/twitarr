@@ -25,3 +25,7 @@
 #    else
 #      controller.set 'user', params.user
 #    @_super(controller, params)
+
+Twitarr.PostsIndexRoute = Ember.Route.extend
+  redirect: ->
+    @transitionTo 'posts.page', 1
