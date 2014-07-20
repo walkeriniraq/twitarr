@@ -14,6 +14,10 @@ Twitarr.ApplicationController = Ember.Controller.extend
 #          @set 'read_only', true
         if data.need_password_change
           @transitionToRoute('user.change_password')
+    # this reloads the page once per day - may solve some javascript issues
+    Ember.run.later ->
+      window.location.reload()
+    , 1000 * 60 * 60 * 24
 
 #  new_email: (->
 #    @get('logged_in') && @get('email_count') > 0

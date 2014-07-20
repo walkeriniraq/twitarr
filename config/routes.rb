@@ -8,8 +8,8 @@ Twitarr::Application.routes.draw do
   get 'user/forgot_password'
   get 'user/logout'
 
-  get 'seamail', to: redirect('/#/seamail')
-  get 'forums', to: redirect('/#/forums')
+  # get 'seamail', to: redirect('/#/seamail')
+  # get 'forums', to: redirect('/#/forums')
 
   # post 'announcements/submit'
   # post 'announcements/delete'

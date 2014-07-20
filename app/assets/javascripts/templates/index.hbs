@@ -3,9 +3,9 @@
 {{else}}
   Hello {{ controllers.application.display_name }}! <a tabindex='-1' href='#' {{ action logout }}>Logout</a>
   <div>
-    <a href="/seamail">Seamail</a>
+    {{#link-to "seamail"}}Seamail{{/link-to}}
   </div>
 {{/unless}}
 <div>
-  <a href="/forums">Forums</a>
+  {{#link-to "forums"}}Forums{{/link-to}}
 </div>
