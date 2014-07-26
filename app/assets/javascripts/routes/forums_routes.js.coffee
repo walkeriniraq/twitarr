@@ -1,6 +1,6 @@
 Twitarr.ForumsIndexRoute = Ember.Route.extend
   model: ->
-    Twitarr.ForumTopic.list()
+    Twitarr.ForumMeta.list()
 
   actions:
     reload: ->

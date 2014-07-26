@@ -1,3 +1,15 @@
+Twitarr.ForumMeta = Ember.Object.extend
+  id: null
+  subject: null
+  posts: 0
+  timestamp: null
+
+Twitarr.ForumMeta.reopenClass
+  list: ->
+    $.getJSON('forums').then (data) =>
+      topics = Ember.A()
+      topics.pushObject(@create(topic)) for topic in data.forum_topics
+
 Twitarr.Forum = Ember.Object.extend
   id: null
   subject: null
@@ -13,4 +25,10 @@ Twitarr.Forum.reopenClass
       @create(data.forum)
 
   new_post: (forum_id, text) ->
-    $.post('forum_posts', { forum_id: forum_id, text: text })
+    $.post('forums', { forum_id: forum_id, text: text })
+
+Twitarr.ForumPost = Ember.Object.extend
+  id: null
+  author: null
+  text: null
+  timestamp: null

@@ -8,9 +8,7 @@ Twitarr::Application.routes.draw do
   get 'user/forgot_password'
   get 'user/logout'
 
-  get 'forum_topics', to: 'forums#index'
-  get 'forums/:id', to: 'forums#show'
-  post 'forum_posts', to: 'forums#new'
+  resources :forums, except: [:destroy, :edit, :new]
 
   # get 'seamail', to: redirect('/#/seamail')
   # get 'forums', to: redirect('/#/forums')

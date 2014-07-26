@@ -7,10 +7,5 @@ Twitarr.ForumsDetailController = Twitarr.ObjectController.extend
         @set('new_post', '')
         @get('posts').pushObject(Twitarr.ForumPost.create(data.forum_post))
       , ->
-        alert 'post could not be saved!'
+        alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
-#      post = @store.createRecord 'forum_post', {
-#        author: @get('login_user')
-#        text: @get('new_post')
-#        timestamp: new Date()
-#      }
