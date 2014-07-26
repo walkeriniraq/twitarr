@@ -22,7 +22,7 @@ gem 'jbuilder'
 gem 'mongoid', github: 'walkeriniraq/mongoid'
 
 gem 'ember-rails'
-gem 'ember-source', '~> 1.5.0'
+gem 'ember-source'
 
 gem 'tzinfo-data'
 

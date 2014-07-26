@@ -10,6 +10,7 @@ Twitarr::Application.routes.draw do
 
   get 'forum_topics', to: 'forums#index'
   get 'forums/:id', to: 'forums#show'
+  post 'forum_posts', to: 'forums#new'
 
   # get 'seamail', to: redirect('/#/seamail')
   # get 'forums', to: redirect('/#/forums')

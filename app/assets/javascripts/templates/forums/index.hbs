@@ -1,6 +1,8 @@
 FORUMS PAGE
 {{#each}}
   <div>
-    {{#link-to 'forums.detail' id}}{{subject}}{{/link-to}} posts: {{posts}}
+    {{#link-to 'forums.detail' id}}{{subject}}{{/link-to}} posts: {{posts}} last post: {{timestamp}}
   </div>
 {{/each}}
+
+<button {{action 'reload'}}>Refresh</button>
