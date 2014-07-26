@@ -35,9 +35,9 @@ class ForumsController < ApplicationController
   end
 
   def new
-    puts params[:forum_post]
-    response = params[:forum_post].dup
-    response[:id] = 123
+    puts params[:forum_id]
+    puts params[:text]
+    response = { id: 123, text: params[:text], author: current_username, timestamp: DateTime.now }
     render_json forum_post: response
   end
 
