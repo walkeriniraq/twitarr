@@ -17,5 +17,20 @@
 #    controller.reload()
 
 Twitarr.SeamailIndexRoute = Ember.Route.extend
-  redirect: ->
-    @transitionTo 'seamail.page', 1
+  model: ->
+    Twitarr.SeamailMeta.list()
+
+  actions:
+    reload: ->
+      @refresh()
+
+Twitarr.SeamailDetailRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.Seamail.get params.id
+
+  setupController: (controller, model) ->
+    @_super(controller, model)
+
+  actions:
+    reload: ->
+      @refresh()

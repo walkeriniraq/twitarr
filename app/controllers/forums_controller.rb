@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
 
   def index
-    render_json forum_topics: [{
+    render_json forum_meta: [{
                                    id: 1,
                                    subject: 'subject a',
                                    posts: 3,

@@ -1,7 +1,6 @@
 Twitarr.Router.map ()->
   @resource 'seamail', ->
-    @route 'page', { path: ':page' }
-    @route 'detail', { path: 'detail/:id' }
+    @route 'detail', { path: ':id' }
 
   @resource 'forums', ->
     @route 'detail', { path: ':id' }

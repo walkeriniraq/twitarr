@@ -1,1 +1,14 @@
 SEAMAIL DETAIL
+{{#each message in messages}}
+  <div>
+    {{message.author}} {{message.text}} {{message.timestamp}}
+  </div>
+{{/each}}
+
+<div>
+  {{textarea value=new_message rows="5"}}
+</div>
+
+<button {{action 'new'}}>Send</button>
+<br />
+<button {{action 'reload'}}>Refresh</button>

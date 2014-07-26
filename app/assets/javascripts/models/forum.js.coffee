@@ -8,7 +8,7 @@ Twitarr.ForumMeta.reopenClass
   list: ->
     $.getJSON('forums').then (data) =>
       topics = Ember.A()
-      topics.pushObject(@create(topic)) for topic in data.forum_topics
+      topics.pushObject(@create(meta)) for meta in data.forum_meta
 
 Twitarr.Forum = Ember.Object.extend
   id: null

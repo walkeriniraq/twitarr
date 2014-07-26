@@ -9,6 +9,7 @@ Twitarr::Application.routes.draw do
   get 'user/logout'
 
   resources :forums, except: [:destroy, :edit, :new]
+  resources :seamail, except: [:destroy, :edit, :new]
 
   # get 'seamail', to: redirect('/#/seamail')
   # get 'forums', to: redirect('/#/forums')

@@ -1,0 +1,8 @@
+SEAMAIL INDEX
+{{#each}}
+  <div>
+    {{#link-to 'seamail.detail' id}}{{users_display}}{{/link-to}} messages: {{messages}} last message: {{timestamp}}
+  </div>
+{{/each}}
+
+<button {{action 'reload'}}>Refresh</button>
