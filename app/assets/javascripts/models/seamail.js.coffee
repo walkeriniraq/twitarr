@@ -28,7 +28,12 @@ Twitarr.Seamail.reopenClass
       @create(data.seamail)
 
   new_message: (seamail_id, text) ->
-    $.post('seamail', { seamail_id: seamail_id, text: text })
+    $.post('seamail/new_message', { seamail_id: seamail_id, text: text }).then (data) =>
+      Twitarr.SeamailMessage.create(data.seamail_message)
+
+  new_seamail: (users, text) ->
+    $.post('seamail', { users: users, text: text }).then (data) =>
+      Twitarr.SeamailMeta.create(data.seamail_meta)
 
 Twitarr.SeamailMessage = Ember.Object.extend
   id: null

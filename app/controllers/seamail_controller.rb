@@ -1,5 +1,31 @@
 class SeamailController < ApplicationController
 
+  def index
+    render_json seamail_meta: Seamail.where(users: current_username).map { |x| x.decorate.to_meta_hash }
+  end
+
+  def show
+    render_json seamail: Seamail.find(params[:id]).decorate.to_hash
+  end
+
+  def create
+    seamail = Seamail.new(users: params[:users])
+    message = seamail.seamail_messages.new(author: current_username, text: params[:text], timestamp: Time.now)
+    seamail.last_message = message.timestamp
+    message.save
+    seamail.save
+    render_json seamail: seamail.decorate.to_meta_hash
+  end
+
+  def new_message
+    seamail = Seamail.find(params[:seamail_id])
+    message = seamail.seamail_messages.new(author: current_username, text: params[:text], timestamp: Time.now)
+    seamail.last_message = message.timestamp
+    message.save
+    seamail.save
+    render_json seamail_message: message.decorate.to_hash
+  end
+
   # def new
   #   return read_only_mode if Twitarr::Application.config.read_only
   #   return login_required unless logged_in?
@@ -53,47 +79,5 @@ class SeamailController < ApplicationController
   #   context.call
   #   render_json status: 'ok'
   # end
-
-  def index
-    render_json seamail_meta: [{
-                                   id: 1,
-                                   users: %w(steve dave),
-                                   messages: 3,
-                                   timestamp: DateTime.now
-                               }, {
-                                   id: 2,
-                                   users: %w(alfred william),
-                                   messages: 123,
-                                   timestamp: DateTime.now
-                               }]
-  end
-
-  def show
-    render_json seamail: {
-        id: params[:id],
-        users: %w(steve dave),
-        messages: [
-            {
-                id: 1,
-                author: 'steve',
-                text: 'some text',
-                timestamp: DateTime.now
-            }, {
-                id: 2,
-                author: 'dave',
-                text: 'more text',
-                timestamp: DateTime.now
-            }
-        ]
-    }
-  end
-
-  def create
-    puts params[:seamail_id]
-    puts params[:text]
-    response = { id: 123, text: params[:text], author: current_username, timestamp: DateTime.now }
-    render_json seamail_message: response
-  end
-
 
 end

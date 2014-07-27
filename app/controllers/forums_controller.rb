@@ -14,7 +14,7 @@ class ForumsController < ApplicationController
     forum.last_post = post.timestamp
     post.save
     forum.save
-    render_json forum: forum.decorate.to_meta_hash
+    render_json forum_meta: forum.decorate.to_meta_hash
   end
 
   def new_post

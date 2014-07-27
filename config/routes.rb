@@ -13,7 +13,11 @@ Twitarr::Application.routes.draw do
       post 'new_post'
     end
   end
-  resources :seamail, except: [:destroy, :edit, :new]
+  resources :seamail, except: [:destroy, :edit, :new] do
+    collection do
+      post 'new_message'
+    end
+  end
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'
 
