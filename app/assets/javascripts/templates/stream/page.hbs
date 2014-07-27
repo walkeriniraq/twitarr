@@ -1,12 +1,16 @@
 Seamonkey Stream o' Noise
-{{#each}}
+{{#each post in posts}}
   <div>
-    {{author}} {{text}} {{timestamp}}
+    {{post.author}} {{post.text}} {{post.timestamp}}
   </div>
 {{/each}}
 
 <div>
   {{textarea value=new_post rows="5"}}
+</div>
+
+<div>
+  next page: {{next_page}}
 </div>
 
 <button {{action 'new'}}>Post</button>

@@ -1,4 +1,4 @@
-Twitarr.StreamPageController = Twitarr.ArrayController.extend
+Twitarr.StreamPageController = Twitarr.ObjectController.extend
   actions:
     new: ->
       Twitarr.StreamPost.new_post(@get('new_post')).then((data) =>

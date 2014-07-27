@@ -13,7 +13,8 @@ class PostsController < ApplicationController
                                    author: 'walter',
                                    text: 'more more more',
                                    timestamp: DateTime.now
-                               }]
+                               }],
+                next_page: DateTime.now.to_i - 60
   end
 
   def create
