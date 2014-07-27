@@ -7,3 +7,6 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend
       , ->
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
+
+    next_page: ->
+      @transitionToRoute 'stream.page', @get('next_page')

@@ -14,7 +14,7 @@ class PostsController < ApplicationController
                                    text: 'more more more',
                                    timestamp: DateTime.now
                                }],
-                next_page: DateTime.now.to_i - 60
+                next_page: params[:page].to_i - 60
   end
 
   def create
