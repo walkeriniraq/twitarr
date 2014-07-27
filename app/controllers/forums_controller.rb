@@ -1,42 +1,15 @@
 class ForumsController < ApplicationController
 
   def index
-    render_json forum_meta: [{
-                                   id: 1,
-                                   subject: 'subject a',
-                                   posts: 3,
-                                   timestamp: DateTime.now
-                               }, {
-                                   id: 2,
-                                   subject: 'subject b',
-                                   posts: 5,
-                                   timestamp: DateTime.now
-                               }]
+    render_json forum_meta: Forum.all.order_by(last_post: :desc).map { |x| x.decorate.to_meta_hash }
   end
 
   def show
-    render_json forum: {
-        id: params[:id],
-        subject: 'hi',
-        posts: [
-            {
-                id: 1,
-                author: 'steve',
-                text: 'some text',
-                timestamp: DateTime.now
-            }, {
-                id: 2,
-                author: 'dave',
-                text: 'more text',
-                timestamp: DateTime.now
-            }
-        ]
-    }
+    render_json forum: Forum.find(params[:id]).decorate.to_hash
   end
 
   def create
-    response = { id: 123, text: params[:text], author: current_username, timestamp: DateTime.now }
-    render_json forum_post: response
+    render_json forum_post: Forum.find(params[:forum_id]).forum_posts.create(author: current_username, text: params[:text], timestamp: Time.now).decorate.to_hash
   end
 
 end
