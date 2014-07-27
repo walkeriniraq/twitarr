@@ -24,7 +24,12 @@ Twitarr.Forum.reopenClass
       @create(data.forum)
 
   new_post: (forum_id, text) ->
-    $.post('forums', { forum_id: forum_id, text: text })
+    $.post('forums/new_post', { forum_id: forum_id, text: text }).then (data) =>
+      Twitarr.ForumPost.create(data.forum_post)
+
+  new_forum: (subject, text) ->
+    $.post('forums', { subject: subject, text: text }).then (data) =>
+      Twitarr.ForumMeta.create(data.forum)
 
 Twitarr.ForumPost = Ember.Object.extend
   id: null

@@ -5,4 +5,16 @@ FORUMS INDEX
   </div>
 {{/each}}
 
+<div>
+  Subject
+  {{textarea value=subject rows="5"}}
+</div>
+
+<div>
+  Text
+  {{textarea value=text rows="5"}}
+</div>
+
+<button {{action 'new'}}>New Forum</button>
+
 <button {{action 'reload'}}>Refresh</button>

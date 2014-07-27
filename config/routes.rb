@@ -8,7 +8,11 @@ Twitarr::Application.routes.draw do
   get 'user/forgot_password'
   get 'user/logout'
 
-  resources :forums, except: [:destroy, :edit, :new]
+  resources :forums, except: [:destroy, :edit, :new] do
+    collection do
+      post 'new_post'
+    end
+  end
   resources :seamail, except: [:destroy, :edit, :new]
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'

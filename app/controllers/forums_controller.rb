@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
 
   def index
-    render_json forum_meta: Forum.all.order_by(last_post: :desc).map { |x| x.decorate.to_meta_hash }
+    render_json forum_meta: Forum.all.order_by(last_post: :asc).map { |x| x.decorate.to_meta_hash }
   end
 
   def show
@@ -9,7 +9,21 @@ class ForumsController < ApplicationController
   end
 
   def create
-    render_json forum_post: Forum.find(params[:forum_id]).forum_posts.create(author: current_username, text: params[:text], timestamp: Time.now).decorate.to_hash
+    forum = Forum.new(author: current_username, subject: params[:subject])
+    post = forum.forum_posts.new(author: current_username, text: params[:text], timestamp: Time.now)
+    forum.last_post = post.timestamp
+    post.save
+    forum.save
+    render_json forum: forum.decorate.to_meta_hash
+  end
+
+  def new_post
+    forum = Forum.find(params[:forum_id])
+    post = forum.forum_posts.new(author: current_username, text: params[:text], timestamp: Time.now)
+    forum.last_post = post.timestamp
+    post.save
+    forum.save
+    render_json forum_post: post.decorate.to_hash
   end
 
 end
