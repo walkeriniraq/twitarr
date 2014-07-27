@@ -9,12 +9,14 @@ class SeamailController < ApplicationController
   end
 
   def create
-    seamail = Seamail.new(users: params[:users])
+    users = Set.new params[:users]
+    users << current_username
+    seamail = Seamail.new(users: users.to_a)
     message = seamail.seamail_messages.new(author: current_username, text: params[:text], timestamp: Time.now)
     seamail.last_message = message.timestamp
     message.save
     seamail.save
-    render_json seamail: seamail.decorate.to_meta_hash
+    render_json seamail_meta: seamail.decorate.to_meta_hash
   end
 
   def new_message
