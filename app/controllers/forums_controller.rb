@@ -35,8 +35,6 @@ class ForumsController < ApplicationController
   end
 
   def create
-    puts params[:forum_id]
-    puts params[:text]
     response = { id: 123, text: params[:text], author: current_username, timestamp: DateTime.now }
     render_json forum_post: response
   end

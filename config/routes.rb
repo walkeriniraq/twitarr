@@ -10,6 +10,8 @@ Twitarr::Application.routes.draw do
 
   resources :forums, except: [:destroy, :edit, :new]
   resources :seamail, except: [:destroy, :edit, :new]
+  get 'stream/:page', to: 'posts#page'
+  post 'stream', to: 'posts#create'
 
   # get 'seamail', to: redirect('/#/seamail')
   # get 'forums', to: redirect('/#/forums')

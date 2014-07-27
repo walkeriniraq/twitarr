@@ -1,1 +1,14 @@
-STREAM PAGE
+Seamonkey Stream o' Noise
+{{#each}}
+  <div>
+    {{author}} {{text}} {{timestamp}}
+  </div>
+{{/each}}
+
+<div>
+  {{textarea value=new_post rows="5"}}
+</div>
+
+<button {{action 'new'}}>Post</button>
+<br />
+<button {{action 'reload'}}>Refresh</button>
