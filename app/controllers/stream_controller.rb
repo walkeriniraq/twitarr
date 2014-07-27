@@ -1,25 +1,18 @@
 require 'RMagick'
 
-class PostsController < ApplicationController
+class StreamController < ApplicationController
 
   def page
-    render_json stream_posts: [{
-                                   id: 1,
-                                   author: 'dave',
-                                   text: 'something something something',
-                                   timestamp: DateTime.now
-                               }, {
-                                   id: 2,
-                                   author: 'walter',
-                                   text: 'more more more',
-                                   timestamp: DateTime.now
-                               }],
-                next_page: params[:page].to_i - 60
+    posts = StreamPost.at_or_before(params[:page]).limit(20).order_by(timestamp: :desc).map { |x| x }
+    next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
+    next_page = 0 if StreamPost.at_or_before(next_page).count < 1
+    render_json stream_posts: posts.map { |x| x.decorate.to_hash }, next_page: next_page
   end
 
   def create
-    response = { id: 123, text: params[:text], author: current_username, timestamp: DateTime.now }
-    render_json stream_post: response
+    post = StreamPost.new(text: params[:text], author: current_username, timestamp: Time.now)
+    post.save
+    render_json stream_post: post
   end
 
   # def submit

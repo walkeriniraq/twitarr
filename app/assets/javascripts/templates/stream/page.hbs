@@ -9,9 +9,11 @@ Seamonkey Stream o' Noise
   {{textarea value=new_post rows="5"}}
 </div>
 
-<div>
-  <button {{action 'next_page'}}>Next</button>
-</div>
+{{#if has_next_page}}
+  <div>
+    <button {{action 'next_page'}}>Next</button>
+  </div>
+{{/if}}
 
 <button {{action 'new'}}>Post</button>
 <br />
