@@ -1,6 +1,6 @@
 Twitarr.StreamIndexRoute = Ember.Route.extend
   redirect: ->
-    @transitionTo 'stream.page', 1
+    @transitionTo 'stream.page', new Date().valueOf()
 
 Twitarr.StreamPageRoute = Ember.Route.extend
   model: (params) ->
@@ -8,5 +8,5 @@ Twitarr.StreamPageRoute = Ember.Route.extend
 
   actions:
     reload: ->
-      @refresh()
+      @transitionTo 'stream.page', new Date().valueOf()
 
