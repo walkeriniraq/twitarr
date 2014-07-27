@@ -8,7 +8,7 @@ Twitarr.ApplicationRoute = Ember.Route.extend
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
-    @transitionTo 'posts.page', 1
+    @transitionTo 'stream.index'
 
 #    openModal: (modalName, model) ->
 #      @controllerFor(modalName).set('model', model)
