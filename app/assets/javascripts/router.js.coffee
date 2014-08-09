@@ -7,6 +7,7 @@ Twitarr.Router.map ()->
 
   @resource 'stream', ->
     @route 'page', { path: ':page' }
+    @route 'new'
 
 #  @route 'create_announcement'
 #  @resource 'user', ->

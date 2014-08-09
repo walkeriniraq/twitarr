@@ -4,6 +4,10 @@ Twitarr.StreamPost = Ember.Object.extend
   text: null
   timestamp: null
 
+  pretty_timestamp: (->
+    moment(@get('timestamp')).fromNow(true)
+  ).property('timestamp')
+
 Twitarr.StreamPost.reopenClass
   page: (page) ->
     $.getJSON("stream/#{page}").then (data) =>

@@ -4,6 +4,7 @@
 #= require jquery.fileupload
 #= require underscore
 #= require bootstrap
+#= require moment
 
 #= require handlebars
 #= require ember

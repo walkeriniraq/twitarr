@@ -5,13 +5,17 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend
   ).property('next_page')
 
   actions:
+    next_page: ->
+      return if @get('next_page') is 0
+      @transitionToRoute 'stream.page', @get('next_page')
+
+Twitarr.StreamNewController = Twitarr.Controller.extend
+  actions:
     new: ->
       Twitarr.StreamPost.new_post(@get('new_post')).then( =>
-        @send('reload')
+        @set 'new_post', ''
+        @transitionToRoute 'stream'
       , ->
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
-    next_page: ->
-      return if @get('next_page') is 0
-      @transitionToRoute 'stream.page', @get('next_page')

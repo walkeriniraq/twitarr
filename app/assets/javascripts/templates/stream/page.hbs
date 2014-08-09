@@ -1,4 +1,5 @@
 <span class="pull-right">
+  {{#link-to "stream.new"}}New Post{{/link-to}}
   <button {{action 'reload'}}>Refresh</button>
 </span>
 <h4>
@@ -11,7 +12,7 @@
         {{post.author}}
       </span>
       <span class="timestamp">
-        {{post.timestamp}}
+        {{post.pretty_timestamp}}
       </span>
     </div>
     <div class="text">
@@ -20,14 +21,8 @@
   </div>
 {{/each}}
 
-<div>
-  {{textarea value=new_post rows="5"}}
-</div>
-
 {{#if has_next_page}}
-  <div>
+  <div class="pull-right">
     <button {{action 'next_page'}}>Next</button>
   </div>
 {{/if}}
-
-<button {{action 'new'}}>Post</button>
