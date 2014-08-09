@@ -4,7 +4,7 @@ Twitarr.ApplicationRoute = Ember.Route.extend
       $.getJSON('user/logout').done (data) =>
         if data.status is 'ok'
           @controller.logout()
-          @transitionToRoute 'stream.index'
+          @transitionTo 'stream.index'
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->

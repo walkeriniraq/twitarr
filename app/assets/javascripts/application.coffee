@@ -52,6 +52,7 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
       range.moveStart "character", pos
       range.select()) jQuery
 
+Ember.FEATURES['ember-routing-drop-deprecated-action-style'] = true
 window.Twitarr = Ember.Application.create
   LOG_TRANSITIONS: true
   LOG_BINDINGS: true
