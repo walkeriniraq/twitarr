@@ -14,3 +14,6 @@ Twitarr.ForumsDetailRoute = Ember.Route.extend
     reload: ->
       @refresh()
 
+Twitarr.ForumsNewPostRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    controller.set('id', model.id)

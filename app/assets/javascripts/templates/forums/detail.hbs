@@ -1,14 +1,22 @@
-FORUM DETAIL
+<span class="pull-right">
+  {{#link-to "forums.new_post" id}}New Post{{/link-to}}
+  <button {{action 'reload'}}>Refresh</button>
+</span>
+
+<h4>{{subject}}</h4>
+
 {{#each post in posts}}
-  <div>
-    {{post.author}} {{post.text}} {{post.timestamp}}
+  <div class="stream-post">
+    <div>
+      <span class="author">
+        {{post.author}}
+      </span>
+      <span class="timestamp">
+        {{post.pretty_timestamp}}
+      </span>
+    </div>
+    <div class="text">
+      {{post.text}}
+    </div>
   </div>
 {{/each}}
-
-<div>
-  {{textarea value=new_post rows="5"}}
-</div>
-
-<button {{action 'new'}}>Post</button>
-<br />
-<button {{action 'reload'}}>Refresh</button>

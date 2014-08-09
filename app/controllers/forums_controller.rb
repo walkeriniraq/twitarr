@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
 
   def index
-    render_json forum_meta: Forum.all.order_by(last_post: :asc).map { |x| x.decorate.to_meta_hash }
+    render_json forum_meta: Forum.all.order_by(last_post: :desc).map { |x| x.decorate.to_meta_hash }
   end
 
   def show
