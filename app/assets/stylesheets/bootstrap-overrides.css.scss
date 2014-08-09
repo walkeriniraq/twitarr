@@ -9,11 +9,14 @@ html {
   margin-left: 15px;
 }
 
+.navbar {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 767px) {
   .navbar-collapse {
     top: 50px;
     width: 200px;
-    height: 500px;
     position: fixed;
     background-color: #000000;
   }

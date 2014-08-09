@@ -1,7 +1,22 @@
-Seamonkey Stream o' Noise
+<span class="pull-right">
+  <button {{action 'reload'}}>Refresh</button>
+</span>
+<h4>
+  Seamonkey Stream o' Noise
+</h4>
 {{#each post in posts}}
-  <div>
-    {{post.author}} {{post.text}} {{post.timestamp}}
+  <div class="stream-post">
+    <div>
+      <span class="author">
+        {{post.author}}
+      </span>
+      <span class="timestamp">
+        {{post.timestamp}}
+      </span>
+    </div>
+    <div class="text">
+      {{post.text}}
+    </div>
   </div>
 {{/each}}
 
@@ -16,5 +31,3 @@ Seamonkey Stream o' Noise
 {{/if}}
 
 <button {{action 'new'}}>Post</button>
-<br />
-<button {{action 'reload'}}>Refresh</button>

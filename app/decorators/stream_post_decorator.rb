@@ -6,7 +6,7 @@ class StreamPostDecorator < Draper::Decorator
         id: id,
         author: author,
         text: text,
-        timestamp: timestamp
+        timestamp: timestamp.strftime('%l:%M%P %b %e')
     }
   end
 

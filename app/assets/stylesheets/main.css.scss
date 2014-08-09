@@ -1,3 +1,9 @@
+@mixin border-radius($radius: 5px) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+}
+
 #app-loading {
   display: block;
   margin-left: auto;
@@ -43,6 +49,25 @@
 }
 @viewport {
   width: device-width;
+}
+
+.stream-post {
+  border: 1px solid lightgrey;
+  margin-bottom: 5px;
+  padding: 2px 8px;
+  @include border-radius(5px);
+
+  .author {
+    color: darkblue;
+  }
+
+  .timestamp {
+    float: right;
+  }
+
+  .text {
+    font-size: large;
+  }
 }
 
 //.overlay {
