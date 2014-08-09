@@ -1,14 +1,25 @@
-SEAMAIL DETAIL
+<span class="pull-right">
+  {{#link-to "seamail.new_message" id}}New Post{{/link-to}}
+  <button {{action 'reload'}}>Refresh</button>
+</span>
+
+<h4>
+  Conversation:
+  {{#each user in users}}{{user}} {{/each}}
+</h4>
+
 {{#each message in messages}}
-  <div>
-    {{message.author}} {{message.text}} {{message.timestamp}}
+  <div class="stream-post">
+    <div>
+      <span class="author">
+        {{message.author}}
+      </span>
+      <span class="timestamp">
+        {{message.pretty_timestamp}}
+      </span>
+    </div>
+    <div class="text">
+      {{message.text}}
+    </div>
   </div>
 {{/each}}
-
-<div>
-  {{textarea value=new_message rows="5"}}
-</div>
-
-<button {{action 'new'}}>Send</button>
-<br />
-<button {{action 'reload'}}>Refresh</button>

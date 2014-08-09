@@ -1,7 +1,7 @@
 class SeamailController < ApplicationController
 
   def index
-    render_json seamail_meta: Seamail.where(users: current_username).map { |x| x.decorate.to_meta_hash }
+    render_json seamail_meta: Seamail.where(users: current_username).order_by(last_message: :desc).map { |x| x.decorate.to_meta_hash }
   end
 
   def show

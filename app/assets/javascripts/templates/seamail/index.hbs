@@ -1,20 +1,24 @@
-SEAMAIL INDEX
+<span class="pull-right">
+  {{#link-to "seamail.new"}}New Seamail{{/link-to}}
+  <button {{action 'reload'}}>Refresh</button>
+</span>
+
+<h4>
+  Seamails
+</h4>
+
 {{#each}}
-  <div>
-    {{#link-to 'seamail.detail' id}}{{users_display}}{{/link-to}} messages: {{messages}} last message: {{timestamp}}
+  <div class="stream-post">
+    <div>
+      <span class="author">
+        {{#link-to 'seamail.detail' id}}{{users_display}}{{/link-to}}
+      </span>
+      <span class="timestamp">
+        last message: {{pretty_timestamp}}
+      </span>
+    </div>
+    <div class="text">
+      {{messages}} messages
+    </div>
   </div>
 {{/each}}
-
-<div>
-  Users
-  {{input value=users}}
-</div>
-
-<div>
-  Text
-  {{textarea value=text rows="5"}}
-</div>
-
-<button {{action 'new'}}>New Seamail</button>
-
-<button {{action 'reload'}}>Refresh</button>

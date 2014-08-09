@@ -4,6 +4,6 @@ class Seamail
   field :us, as: :users, type: Array
   field :lm, as: :last_message, type: Time
 
-  has_many :seamail_messages
+  has_many :seamail_messages, :order => :timestamp.desc
 
 end
