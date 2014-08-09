@@ -1,18 +1,39 @@
-<div class='main'>
-  {{#unless logged_in}}
-    Not logged in. <a href="/login">Login.</a>
-  {{else}}
-    Hello {{ display_name }}! <a tabindex='-1' href='#' {{ action logout }}>Logout</a>
-    <div>
-      {{#link-to "seamail"}}Seamail{{/link-to}}
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse-menu">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">Twitarr</span>
     </div>
-  {{/unless}}
-  <div>
-    {{#link-to "forums"}}Forums{{/link-to}}
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="collapse-menu">
+      <ul class="nav navbar-nav">
+        <li>{{#link-to "seamail"}}Seamail{{/link-to}}</li>
+        <li>{{#link-to "forums"}}Forums{{/link-to}}</li>
+        <li>{{#link-to "stream"}}Stream o' Stuff{{/link-to}}</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{#unless logged_in}}
+          <p class="navbar-text">Not logged in.</p>
+          <li><a href="/login">Login.</a></li>
+        {{else}}
+          <p class="navbar-text">Hello {{ display_name }}!</p>
+          <li><a tabindex='-1' href='#' {{ action logout }}>Logout</a></li>
+        {{/unless}}
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
   </div>
-  <div>
-    {{#link-to "stream"}}Stream o' Stuff{{/link-to}}
-  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+<div class='main'>
   {{ outlet }}
   {{ outlet modal }}
 </div>
