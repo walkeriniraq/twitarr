@@ -1,20 +1,20 @@
 class ApplicationController < BaseRedisController
   protect_from_forgery with: :exception
-  around_action :log_filter
+  # around_action :log_filter
 
-  def log_filter
-    yield
-    user = if logged_in?
-             if is_admin?
-               "admin/#{current_username}"
-             else
-               "user/#{current_username}"
-             end
-           else
-             "anon"
-           end
-    Stats.new(redis).log_event "#{params[:controller]}/#{params[:action]}", user
-  end
+  # def log_filter
+  #   yield
+  #   user = if logged_in?
+  #            if is_admin?
+  #              "admin/#{current_username}"
+  #            else
+  #              "user/#{current_username}"
+  #            end
+  #          else
+  #            "anon"
+  #          end
+  #   Stats.new(redis).log_event "#{params[:controller]}/#{params[:action]}", user
+  # end
 
   def logged_in?
     !current_username.nil?
@@ -25,7 +25,7 @@ class ApplicationController < BaseRedisController
   end
 
   def current_user
-    @user ||= redis.user_store.get(current_username)
+    @user ||= User.where(username: current_username).first
   end
 
   def login_user(user)

@@ -1,0 +1,29 @@
+<div class="main-page-header">
+  <span class="controls">
+    {{#link-to "stream.new"}}New Post{{/link-to}}
+    <button {{action 'reload'}}>Refresh</button>
+  </span>
+  <h4>Seamonkey Stream o' Noise</h4>
+</div>
+
+{{#each post in posts}}
+  <div class="stream-post">
+    <div>
+      <span class="author">
+        {{post.author}}
+      </span>
+      <span class="timestamp">
+        {{post.pretty_timestamp}}
+      </span>
+    </div>
+    <div class="text">
+      {{post.text}}
+    </div>
+  </div>
+{{/each}}
+
+{{#if has_next_page}}
+  <div class="next-page-button">
+    <button {{action 'next_page'}}>Next</button>
+  </div>
+{{/if}}

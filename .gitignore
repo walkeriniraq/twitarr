@@ -6,6 +6,7 @@
 /tmp
 
 /config/application.yml
+/config/mongoid.yml
 
 /public/img/photos/*
 

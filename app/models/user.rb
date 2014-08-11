@@ -1,12 +1,20 @@
 require 'bcrypt'
 
-class User < BaseModel
-  include ActiveModel::Validations
+class User
+  include Mongoid::Document
+
   USERNAME_REGEX = /^[\w&-]{3,}$/
   DISPLAY_NAME_REGEX = /^[\w\. &-]{3,40}$/
 
-  attr :username, :password, :is_admin, :status, :email, :display_name,
-       :last_login, :last_checked_posts, :security_question, :security_answer
+  field :un, as: :username, type: String
+  field :pw, as: :password, type: String
+  field :ia, as: :is_admin, type: Boolean
+  field :st, as: :status, type: String
+  field :em, as: :email, type: String
+  field :dn, as: :display_name, type: String
+  field :ll, as: :last_login, type: DateTime
+  field :sq, as: :security_question, type: String
+  field :sa, as: :security_answer, type: String
 
   validate :valid_username?
   validate :valid_display_name?
@@ -18,15 +26,15 @@ class User < BaseModel
     !username.match(USERNAME_REGEX).nil?
   end
 
-  def self.valid_display_name?(name)
-    return true unless name
-    !name.match(DISPLAY_NAME_REGEX).nil?
-  end
-
   def valid_username?
     unless User.valid_username? (username)
       errors.add(:username, 'must be three or more characters and only include letters, numbers, underscore, dash, and ampersand')
     end
+  end
+
+  def self.valid_display_name?(name)
+    return true unless name
+    !name.match(DISPLAY_NAME_REGEX).nil?
   end
 
   def valid_display_name?
@@ -35,47 +43,37 @@ class User < BaseModel
     end
   end
 
+  def empty_password?
+    password.nil? || password.empty?
+  end
+
   def set_password(pass)
-    @password = BCrypt::Password.create pass
+    self.password = BCrypt::Password.create pass
   end
 
   def correct_password(pass)
     BCrypt::Password.new(password) == pass
   end
 
-  def username=(val)
-    @username = val.andand.downcase
-  end
-
-  def empty_password
-    password.nil? || password.empty?
-  end
-
   def update_last_login
-    @last_login = Time.now.to_f
+    self.last_login = Time.now.to_f
     self
   end
 
-  def last_login_readable
-    return Time.at(@last_login) unless @last_login.nil?
-    @last_login
-  end
-
-  def update_last_checked_posts
-    @last_checked_posts = Time.now.to_f
-    self
+  def username=(val)
+    super val.andand.downcase
   end
 
   def security_answer=(val)
-    @security_answer = val.andand.downcase.andand.strip
+    super val.andand.downcase.andand.strip
   end
 
   def security_question=(val)
-    @security_question = val.andand.strip
+    super val.andand.strip
   end
 
   def display_name=(val)
-    @display_name = val.andand.strip
+    super val.andand.strip
   end
 
 end

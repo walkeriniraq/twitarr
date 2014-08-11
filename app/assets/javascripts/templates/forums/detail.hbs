@@ -1,0 +1,24 @@
+<div class="main-page-header">
+  <span class="controls">
+    {{#link-to "forums.new_post" id}}Reply{{/link-to}}
+    <button {{action 'reload'}}>Refresh</button>
+  </span>
+
+  <h4>{{subject}}</h4>
+</div>
+
+{{#each post in posts}}
+  <div class="stream-post">
+    <div>
+      <span class="author">
+        {{post.author}}
+      </span>
+      <span class="timestamp">
+        {{post.pretty_timestamp}}
+      </span>
+    </div>
+    <div class="text">
+      {{post.text}}
+    </div>
+  </div>
+{{/each}}

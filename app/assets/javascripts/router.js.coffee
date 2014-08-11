@@ -1,20 +1,23 @@
 Twitarr.Router.map ()->
-  @route 'create_announcement'
-  @resource 'user', ->
-    @route 'change_password'
-    @route 'profile'
-  @resource 'users', ->
-    @route 'index'
-    @route 'edit', { path: '/:username/edit' }
-    @route 'new'
-  @resource 'posts', ->
-    @route 'popular'
-    @route 'all'
-    @route 'new'
-    @route 'user', { path: '/user/:user' }
-    @route 'tag', { path: '/tag/:tag' }
   @resource 'seamail', ->
+    @route 'new_message', { path: ':id/new' }
+    @route 'detail', { path: ':id' }
     @route 'new'
-    @route 'inbox'
-    @route 'archive'
-    @route 'outbox'
+
+  @resource 'forums', ->
+    @route 'new_post', { path: ':id/new' }
+    @route 'detail', { path: ':id' }
+    @route 'new'
+
+  @resource 'stream', ->
+    @route 'page', { path: ':page' }
+    @route 'new'
+
+#  @route 'create_announcement'
+#  @resource 'user', ->
+#    @route 'change_password'
+#    @route 'profile'
+#  @resource 'users', ->
+#    @route 'index'
+#    @route 'edit', { path: '/:username/edit' }
+#    @route 'new'

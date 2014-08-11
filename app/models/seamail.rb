@@ -1,19 +1,10 @@
-class Seamail < BaseModel
-  attr :seamail_id, :from, :to, :subject, :text, :sent_time
+class Seamail
+  include Mongoid::Document
 
-  def from
-    @from.downcase if @from
-  end
+  field :us, as: :users, type: Array
+  field :sj, as: :subject, type: String
+  field :lm, as: :last_message, type: Time
 
-  def sent_time
-    return @sent_time.to_f if @sent_time.respond_to? :to_f
-    @sent_time
-  end
-
-  def to
-    return [ @to.downcase ] if @to.respond_to? :downcase
-    return @to.map { |x| x.downcase } if @to.respond_to? :each
-    @to
-  end
+  has_many :seamail_messages, :order => :timestamp.desc
 
 end

@@ -1,0 +1,23 @@
+<div class="main-page-header">
+  <span class="controls">
+    {{#link-to "seamail.new"}}New Seamail{{/link-to}}
+    <button {{action 'reload'}}>Refresh</button>
+  </span>
+  <h4>Seamails</h4>
+</div>
+
+{{#each}}
+  <div class="seamail-meta">
+    <div>
+      <span class="users">
+        {{#link-to 'seamail.detail' id}}{{users_display}}{{/link-to}}
+      </span>
+      <span class="details">
+        {{messages}} - {{pretty_timestamp}} ago
+      </span>
+    </div>
+    <div class="subject">
+      {{#link-to 'seamail.detail' id}}{{subject}}{{/link-to}}
+    </div>
+  </div>
+{{/each}}

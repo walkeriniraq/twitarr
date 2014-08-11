@@ -24,12 +24,6 @@ Twitarr::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.db = {
-    host: APP_CONFIG["DATABASE"][Rails.env]["HOST"],
-    port: APP_CONFIG["DATABASE"][Rails.env]["PORT"],
-    db: APP_CONFIG["DATABASE"][Rails.env]["DB"]
-  }
-
   config.read_only = false
   config.allow_new_users = true
 

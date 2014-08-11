@@ -1,43 +1,56 @@
-Twitarr.Seamail = Ember.Object.extend
-  to: null
+Twitarr.SeamailMeta = Ember.Object.extend
+  id: null
+  users: []
+  messages: 0
   subject: null
-  text: null
+  timestamp: null
 
-  validate: ->
-    errors = {}
-    errors.to = 'Please specify a recipient.' unless @get('to')
-    errors.subject = 'Yup. Need a subject.' unless @get('subject')
-    errors.text = 'Cannot send an empty message.' unless @get('text')
-    errors
+  users_display: (->
+    @get('users').join(', ')
+  ).property('users')
 
-  to_json: ->
-    {
-      to: @get('to')
-      subject: @get('subject')
-      text: @get('text')
-    }
+  pretty_timestamp: (->
+    moment(@get('timestamp')).fromNow(true)
+  ).property('timestamp')
 
-  post: ->
-    $.post("seamail/new", { to: @get('to'), subject: @get('subject'), text: @get('text') })
+Twitarr.SeamailMeta.reopenClass
+  list: ->
+    $.getJSON('seamail').then (data) =>
+      Ember.A().pushObject(@create(meta)) for meta in data.seamail_meta
+
+Twitarr.Seamail = Ember.Object.extend
+  id: null
+  users: []
+  messages: []
+  subject: null
+  timestamp: null
+
+  users_display: (->
+    @get('users').join(', ')
+  ).property('users')
+
+  init: ->
+    @set('messages', Ember.A().pushObject(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))
 
 Twitarr.Seamail.reopenClass
-  inbox: ->
-    $.getJSON('seamail/inbox').then (data) =>
-      return data unless data.list?
-      links = Ember.A()
-      links.pushObject(@create(seamail)) for seamail in data.list
-      { status: data.status, seamail: links }
+  get: (id) ->
+    $.getJSON("seamail/#{id}").then (data) =>
+      @create(data.seamail)
 
-  archive: ->
-    $.getJSON('seamail/archive').then (data) =>
-      return data unless data.list?
-      links = Ember.A()
-      links.pushObject(@create(seamail)) for seamail in data.list
-      { status: data.status, seamail: links }
+  new_message: (seamail_id, text) ->
+    $.post('seamail/new_message', { seamail_id: seamail_id, text: text }).then (data) =>
+      Twitarr.SeamailMessage.create(data.seamail_message)
 
-  outbox: ->
-    $.getJSON('seamail/outbox').then (data) =>
-      return data unless data.list?
-      links = Ember.A()
-      links.pushObject(@create(seamail)) for seamail in data.list
-      { status: data.status, seamail: links }
+  new_seamail: (users, subject, text) ->
+    $.post('seamail', { users: users, subject: subject, text: text }).then (data) =>
+      Twitarr.SeamailMeta.create(data.seamail_meta)
+
+Twitarr.SeamailMessage = Ember.Object.extend
+  id: null
+  author: null
+  text: null
+  timestamp: null
+
+  pretty_timestamp: (->
+    moment(@get('timestamp')).fromNow(true)
+  ).property('timestamp')
