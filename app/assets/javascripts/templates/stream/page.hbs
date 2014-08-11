@@ -1,4 +1,4 @@
-<span class="pull-right">
+<span class="list-top-controls">
   {{#link-to "stream.new"}}New Post{{/link-to}}
   <button {{action 'reload'}}>Refresh</button>
 </span>
@@ -22,7 +22,7 @@
 {{/each}}
 
 {{#if has_next_page}}
-  <div class="pull-right">
+  <div class="next-page-button">
     <button {{action 'next_page'}}>Next</button>
   </div>
 {{/if}}

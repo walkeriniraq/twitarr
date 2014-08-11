@@ -2,6 +2,7 @@ Twitarr.SeamailMeta = Ember.Object.extend
   id: null
   users: []
   messages: 0
+  subject: null
   timestamp: null
 
   users_display: (->
@@ -21,7 +22,12 @@ Twitarr.Seamail = Ember.Object.extend
   id: null
   users: []
   messages: []
+  subject: null
   timestamp: null
+
+  users_display: (->
+    @get('users').join(', ')
+  ).property('users')
 
   init: ->
     @set('messages', Ember.A().pushObject(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))
@@ -35,8 +41,8 @@ Twitarr.Seamail.reopenClass
     $.post('seamail/new_message', { seamail_id: seamail_id, text: text }).then (data) =>
       Twitarr.SeamailMessage.create(data.seamail_message)
 
-  new_seamail: (users, text) ->
-    $.post('seamail', { users: users, text: text }).then (data) =>
+  new_seamail: (users, subject, text) ->
+    $.post('seamail', { users: users, subject: subject, text: text }).then (data) =>
       Twitarr.SeamailMeta.create(data.seamail_meta)
 
 Twitarr.SeamailMessage = Ember.Object.extend

@@ -11,7 +11,7 @@ class SeamailController < ApplicationController
   def create
     users = Set.new params[:users]
     users << current_username
-    seamail = Seamail.new(users: users.to_a)
+    seamail = Seamail.new(users: users.to_a, subject: params[:subject])
     message = seamail.seamail_messages.new(author: current_username, text: params[:text], timestamp: Time.now)
     seamail.last_message = message.timestamp
     message.save

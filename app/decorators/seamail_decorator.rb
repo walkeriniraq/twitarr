@@ -1,11 +1,13 @@
 class SeamailDecorator < Draper::Decorator
   delegate_all
+  include ActionView::Helpers::TextHelper
 
   def to_meta_hash
     {
         id: id.to_s,
         users: users,
-        messages: seamail_messages.count,
+        subject: subject,
+        messages: pluralize(seamail_messages.count, 'message'),
         timestamp: last_message
     }
   end
@@ -14,6 +16,7 @@ class SeamailDecorator < Draper::Decorator
     {
         id: id.to_s,
         users: users,
+        subject: subject,
         messages: seamail_messages.map { |x| x.decorate.to_hash }
     }
   end

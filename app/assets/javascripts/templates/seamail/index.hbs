@@ -1,4 +1,4 @@
-<span class="pull-right">
+<span class="list-top-controls">
   {{#link-to "seamail.new"}}New Seamail{{/link-to}}
   <button {{action 'reload'}}>Refresh</button>
 </span>
@@ -8,17 +8,17 @@
 </h4>
 
 {{#each}}
-  <div class="stream-post">
+  <div class="seamail-meta">
     <div>
-      <span class="author">
+      <span class="users">
         {{#link-to 'seamail.detail' id}}{{users_display}}{{/link-to}}
       </span>
-      <span class="timestamp">
-        last message: {{pretty_timestamp}}
+      <span class="details">
+        {{messages}} - {{pretty_timestamp}} ago
       </span>
     </div>
-    <div class="text">
-      {{messages}} messages
+    <div class="subject">
+      {{#link-to 'seamail.detail' id}}{{subject}}{{/link-to}}
     </div>
   </div>
 {{/each}}

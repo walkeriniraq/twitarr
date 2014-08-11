@@ -10,14 +10,27 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         @login data.user
-#        if data.is_read_only
-#          @set 'read_only', true
+        #        if data.is_read_only
+        #          @set 'read_only', true
         if data.need_password_change
           @transitionToRoute('user.change_password')
     # this reloads the page once per day - may solve some javascript issues
     Ember.run.later ->
       window.location.reload()
     , 1000 * 60 * 60 * 24
+
+  actions:
+    menu_toggle: ->
+      @menu_toggle()
+
+    menu_close: ->
+      @menu_toggle()
+
+    login: ->
+      window.location = '/login'
+
+  menu_toggle: ->
+    $('#side-menu').animate { width: 'toggle' }, 100
 
 #  new_email: (->
 #    @get('logged_in') && @get('email_count') > 0

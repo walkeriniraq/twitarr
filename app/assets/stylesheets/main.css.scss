@@ -1,7 +1,7 @@
 @mixin border-radius($radius: 5px) {
   -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-          border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
 }
 
 #app-loading {
@@ -11,12 +11,13 @@
   margin-top: 200px;
 }
 
-.main {
+#main {
   margin-right: auto;
   margin-left: auto;
   padding-left: 20px;
   padding-right: 20px;
   max-width: 1000px;
+  padding-top: 55px;
 }
 
 #help_page {
@@ -38,15 +39,19 @@
 @-webkit-viewport {
   width: device-width;
 }
+
 @-moz-viewport {
   width: device-width;
 }
+
 @-ms-viewport {
   width: device-width;
 }
+
 @-o-viewport {
   width: device-width;
 }
+
 @viewport {
   width: device-width;
 }
@@ -70,6 +75,113 @@
   }
 }
 
+.list-top-controls {
+  float: right;
+}
+
+.seamail-meta {
+  border: 1px solid lightgrey;
+  margin-bottom: 5px;
+  padding: 2px 8px;
+  @include border-radius(5px);
+
+  .users {
+  }
+
+  .details {
+    float: right;
+  }
+
+  .subject {
+    font-size: large;
+  }
+}
+
+.input {
+  width: 100%;
+}
+
+.next-page-button {
+  float: right;
+}
+
+#top-bar {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #eee;
+  height: 50px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+
+  .menu-toggle {
+    @include border-radius(4px);
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    float: left;
+    margin: 8px 16px;
+    padding: 9px 10px 5px;
+
+    .icon-bar {
+      background-color: #888;
+      @include border-radius(1px);
+      display: block;
+      height: 2px;
+      margin-bottom: 4px;
+      width: 22px;
+    }
+  }
+
+  .menu-brand {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    float: left;
+    padding: 12px;
+    font-size: 18px;
+    color: #777;
+  }
+}
+
+#side-menu {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 50px;
+  width: 250px;
+  background-color: #222;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: none;
+  white-space: nowrap;
+
+  #login-info {
+    color: #ccc;
+    padding: 10px;
+  }
+
+  ul {
+    list-style: none outside none;
+    padding-left: 0;
+
+    li {
+      a {
+        padding: 10px;
+        display: block;
+
+        &:focus {
+          text-decoration: none;
+        }
+
+        &:hover {
+          background-color: #333;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
 //.overlay {
 //  height: 100%;
 //  width: 100%;
@@ -79,9 +191,6 @@
 //  background-color: rgba(0, 0, 0, 0.2);
 //  z-index: 1400;
 //}
-
-
-
 
 /////// OLD STUFF - remove before production
 

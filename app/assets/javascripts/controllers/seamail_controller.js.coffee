@@ -1,13 +1,14 @@
 Twitarr.SeamailNewController = Twitarr.Controller.extend
   actions:
     new: ->
-      users = @get('users').split ' '
-      Twitarr.Seamail.new_seamail(users, @get('text')).then((forum) =>
+      users = @get('users').split /[,\s]/
+      Twitarr.Seamail.new_seamail(users, @get('subject'), @get('text')).then( =>
         @set 'users', ''
+        @set 'subject', ''
         @set 'text', ''
-        @transitionToRoute 'seamail.detail', forum.id
+        window.history.go(-1)
       , ->
-        alert 'Forum could not be added. Please try again later. Or try again somepleace without so many seamonkeys.'
+        alert 'Message could not be sent. Please try again later. Or try again somepleace without so many seamonkeys.'
       )
 
 Twitarr.SeamailNewMessageController = Twitarr.Controller.extend
@@ -15,7 +16,7 @@ Twitarr.SeamailNewMessageController = Twitarr.Controller.extend
     new: ->
       Twitarr.Seamail.new_message(@get('id'), @get('new_message')).then( =>
         @set('new_message', '')
-        @transitionToRoute 'seamail.detail', @get('id')
+        window.history.go(-1)
       , ->
         alert 'Message could not be sent! Please try again later. Or try again someplace without so many seamonkeys.'
       )

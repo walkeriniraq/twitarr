@@ -1,39 +1,36 @@
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse-menu">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">Twitarr</span>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="collapse-menu">
-      <ul class="nav navbar-nav">
-        <li>{{#link-to "seamail"}}Seamail{{/link-to}}</li>
-        <li>{{#link-to "forums"}}Forums{{/link-to}}</li>
-        <li>{{#link-to "stream"}}Stream o' Stuff{{/link-to}}</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {{#unless logged_in}}
-          <p class="navbar-text">Not logged in.</p>
-          <li><a href="/login">Login.</a></li>
-        {{else}}
-          <p class="navbar-text">Hello {{ display_name }}!</p>
-          <li><a tabindex='-1' href='#' {{ action logout }}>Logout</a></li>
-        {{/unless}}
-      </ul>
-    </div>
-    <!-- /.navbar-collapse -->
-  </div>
-  <!-- /.container-fluid -->
+<nav id="top-bar" role="navigation">
+  <button type="button" class="menu-toggle" {{action 'menu_toggle'}}>
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <span class="menu-brand">Twitarr</span>
 </nav>
+<div id="side-menu">
+  <div id="login-info">
+    {{#unless logged_in}}
+      Not logged in.
+    {{else}}
+      {{ display_name }}
+    {{/unless}}
+  </div>
+  <ul {{action 'menu_close'}}>
+    {{#if logged_in}}
+      <li>{{#link-to "seamail"}}Seamail{{/link-to}}</li>
+    {{/if}}
+    <li>{{#link-to "forums"}}Forums{{/link-to}}</li>
+    <li>{{#link-to "stream"}}Stream o' Stuff{{/link-to}}</li>
+    <li></li>
+    {{#unless logged_in}}
+      <li><a {{action 'login'}}>Login</a></li>
+    {{else}}
+      <li><a tabindex='-1' href='#' {{ action logout }}>Logout</a></li>
+    {{/unless}}
+  </ul>
+</div>
 
-<div class='main'>
+<div id='main'>
   {{ outlet }}
   {{ outlet modal }}
 </div>
