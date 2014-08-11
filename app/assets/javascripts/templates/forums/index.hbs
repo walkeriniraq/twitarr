@@ -1,11 +1,10 @@
-<span class="list-top-controls">
-  {{#link-to "forums.new"}}Create Forum{{/link-to}}
-  <button {{action 'reload'}}>Refresh</button>
-</span>
-
-<h4>
-  Forums
-</h4>
+<div class="main-page-header">
+  <span class="controls">
+    {{#link-to "forums.new"}}Create Forum{{/link-to}}
+    <button {{action 'reload'}}>Refresh</button>
+  </span>
+  <h4>Forums</h4>
+</div>
 
 {{#each}}
   <div class="stream-post">

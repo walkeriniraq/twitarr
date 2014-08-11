@@ -1,11 +1,10 @@
-<span class="list-top-controls">
-  {{#link-to "seamail.new"}}New Seamail{{/link-to}}
-  <button {{action 'reload'}}>Refresh</button>
-</span>
-
-<h4>
-  Seamails
-</h4>
+<div class="main-page-header">
+  <span class="controls">
+    {{#link-to "seamail.new"}}New Seamail{{/link-to}}
+    <button {{action 'reload'}}>Refresh</button>
+  </span>
+  <h4>Seamails</h4>
+</div>
 
 {{#each}}
   <div class="seamail-meta">

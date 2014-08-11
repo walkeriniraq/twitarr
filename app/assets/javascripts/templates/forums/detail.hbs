@@ -1,9 +1,11 @@
-<span class="list-top-controls">
-  {{#link-to "forums.new_post" id}}Reply{{/link-to}}
-  <button {{action 'reload'}}>Refresh</button>
-</span>
+<div class="main-page-header">
+  <span class="controls">
+    {{#link-to "forums.new_post" id}}Reply{{/link-to}}
+    <button {{action 'reload'}}>Refresh</button>
+  </span>
 
-<h4>{{subject}}</h4>
+  <h4>{{subject}}</h4>
+</div>
 
 {{#each post in posts}}
   <div class="stream-post">
