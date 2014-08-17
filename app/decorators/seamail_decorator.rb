@@ -5,7 +5,7 @@ class SeamailDecorator < Draper::Decorator
   def to_meta_hash
     {
         id: id.to_s,
-        users: users,
+        users: users.map { |x| x.username },
         subject: subject,
         messages: pluralize(seamail_messages.count, 'message'),
         timestamp: last_message
@@ -15,7 +15,7 @@ class SeamailDecorator < Draper::Decorator
   def to_hash
     {
         id: id.to_s,
-        users: users,
+        users: users.map { |x| x.username },
         subject: subject,
         messages: seamail_messages.map { |x| x.decorate.to_hash }
     }

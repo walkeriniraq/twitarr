@@ -7,4 +7,6 @@ class SeamailMessage
 
   belongs_to :seamail
 
+  validates :text, presence: true
+
 end

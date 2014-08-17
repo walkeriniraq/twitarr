@@ -16,6 +16,8 @@ class User
   field :sq, as: :security_question, type: String
   field :sa, as: :security_answer, type: String
 
+  has_and_belongs_to_many :seamails, :order => :timestamp.desc
+
   validate :valid_username?
   validate :valid_display_name?
   validates :email, format: { with: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, message: 'address is not valid.'}

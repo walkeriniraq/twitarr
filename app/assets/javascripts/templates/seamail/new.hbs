@@ -8,5 +8,10 @@ Subject
 Text
 {{textarea value=text rows='5' class='input'}}
 
+<div class="errors">
+  {{#each error in errors}}
+    <div>{{error}}</div>
+  {{/each}}
+</div>
 <button {{action 'new'}}>Create</button>
 

@@ -1,8 +1,15 @@
 Twitarr.SeamailNewController = Twitarr.Controller.extend
+  errors: []
+  users: ''
+
   actions:
     new: ->
-      users = @get('users').split /[,\s]/
-      Twitarr.Seamail.new_seamail(users, @get('subject'), @get('text')).then( =>
+      users = @get('users').split(/[,\s]/).filter((user) -> !!user)
+      Twitarr.Seamail.new_seamail(users, @get('subject'), @get('text')).then((response) =>
+        if response.errors?
+          @set 'errors', response.errors
+          return
+        @set 'errors', []
         @set 'users', ''
         @set 'subject', ''
         @set 'text', ''
