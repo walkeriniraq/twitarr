@@ -114,6 +114,23 @@ html {
 
   .details {
     float: right;
+    font-size: small;
+  }
+
+  .subject {
+    font-size: large;
+  }
+}
+
+.forum-meta {
+  border: 1px solid lightgrey;
+  margin-bottom: 5px;
+  padding: 2px 8px;
+  @include border-radius(5px);
+
+  .details {
+    float: right;
+    font-size: small;
   }
 
   .subject {

@@ -1,12 +1,12 @@
 <div class="main-page-header">
+  <h5>
+    {{users_display}}
+  </h5>
   <span class="controls">
     {{#link-to "seamail.new_message" id}}Reply{{/link-to}}
     <button {{action 'reload'}}>Refresh</button>
   </span>
   <h4>{{subject}}</h4>
-  <h5>
-    {{users_display}}
-  </h5>
 </div>
 
 {{#each message in messages}}

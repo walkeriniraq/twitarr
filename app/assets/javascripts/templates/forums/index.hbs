@@ -7,17 +7,12 @@
 </div>
 
 {{#each}}
-  <div class="stream-post">
-    <div>
-      <span class="author">
-        {{#link-to 'forums.detail' id}}{{subject}}{{/link-to}}
+  <div class="forum-meta">
+    <div class="subject">
+      {{#link-to 'forums.detail' id}}{{subject}}{{/link-to}}
+      <span class="details">
+        {{posts}} - {{pretty_timestamp}} ago
       </span>
-      <span class="timestamp">
-        last message: {{pretty_timestamp}}
-      </span>
-    </div>
-    <div class="text">
-      {{posts}} posts
     </div>
   </div>
 {{/each}}
