@@ -1,5 +1,4 @@
 Twitarr.SeamailNewController = Twitarr.Controller.extend
-  errors: []
   users: ''
 
   actions:
@@ -15,14 +14,18 @@ Twitarr.SeamailNewController = Twitarr.Controller.extend
         @set 'text', ''
         window.history.go(-1)
       , ->
-        alert 'Message could not be sent. Please try again later. Or try again somepleace without so many seamonkeys.'
+        alert 'Message could not be sent. Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
 Twitarr.SeamailNewMessageController = Twitarr.Controller.extend
   actions:
     new: ->
-      Twitarr.Seamail.new_message(@get('id'), @get('new_message')).then( =>
+      Twitarr.Seamail.new_message(@get('id'), @get('new_message')).then((response) =>
+        if response.errors?
+          @set 'errors', response.errors
+          return
         @set('new_message', '')
+        @set 'errors', []
         window.history.go(-1)
       , ->
         alert 'Message could not be sent! Please try again later. Or try again someplace without so many seamonkeys.'

@@ -25,7 +25,7 @@ class ApplicationController < BaseRedisController
   end
 
   def current_user
-    @user ||= User.where(username: current_username).first
+    @user ||= User.get current_username
   end
 
   def login_user(user)

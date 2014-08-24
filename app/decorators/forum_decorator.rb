@@ -5,7 +5,7 @@ class ForumDecorator < Draper::Decorator
     {
         id: id.to_s,
         subject: subject,
-        posts: forum_posts.count,
+        posts: post_count,
         timestamp: last_post
     }
   end
@@ -14,7 +14,7 @@ class ForumDecorator < Draper::Decorator
     {
         id: id.to_s,
         subject: subject,
-        posts: forum_posts.map { |x| x.decorate.to_hash }
+        posts: posts.map { |x| x.decorate.to_hash }
     }
   end
 

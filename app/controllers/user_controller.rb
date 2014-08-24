@@ -9,7 +9,7 @@ class UserController < ApplicationController
   layout 'login'
 
   def login
-    user = User.where(username: params[:username].downcase).first
+    user = User.get params[:username]
     if user.nil?
       @error = 'User does not exist.'
       render :login_page

@@ -6,5 +6,10 @@ Subject
 Text
 {{textarea value=text rows='5' class='input'}}
 
+<ul class="errors-list">
+  {{#each error in errors}}
+    <li>{{error}}</li>
+  {{/each}}
+</ul>
 <button {{action 'new'}}>Create</button>
 

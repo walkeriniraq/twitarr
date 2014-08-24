@@ -3,7 +3,6 @@ class SeamailMessageDecorator < Draper::Decorator
 
   def to_hash
     {
-        id: id.to_s,
         author: author,
         text: text,
         timestamp: timestamp

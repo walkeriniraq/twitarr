@@ -9,12 +9,7 @@ class SeamailController < ApplicationController
   end
 
   def create
-    usernames = params[:users] || []
-    usernames << current_username
-    users = User.where(:username.in => usernames).map { |x| x }
-    missing_users = usernames.reduce([]) { |a, x| a << x unless users.any? { |user| user.username == x }; a }
-    render_json errors: missing_users.map { |x| "#{x} is not a valid username" } and return unless missing_users.blank?
-    seamail = Seamail.create_new_seamail current_user, users, params[:subject], params[:text]
+    seamail = Seamail.create_new_seamail current_username, params[:users], params[:subject], params[:text]
     if seamail.valid?
       render_json seamail_meta: seamail.decorate.to_meta_hash
     else
@@ -24,11 +19,12 @@ class SeamailController < ApplicationController
 
   def new_message
     seamail = Seamail.find(params[:seamail_id])
-    message = seamail.seamail_messages.new(author: current_username, text: params[:text], timestamp: Time.now)
-    seamail.last_message = message.timestamp
-    message.save
-    seamail.save
-    render_json seamail_message: message.decorate.to_hash
+    message = seamail.add_message current_username, params[:text]
+    if message.valid?
+      render_json seamail_message: message.decorate.to_hash
+    else
+      render_json errors: message.errors.full_messages
+    end
   end
 
   # def new

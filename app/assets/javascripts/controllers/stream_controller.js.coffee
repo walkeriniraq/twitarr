@@ -12,7 +12,10 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend
 Twitarr.StreamNewController = Twitarr.Controller.extend
   actions:
     new: ->
-      Twitarr.StreamPost.new_post(@get('new_post')).then( =>
+      Twitarr.StreamPost.new_post(@get('new_post')).then((response) =>
+        if response.errors?
+          @set 'errors', response.errors
+          return
         @set 'new_post', ''
         @transitionToRoute 'stream'
       , ->

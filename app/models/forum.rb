@@ -1,10 +1,45 @@
 class Forum
   include Mongoid::Document
 
-  field :au, as: :author, type: String
   field :sj, as: :subject, type: String
-  field :lp, as: :last_post, type: Time
 
-  has_many :forum_posts, :order => :timestamp.desc
+  embeds_many :posts, class_name: 'ForumPost', store_as: :fp, order: :timestamp.desc, validate: false
+
+  validates :subject, presence: true
+  validate :validate_posts
+
+  def validate_posts
+    errors[:base] << 'Must have a post' if posts.size < 1
+    posts.each do |post|
+      unless post.valid?
+        post.errors.full_messages.each { |x| errors[:base] << x }
+      end
+    end
+  end
+
+  def subject=(subject)
+    self[:subject] = subject.andand.strip
+  end
+
+  def last_post
+    posts.first.timestamp
+  end
+
+  def post_count
+    posts.size
+  end
+
+  def self.create_new_forum(author, subject, first_post_text)
+    forum = Forum.new subject: subject
+    forum.posts << ForumPost.new(author: author, text: first_post_text, timestamp: Time.now)
+    if forum.valid?
+      forum.save
+    end
+    forum
+  end
+
+  def add_post(author, text)
+    posts.create author: author, text: text, timestamp: Time.now
+  end
 
 end

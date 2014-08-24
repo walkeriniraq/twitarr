@@ -29,11 +29,13 @@ Twitarr.Forum.reopenClass
 
   new_post: (forum_id, text) ->
     $.post('forums/new_post', { forum_id: forum_id, text: text }).then (data) =>
-      Twitarr.ForumPost.create(data.forum_post)
+      data.forum_post = Twitarr.ForumPost.create(data.forum_post) if data.forum_post?
+      data
 
   new_forum: (subject, text) ->
     $.post('forums', { subject: subject, text: text }).then (data) =>
-      Twitarr.ForumMeta.create(data.forum_meta)
+      data.forum_meta = Twitarr.ForumMeta.create(data.forum_meta) if data.forum_meta?
+      data
 
 Twitarr.ForumPost = Ember.Object.extend
   id: null

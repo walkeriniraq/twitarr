@@ -39,7 +39,8 @@ Twitarr.Seamail.reopenClass
 
   new_message: (seamail_id, text) ->
     $.post('seamail/new_message', { seamail_id: seamail_id, text: text }).then (data) =>
-      Twitarr.SeamailMessage.create(data.seamail_message)
+      data.seamail_message = Twitarr.SeamailMessage.create(data.seamail_message) if data.seamail_message?
+      data
 
   new_seamail: (users, subject, text) ->
     $.post('seamail', { users: users, subject: subject, text: text }).then (data) =>

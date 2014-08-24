@@ -16,5 +16,7 @@ Twitarr.StreamPost.reopenClass
       { posts: list, next_page: data.next_page }
 
   new_post: (text) ->
-    $.post 'stream', text: text
+    $.post('stream', text: text).then (data) =>
+      data.stream_post = Twitarr.StreamPost.create(data.stream_post) if data.stream_post?
+      data
 

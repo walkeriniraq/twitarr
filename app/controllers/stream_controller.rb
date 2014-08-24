@@ -10,9 +10,12 @@ class StreamController < ApplicationController
   end
 
   def create
-    post = StreamPost.new(text: params[:text], author: current_username, timestamp: Time.now)
-    post.save
-    render_json stream_post: post
+    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now)
+    if post.valid?
+      render_json stream_post: post.decorate.to_hash
+    else
+      render_json errors: post.errors.full_messages
+    end
   end
 
   # def submit
