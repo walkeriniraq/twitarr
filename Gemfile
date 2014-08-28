@@ -19,7 +19,7 @@ gem 'underscore-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
-gem 'mongoid', github: 'walkeriniraq/mongoid'
+gem 'mongoid'
 
 gem 'ember-rails'
 gem 'ember-source'
