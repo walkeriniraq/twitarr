@@ -5,6 +5,10 @@ Twitarr.ApplicationRoute = Ember.Route.extend
         if data.status is 'ok'
           @controller.logout()
           @transitionTo 'stream.index'
+    start_upload: ->
+      @controller.incrementProperty 'uploads_pending'
+    end_upload: ->
+      @controller.decrementProperty 'uploads_pending'
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->

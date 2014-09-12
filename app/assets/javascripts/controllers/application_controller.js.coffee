@@ -5,6 +5,11 @@ Twitarr.ApplicationController = Ember.Controller.extend
   posts_count: 0
   display_name: null
   read_only: false
+  uploads_pending: 0
+
+  has_uploads_pending: (->
+    @get('uploads_pending')
+  ).property('uploads_pending')
 
   init: ->
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>

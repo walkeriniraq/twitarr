@@ -9,3 +9,8 @@
   {{/each}}
 </ul>
 <button {{action 'new'}}>Post</button>
+
+<span id="photo-upload-div" style="width: 200px; height: 100px; border: 1px solid black;" class="pull-right mini-upload">
+  Drop files here
+</span>
+<input style="display: none" id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>

@@ -22,3 +22,6 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
+    file_uploaded: (data) ->
+      console.log data
+      alert 'WINNING'

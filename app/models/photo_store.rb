@@ -1,0 +1,110 @@
+require 'digest'
+require 'RMagick'
+
+class PhotoStore
+
+  def upload(temp_file, uploader)
+    temp_file = UploadFile.new(temp_file)
+    return { status: 'file was not an allowed image type' } unless temp_file.photo_type?
+    existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
+    return { status: 'duplicate file', photo: existing_photo } unless existing_photo.nil?
+
+    photo = store(temp_file, uploader)
+    photo.save
+    begin
+      img = Magick::Image::read(temp_file.tempfile.path).first
+    rescue Java::JavaLang::NullPointerException
+      # yeah, ImageMagick throws a NPE if the photo isn't a photo
+      return { status: 'file could not be opened' }
+    end
+    if temp_file.extension == 'jpg' || temp_file.extension == 'jpeg'
+      exif = EXIFR::JPEG.new(temp_file.tempfile)
+      orientation = exif.orientation
+      if orientation
+        img = orientation.transform_rmagick(img)
+      end
+    end
+    img.resize_to_fit(150, 150).write "tmp/#{photo.store_filename}"
+    FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
+    puts "SMALL THUMB PATH: #{sm_thumb_path photo.store_filename}"
+    img.resize_to_fit(600, 800).write "tmp/#{photo.store_filename}"
+    FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
+    { status: 'ok', photo: photo.store_filename }
+  rescue EXIFR::MalformedJPEG
+    { status: 'file extension is jpg but was not a jpeg' }
+  end
+
+  def store(file, uploader)
+    new_filename = SecureRandom.uuid.to_s + Pathname.new(file.filename).extname.downcase
+    photo = PhotoMetadata.new uploader: uploader,
+                              original_filename: file.filename,
+                              store_filename: new_filename,
+                              upload_time: Time.now,
+                              md5_hash: file.md5_hash
+    FileUtils.copy file.tempfile, photo_path(photo.store_filename)
+    # Pathname.new(PHOTO_STORAGE_PATH + new_filename).chmod(0664)
+    photo
+  end
+
+  def initialize
+    @root = Pathname.new(Rails.configuration.photo_store)
+    @full = @root + 'full'
+    @thumb = @root + 'thumb'
+    @full.mkdir unless @full.exist?
+    @thumb.mkdir unless @thumb.exist?
+  end
+
+  def photo_path(filename)
+    (build_directory(@full, filename) + filename).to_s
+  end
+
+  def sm_thumb_path(filename)
+    (build_directory(@thumb, filename) + ('sm_' + filename)).to_s
+  end
+
+  def md_thumb_path(filename)
+    (build_directory(@thumb, filename) + ('md_' + filename)).to_s
+  end
+
+  @@mutex = Mutex.new
+
+  def build_directory(root_path, filename)
+    @@mutex.synchronize do
+      first = root_path + filename[0]
+      first.mkdir unless first.exist?
+      second = first + filename[1]
+      second.mkdir unless second.exist?
+      second
+    end
+  end
+
+  class UploadFile
+    PHOTO_EXTENSIONS = %w(jpg jpeg gif png).freeze
+
+    def initialize(file)
+      @file = file
+    end
+
+    def extension
+      @ext ||= Pathname.new(@file.original_filename).extname[1..-1].downcase
+    end
+
+    def photo_type?
+      return true if PHOTO_EXTENSIONS.include?(extension)
+      false
+    end
+
+    def tempfile
+      @file.tempfile
+    end
+
+    def md5_hash
+      @hash ||= Digest::MD5.file(@file.tempfile).hexdigest
+    end
+
+    def filename
+      @file.original_filename
+    end
+  end
+
+end
