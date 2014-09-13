@@ -1,5 +1,4 @@
 Twitarr.StreamPageController = Twitarr.ObjectController.extend
-
   has_next_page: (->
     @get('next_page') isnt 0
   ).property('next_page')
@@ -9,10 +8,17 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend
       return if @get('next_page') is 0
       @transitionToRoute 'stream.page', @get('next_page')
 
+
 Twitarr.StreamNewController = Twitarr.Controller.extend
+  photo_id: null
+
+  photo_path: (->
+    Twitarr.StreamPost.photo_path @get('photo_id')
+  ).property('photo_id')
+
   actions:
     new: ->
-      Twitarr.StreamPost.new_post(@get('new_post')).then((response) =>
+      Twitarr.StreamPost.new_post(@get('new_post'), @get('photo_id')).then((response) =>
         if response.errors?
           @set 'errors', response.errors
           return
@@ -23,5 +29,4 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
       )
 
     file_uploaded: (data) ->
-      console.log data
-      alert 'WINNING'
+      @set('photo_id', data.files[0].photo)

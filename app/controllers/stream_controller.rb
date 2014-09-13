@@ -1,5 +1,3 @@
-require 'RMagick'
-
 class StreamController < ApplicationController
 
   def page
@@ -10,7 +8,7 @@ class StreamController < ApplicationController
   end
 
   def create
-    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now)
+    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo])
     if post.valid?
       render_json stream_post: post.decorate.to_hash
     else

@@ -6,7 +6,8 @@ class StreamPostDecorator < Draper::Decorator
         id: id,
         author: author,
         text: text,
-        timestamp: timestamp
+        timestamp: timestamp,
+        photo: photo
     }
   end
 

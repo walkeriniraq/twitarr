@@ -19,6 +19,9 @@
     <div class="text">
       {{post.text}}
     </div>
+    {{#if post.photo}}
+      <img {{bind-attr src=post.photo_path}} style="display: block; margin: 0 auto 0.4em;"/>
+    {{/if}}
   </div>
 {{/each}}
 

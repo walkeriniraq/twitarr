@@ -1,7 +1,14 @@
 <div class="main-page-header">
   <h4>Post to stream</h4>
 </div>
+
 {{textarea value=new_post rows='5' class='input'}}
+<div id="photo-upload-div" style="border: 1px solid black; padding: 0.6em; margin: 1em; text-align: center;" class="mini-upload">
+  {{#if photo_id}}
+    <img {{bind-attr src=photo_path}} style="display: block; margin: 0 auto 0.6em;"/>
+  {{/if}}
+  Click to add or change photo
+</div>
 
 <ul class="errors-list">
   {{#each error in errors}}
@@ -10,7 +17,4 @@
 </ul>
 <button {{action 'new'}}>Post</button>
 
-<span id="photo-upload-div" style="width: 200px; height: 100px; border: 1px solid black;" class="pull-right mini-upload">
-  Drop files here
-</span>
 <input style="display: none" id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>

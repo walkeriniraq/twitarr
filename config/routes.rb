@@ -20,7 +20,11 @@ Twitarr::Application.routes.draw do
   end
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'
+
   post 'photo/upload'
+  get 'photo/small_thumb/:id', to: 'photo#small_thumb'
+  get 'photo/medium_thumb/:id', to: 'photo#medium_thumb'
+  get 'photo/full/:id', to: 'photo#full'
 
   # get 'seamail', to: redirect('/#/seamail')
   # get 'forums', to: redirect('/#/forums')
