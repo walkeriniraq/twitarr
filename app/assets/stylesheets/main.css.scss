@@ -184,6 +184,22 @@ html {
   }
 }
 
+.loading-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%;
+  }
+}
+
 #side-menu {
   position: fixed;
   left: 0;

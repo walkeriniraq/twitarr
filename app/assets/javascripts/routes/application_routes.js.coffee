@@ -1,3 +1,6 @@
+Twitarr.LoadingRoute = Ember.Route.extend
+  renderTemplate: -> @render 'loading'
+
 Twitarr.ApplicationRoute = Ember.Route.extend
   actions:
     logout: ->

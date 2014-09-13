@@ -44,7 +44,6 @@ class PhotoStore
                               upload_time: Time.now,
                               md5_hash: file.md5_hash
     FileUtils.copy file.tempfile, photo_path(photo.store_filename)
-    # Pathname.new(PHOTO_STORAGE_PATH + new_filename).chmod(0664)
     photo
   end
 

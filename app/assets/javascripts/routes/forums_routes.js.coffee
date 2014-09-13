@@ -1,3 +1,5 @@
+Twitarr.ForumsLoadingRoute = Twitarr.LoadingRoute.extend()
+
 Twitarr.ForumsIndexRoute = Ember.Route.extend
   model: ->
     Twitarr.ForumMeta.list()
