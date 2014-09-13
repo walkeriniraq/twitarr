@@ -30,4 +30,7 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
       )
 
     file_uploaded: (data) ->
-      @set('photo_id', data.files[0].photo)
+      if data.files[0]?.photo
+        @set('photo_id', data.files[0].photo)
+      else
+        alert "Error: " + data.files[0]?.status

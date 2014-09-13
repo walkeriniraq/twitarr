@@ -7,9 +7,9 @@ class PhotoStore
 
   def upload(temp_file, uploader)
     temp_file = UploadFile.new(temp_file)
-    return { status: 'file was not an allowed image type' } unless temp_file.photo_type?
+    return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
     existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
-    return { status: 'duplicate file', photo: existing_photo.id.to_s } unless existing_photo.nil?
+    return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
 
     photo = store(temp_file, uploader)
     photo.save
@@ -17,7 +17,7 @@ class PhotoStore
       img = Magick::Image::read(temp_file.tempfile.path).first
     rescue Java::JavaLang::NullPointerException
       # yeah, ImageMagick throws a NPE if the photo isn't a photo
-      return { status: 'file could not be opened' }
+      return { status: 'Photo could not be opened - is it an image?' }
     end
     if temp_file.extension == 'jpg' || temp_file.extension == 'jpeg'
       exif = EXIFR::JPEG.new(temp_file.tempfile)
@@ -33,7 +33,7 @@ class PhotoStore
     FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
     { status: 'ok', photo: photo.id.to_s }
   rescue EXIFR::MalformedJPEG
-    { status: 'file extension is jpg but was not a jpeg' }
+    { status: 'Photo extension is jpg but could not be opened as jpeg.' }
   end
 
   def store(file, uploader)
