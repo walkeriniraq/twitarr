@@ -23,6 +23,7 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
           @set 'errors', response.errors
           return
         @set 'new_post', ''
+        @set 'photo_id', null
         @transitionToRoute 'stream'
       , ->
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
