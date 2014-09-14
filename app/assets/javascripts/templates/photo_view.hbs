@@ -1,0 +1,10 @@
+<div class="full-screen-overlay" {{action 'close_photo'}} >
+  <div style="height: 10%;"></div>
+  <div id="photo-modal">
+    <img class="close" {{action 'close_photo'}} src="/img/close-icon.png" />
+    <button class="open-full-size" {{action 'open_full'}}>open full size</button>
+    <div id="photo-holder">
+      <img {{bind-attr src=photo_path}} />
+    </div>
+  </div>
+</div>

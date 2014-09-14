@@ -9,8 +9,8 @@ Twitarr.StreamPost = Ember.Object.extend
     moment(@get('timestamp')).fromNow(true)
   ).property('timestamp')
 
-  photo_path: (->
-    Twitarr.StreamPost.photo_path @get('photo')
+  sm_photo_path: (->
+    Twitarr.ApplicationController.sm_photo_path @get('photo')
   ).property('photo')
 
 
@@ -25,6 +25,3 @@ Twitarr.StreamPost.reopenClass
     $.post('stream', text: text, photo: photo).then (data) =>
       data.stream_post = Twitarr.StreamPost.create(data.stream_post) if data.stream_post?
       data
-
-  photo_path: (photo) ->
-    "/photo/small_thumb/#{photo}"

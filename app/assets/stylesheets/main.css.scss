@@ -200,6 +200,62 @@ html {
   }
 }
 
+.full-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+}
+
+#photo-modal {
+  background-color: #000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 80%;
+  max-height: 80%;
+  position: absolute;
+  padding: 1em;
+
+  .close {
+    height: 2em;
+    width: 2em;
+    margin: 1em;
+    position: absolute;
+    right: 0;
+    z-index: +1;
+  }
+
+  .open-full-size {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0.8em;
+    font-size: large;
+    z-index: +1;
+  }
+
+  #photo-holder {
+    height: 100%;
+    position: relative;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%)
+    }
+  }
+}
+
 #side-menu {
   position: fixed;
   left: 0;

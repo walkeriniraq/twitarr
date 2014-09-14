@@ -30,7 +30,7 @@ class PhotoController < ApplicationController
 
   def full
     photo = PhotoMetadata.find params[:id]
-    send_file PhotoStore.instance.photo_path photo.store_filename
+    send_file PhotoStore.instance.photo_path(photo.store_filename), filename: photo.original_filename, disposition: :inline
   end
 
 end

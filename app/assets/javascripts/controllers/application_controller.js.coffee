@@ -94,3 +94,30 @@ Twitarr.ApplicationController = Ember.Controller.extend
 #    return true if path is 'posts.tag'
 #    return true if path is 'search'
 #    false
+
+Twitarr.ApplicationController.reopenClass
+  sm_photo_path: (photo) ->
+    "/photo/small_thumb/#{photo}"
+
+  md_photo_path: (photo) ->
+    "/photo/medium_thumb/#{photo}"
+
+  full_photo_path: (photo) ->
+    "/photo/full/#{photo}"
+
+
+Twitarr.PhotoViewController = Ember.Controller.extend
+  photo_id: null
+
+  photo_path: (->
+    Twitarr.ApplicationController.md_photo_path @get('photo_id')
+  ).property('photo_id')
+
+  make_it_work: (->
+    "background: url('#{@get('photo_path')}')"
+  ).property('photo_path')
+
+  actions:
+    open_full: ->
+      window.open Twitarr.ApplicationController.full_photo_path(@get('photo_id'))
+#      window.open Twitarr.ApplicationController.full_photo_path(@get('photo_id')), '_blank'

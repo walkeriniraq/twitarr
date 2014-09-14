@@ -12,6 +12,15 @@ Twitarr.ApplicationRoute = Ember.Route.extend
       @controller.incrementProperty 'uploads_pending'
     end_upload: ->
       @controller.decrementProperty 'uploads_pending'
+    display_photo: (photo_id) ->
+      @controllerFor('photo_view').set 'photo_id', photo_id
+      @render 'photo_view',
+        into: 'application',
+        outlet: 'modal'
+    close_photo: ->
+      @disconnectOutlet
+        outlet: 'modal',
+        parentView: 'application'
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->

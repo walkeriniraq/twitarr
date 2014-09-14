@@ -11,8 +11,6 @@ class PhotoStore
     existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
     return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
 
-    photo = store(temp_file, uploader)
-    photo.save
     begin
       img = Magick::Image::read(temp_file.tempfile.path).first
     rescue Java::JavaLang::NullPointerException
@@ -26,11 +24,13 @@ class PhotoStore
         img = orientation.transform_rmagick(img)
       end
     end
-    img.resize_to_fit(150, 150).write "tmp/#{photo.store_filename}"
+    photo = store(temp_file, uploader)
+    img.resize_to_fit(200, 200).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     puts "SMALL THUMB PATH: #{sm_thumb_path photo.store_filename}"
-    img.resize_to_fit(600, 800).write "tmp/#{photo.store_filename}"
+    img.resize_to_fit(800, 800).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
+    photo.save
     { status: 'ok', photo: photo.id.to_s }
   rescue EXIFR::MalformedJPEG
     { status: 'Photo extension is jpg but could not be opened as jpeg.' }

@@ -13,7 +13,7 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
   photo_id: null
 
   photo_path: (->
-    Twitarr.StreamPost.photo_path @get('photo_id')
+    Twitarr.ApplicationController.sm_photo_path @get('photo_id')
   ).property('photo_id')
 
   actions:

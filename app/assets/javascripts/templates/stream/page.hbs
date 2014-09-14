@@ -20,7 +20,7 @@
       {{post.text}}
     </div>
     {{#if post.photo}}
-      <img {{bind-attr src=post.photo_path}} style="display: block; margin: 0 auto 0.4em;"/>
+      <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} style="display: block; margin: 0 auto 0.4em;"/>
     {{/if}}
   </div>
 {{/each}}
