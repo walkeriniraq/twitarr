@@ -16,7 +16,7 @@ Twitarr.SeamailMeta = Ember.Object.extend
 Twitarr.SeamailMeta.reopenClass
   list: ->
     $.getJSON('seamail').then (data) =>
-      Ember.A().pushObject(@create(meta)) for meta in data.seamail_meta
+      Ember.A(@create(meta)) for meta in data.seamail_meta
 
 Twitarr.Seamail = Ember.Object.extend
   id: null
@@ -30,7 +30,7 @@ Twitarr.Seamail = Ember.Object.extend
   ).property('users')
 
   init: ->
-    @set('messages', Ember.A().pushObject(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))
+    @set('messages', Ember.A(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))
 
 Twitarr.Seamail.reopenClass
   get: (id) ->

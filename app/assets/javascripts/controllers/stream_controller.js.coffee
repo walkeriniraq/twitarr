@@ -12,8 +12,12 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend
 Twitarr.StreamNewController = Twitarr.Controller.extend
   photo_id: null
 
-  photo_path: (->
-    Twitarr.ApplicationController.sm_photo_path @get('photo_id')
+  photos: (->
+    photo_id = @get('photo_id')
+    if photo_id
+      [ path: Twitarr.ApplicationController.sm_photo_path photo_id, id: photo_id ]
+    else
+      []
   ).property('photo_id')
 
   actions:
@@ -37,3 +41,6 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
         @set('photo_id', data.files[0].photo)
       else
         alert "Error: " + data.files[0]?.status
+
+    remove_photo: ->
+      @set 'photo_id', null

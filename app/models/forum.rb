@@ -29,17 +29,17 @@ class Forum
     posts.size
   end
 
-  def self.create_new_forum(author, subject, first_post_text)
+  def self.create_new_forum(author, subject, first_post_text, photos)
     forum = Forum.new subject: subject
-    forum.posts << ForumPost.new(author: author, text: first_post_text, timestamp: Time.now)
+    forum.posts << ForumPost.new(author: author, text: first_post_text, timestamp: Time.now, photos: photos)
     if forum.valid?
       forum.save
     end
     forum
   end
 
-  def add_post(author, text)
-    posts.create author: author, text: text, timestamp: Time.now
+  def add_post(author, text, photos)
+    posts.create author: author, text: text, timestamp: Time.now, photos: photos
   end
 
 end

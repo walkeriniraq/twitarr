@@ -1,10 +1,19 @@
-<div id="photo-upload-div" style="border: 1px solid black; padding: 0.6em; margin: 1em; text-align: center;" class="mini-upload">
-  {{#if photo_id}}
-    <img {{bind-attr src=photo_path}} style="display: block; margin: 0 auto 0.6em;"/>
-  {{/if}}
+<div id="photo-upload-div" style="border: 1px solid black; padding: 0.6em; margin: 1em; text-align: center;">
   {{#if controllers.application.uploads_pending}}
     <div style="color: #bb7100; font-size: larger;">Uploading...</div>
+  {{else}}
+    Click to add a photo
   {{/if}}
-  Click to add or change photo
 </div>
+<div id="photo-display" style="text-align: center;">
+  {{#each photo in photos}}
+    <div style="position: relative; display: inline-block;">
+      <img class="close" {{action 'remove_photo' photo.id}} src="/img/close-icon.png" style="position: absolute; height: 1.5em; right: 0; margin: 0.3em;" />
+      <img {{bind-attr src=photo.path}} {{action 'display_photo' photo.id}} style="margin: 0 auto 0.6em;"/>
+    </div>
+  {{/each}}
+</div>
+{{#if photo_id}}
+  <img {{bind-attr src=photo_path}} style="display: block; margin: 0 auto 0.6em;"/>
+{{/if}}
 <input style="display: none" id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>

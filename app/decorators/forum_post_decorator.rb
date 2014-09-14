@@ -6,7 +6,8 @@ class ForumPostDecorator < Draper::Decorator
         id: id.to_s,
         author: author,
         text: text,
-        timestamp: timestamp
+        timestamp: timestamp,
+        photos: photos || []
     }
   end
 

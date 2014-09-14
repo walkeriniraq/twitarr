@@ -9,7 +9,7 @@ class ForumsController < ApplicationController
   end
 
   def create
-    forum = Forum.create_new_forum current_username, params[:subject], params[:text]
+    forum = Forum.create_new_forum current_username, params[:subject], params[:text], params[:photos]
     if forum.valid?
       render_json forum_meta: forum.decorate.to_meta_hash
     else
@@ -19,7 +19,7 @@ class ForumsController < ApplicationController
 
   def new_post
     forum = Forum.find(params[:forum_id])
-    post = forum.add_post current_username, params[:text]
+    post = forum.add_post current_username, params[:text], params[:photos]
     if post.valid?
       render_json forum_post: post.decorate.to_hash
     else
