@@ -18,6 +18,9 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
 
   actions:
     new: ->
+      if @get('controllers.application.uploads_pending')
+        alert('Please wait for uploads to finish.')
+        return
       Twitarr.StreamPost.new_post(@get('new_post'), @get('photo_id')).then((response) =>
         if response.errors?
           @set 'errors', response.errors

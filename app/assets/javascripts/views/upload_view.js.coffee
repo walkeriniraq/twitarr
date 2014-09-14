@@ -1,14 +1,11 @@
-Twitarr.StreamNewView = Ember.View.extend
+Twitarr.UploadView = Ember.View.extend
+  templateName: 'upload'
   needs: ['application']
-
-#  form_data: ->
-#    $.extend { name: 'authenticity_token', value: $('meta[name="csrf-token"]').attr('content') }, @controller.photo_upload_data
 
   didInsertElement: ->
     $('#fileupload').fileupload
       dataType: 'json'
       dropZone: $('#photo-upload-div')
-#      formData: { name: 'authenticity_token', value: $('meta[name="csrf-token"]').attr('content') }
       add: (e, data) =>
         @get('controller').send('start_upload')
         data.submit()

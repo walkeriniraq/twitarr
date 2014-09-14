@@ -1,0 +1,10 @@
+<div id="photo-upload-div" style="border: 1px solid black; padding: 0.6em; margin: 1em; text-align: center;" class="mini-upload">
+  {{#if photo_id}}
+    <img {{bind-attr src=photo_path}} style="display: block; margin: 0 auto 0.6em;"/>
+  {{/if}}
+  {{#if controllers.application.uploads_pending}}
+    <div style="color: #bb7100; font-size: larger;">Uploading...</div>
+  {{/if}}
+  Click to add or change photo
+</div>
+<input style="display: none" id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>
