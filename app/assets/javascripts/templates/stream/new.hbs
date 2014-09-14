@@ -9,6 +9,7 @@
   {{/if}}
   Click to add or change photo
 </div>
+<input style="display: none" id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>
 
 <ul class="errors-list">
   {{#each error in errors}}
@@ -16,5 +17,3 @@
   {{/each}}
 </ul>
 <button {{action 'new'}}>Post</button>
-
-<input style="display: none" id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>
