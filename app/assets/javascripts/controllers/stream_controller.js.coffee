@@ -15,7 +15,7 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
   photos: (->
     photo_id = @get('photo_id')
     if photo_id
-      [ path: Twitarr.ApplicationController.sm_photo_path photo_id, id: photo_id ]
+      [ Twitarr.Photo.create { id: photo_id } ]
     else
       []
   ).property('photo_id')
