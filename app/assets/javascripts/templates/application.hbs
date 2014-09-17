@@ -22,7 +22,7 @@
     <li>{{#link-to "stream"}}Tweets{{/link-to}}</li>
     <li>---</li>
     {{#unless logged_in}}
-      <li><a {{action 'login'}}>Login</a></li>
+      <li><a href="#" {{action 'login'}}>Login</a></li>
     {{else}}
       <li><a tabindex='-1' href='#' {{ action logout }}>Logout</a></li>
     {{/unless}}
