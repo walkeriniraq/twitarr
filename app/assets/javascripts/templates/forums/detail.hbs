@@ -20,9 +20,9 @@
     <div class="text">
       {{post.text}}
     </div>
-    <div class="photos" style="text-align: center;">
+    <div class="photos">
       {{#each photo in post.photos}}
-        <img {{bind-attr src=photo.path}} {{action 'display_photo' photo.id}} style="margin: 0 auto 0.4em;"/>
+        <img {{bind-attr src=photo.path}} {{action 'display_photo' photo.id}} />
       {{/each}}
     </div>
   </div>

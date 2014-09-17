@@ -3,7 +3,7 @@
     {{#link-to "stream.new"}}New Post{{/link-to}}
     <button {{action 'reload'}}>Refresh</button>
   </span>
-  <h4>Seamonkey Stream o' Noise</h4>
+  <h4>Stream O' Tweets</h4>
 </div>
 
 {{#each post in posts}}
@@ -20,7 +20,7 @@
       {{post.text}}
     </div>
     {{#if post.photo}}
-      <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} style="display: block; margin: 0 auto 0.4em;"/>
+      <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
     {{/if}}
   </div>
 {{/each}}
