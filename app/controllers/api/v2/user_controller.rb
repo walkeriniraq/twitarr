@@ -1,4 +1,4 @@
-class API::V2::UserController < BaseRedisController
+class API::V2::UserController < ActionController::Base
 
   def auth
     @user = redis.user_store.get(params[:username].downcase)

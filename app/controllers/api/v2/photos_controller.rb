@@ -1,4 +1,4 @@
-class API::V2::PhotosController < BaseRedisController
+class API::V2::PhotosController < ActionController::Base
 
   PAGE_LENGTH = 20
 
