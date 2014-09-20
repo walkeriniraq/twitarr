@@ -12,12 +12,3 @@ Twitarr.Router.map ()->
   @resource 'stream', ->
     @route 'page', { path: ':page' }
     @route 'new'
-
-#  @route 'create_announcement'
-#  @resource 'user', ->
-#    @route 'change_password'
-#    @route 'profile'
-#  @resource 'users', ->
-#    @route 'index'
-#    @route 'edit', { path: '/:username/edit' }
-#    @route 'new'

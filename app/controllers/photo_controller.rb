@@ -1,11 +1,5 @@
 class PhotoController < ApplicationController
 
-  def preview
-    #TODO: check if the photo exists
-    @photo = params[:photo]
-    render :layout => false
-  end
-
   def upload
     return render_json status: 'Must provide photos to upload.' if params[:files].blank?
     files = params[:files].map do |file|

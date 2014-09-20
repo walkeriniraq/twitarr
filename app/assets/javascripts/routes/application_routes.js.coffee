@@ -25,12 +25,3 @@ Twitarr.ApplicationRoute = Ember.Route.extend
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo 'stream.index'
-
-#    openModal: (modalName, model) ->
-#      @controllerFor(modalName).set('model', model)
-#      @render(modalName, into: 'application', outlet: 'modal')
-#    closeModal: ->
-#      @disconnectOutlet
-#        outlet: 'modal'
-#        parentView: 'application'
-#

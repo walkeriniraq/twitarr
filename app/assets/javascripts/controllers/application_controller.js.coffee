@@ -37,14 +37,6 @@ Twitarr.ApplicationController = Ember.Controller.extend
   menu_toggle: ->
     $('#side-menu').animate { width: 'toggle' }, 100
 
-#  new_email: (->
-#    @get('logged_in') && @get('email_count') > 0
-#  ).property('logged_in', 'email_count')
-#
-#  new_posts: (->
-#    @get('logged_in') && @get('posts_count') > 0
-#  ).property('logged_in', 'posts_count')
-
   login: (user) ->
     @set 'login_user', user.username
     @set 'login_admin', user.is_admin
@@ -67,33 +59,6 @@ Twitarr.ApplicationController = Ember.Controller.extend
   logged_in: (->
     @get('login_user')?
   ).property('login_user')
-
-#  new_email_class: (->
-#    if @get('new_email')
-#      'new-email-border'
-#  ).property('new_email')
-#
-#  email_count_display: (->
-#    if @get('new_email')
-#      return @get('email_count')
-#    else
-#      return null
-#  ).property('new_email', 'email_count')
-#
-#  posts_count_display: (->
-#    if @get('new_posts')
-#      return @get('posts_count')
-#    else
-#      return null
-#  ).property('new_posts', 'posts_count')
-#
-#  is_all_users_path: (path) ->
-#    return true if path is 'posts.all'
-#    return true if path is 'posts.popular'
-#    return true if path is 'posts.user'
-#    return true if path is 'posts.tag'
-#    return true if path is 'search'
-#    false
 
 Twitarr.ApplicationController.reopenClass
   sm_photo_path: (photo) ->
@@ -120,4 +85,3 @@ Twitarr.PhotoViewController = Ember.Controller.extend
   actions:
     open_full: ->
       window.open Twitarr.ApplicationController.full_photo_path(@get('photo_id'))
-#      window.open Twitarr.ApplicationController.full_photo_path(@get('photo_id')), '_blank'
