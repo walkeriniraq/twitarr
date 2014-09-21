@@ -1,17 +1,36 @@
 <div class="main-page-header">
   <h4>New seamail</h4>
 </div>
-Users (space-separated)
-{{input value=users class='input'}}
-Subject
-{{input value=subject class='input'}}
-Text
-{{textarea value=text rows='5' class='input'}}
+<div id="new-seamail-form">
+  <h5>Users</h5>
 
-<ul class="errors-list">
-  {{#each error in errors}}
-    <li>{{error}}</li>
-  {{/each}}
-</ul>
-<button {{action 'new'}}>Create</button>
+  <div class="to-users">
+    {{#each toUsers}}
+      <span class="to-user" {{ action 'remove' this }}>
+        {{this}}
+        <span class="glyphicon glyphicon-remove"></span>
+      </span>
+    {{/each}}
+  </div>
+  <div>
+    {{ view Ember.TextField valueBinding='toInput' id='seamail-user-autocomplete' class='input'}}
+    {{#if searchResults}}
+      <ul class="to-autocomplete-list">
+        {{#each searchResults}}
+          <li class="to-autocomplete-item" href="#" {{ action 'select' this }}>{{this}}</li>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+  <h5>Subject</h5>
+  {{input value=subject class='input'}}
+  <h5>Text</h5>
+  {{textarea value=text rows='5' class='input'}}
 
+  <ul class="errors-list">
+    {{#each error in errors}}
+      <li>{{error}}</li>
+    {{/each}}
+  </ul>
+  <button {{action 'new'}}>Create</button>
+</div>

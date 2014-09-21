@@ -7,6 +7,7 @@ Twitarr::Application.routes.draw do
   get 'user/username'
   get 'user/forgot_password'
   get 'user/logout'
+  get 'user/autocomplete'
 
   resources :forums, except: [:destroy, :edit, :new] do
     collection do

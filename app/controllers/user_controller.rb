@@ -52,4 +52,8 @@ class UserController < ApplicationController
     render_json status: 'ok'
   end
 
+  def autocomplete
+    render_json names: User.where(username: /^#{params[:string]}/).map(:username)
+  end
+
 end
