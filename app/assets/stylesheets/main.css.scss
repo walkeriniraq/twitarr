@@ -135,6 +135,20 @@ div.stream-post {
 
   .controls {
     float: right;
+
+    a {
+      @include border-radius(3px);
+      border: 1px solid darkgrey;
+      padding: 4px 7px;
+      background-color: #e0f0ff;
+      color: #505050;
+
+      &:hover, &:focus {
+        outline: none;
+        color: darkblue;
+        text-decoration: none;
+      }
+    }
   }
 }
 
