@@ -44,6 +44,14 @@ class API::V2::PhotoController < ApplicationController
       raise ActionController::RoutingError.new('Unable to modify fields other than original_filename') unless @photo
     end
 
+     unless @photo.uploader == current_username or is_admin?
+       err = [{error:"You can not update other users' photos"}]
+       return respond_to do |format|
+         format.json { render json: err, status: :unprocessable_entity }
+         format.xml { render xml: err, status: :unprocessable_entity }
+       end
+     end
+
     respond_to do |format|
       if @photo.update_attributes!(params[:photo].inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo})
         format.json { head :no_content, status: :ok }
@@ -56,6 +64,13 @@ class API::V2::PhotoController < ApplicationController
   end
 
   def destroy
+    unless @photo.uploader == current_username or is_admin?
+      err = [{error:"You can not delete other users' photos"}]
+      return respond_to do |format|
+        format.json { render json: err, status: :unprocessable_entity }
+        format.xml { render xml: err, status: :unprocessable_entity }
+      end
+    end
     begin
       File.delete @photo.store_filename
     rescue => e
