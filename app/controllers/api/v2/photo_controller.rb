@@ -1,49 +1,74 @@
-class API::V2::PhotoController < ActionController::Base
+require 'tempfile'
+class API::V2::PhotoController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   PAGE_LENGTH = 20
+  before_filter :login_required
+  before_filter :fetch_photo, :except => [:index]
 
-  def list
-    friendly_field_mapping = {'display_name' => 'original_filename',
-                              'photo' => 'store_filename',
-                              'time' => 'timestamp',
-                              'username' => 'uploader'}
-
-    sort_by = friendly_field_mapping[params[:sortBy]] || params[:sortBy]
-    page = params[:page].to_i
-    list = if sort_by.nil?
-             redis.photo_list[page * PAGE_LENGTH, PAGE_LENGTH]
-           else
-             render_json(status: "Invalid field to sort by '#{sort_by}'") and return unless PhotoMetadata.attr.include? sort_by
-             sort_options = {:limit => [page * PAGE_LENGTH, PAGE_LENGTH]}
-             if sort_by != "timestamp"
-               sort_options[:order] = "ALPHA"
-             else
-               sort_options[:order] = "ASC"
-             end
-             puts sort_options
-             redis.photo_metadata_index.sort_list(redis.photo_list, sort_by, sort_options)
-           end
-    photos = redis.photo_metadata_store.get(list).reject { |x| x.post_id.nil? }
-    render_json(status: 'no more items') and return if photos.blank?
-    posts = redis.post_store.get(photos.map { |x| x.post_id }).reduce({}) do |hash, post|
-      hash[post.post_id] = post
-      hash
-    end
-    data = photos.map do |photo|
-      post = posts[photo.post_id]
-      {
-          display_name: photo.original_filename,
-          photo: photo.store_filename,
-          time: post.andand.post_time,
-          username: post.andand.username,
-          message: post.andand.message
-      }
-    end
-    render_json status: 'ok',
-                total_count: redis.photo_list.size,
-                page: page,
-                items: data.size,
-                photos: data
+  def login_required
+    head :unauthorized unless logged_in?
   end
 
+  def fetch_photo
+    begin
+      @photo = PhotoMetadata.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound
+      raise ActionController::RoutingError.new('Not Found') unless @photo
+    end
+  end
+
+  def index
+    sort_by = (params[:sort_by] || 'upload_time').to_sym
+    order = (params[:order] || 'asc').to_sym
+    page = params[:page].to_i
+    query = PhotoMetadata.where({}).order_by([sort_by, order]).skip(PAGE_LENGTH * page).limit(PAGE_LENGTH)
+    count = query.length
+    result = [status: 'ok', total_count:count, page:page, items:query.length, photos:query]
+    respond_to do |format|
+      format.json { render json: result }
+      format.xml { render xml: result }
+    end
+  end
+
+  def show
+    respond_to do |format|
+      format.json { render json: @photo }
+      format.xml { render xml: @photo }
+    end
+  end
+
+  def update
+    puts params
+    if params[:photo].keys != [:original_filename]
+      raise ActionController::RoutingError.new('Unable to modify fields other than original_filename') unless @photo
+    end
+
+    respond_to do |format|
+      if @photo.update_attributes!(params[:photo].inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo})
+        format.json { head :no_content, status: :ok }
+        format.xml { head :no_content, status: :ok }
+      else
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        format.xml { render xml: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    begin
+      File.delete @photo.store_filename
+    rescue => e
+      puts "Error deleting file: #{e.to_s}"
+    end
+    respond_to do |format|
+      if @photo.destroy
+        format.json { head :no_content, status: :ok }
+        format.xml { head :no_content, status: :ok }
+      else
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        format.xml { render xml: @photo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
