@@ -1,4 +1,4 @@
-class API::V2::PhotosController < ActionController::Base
+class API::V2::PhotoController < ActionController::Base
 
   PAGE_LENGTH = 20
 
