@@ -28,4 +28,10 @@ Twitarr::Application.routes.draw do
   get 'photo/medium_thumb/:id', to: 'photo#medium_thumb'
   get 'photo/full/:id', to: 'photo#full'
 
+  namespace :api do
+    namespace :v2 do
+      resources :photo, only: [:index, :destroy, :update, :show], :defaults => { :format => 'json' }
+    end
+  end
+
 end
