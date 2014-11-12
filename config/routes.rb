@@ -35,7 +35,8 @@ Twitarr::Application.routes.draw do
       get 'user/auth', to: 'user#auth'
       get 'user/logout', to: 'user#logout'
       get 'user/whoami', to: 'user#whoami'
-      get 'user/autocomplete', to: 'user#autocomplete'
+      get 'user/autocomplete/:username', to: 'user#autocomplete'
+      get 'user/view/:username', to: 'user#show'
     end
   end
 

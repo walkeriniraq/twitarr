@@ -18,19 +18,26 @@ class API::V2::UserController < ApplicationController
   end
 
   def autocomplete
-    render_json names: User.where(username: /^#{params[:string]}/).map(:username)
+    render_json names: User.where(username: /^#{params[:username]}/).map(:username)
   end
 
   def whoami
     return unless logged_in!
-    render_json :status => 'ok', user: {
-                                   username: current_user.username,
-                                   display_name: current_user.display_name,
-                                   admin: current_user.is_admin,
-                                   email: current_user.email,
-                                   last_login: current_user.last_login,
-                                   session_id: session.id
-                               }
+    render_json :status => 'ok', user: UserDecorator.decorate(current_user).self_hash
+  end
+
+  def show
+    return unless logged_in!
+    user = User.where(username: params[:username]).first
+    unless user
+      render status: :not_found, json: {status: 'Not found', error: "User #{params[:username]} is not found."}
+      return
+    end
+    if current_user.is_admin && params[:admin]
+      render status: :ok, json: {status: 'Found', user: UserDecorator.decorate(user).admin_hash}
+    else
+      render status: :ok, json: {status: 'Found', user: UserDecorator.decorate(user).gui_hash}
+    end
   end
 
   def logout
