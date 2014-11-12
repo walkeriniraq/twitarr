@@ -27,6 +27,29 @@ class ApplicationController < ActionController::Base
     session[:is_admin]
   end
 
+  def logged_in!
+    unless logged_in?
+      render json: {:status => 'key not valid'}, status: 401 and return false
+    end
+    true
+  end
+
+  def validate_login(username, password)
+    user = User.get username
+    result = {user: user}
+    if user.nil?
+      result[:error] = 'User does not exist.'
+    elsif user.status != UserController::ACTIVE_STATUS|| user.empty_password?
+      result[:error] = 'User account has been disabled.'
+    elsif !user.correct_password(password)
+      result[:error] = 'Invalid username or password.'
+    else
+      user.update_last_login.save
+    end
+    result
+  end
+
+
   def login_required
     render json: { status: 'Not logged in.' }
   end

@@ -31,6 +31,11 @@ Twitarr::Application.routes.draw do
   namespace :api do
     namespace :v2 do
       resources :photo, only: [:index, :destroy, :update, :show], :defaults => { :format => 'json' }
+      get 'user/new_seamail', to: 'user#new_seamail'
+      get 'user/auth', to: 'user#auth'
+      get 'user/logout', to: 'user#logout'
+      get 'user/whoami', to: 'user#whoami'
+      get 'user/autocomplete', to: 'user#autocomplete'
     end
   end
 

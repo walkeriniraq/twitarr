@@ -80,6 +80,10 @@ class User
     Seamail.where(usernames: username).sort_by { |x| x.last_message }.reverse
   end
 
+  def seamail_count
+    Seamail.where(usernames: username).length
+  end
+
   def self.format_username(username)
     username.andand.downcase.andand.strip
   end
