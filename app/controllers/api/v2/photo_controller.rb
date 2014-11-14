@@ -14,7 +14,7 @@ class API::V2::PhotoController < ApplicationController
     begin
       @photo = PhotoMetadata.find(params[:id])
     rescue Mongoid::Errors::DocumentNotFound
-      raise ActionController::RoutingError.new('Not Found') unless @photo
+      render status:404, json:{status:'Not found', error: "Photo by id #{params['id']} is not found."}
     end
   end
 
