@@ -5,6 +5,7 @@ class StreamPost
   field :tx, as: :text, type: String
   field :ts, as: :timestamp, type: Time
   field :p, as: :photo, type: String
+  field :fv, as: :favorites, type: Array
 
   validates :text, :author, :timestamp, presence: true
   validate :validate_author
@@ -18,6 +19,11 @@ class StreamPost
 
   def self.at_or_before(ms_since_epoch)
     where(:timestamp.lte => Time.at(ms_since_epoch.to_i / 1000))
+  end
+
+  def favorites
+    self.favorites = [] if super.nil?
+    super
   end
 
 end

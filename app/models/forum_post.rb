@@ -19,7 +19,12 @@ class ForumPost
   end
 
   def author=(username)
-    self[:author] = User.format_username username
+    super User.format_username username
+  end
+
+  def photos
+    self.photos = [] if super.nil?
+    super
   end
 
 end

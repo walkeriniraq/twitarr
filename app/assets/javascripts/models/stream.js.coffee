@@ -4,6 +4,7 @@ Twitarr.StreamPost = Ember.Object.extend
   text: null
   timestamp: null
   photo: null
+  favorites: []
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
@@ -13,6 +14,9 @@ Twitarr.StreamPost = Ember.Object.extend
     Twitarr.ApplicationController.sm_photo_path @get('photo')
   ).property('photo')
 
+  favorites_string: (->
+    @get('favorites').join(', ')
+  ).property('favorites')
 
 Twitarr.StreamPost.reopenClass
   page: (page) ->

@@ -22,6 +22,11 @@
     {{#if post.photo}}
       <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
     {{/if}}
+    {{#if post.favorites}}
+      <div>
+        {{post.favorites_string}} like this.
+      </div>
+    {{/if}}
   </div>
 {{/each}}
 

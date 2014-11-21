@@ -28,11 +28,11 @@ class Seamail
   end
 
   def usernames=(usernames)
-    self[:usernames] = usernames.map { |x| User.format_username x }
+    super usernames.map { |x| User.format_username x }
   end
 
   def subject=(subject)
-    self[:subject] = subject.andand.strip
+    super subject.andand.strip
   end
 
   def last_message
