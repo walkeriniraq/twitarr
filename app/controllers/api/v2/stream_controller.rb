@@ -38,8 +38,8 @@ class API::V2::StreamController < ApplicationController
     unless @post.author == current_username or is_admin?
       err = [{error:"You can not delete other users' posts"}]
       return respond_to do |format|
-        format.json { render json: err, status: :unprocessable_entity }
-        format.xml { render xml: err, status: :unprocessable_entity }
+        format.json { render json: err, status: :forbidden }
+        format.xml { render xml: err, status: :forbidden }
       end
     end
     respond_to do |format|
