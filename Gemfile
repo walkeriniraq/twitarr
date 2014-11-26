@@ -40,7 +40,9 @@ group :doc do
 end
 
 group :test do
+  # these versions are based on: http://stackoverflow.com/a/21639154
+  gem 'minitest', '~> 5.4.3'
   gem 'minitest-spec-rails'
-  gem 'turn'
+  gem 'turn', '< 0.8.3'
   gem 'mocha', :require => false
 end
