@@ -84,6 +84,10 @@ class User
     Seamail.where(usernames: username).length
   end
 
+  def liked_posts
+    ForumPost.where(:likes.in => [self.username]).union(StreamPost.where(:likes.in => [self.username])).order_by(timestamp: :desc)
+  end
+
   def self.format_username(username)
     username.andand.downcase.andand.strip
   end
@@ -95,5 +99,6 @@ class User
   def self.get(username)
     where(username: format_username(username)).first
   end
+
 
 end

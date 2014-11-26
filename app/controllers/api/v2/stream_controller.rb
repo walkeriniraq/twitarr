@@ -30,7 +30,6 @@ class API::V2::StreamController < ApplicationController
   end
 
   def show
-    @post = StreamPost.find(params[:id])
     render_json @post.decorate.to_hash
   end
 
@@ -58,7 +57,29 @@ class API::V2::StreamController < ApplicationController
     if post.valid?
       render_json stream_post: post.decorate.to_hash
     else
-      render_json errors: post.errors.full_messages
+      render_json status: :unprocessable_entity, errors: post.errors.full_messages
+    end
+  end
+
+  def like
+    @post.add_like current_username
+    if @post.save
+      render status: :ok, json: {status: 'ok', likes: @post.likes }
+    else
+      render json: {status: 'error', likes: @post.errors },  status: :unprocessable_entity
+    end
+  end
+
+  def show_likes
+    render status: :ok, json: {status: 'ok', likes: @post.likes }
+  end
+
+  def unlike
+    @post.remove_like current_username
+    if @post.save
+      render status: :ok, json: {status: 'ok', likes: @post.likes }
+    else
+      render json: {status: 'error', likes: @post.errors },  status: :unprocessable_entity
     end
   end
 
@@ -84,7 +105,7 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_before(start_loc, author).limit(limit).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
-    {stream_posts: posts.map { |x| x.decorate.to_hash }, next_page: next_page}
+    {stream_posts: posts.map { |x| x.decorate.to_list_hash }, next_page: next_page}
   end
 
   def want_newer_posts?
@@ -97,6 +118,6 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_after(start_loc, author).limit(limit).order_by(timestamp: :asc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
-    {stream_posts: posts.map { |x| x.decorate.to_hash }, next_page: next_page}
+    {stream_posts: posts.map { |x| x.decorate.to_list_hash }, next_page: next_page}
   end
 end
