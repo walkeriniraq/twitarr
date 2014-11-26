@@ -60,30 +60,36 @@ Dir.mktmpdir do |dir|
   photos.push add_photo('http://i.imgur.com/FJdle9E.jpg', File.join(dir, 'warm_bread.jpg'), 'kvort', DateTime.civil(2014, 10, 14, 11, 15))
 end
 
-def create_post(text, author, timestamp, photo)
+def create_post(text, author, timestamp, photo, likes = [])
   post = StreamPost.create(text: text, author: author, timestamp: timestamp, photo: photo)
   unless post.valid?
     puts "Errors for post #{text}: #{post.errors.full_messages}"
+    return post
   end
+  likes.each do |like_user|
+    post.add_like like_user
+  end
+  post.save!
+  post
 end
 
 StreamPost.delete_all
 
 if StreamPost.count == 0
-  create_post 'This is a cute cat #catphotos', 'james', DateTime.civil(2014, 10, 13, 14, 31), photos[0].id
+  create_post 'This is a cute cat #catphotos', 'james', DateTime.civil(2014, 10, 13, 14, 31), photos[0].id, ['steven']
   create_post 'Joco is the best cruise ever #jococruise', 'steve', DateTime.civil(2014, 10, 14, 10, 9), nil
   create_post 'This cruise is coming up really soon #jococruise', 'james', DateTime.civil(2014, 10, 14, 10, 12), nil
 
   create_post 'The bread is warm #warmbread', 'james', DateTime.civil(2014, 10, 14, 10, 13), nil
-  create_post 'Whats with the #warmbread meme?', 'steve', DateTime.civil(2014, 10, 14, 10, 14), nil
+  create_post 'Whats with the #warmbread meme?', 'steve', DateTime.civil(2014, 10, 14, 10, 14), nil, ['james']
   create_post 'This is a mean cat #catphotos', 'steve', DateTime.civil(2014, 10, 14, 12, 1), photos[1].id
-  create_post 'This is a tired cat #catphotos', 'james', DateTime.civil(2014, 10, 14, 12, 6), photos[2].id
+  create_post 'This is a tired cat #catphotos', 'james', DateTime.civil(2014, 10, 14, 12, 6), photos[2].id, ['steven']
 
   create_post 'Look at this #warmbread', 'kvort', DateTime.civil(2014, 10, 14, 11, 15), photos[3].id
-  create_post 'Wow, that bread is warm #warmbread', 'james', DateTime.civil(2014, 10, 14, 11, 16), nil
-  create_post 'I miss netflix.', 'steve', DateTime.civil(2014, 10, 14, 11, 17), nil
+  create_post 'Wow, that bread is warm #warmbread', 'james', DateTime.civil(2014, 10, 14, 11, 16), nil, %w(kvort steven)
+  create_post 'I miss netflix.', 'steve', DateTime.civil(2014, 10, 14, 11, 17), nil, %w(kvort james)
 
-  create_post 'Are you, are you #mockingjay', 'kvort', DateTime.civil(2014, 10, 14, 11, 18), photos[3].id
+  create_post 'Are you, are you #mockingjay', 'kvort', DateTime.civil(2014, 10, 14, 11, 18), photos[3].id, %w(james steven)
   create_post 'Coming to the tree #mockingjay', 'james', DateTime.civil(2014, 10, 14, 11, 19), nil
   create_post 'Where they strung up a man they say murdered three #mockingjay', 'steve', DateTime.civil(2014, 10, 14, 11, 20), nil
 
@@ -105,9 +111,9 @@ if StreamPost.count == 0
   create_post 'Where the dead man called out for his love to flee #mockingjay', 'steve', DateTime.civil(2014, 10, 14, 11, 26), nil
 
   create_post 'Nike+ bracelet thingie verdict: it successfully guilted me into learning guitar by fighting zombies.', 'steve', DateTime.civil(2014, 10, 14, 11, 27), nil
-  create_post 'I may have eaten too much cake.', 'kvort', DateTime.civil(2014, 10, 14, 11, 28), nil
-  create_post '@kvort you can never have too much cake.', 'steve', DateTime.civil(2014, 10, 14, 11, 29), nil
-  create_post '@kvort though you can never eat to much cookies', 'james', DateTime.civil(2014, 10, 14, 11, 30), nil
-  create_post '@james challenge accepted.', 'kvort', DateTime.civil(2014, 10, 14, 11, 31), nil
-  create_post 'Whats the over/under?', 'steve', DateTime.civil(2014, 10, 14, 11, 32), nil
+  create_post 'I may have eaten too much cake.', 'kvort', DateTime.civil(2014, 10, 14, 11, 28), nil, %w(james)
+  create_post '@kvort you can never have too much cake.', 'steve', DateTime.civil(2014, 10, 14, 11, 29), nil, %w(kvort)
+  create_post '@kvort though you can never eat to much cookies', 'james', DateTime.civil(2014, 10, 14, 11, 30), nil, %w(steven)
+  create_post '@james challenge accepted.', 'kvort', DateTime.civil(2014, 10, 14, 11, 31), nil, %w(james steven)
+  create_post 'Whats the over/under?', 'steve', DateTime.civil(2014, 10, 14, 11, 32), nil, %w(kvort james steven)
 end

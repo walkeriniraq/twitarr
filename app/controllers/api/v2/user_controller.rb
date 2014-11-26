@@ -40,6 +40,19 @@ class API::V2::UserController < ApplicationController
     end
   end
 
+  def likes
+    return unless logged_in!
+    limit = params[:limit] || 20
+    skip = params[:skip] || 0
+    query = current_user.liked_posts.limit(limit).skip(skip)
+    count = query.length
+    result = [status: 'ok', user:current_user.username, total_count:count, next:(skip + limit), items:query.length, likes:query]
+    respond_to do |format|
+      format.json { render json: result }
+      format.xml { render xml: result }
+    end
+  end
+
   def logout
     logout_user
     render_json status: 'ok'
