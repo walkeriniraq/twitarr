@@ -23,12 +23,15 @@ class StreamPost
   end
 
   def add_like(username)
-    self.likes << username unless self.likes.include? username
+    StreamPost.
+        where(id: id).
+        find_and_modify( {'$addToSet' => {lk: username} }, new: true)
   end
 
   def remove_like(username)
-    self.likes.delete username
-    self.likes
+    StreamPost.
+        where(id: id).
+        find_and_modify( {'$pull' => {lk: username} }, new: true)
   end
 
   def self.at_or_before(ms_since_epoch, filter_author = nil)

@@ -62,12 +62,8 @@ class API::V2::StreamController < ApplicationController
   end
 
   def like
-    @post.add_like current_username
-    if @post.save
-      render status: :ok, json: {status: 'ok', likes: @post.likes }
-    else
-      render json: {status: 'error', likes: @post.errors },  status: :unprocessable_entity
-    end
+    @post = @post.add_like current_username
+    render status: :ok, json: {status: 'ok', likes: @post.likes }
   end
 
   def show_likes
@@ -75,12 +71,8 @@ class API::V2::StreamController < ApplicationController
   end
 
   def unlike
-    @post.remove_like current_username
-    if @post.save
-      render status: :ok, json: {status: 'ok', likes: @post.likes }
-    else
-      render json: {status: 'error', likes: @post.errors },  status: :unprocessable_entity
-    end
+    @post = @post.remove_like current_username
+    render status: :ok, json: {status: 'ok', likes: @post.likes }
   end
 
   ## The following functions are helpers for the finding of new posts in the stream

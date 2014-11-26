@@ -24,12 +24,15 @@ class ForumPost
   end
 
   def add_like(username)
-    self.likes << username unless self.likes.include? username
+    ForumPost.
+        where(id: id).
+        find_and_modify( {'$addToSet' => {lk: username} }, new: true)
   end
 
   def remove_like(username)
-    self.likes.delete username
-    self.likes
+    ForumPost.
+        where(id: id).
+        find_and_modify( {'$pull' => {lk: username} }, new: true)
   end
 
   def author=(username)
