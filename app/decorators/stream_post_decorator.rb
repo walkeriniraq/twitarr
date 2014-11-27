@@ -1,3 +1,4 @@
+# noinspection RubyResolve
 class StreamPostDecorator < Draper::Decorator
   delegate_all
 
@@ -12,6 +13,9 @@ class StreamPostDecorator < Draper::Decorator
         likes: likes,
         likes_counts: likes.length,
         epoch: (timestamp.to_f * 1000).to_i,
+        mentions: mentions,
+        entities: entities,
+        hash_tags: hash_tags,
         photo: photo
     }
   end

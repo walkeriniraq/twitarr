@@ -32,6 +32,7 @@ unless User.exist? 'admin'
   user.save
 end
 
+# noinspection RubyResolve
 def add_photo(url, localfilename, uploader, upload_date)
 
   photo_basename = File.basename localfilename
@@ -51,6 +52,8 @@ def add_photo(url, localfilename, uploader, upload_date)
   photo_md.save!
   photo_md
 end
+
+# noinspection RubyResolve
 Mongoid.raise_not_found_error = false
 photos = []
 Dir.mktmpdir do |dir|
@@ -111,9 +114,9 @@ if StreamPost.count == 0
   create_post 'Where the dead man called out for his love to flee #mockingjay', 'steve', DateTime.civil(2014, 10, 14, 11, 26), nil
 
   create_post 'Nike+ bracelet thingie verdict: it successfully guilted me into learning guitar by fighting zombies.', 'steve', DateTime.civil(2014, 10, 14, 11, 27), nil
-  create_post 'I may have eaten too much cake.', 'kvort', DateTime.civil(2014, 10, 14, 11, 28), nil, %w(james)
-  create_post '@kvort you can never have too much cake.', 'steve', DateTime.civil(2014, 10, 14, 11, 29), nil, %w(kvort)
-  create_post '@kvort though you can never eat to much cookies', 'james', DateTime.civil(2014, 10, 14, 11, 30), nil, %w(steven)
+  create_post 'I may have eaten too much #cake.', 'kvort', DateTime.civil(2014, 10, 14, 11, 28), nil, %w(james)
+  create_post '@kvort you can never have too much #cake.', 'steve', DateTime.civil(2014, 10, 14, 11, 29), nil, %w(kvort)
+  create_post '@kvort though you can never eat to much #cookies', 'james', DateTime.civil(2014, 10, 14, 11, 30), nil, %w(steven)
   create_post '@james challenge accepted.', 'kvort', DateTime.civil(2014, 10, 14, 11, 31), nil, %w(james steven)
   create_post 'Whats the over/under?', 'steve', DateTime.civil(2014, 10, 14, 11, 32), nil, %w(kvort james steven)
 end

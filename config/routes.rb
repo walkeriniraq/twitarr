@@ -34,6 +34,8 @@ Twitarr::Application.routes.draw do
       resources :stream, only: [:index, :new, :create, :show, :destroy]
       post 'stream/:id/like', to: 'stream#like'
       delete 'stream/:id/like', to: 'stream#unlike'
+      get 'stream/m/:query', to: 'stream#view_mention'
+      get 'stream/h/:query', to: 'stream#view_hash_tag'
       get 'stream/:id/like', to: 'stream#show_likes'
       get 'user/new_seamail', to: 'user#new_seamail'
       get 'user/auth', to: 'user#auth'
