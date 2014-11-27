@@ -80,6 +80,36 @@ class API::V2::StreamController < ApplicationController
     end
   end
 
+  # noinspection RubyResolve
+  def update
+    unless (params[:stream].keys - %w(text photo)).empty?
+      render json:[{error:'Unable to modify fields other than text or photo'}], status: :bad_request
+      return
+    end
+
+    unless @post.author == current_username or is_admin?
+      err = [{error:"You can not modify other users' posts"}]
+      render json: err, status: :forbidden
+      return
+    end
+    @post.text = params[:text] if params.has_key? :text
+
+    if params.has_key? :photo
+      unless PhotoMetadata.where(id: params[:photo]).exists?
+        render json:[{error:"Unable to find photo by id #{params[:photo]}"}], status: :not_acceptable
+        return
+      end
+      @post.photo = params[:photo]
+    end
+
+    @post.save
+    if @post.valid?
+      render_json stream_post: @post.decorate.to_hash
+    else
+      render_json errors: @post.errors.full_messages
+    end
+  end
+
   def like
     @post = @post.add_like current_username
     render status: :ok, json: {status: 'ok', likes: @post.likes }

@@ -1,4 +1,5 @@
 require 'tempfile'
+# noinspection RailsParamDefResolve,RubyResolve
 class API::V2::PhotoController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -39,21 +40,20 @@ class API::V2::PhotoController < ApplicationController
   end
 
   def update
-    puts params
     if params[:photo].keys != [:original_filename]
-      raise ActionController::RoutingError.new('Unable to modify fields other than original_filename') unless @photo
+      raise ActionController::RoutingError.new('Unable to modify fields other than original_filename')
     end
 
-     unless @photo.uploader == current_username or is_admin?
-       err = [{error:"You can not update other users' photos"}]
-       return respond_to do |format|
-         format.json { render json: err, status: :forbidden }
-         format.xml { render xml: err, status: :forbidden }
-       end
-     end
+    unless @photo.uploader == current_username or is_admin?
+      err = [{error: "You can not update other users' photos"}]
+      return respond_to do |format|
+        format.json { render json: err, status: :forbidden }
+        format.xml { render xml: err, status: :forbidden }
+      end
+    end
 
     respond_to do |format|
-      if @photo.update_attributes!(params[:photo].inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo})
+      if @photo.update_attributes!(params[:photo].inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo })
         format.json { head :no_content, status: :ok }
         format.xml { head :no_content, status: :ok }
       else
