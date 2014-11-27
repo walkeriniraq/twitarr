@@ -39,7 +39,7 @@ class API::V2::StreamController < ApplicationController
     query_string = params[:query]
     start_loc = params[:page] || 0
     limit = params[:limit] || PAGE_LENGTH
-    query = StreamPost.where(mentions: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
+    query = StreamPost.or({mentions: query_string}, {author: query_string}).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
     render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_list_hash }, next:(start_loc+limit)}
   end
 
