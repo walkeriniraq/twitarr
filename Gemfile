@@ -34,13 +34,17 @@ gem 'rmagick4j'
 gem 'exifr'
 gem 'puma'
 
+gem 'twitter-text', '~> 1.10.0'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
 group :test do
+  # these versions are based on: http://stackoverflow.com/a/21639154
+  gem 'minitest', '~> 5.4.3'
   gem 'minitest-spec-rails'
-  gem 'turn'
+  gem 'turn', '< 0.8.3'
   gem 'mocha', :require => false
 end
