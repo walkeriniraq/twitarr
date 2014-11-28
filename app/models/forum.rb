@@ -3,7 +3,7 @@ class Forum
 
   field :sj, as: :subject, type: String
 
-  embeds_many :posts, class_name: 'ForumPost', store_as: :fp, order: :timestamp.desc, validate: false
+  embeds_many :posts, class_name: 'ForumPost', store_as: :fp, order: :timestamp.asc, validate: false
 
   validates :subject, presence: true
   validate :validate_posts
