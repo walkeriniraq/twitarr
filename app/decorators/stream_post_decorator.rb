@@ -10,6 +10,7 @@ class StreamPostDecorator < Draper::Decorator
         id: as_str(id),
         author: author,
         text: text,
+        #  TODO: figure this thing out
         # text: auto_link(text),
         timestamp: timestamp.to_i,
         photo: photo,

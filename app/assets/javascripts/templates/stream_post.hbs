@@ -1,0 +1,28 @@
+<div class="stream-post">
+  <div>
+    <span class="author">
+      {{post.author}}
+    </span>
+    <span class="timestamp">
+      {{post.pretty_timestamp}}
+    </span>
+  </div>
+  <div class="text">
+    {{post.text}}
+  </div>
+  {{#if post.photo}}
+    <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
+  {{/if}}
+  <div class="post-bottom clearfix">
+    {{#if post.likes}}
+      {{post.likes_string}}
+    {{/if}}
+    <div class="pull-right">
+      {{#if post.user_likes}}
+        <a href="#" {{action 'unlike'}}>Unlike</a>
+      {{else}}
+        <a href="#" {{action 'like'}}>Like</a>
+      {{/if}}
+    </div>
+  </div>
+</div>

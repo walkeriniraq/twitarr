@@ -8,12 +8,27 @@ class StreamController < ApplicationController
   end
 
   def create
+    return unless logged_in!
     post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo])
     if post.valid?
       render_json stream_post: post.decorate.to_hash
     else
       render_json errors: post.errors.full_messages
     end
+  end
+
+  def like
+    return unless logged_in!
+    post = StreamPost.find(params[:id])
+    post = post.add_like current_username
+    render_json status: 'ok', likes: post.decorate.some_likes(current_username)
+  end
+
+  def unlike
+    return unless logged_in!
+    post = StreamPost.find(params[:id])
+    post = post.remove_like current_username
+    render_json status: 'ok', likes: post.decorate.some_likes(current_username)
   end
 
 end
