@@ -5,6 +5,7 @@ Twitarr::Application.routes.draw do
   post 'login', to: 'user#login'
   get 'help', to: 'home#help'
   get 'user/new', to: 'user#create_user'
+  post 'user/new', to: 'user#new'
   get 'user/username'
   get 'user/forgot_password'
   get 'user/logout'

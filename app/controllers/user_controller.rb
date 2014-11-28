@@ -29,6 +29,57 @@ class UserController < ApplicationController
   def login_page
   end
 
+  def new
+    new_username = params[:new_username].downcase
+    @user = User.new username: new_username, display_name: new_username,
+                    is_admin: false, status: UserController::ACTIVE_STATUS, email: params[:email],
+                    security_question: params[:security_question], security_answer: params[:security_answer]
+    if !@user.valid?
+      render :create_user
+    elsif User.where(username: new_username).exists?
+      @user.errors.add :username, 'already exists.'
+      render :create_user
+    elsif params[:new_password].length < 6
+      @user.errors.add :password, 'must be at least six characters long.'
+      render :create_user
+    elsif params[:new_password] != params[:new_password2]
+      @user.errors.add :password, 'does not match.'
+      render :create_user
+    else
+      @user.set_password params[:new_password]
+      @user.save
+      login_user(@user)
+      # redis.user_store.save @user.update_last_login, current_username
+      redirect_to :root
+    end
+  end
+
+  def security_question
+    # @user = redis.user_store.get(params[:username].downcase)
+    # if @user.nil?
+    #   @error = 'User does not exist.'
+    #   render :forgot_password
+    # end
+  end
+
+  def security_answer
+    @user = redis.user_store.get(params[:username].downcase)
+    if @user.nil?
+      @error = 'User does not exist.'
+      render :forgot_password
+    end
+    if params[:security_answer].downcase.strip != @user.security_answer ||
+        params[:email].strip != @user.email
+      sleep 30.seconds.to_i
+      @error = 'Email or security answer did not match.'
+      render :security_question and return
+    end
+    @user.set_password 'seamonkey'
+    redis.user_store.save @user, @user.username
+    @error = 'Password has been reset to "seamonkey"'
+    render :login_page
+  end
+
   def username
     if logged_in?
       if current_user.nil?
