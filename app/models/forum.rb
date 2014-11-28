@@ -18,7 +18,7 @@ class Forum
   end
 
   def subject=(subject)
-    self[:subject] = subject.andand.strip
+    super subject.andand.strip
   end
 
   def last_post

@@ -17,7 +17,7 @@ class SeamailMessage
   end
 
   def author=(username)
-    self[:author] = User.format_username username
+    super User.format_username username
   end
 
 end

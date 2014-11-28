@@ -22,6 +22,8 @@ Twitarr::Application.routes.draw do
   end
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'
+  get 'tweet/like/:id', to: 'stream#like'
+  get 'tweet/unlike/:id', to: 'stream#unlike'
 
   post 'photo/upload'
   get 'photo/small_thumb/:id', to: 'photo#small_thumb'
