@@ -34,13 +34,13 @@ class StreamPost
   def add_like(username)
     StreamPost.
         where(id: id).
-        find_and_modify( {'$addToSet' => {lk: username} }, new: true)
+        find_and_modify({ '$addToSet' => { lk: username } }, new: true)
   end
 
   def remove_like(username)
     StreamPost.
         where(id: id).
-        find_and_modify( {'$pull' => {lk: username} }, new: true)
+        find_and_modify({ '$pull' => { lk: username } }, new: true)
   end
 
   def self.at_or_before(ms_since_epoch, filter_author = nil)
@@ -67,6 +67,11 @@ class StreamPost
         self.mentions << entity[:screen_name]
       end
     end
+  end
+
+  def likes
+    self.likes = [] if super.nil?
+    super
   end
 
 end

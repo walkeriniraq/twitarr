@@ -1,21 +1,21 @@
 # noinspection RubyResolve
 class StreamPostDecorator < Draper::Decorator
   delegate_all
+  include Twitter::Autolink
 
-  MAX_LIST_LIKES = 10
+  MAX_LIST_LIKES = 5
 
   def to_hash(username = nil)
     {
         id: as_str(id),
         author: author,
-        text: text,
+        text: auto_link(text),
         timestamp: timestamp.to_i,
         photo: photo,
         likes: some_likes(username),
         mentions: mentions,
         entities: entities,
         hash_tags: hash_tags,
-        photo: photo
     }
   end
 
@@ -24,18 +24,17 @@ class StreamPostDecorator < Draper::Decorator
     unless username.nil?
       favs << 'You' if likes.include? username
     end
-    if favorites.count < 20
+    if likes.count < MAX_LIST_LIKES
       favs += likes.reject { |x| x == username }
     else
-      favs << "#{likes.count} seamonkeys"
+      if likes.include? username
+        favs << "#{likes.count - 1} other seamonkeys"
+      else
+        favs << "#{likes.count} seamonkeys"
+      end
     end
     return nil if favs.empty?
     favs
-  end
-
-  def as_str(v)
-    return v.to_str if v.is_a? BSON::ObjectId
-    v
   end
 
 end

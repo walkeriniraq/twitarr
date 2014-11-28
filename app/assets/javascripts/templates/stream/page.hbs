@@ -22,9 +22,9 @@
     {{#if post.photo}}
       <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
     {{/if}}
-    {{#if post.favorites}}
+    {{#if post.likes}}
       <div>
-        {{post.favorites_string}} like this.
+        {{post.likes_string}}
       </div>
     {{/if}}
   </div>
