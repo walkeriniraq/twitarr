@@ -40,6 +40,55 @@ class API::V2::UserController < ApplicationController
     end
   end
 
+  def get_photo
+    user = User.where(username: params[:username]).first
+    send_file user.profile_picture_path, disposition: 'inline'
+  end
+
+  def reset_photo
+    return unless logged_in!
+
+    if params[:username] != current_user and not current_user.is_admin
+      render json: {message: 'Unable to modify another user\'s profile picture.', status: 'err'}, status: :forbidden
+      return
+    end
+
+    if params[:username] != current_username
+      user = User.where(username: params[:username]).first
+    else
+      user = current_user
+    end
+    unless user
+      render status: :not_found, json: {status: 'Not found', error: "User #{params[:username]} is not found."}
+      return
+    end
+    user.set_profile_image_as_identicon
+  end
+
+  def update_photo
+    return unless logged_in!
+    puts params
+    return render json: {message: 'Must provide a photo to upload.', status: 'err'}, status: :bad_request unless params[:file]
+
+    if params[:username] != current_username and not current_user.is_admin
+      render json: {message: 'Unable to modify another user\'s profile picture.', status: 'err'}, status: :forbidden
+      return
+    end
+
+    if params[:username] != current_user
+      user = User.where(username: params[:username]).first
+    else
+      user = current_user
+    end
+    unless user
+      render status: :not_found, json: {status: 'Not found', error: "User #{params[:username]} is not found."}
+      return
+    end
+
+    user.profile_picture_from_file params[:file]
+    render json:{status:'ok', message:'updated user\'s profile picture'}
+  end
+
   def likes
     return unless logged_in!
     limit = params[:limit] || 20

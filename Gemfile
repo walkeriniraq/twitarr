@@ -34,6 +34,8 @@ gem 'rmagick4j'
 gem 'exifr'
 gem 'puma'
 
+gem 'siphash'
+
 gem 'twitter-text', '~> 1.10.0'
 
 group :doc do

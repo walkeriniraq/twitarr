@@ -46,6 +46,9 @@ Twitarr::Application.routes.draw do
       get 'user/whoami', to: 'user#whoami'
       get 'user/autocomplete/:username', to: 'user#autocomplete'
       get 'user/view/:username', to: 'user#show'
+      get 'user/photo/:username', to: 'user#get_photo'
+      post 'user/photo/:username', to: 'user#update_photo'
+      delete 'user/photo/:username', to: 'user#reset_photo'
     end
   end
 

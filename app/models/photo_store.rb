@@ -5,12 +5,15 @@ require 'singleton'
 class PhotoStore
   include Singleton
 
-  def upload(temp_file, uploader)
-    temp_file = UploadFile.new(temp_file)
-    return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
-    existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
-    return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
 
+  # @return [Magick::Image]
+  def read_image(temp_file, check_if_existing = false)
+    temp_file = UploadFile.new(temp_file) unless temp_file.is_a? UploadFile
+    return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
+    if check_if_existing
+      existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
+      return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
+    end
     begin
       img = Magick::Image::read(temp_file.tempfile.path).first
     rescue Java::JavaLang::NullPointerException
@@ -24,6 +27,13 @@ class PhotoStore
         img = orientation.transform_rmagick(img)
       end
     end
+    img
+  end
+
+  def upload(temp_file, uploader)
+    temp_file = UploadFile.new(temp_file)
+    img = read_image temp_file, true
+    return img if img.is_a? Hash
     photo = store(temp_file, uploader)
     img.resize_to_fit(200, 200).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
@@ -49,10 +59,15 @@ class PhotoStore
 
   def initialize
     @root = Pathname.new(Rails.configuration.photo_store)
+
     @full = @root + 'full'
     @thumb = @root + 'thumb'
+    @profiles = @root + 'profiles/'
+    @profiles_small = @profiles + 'small'
     @full.mkdir unless @full.exist?
     @thumb.mkdir unless @thumb.exist?
+    @profiles.mkdir unless @profiles.exist?
+    @profiles_small.mkdir unless @profiles_small.exist?
   end
 
   def photo_path(filename)
@@ -65,6 +80,19 @@ class PhotoStore
 
   def md_thumb_path(filename)
     (build_directory(@thumb, filename) + ('md_' + filename)).to_s
+  end
+
+  def small_profile_path(store_filename)
+    (build_directory(@profiles_small, store_filename) + (store_filename)).to_s
+  end
+
+  def small_profile_img(store_filename)
+    begin
+      return Magick::Image::read(small_profile_path(store_filename)).first
+    rescue Java::JavaLang::NullPointerException
+      # yeah, ImageMagick throws a NPE if the photo isn't a photo
+      return { status: 'Photo could not be opened - is it an image?' }
+    end
   end
 
   @@mutex = Mutex.new
