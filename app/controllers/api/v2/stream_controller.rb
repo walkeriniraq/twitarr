@@ -40,7 +40,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:page] || 0
     limit = params[:limit] || PAGE_LENGTH
     query = StreamPost.or({mentions: query_string}, {author: query_string}).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
-    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_list_hash }, next:(start_loc+limit)}
+    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash }, next:(start_loc+limit)}
   end
 
   def view_hash_tag
@@ -48,7 +48,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:page] || 0
     limit = params[:limit] || PAGE_LENGTH
     query = StreamPost.where(hash_tags: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
-    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_list_hash }, next:(start_loc+limit)}
+    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash }, next:(start_loc+limit)}
 
   end
 
@@ -154,7 +154,7 @@ class API::V2::StreamController < ApplicationController
   end
 
   def generate_return_map(posts, desire_auto_link)
-    posts = posts.map { |x| x.decorate.to_list_hash }
+    posts = posts.map { |x| x.decorate.to_hash }
     posts = posts.map { |x| do_auto_link(x) } if desire_auto_link
     posts
   end
