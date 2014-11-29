@@ -16,6 +16,9 @@ class User
   field :sq, as: :security_question, type: String
   field :sa, as: :security_answer, type: String
 
+  # noinspection RubyResolve
+  before_create :set_profile_image_as_identicon
+
   validate :valid_username?
   validate :valid_display_name?
   validates :email, format: { with: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, message: 'address is not valid.'}
@@ -80,6 +83,11 @@ class User
     Seamail.where(usernames: username).sort_by { |x| x.last_message }.reverse
   end
 
+  def seamail_unread_count
+    Seamail.where(usernames: username, unread_users: username).length
+  end
+
+
   def seamail_count
     Seamail.where(usernames: username).length
   end
@@ -92,6 +100,11 @@ class User
     username.andand.downcase.andand.strip
   end
 
+  def set_profile_image_as_identicon
+    identicon = Identicon.create(username)
+    save_profile_picture(identicon)
+  end
+
   def self.exist?(username)
     where(username: format_username(username)).exists?
   end
@@ -100,5 +113,31 @@ class User
     where(username: format_username(username)).first
   end
 
+  def profile_picture_from_file(temp_file, options = {})
+    img = PhotoStore.instance.read_image temp_file
+    return img if img.is_a? Hash
+    save_profile_picture(img, options)
+  end
 
+  # @param [Magick::Image] img
+  # @param [hash] options
+  def save_profile_picture(img, options = {})
+    store_filename = "#{username}.png"
+    tmp_store_path = "tmp/#{store_filename}"
+    small_thumbnail_width = options[:small_thumbnail_width] || 73
+    img.resize_to_fit(small_thumbnail_width, small_thumbnail_width).write tmp_store_path
+    small_profile_path = PhotoStore.instance.small_profile_path(store_filename)
+    puts "Saving profile image (#{tmp_store_path}) => #{small_profile_path}"
+    FileUtils.move tmp_store_path, small_profile_path
+    self
+  end
+
+
+  def profile_picture_path
+    PhotoStore.instance.small_profile_path("#{username}.png")
+  end
+
+  def profile_picture
+    PhotoStore.instance.small_profile_img("#{username}.png")
+  end
 end

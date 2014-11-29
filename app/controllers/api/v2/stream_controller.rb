@@ -32,7 +32,9 @@ class API::V2::StreamController < ApplicationController
   end
 
   def show
-    render_json @post.decorate.to_hash
+    hsh = @post.decorate.to_hash
+    hsh = do_auto_link(hsh) if params.has_key? :auto_link
+    render_json hsh
   end
 
   def view_mention
