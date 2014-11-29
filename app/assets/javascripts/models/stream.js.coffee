@@ -17,22 +17,22 @@ Twitarr.StreamPost = Ember.Object.extend
     Twitarr.ApplicationController.sm_photo_path @get('photo')
   ).property('photo')
 
+  user_likes: (->
+    @get('likes') && @get('likes')[0] == 'You'
+  ).property('likes')
+
   likes_string: (->
     likes = @get('likes')
     return '' unless likes and likes.length > 0
     if likes.length == 1
-      if @get('user_likes')
+      if likes[0] == 'You'
         return 'You like this.'
-      if likes[0].contains('seamonkeys')
+      if likes[0].indexOf('seamonkeys') > -1
         return "#{likes[0]} like this."
       else
         return "#{likes[0]} likes this."
     last = likes.pop()
     likes.join(', ') + " and #{last} like this."
-  ).property('likes')
-
-  user_likes: (->
-    @get('likes') && @get('likes')[0] == 'You'
   ).property('likes')
 
   like: ->
