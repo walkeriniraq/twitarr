@@ -1,7 +1,7 @@
 class SeamailController < ApplicationController
 
   def index
-    render_json seamail_meta: current_user.seamails.map { |x| x.decorate.to_meta_hash.merge!({is_unread: x.unread_users.include?(current_username)}) }
+    render_json seamail_meta: current_user.seamails.map { |x| x.decorate.to_meta_hash.merge!({is_unread: x.unread_users.andand.include?(current_username)}) }
   end
 
   def show

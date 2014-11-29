@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.1.1'
 
 gem 'sass-rails', '~> 4.0.3'
-gem 'coffee-rails', '~> 4.0.1'
+gem 'coffee-rails', '~> 4.0'
 
 gem 'therubyrhino'
 gem 'bcrypt'
@@ -26,7 +26,7 @@ gem 'ember-source'
 
 gem 'tzinfo-data'
 
-gem 'draper', '~> 1.3.0'
+gem 'draper', '~> 1.3'
 gem 'andand'
 gem 'browser'
 
