@@ -14,7 +14,7 @@ class API::V2::UserController < ApplicationController
 
   def new_seamail
     return unless logged_in!
-    render_json :status => 'ok', email_count: current_user.seamail_count
+    render_json :status => 'ok', email_count: current_user.seamail_unread_count
   end
 
   def autocomplete

@@ -83,6 +83,11 @@ class User
     Seamail.where(usernames: username).sort_by { |x| x.last_message }.reverse
   end
 
+  def seamail_unread_count
+    Seamail.where(usernames: username, unread_users: username).length
+  end
+
+
   def seamail_count
     Seamail.where(usernames: username).length
   end

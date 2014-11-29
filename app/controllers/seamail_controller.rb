@@ -5,7 +5,9 @@ class SeamailController < ApplicationController
   end
 
   def show
-    render_json seamail: Seamail.find(params[:id]).decorate.to_hash
+    seamail = Seamail.find(params[:id])
+    seamail.mark_as_read current_username
+    render_json seamail:seamail.decorate.to_hash
   end
 
   def create
