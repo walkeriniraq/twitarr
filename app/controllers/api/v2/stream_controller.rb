@@ -1,5 +1,4 @@
 class API::V2::StreamController < ApplicationController
-  include Twitter::Autolink
   # noinspection RailsParamDefResolve
   skip_before_action :verify_authenticity_token
 
@@ -32,9 +31,7 @@ class API::V2::StreamController < ApplicationController
   end
 
   def show
-    hsh = @post.decorate.to_hash
-    hsh = do_auto_link(hsh) if params.has_key? :auto_link
-    render_json hsh
+    render_json @post.decorate.to_hash
   end
 
   def view_mention
@@ -148,25 +145,11 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_before(start_loc, author).limit(limit).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
-    {stream_posts: generate_return_map(posts, params.has_key?(:auto_link)), next_page: next_page}
+    {stream_posts: posts.map{|x| x.decorate.to_hash}, next_page: next_page}
   end
 
   def want_newer_posts?
     params.has_key?(:start) and not params.has_key?(:older_posts)
-  end
-
-  def generate_return_map(posts, desire_auto_link)
-    posts = posts.map { |x| x.decorate.to_hash }
-    posts = posts.map { |x| do_auto_link(x) } if desire_auto_link
-    posts
-  end
-
-
-  def do_auto_link(post)
-    # TODO: maybe just add a decorator method for this?
-    post[:text] = auto_link(post[:text])
-    post.delete :entities
-    post
   end
 
   def newer_posts
@@ -175,6 +158,6 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_after(start_loc, author).limit(limit).order_by(timestamp: :asc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
-    {stream_posts: generate_return_map(posts, params.has_key?(:auto_link)), next_page: next_page}
+    {stream_posts: posts.map{|x| x.decorate.to_hash}, next_page: next_page}
   end
 end
