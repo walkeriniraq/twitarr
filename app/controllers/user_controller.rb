@@ -22,7 +22,7 @@ class UserController < ApplicationController
     else
       login_user(user)
       user.update_last_login.save
-      redirect_to '/'
+      redirect_to :root
     end
   end
 
@@ -49,7 +49,7 @@ class UserController < ApplicationController
       @user.set_password params[:new_password]
       @user.update_last_login.save
       login_user(@user)
-      redirect_to '/'
+      redirect_to :root
     end
   end
 
