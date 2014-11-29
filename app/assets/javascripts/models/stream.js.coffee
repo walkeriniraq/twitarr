@@ -19,10 +19,14 @@ Twitarr.StreamPost = Ember.Object.extend
 
   likes_string: (->
     likes = @get('likes')
+    return '' unless likes and likes.length > 0
     if likes.length == 1
       if @get('user_likes')
         return 'You like this.'
-      return "#{likes[0]} likes this."
+      if likes[0].contains('seamonkeys')
+        return "#{likes[0]} like this."
+      else
+        return "#{likes[0]} likes this."
     last = likes.pop()
     likes.join(', ') + " and #{last} like this."
   ).property('likes')
