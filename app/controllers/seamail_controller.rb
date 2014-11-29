@@ -1,19 +1,20 @@
 class SeamailController < ApplicationController
 
   def index
-    render_json seamail_meta: current_user.seamails.map { |x| x.decorate.to_meta_hash }
+    render_json seamail_meta: current_user.seamails.map { |x| x.decorate.to_meta_hash.merge!({is_unread: x.unread_users.include?(current_username)}) }
   end
 
   def show
     seamail = Seamail.find(params[:id])
+    was_unread = seamail.unread_users.include?(current_username)
     seamail.mark_as_read current_username
-    render_json seamail:seamail.decorate.to_hash
+    render_json seamail:seamail.decorate.to_hash.merge!({is_unread: was_unread})
   end
 
   def create
     seamail = Seamail.create_new_seamail current_username, params[:users], params[:subject], params[:text]
     if seamail.valid?
-      render_json seamail_meta: seamail.decorate.to_meta_hash
+      render_json seamail_meta: seamail.decorate.to_meta_hash.merge!({is_unread: seamail.unread_users.include?(current_username)})
     else
       render_json errors: seamail.errors.full_messages
     end
@@ -23,7 +24,7 @@ class SeamailController < ApplicationController
     seamail = Seamail.find(params[:seamail_id])
     message = seamail.add_message current_username, params[:text]
     if message.valid?
-      render_json seamail_message: message.decorate.to_hash
+      render_json seamail_message: message.decorate.to_hash.merge!({is_unread: seamail.unread_users.include?(current_username)})
     else
       render_json errors: message.errors.full_messages
     end
