@@ -21,6 +21,7 @@ Twitarr::Application.routes.draw do
       post 'new_message'
     end
   end
+  put 'seamail/:id/recipients', to: 'seamail#recipients'
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'
   get 'tweet/like/:id', to: 'stream#like'

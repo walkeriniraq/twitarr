@@ -29,4 +29,17 @@ class SeamailController < ApplicationController
     end
   end
 
+  def recipients
+    seamail = Seamail.find(params[:id])
+    unless seamail.usernames.include? current_username
+      render json: {errors: 'Must already be part of the Seamail to add recipients.'}, status: :forbidden
+    end
+    # this ensures that the logged in user is also specified
+    usernames = Set.new([params[:users], current_username].flatten).to_a
+    seamail.usernames = usernames
+    seamail.reset_read current_username
+    seamail.save!
+    render json: {seamail_meta: seamail.decorate.to_meta_hash}
+  end
+
 end
