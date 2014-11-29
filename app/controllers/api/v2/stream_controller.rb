@@ -162,13 +162,9 @@ class API::V2::StreamController < ApplicationController
   end
 
 
-  # TODO: get Nate to fill in these with real good default values
-  DEFAULT_LINK_OPTIONS = { :username_url_base => '/users/',  :list_url_base => '/lists/', :hashtag_url_base => '/stream/h/', :cashtag_url_base => '/stream/c/' }.freeze
   def do_auto_link(post)
-    link_options = DEFAULT_LINK_OPTIONS.merge params.slice [ :list_class, :username_class, :hashtag_class, :cashtag_class, :username_url_base,
-                   :list_url_base, :hashtag_url_base, :cashtag_url_base, :invisible_tag_attrs ]
-
-    post[:text] = auto_link(post[:text], link_options)
+    # TODO: maybe just add a decorator method for this?
+    post[:text] = auto_link(post[:text])
     post.delete :entities
     post
   end

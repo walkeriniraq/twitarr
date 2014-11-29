@@ -9,9 +9,7 @@ class StreamPostDecorator < Draper::Decorator
     {
         id: as_str(id),
         author: author,
-        #  TODO: figure this thing out
-        # text: text,
-        text: auto_link(text, username_url_base: '#/user/', hashtag_url_base: '#/tag/', cashtag_url_base: '#/tag/', suppress_lists: true, suppress_no_follow: true),
+        text: auto_link(text),
         timestamp: timestamp.to_i,
         photo: photo,
         likes: some_likes(username),
