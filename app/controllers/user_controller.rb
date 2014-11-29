@@ -22,7 +22,7 @@ class UserController < ApplicationController
     else
       login_user(user)
       user.update_last_login.save
-      redirect_to :root
+      redirect_to '/'
     end
   end
 
@@ -49,7 +49,7 @@ class UserController < ApplicationController
       @user.set_password params[:new_password]
       @user.update_last_login.save
       login_user(@user)
-      redirect_to :root
+      redirect_to '/'
     end
   end
 
@@ -92,7 +92,7 @@ class UserController < ApplicationController
       return render_json status: 'ok',
                          user: current_user.decorate.gui_hash,
                          need_password_change: current_user.correct_password(DEFAULT_PASSWORD),
-                         is_read_only: Twitarr::Application.config.read_only
+                         is_read_only: false
     end
     render_json status: 'logout'
   end

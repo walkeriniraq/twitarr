@@ -34,8 +34,6 @@ module Twitarr
 
     config.autoload_paths += Dir[Rails.root.join('app', 'contexts', '{**}')]
 
-    config.allow_new_users = true
-
     config.action_dispatch.perform_deep_munge = false
 
     config.photo_store = 'photo_storage'
