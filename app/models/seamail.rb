@@ -53,7 +53,6 @@ class Seamail
   def reset_read(author)
     # noinspection RubyUnusedLocalVariable,RubyLocalVariableNamingConvention
     ur = usernames - [author]
-    puts "Resetting unread to #{usernames} - #{author} = #{ur}"
     unread_users.clear
     unread_users.push *ur
     save!
