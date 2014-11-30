@@ -1,6 +1,8 @@
 <div class="main-page-header">
   <span class="controls">
-    {{#link-to "forums.new_post" id}}Reply{{/link-to}}
+    {{#if logged_in}}
+      {{#link-to "forums.new_post" id}}Reply{{/link-to}}
+    {{/if}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
 

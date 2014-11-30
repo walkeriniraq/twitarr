@@ -1,6 +1,8 @@
 <div class="main-page-header">
   <span class="controls">
-    {{#link-to "forums.new"}}Create Forum{{/link-to}}
+    {{#if logged_in}}
+      {{#link-to "forums.new"}}Create Forum{{/link-to}}
+    {{/if}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
   <h4>Forums</h4>
