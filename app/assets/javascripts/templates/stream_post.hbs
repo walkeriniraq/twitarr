@@ -15,12 +15,14 @@
   {{/if}}
   <div class="post-bottom clearfix">
     {{post.likes_string}}
-    <div class="pull-right">
-      {{#if post.user_likes}}
-        <a href="#" {{action 'unlike'}}>Unlike</a>
-      {{else}}
-        <a href="#" {{action 'like'}}>Like</a>
-      {{/if}}
-    </div>
+    {{#if logged_in}}
+      <div class="pull-right">
+        {{#if post.user_likes}}
+          <a href="#" {{action 'unlike'}}>Unlike</a>
+        {{else}}
+          <a href="#" {{action 'like'}}>Like</a>
+        {{/if}}
+      </div>
+    {{/if}}
   </div>
 </div>
