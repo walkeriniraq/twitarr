@@ -1,7 +1,7 @@
 <div class="main-page-header">
-  <h4>Seamail reply</h4>
+  <h4>{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{#link-to 'seamail.detail' id}}{{subject}}{{/link-to}} > reply</h4>
 </div>
-{{textarea value=new_message rows='5' class='input'}}
+{{textarea value=new_message rows='3' class='input'}}
 
 <ul class="errors-list">
   {{#each error in errors}}
@@ -9,3 +9,4 @@
   {{/each}}
 </ul>
 <button {{action 'new'}}>Send</button>
+<button {{action 'cancel'}}>Cancel</button>

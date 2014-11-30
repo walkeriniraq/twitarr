@@ -221,7 +221,7 @@ div.stream-post {
     float: left;
     padding: 12px;
     font-size: 18px;
-    color: #777;
+    color: #444;
   }
 }
 
@@ -316,6 +316,7 @@ div.stream-post {
       a {
         padding: 10px;
         display: block;
+        font-size: large;
 
         &:focus {
           text-decoration: none;

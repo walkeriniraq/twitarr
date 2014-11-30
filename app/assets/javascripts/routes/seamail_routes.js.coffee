@@ -17,5 +17,9 @@ Twitarr.SeamailDetailRoute = Ember.Route.extend
       @refresh()
 
 Twitarr.SeamailNewMessageRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.Seamail.get params.id
+
   setupController: (controller, model) ->
     controller.set('id', model.id)
+    controller.set('subject', model.subject)

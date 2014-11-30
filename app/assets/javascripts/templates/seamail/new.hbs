@@ -1,5 +1,5 @@
 <div class="main-page-header">
-  <h4>New seamail</h4>
+  <h4>{{#link-to 'seamail.index'}}Seamails{{/link-to}} > new</h4>
 </div>
 <div id="new-seamail-form">
   <h5>Users</h5>
@@ -25,7 +25,7 @@
   <h5>Subject</h5>
   {{input value=subject class='input'}}
   <h5>Text</h5>
-  {{textarea value=text rows='5' class='input'}}
+  {{textarea value=text rows='3' class='input'}}
 
   <ul class="errors-list">
     {{#each error in errors}}

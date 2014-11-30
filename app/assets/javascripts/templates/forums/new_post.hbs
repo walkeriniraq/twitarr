@@ -1,7 +1,7 @@
 <div class="main-page-header">
-  <h4>Forum reply</h4>
+  <h4>{{#link-to 'forums.index'}}Forums{{/link-to}} > {{#link-to 'forums.detail' id}}{{subject}}{{/link-to}} > reply</h4>
 </div>
-{{textarea value=new_post rows='5' class='input'}}
+{{textarea value=new_post rows='3' class='input'}}
 {{view 'upload'}}
 
 <ul class="errors-list">

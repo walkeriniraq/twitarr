@@ -1,12 +1,11 @@
 <div class="main-page-header">
   <span class="controls">
     {{#if logged_in}}
-      {{#link-to "forums.new_post" id}}Reply{{/link-to}}
+      {{#link-to "forums.new_post" model}}Reply{{/link-to}}
     {{/if}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-
-  <h4>{{subject}}</h4>
+  <h4>{{#link-to 'forums.index'}}Forums{{/link-to}} > {{subject}}</h4>
 </div>
 
 {{#each post in posts}}

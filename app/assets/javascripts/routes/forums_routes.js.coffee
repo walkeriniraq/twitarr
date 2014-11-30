@@ -17,5 +17,9 @@ Twitarr.ForumsDetailRoute = Ember.Route.extend
       @refresh()
 
 Twitarr.ForumsNewPostRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.Forum.get params.id
+
   setupController: (controller, model) ->
     controller.set('id', model.id)
+    controller.set('subject', model.subject)

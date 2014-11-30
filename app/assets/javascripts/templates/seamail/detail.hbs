@@ -1,12 +1,12 @@
 <div class="main-page-header">
+  <h4>{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{subject}}</h4>
+  <span class="controls">
+    {{#link-to "seamail.new_message" model}}Reply{{/link-to}}
+    <a href="#" {{action 'reload'}}>Refresh</a>
+  </span>
   <h5>
     {{users_display}}
   </h5>
-  <span class="controls">
-    {{#link-to "seamail.new_message" id}}Reply{{/link-to}}
-    <a href="#" {{action 'reload'}}>Refresh</a>
-  </span>
-  <h4>{{subject}}</h4>
 </div>
 
 {{#each message in messages}}

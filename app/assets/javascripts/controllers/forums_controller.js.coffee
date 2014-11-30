@@ -20,18 +20,18 @@ Twitarr.PhotosUploadController = Twitarr.Controller.extend
 Twitarr.ForumsNewController = Twitarr.PhotosUploadController.extend
   actions:
     new: ->
-      Ember.run =>
-        if @get('controllers.application.uploads_pending')
-          alert('Please wait for uploads to finish.')
-          return
-        return if @get('posting')
-        @set 'posting', true
+      if @get('controllers.application.uploads_pending')
+        alert('Please wait for uploads to finish.')
+        return
+      return if @get('posting')
+      @set 'posting', true
       Twitarr.Forum.new_forum(@get('subject'), @get('text'), @get('photo_ids')).then((response) =>
+        if response.errors?
+          @set 'errors', response.errors
+          @set 'posting', false
+          return
         Ember.run =>
           @set 'posting', false
-          if response.errors?
-            @set 'errors', response.errors
-            return
           @set 'subject', ''
           @set 'text', ''
           @get('errors').clear()
@@ -45,19 +45,20 @@ Twitarr.ForumsNewController = Twitarr.PhotosUploadController.extend
 Twitarr.ForumsNewPostController = Twitarr.PhotosUploadController.extend
   actions:
     new: ->
-      Ember.run =>
-        if @get('controllers.application.uploads_pending')
-          alert('Please wait for uploads to finish.')
-          return
-        return if @get('posting')
-        @set 'posting', true
+      if @get('controllers.application.uploads_pending')
+        alert('Please wait for uploads to finish.')
+        return
+      return if @get('posting')
+      @set 'posting', true
       Twitarr.Forum.new_post(@get('id'), @get('new_post'), @get('photo_ids')).then (response) =>
+        if response.errors?
+          @set 'errors', response.errors
+          @set 'posting', false
+          return
         Ember.run =>
           @set 'posting', false
-          if response.errors?
-            @set 'errors', Ember.A(response.errors)
-            return
           @set('new_post', '')
+          @get('errors').clear()
           @get('photo_ids').clear()
           window.history.go(-1)
       , ->
