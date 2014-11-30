@@ -23,7 +23,10 @@ Twitarr.ForumsNewController = Twitarr.PhotosUploadController.extend
       if @get('controllers.application.uploads_pending')
         alert('Please wait for uploads to finish.')
         return
+      return if @get('posting')
+      @set 'posting', true
       Twitarr.Forum.new_forum(@get('subject'), @get('text'), @get('photo_ids')).then((response) =>
+        @set 'posting', false
         if response.errors?
           @set 'errors', response.errors
           return
@@ -33,6 +36,7 @@ Twitarr.ForumsNewController = Twitarr.PhotosUploadController.extend
         @get('photo_ids').clear()
         window.history.go(-1)
       , ->
+        @set 'posting', false
         alert 'Forum could not be added. Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
@@ -42,7 +46,10 @@ Twitarr.ForumsNewPostController = Twitarr.PhotosUploadController.extend
       if @get('controllers.application.uploads_pending')
         alert('Please wait for uploads to finish.')
         return
+      return if @get('posting')
+      @set 'posting', true
       Twitarr.Forum.new_post(@get('id'), @get('new_post'), @get('photo_ids')).then (response) =>
+        @set 'posting', false
         if response.errors?
           @set 'errors', Ember.A(response.errors)
           return
@@ -50,4 +57,5 @@ Twitarr.ForumsNewPostController = Twitarr.PhotosUploadController.extend
         @get('photo_ids').clear()
         window.history.go(-1)
       , ->
+        @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'

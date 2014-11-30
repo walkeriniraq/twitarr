@@ -9,7 +9,6 @@ class StreamController < ApplicationController
 
   def create
     return unless logged_in!
-    sleep 10.seconds
     post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo])
     if post.valid?
       render_json stream_post: post.decorate.to_hash
