@@ -28,19 +28,21 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
 
   actions:
     new: ->
-      if @get('controllers.application.uploads_pending')
-        alert('Please wait for uploads to finish.')
-        return
-      return if @get('posting')
-      @set 'posting', true
-      Twitarr.StreamPost.new_post(@get('new_post'), @get('photo_id')).then((response) =>
-        @set 'posting', false
-        if response.errors?
-          @set 'errors', response.errors
+      Ember.run =>
+        if @get('controllers.application.uploads_pending')
+          alert('Please wait for uploads to finish.')
           return
-        @set 'new_post', ''
-        @set 'photo_id', null
-        @transitionToRoute 'stream'
+        return if @get('posting')
+        @set 'posting', true
+      Twitarr.StreamPost.new_post(@get('new_post'), @get('photo_id')).then((response) =>
+        Ember.run =>
+          @set 'posting', false
+          if response.errors?
+            @set 'errors', response.errors
+            return
+          @set 'new_post', ''
+          @set 'photo_id', null
+          @transitionToRoute 'stream'
       , ->
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
