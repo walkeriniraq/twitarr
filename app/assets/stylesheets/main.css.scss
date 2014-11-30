@@ -30,10 +30,10 @@
   @include border-radius(4px);
   line-height: 2em;
   padding: 0.1em 0.6em;
-  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
   &:focus {
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
     border-color: #66afe9;
   }
 }
@@ -219,9 +219,18 @@ div.stream-post {
   .menu-brand {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     float: left;
-    padding: 12px;
+    padding: 10px;
     font-size: 18px;
     color: #444;
+
+    img {
+      height: 1.6em;
+      margin-right: 0.3em;
+    }
+
+    span {
+      vertical-align: middle;
+    }
   }
 }
 
