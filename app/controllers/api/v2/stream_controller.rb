@@ -31,7 +31,15 @@ class API::V2::StreamController < ApplicationController
   end
 
   def show
-    render_json @post.decorate.to_hash
+    limit = (params[:limit] || PAGE_LENGTH).to_i
+    start_loc = (params[:page] || 0).to_i
+
+    children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :desc).map { |x| x.decorate.to_hash(nil, remove:[:parent_chain]) }
+    post_result = @post.decorate.to_hash
+    if children and children.length > 0
+      post_result[:children] = children
+    end
+    render_json post_result
   end
 
   def view_mention
@@ -71,11 +79,20 @@ class API::V2::StreamController < ApplicationController
   end
 
   def create
-    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo])
+    parent_chain = []
+    if params[:parent]
+      parent = StreamPost.where(id: params[:parent]).first
+      unless parent
+        render status: :unprocessable_entity, json:{errors: ["Parent id: #{params[:parent]} was not found"]}
+        return
+      end
+      parent_chain = parent.parent_chain + [params[:parent]]
+    end
+    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo], parent_chain: parent_chain)
     if post.valid?
       render_json stream_post: post.decorate.to_hash
     else
-      render_json status: :unprocessable_entity, errors: post.errors.full_messages
+      render status: :unprocessable_entity, json:{errors: post.errors.full_messages}
     end
   end
 
