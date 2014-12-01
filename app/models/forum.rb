@@ -22,7 +22,7 @@ class Forum
   end
 
   def last_post
-    posts.first.timestamp
+    posts.last.timestamp
   end
 
   def post_count
