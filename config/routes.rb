@@ -42,6 +42,8 @@ Twitarr::Application.routes.draw do
       get 'stream/h/:query', to: 'stream#view_hash_tag'
       get 'stream/:id/like', to: 'stream#show_likes'
       get 'user/new_seamail', to: 'user#new_seamail'
+      delete 'user/mentions', to:'user#reset_mentions'
+      get 'user/mentions', to:'user#mentions'
       get 'user/auth', to: 'user#auth'
       get 'user/logout', to: 'user#logout'
       get 'user/whoami', to: 'user#whoami'

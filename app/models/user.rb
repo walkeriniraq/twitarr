@@ -15,6 +15,7 @@ class User
   field :ll, as: :last_login, type: DateTime
   field :sq, as: :security_question, type: String
   field :sa, as: :security_answer, type: String
+  field :um, as: :unnoticed_mentions, type: Integer
 
   # noinspection RubyResolve
   before_create :set_profile_image_as_identicon
@@ -132,12 +133,23 @@ class User
     self
   end
 
-
   def profile_picture_path
     PhotoStore.instance.small_profile_path("#{username}.png")
   end
 
   def profile_picture
     PhotoStore.instance.small_profile_img("#{username}.png")
+  end
+
+  def inc_mentions
+    inc(unnoticed_mentions: 1)
+  end
+
+  def self.inc_mentions(username)
+    User.find_by(username: username).inc(unnoticed_mentions: 1)
+  end
+
+  def reset_mentions
+    set(unnoticed_mentions: 0)
   end
 end
