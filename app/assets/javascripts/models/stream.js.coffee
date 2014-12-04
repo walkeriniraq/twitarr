@@ -49,6 +49,12 @@ Twitarr.StreamPost = Ember.Object.extend
       else
         alert data.status
 
+  author_small_profile_pic: (->
+    "/api/v2/user/photo/#{@get('author')}"
+  ).property('author_small_profile_pic')
+
+
+
 Twitarr.StreamPost.reopenClass
   page: (page) ->
     $.getJSON("stream/#{page}").then (data) =>

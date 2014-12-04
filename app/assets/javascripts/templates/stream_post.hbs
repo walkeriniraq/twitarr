@@ -1,28 +1,37 @@
 <div class="stream-post">
-  <div>
-    <span class="author">
-      {{post.author}}
-    </span>
-    <span class="timestamp">
-      {{post.pretty_timestamp}}
-    </span>
-  </div>
-  <div class="text">
-    {{{post.text}}}
-  </div>
-  {{#if post.photo}}
-    <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
-  {{/if}}
-  <div class="post-bottom clearfix">
-    {{post.likes_string}}
-    {{#if logged_in}}
-      <div class="pull-right">
-        {{#if post.user_likes}}
-          <a href="#" {{action 'unlike'}}>Unlike</a>
-        {{else}}
-          <a href="#" {{action 'like'}}>Like</a>
+  <div class="content">
+    <img {{bind-attr src=post.author_small_profile_pic}} class="profile-pic" />
+    <div>
+      <span class="author">
+        {{post.author}}
+      </span>
+      <span class="timestamp">
+        {{post.pretty_timestamp}}
+      </span>
+    </div>
+    <div>
+      <div class="text">
+        {{{post.text}}}
+      </div>
+      <div>
+        {{#if post.photo}}
+          <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
         {{/if}}
       </div>
-    {{/if}}
+    </div>
+    <div class="clearfix">
+      <div class="pull-right">
+        {{post.likes_string}}
+        {{#if logged_in}}
+          <div class="pull-right">
+            {{#if post.user_likes}}
+              <a href="#" {{action 'unlike'}}>Unlike</a>
+            {{else}}
+              <a href="#" {{action 'like'}}>Like</a>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </div>
