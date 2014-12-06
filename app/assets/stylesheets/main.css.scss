@@ -104,6 +104,15 @@ div.stream-post {
   padding: 2px 8px;
   @include border-radius(5px);
 
+  div.content {
+    margin-left: 76px;
+  }
+
+  img.profile-pic {
+    float: left;
+    margin-left: -76px;
+  }
+
   span.author {
     color: darkblue;
   }
