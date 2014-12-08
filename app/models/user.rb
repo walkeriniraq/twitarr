@@ -134,7 +134,12 @@ class User
   end
 
   def profile_picture_path
-    PhotoStore.instance.small_profile_path("#{username}.png")
+    path = PhotoStore.instance.small_profile_path("#{username}.png")
+    unless File.exists? path
+      set_profile_image_as_identicon
+      save
+    end
+    path
   end
 
   def profile_picture

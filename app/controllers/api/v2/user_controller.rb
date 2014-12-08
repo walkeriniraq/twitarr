@@ -42,10 +42,6 @@ class API::V2::UserController < ApplicationController
 
   def get_photo
     user = User.where(username: params[:username]).first
-    unless (File.exists? user.profile_picture_path)
-      user.set_profile_image_as_identicon
-      user.save
-    end
     send_file user.profile_picture_path, disposition: 'inline'
   end
 
