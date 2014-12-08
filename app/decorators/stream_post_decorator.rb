@@ -11,15 +11,17 @@ class StreamPostDecorator < Draper::Decorator
         author: author,
         text: auto_link(text),
         timestamp: timestamp.to_i,
-        photo: { id: photo, animated: !photo.blank? && PhotoMetadata.find(photo).animated },
         likes: some_likes(username),
         mentions: mentions,
         entities: entities,
         hash_tags: hash_tags,
         parent_chain: parent_chain
     }
+    unless photo.blank?
+      result[:photo] = { id: photo, animated: PhotoMetadata.find(photo).animated }
+    end
     if options.has_key? :remove
-      options[:remove].each {|k| result.delete k }
+      options[:remove].each { |k| result.delete k }
     end
     result
   end

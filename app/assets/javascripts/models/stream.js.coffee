@@ -1,9 +1,12 @@
 Twitarr.StreamPost = Ember.Object.extend
   likes: []
+  photo: null
 
   init: ->
     @set('timestamp', @get('timestamp') * 1000)
-    @set 'photo', Twitarr.Photo.create(@get('photo'))
+    photo = @get('photo')
+    if photo
+      @set 'photo', Twitarr.Photo.create(photo)
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
