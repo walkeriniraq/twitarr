@@ -74,17 +74,22 @@ Twitarr.ApplicationController.reopenClass
     "/photo/full/#{photo}"
 
 
-Twitarr.PhotoViewController = Ember.Controller.extend
-  photo_id: null
-
+Twitarr.PhotoViewController = Ember.ObjectController.extend
   photo_path: (->
-    Twitarr.ApplicationController.md_photo_path @get('photo_id')
-  ).property('photo_id')
-
-  make_it_work: (->
-    "background: url('#{@get('photo_path')}')"
-  ).property('photo_path')
+    if(@get('animated'))
+      Twitarr.ApplicationController.full_photo_path(@get('id'))
+    else
+      Twitarr.ApplicationController.md_photo_path @get('id')
+  ).property('animated', 'id')
 
   actions:
     open_full: ->
-      window.open Twitarr.ApplicationController.full_photo_path(@get('photo_id'))
+      window.open Twitarr.ApplicationController.full_photo_path(@get('id'))
+
+Twitarr.PhotoMiniController = Ember.ObjectController.extend
+  sm_photo_path: (->
+    if(@get('animated'))
+      "background: url('#{Twitarr.ApplicationController.sm_photo_path @get('id')}') no-repeat center center black;"
+    else
+      Twitarr.ApplicationController.sm_photo_path @get('id')
+  ).property('photo')

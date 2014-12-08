@@ -1,21 +1,13 @@
 Twitarr.StreamPost = Ember.Object.extend
-  id: null
-  author: null
-  text: null
-  timestamp: null
-  photo: null
   likes: []
 
   init: ->
     @set('timestamp', @get('timestamp') * 1000)
+    @set 'photo', Twitarr.Photo.create(@get('photo'))
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
   ).property('timestamp')
-
-  sm_photo_path: (->
-    Twitarr.ApplicationController.sm_photo_path @get('photo')
-  ).property('photo')
 
   user_likes: (->
     @get('likes') && @get('likes')[0] == 'You'
@@ -52,7 +44,6 @@ Twitarr.StreamPost = Ember.Object.extend
   author_small_profile_pic: (->
     "/api/v2/user/photo/#{@get('author')}"
   ).property('author_small_profile_pic')
-
 
 
 Twitarr.StreamPost.reopenClass

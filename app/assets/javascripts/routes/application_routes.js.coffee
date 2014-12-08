@@ -12,8 +12,8 @@ Twitarr.ApplicationRoute = Ember.Route.extend
       @controller.incrementProperty 'uploads_pending'
     end_upload: ->
       @controller.decrementProperty 'uploads_pending'
-    display_photo: (photo_id) ->
-      @controllerFor('photo_view').set 'photo_id', photo_id
+    display_photo: (photo) ->
+      @controllerFor('photo_view').set 'model', photo
       @render 'photo_view',
         into: 'application',
         outlet: 'modal'

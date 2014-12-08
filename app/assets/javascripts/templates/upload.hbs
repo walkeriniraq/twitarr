@@ -10,7 +10,7 @@
     <div class="photo-container">
       {{log 'photo: ' photo}}
       <img class="close" {{action 'remove_photo' photo.id}} src="/img/close-icon.png" />
-      <img {{bind-attr src=photo.path}} {{action 'display_photo' photo.id}} class="photo" />
+      {{render 'photo_mini' photo }}
     </div>
   {{/each}}
 </div>

@@ -1,6 +1,7 @@
 <div class="stream-post">
   <div class="content">
-    <img {{bind-attr src=post.author_small_profile_pic}} class="profile-pic" />
+    <img {{bind-attr src=post.author_small_profile_pic}} class="profile-pic"/>
+
     <div>
       <span class="author">
         {{post.author}}
@@ -15,7 +16,7 @@
       </div>
       <div>
         {{#if post.photo}}
-          <img {{bind-attr src=post.sm_photo_path}} {{action 'display_photo' post.photo}} class="photo"/>
+          {{render 'photo_mini' post.photo }}
         {{/if}}
       </div>
     </div>

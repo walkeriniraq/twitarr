@@ -38,14 +38,10 @@ Twitarr.Forum.reopenClass
       data
 
 Twitarr.ForumPost = Ember.Object.extend
-  id: null
-  author: null
-  text: null
-  timestamp: null
   photos: []
 
   init: ->
-    @set('photos', Ember.A(Twitarr.Photo.create({ id: id }) for id in @get('photos')))
+    @set('photos', Ember.A(Twitarr.Photo.create(photo) for photo in @get('photos')))
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)

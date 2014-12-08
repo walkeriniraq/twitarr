@@ -23,7 +23,7 @@
     </div>
     <div class="photos">
       {{#each photo in post.photos}}
-        <img {{bind-attr src=photo.path}} {{action 'display_photo' photo.id}} />
+        {{render 'photo_mini' photo }}
       {{/each}}
     </div>
   </div>

@@ -11,7 +11,7 @@ class StreamPostDecorator < Draper::Decorator
         author: author,
         text: auto_link(text),
         timestamp: timestamp.to_i,
-        photo: photo,
+        photo: { id: photo, animated: !photo.blank? && PhotoMetadata.find(photo).animated },
         likes: some_likes(username),
         mentions: mentions,
         entities: entities,

@@ -1,0 +1,5 @@
+{{#if animated}}
+  <img src="/img/play_overlay.png" {{action 'display_photo' model}} class="photo" {{bind-attr style=sm_photo_path}} />
+{{else}}
+  <img {{bind-attr src=sm_photo_path}} {{action 'display_photo' model}} class="photo"/>
+{{/if}}
