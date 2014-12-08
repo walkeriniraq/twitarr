@@ -5,8 +5,8 @@ class StreamPostDecorator < Draper::Decorator
 
   MAX_LIST_LIKES = 5
 
-  def to_hash(username = nil)
-    {
+  def to_hash(username = nil, options = {})
+    result = {
         id: as_str(id),
         author: author,
         text: auto_link(text),
@@ -16,7 +16,12 @@ class StreamPostDecorator < Draper::Decorator
         mentions: mentions,
         entities: entities,
         hash_tags: hash_tags,
+        parent_chain: parent_chain
     }
+    if options.has_key? :remove
+      options[:remove].each {|k| result.delete k }
+    end
+    result
   end
 
   def some_likes(username)

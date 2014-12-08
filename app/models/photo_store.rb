@@ -48,11 +48,13 @@ class PhotoStore
 
   def store(file, uploader)
     new_filename = SecureRandom.uuid.to_s + Pathname.new(file.filename).extname.downcase
+    animated_image = ImageHelpers::AnimatedImage.is_animated file.tempfile.path
     photo = PhotoMetadata.new uploader: uploader,
                               original_filename: file.filename,
                               store_filename: new_filename,
                               upload_time: Time.now,
-                              md5_hash: file.md5_hash
+                              md5_hash: file.md5_hash,
+                              animated: animated_image
     FileUtils.copy file.tempfile, photo_path(photo.store_filename)
     photo
   end

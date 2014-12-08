@@ -11,6 +11,7 @@ class StreamPost
   field :ht, as: :hash_tags, type: Array
   field :mn, as: :mentions, type: Array
   field :et, as: :entities, type: Array
+  field :pc, as: :parent_chain, type: Array, default: []
 
   validates :text, :author, :timestamp, presence: true
   validate :validate_author
@@ -21,8 +22,10 @@ class StreamPost
   index :author => 1
   index :mentions => 1
   index :hash_tags => 1
+  index :parent_chain => 1
 
   before_validation :parse_hash_tags
+  after_create :increment_mentions_counts
 
   def validate_author
     return if author.blank?
@@ -72,6 +75,25 @@ class StreamPost
   def likes
     self.likes = [] if super.nil?
     super
+  end
+
+  def parent_chain
+    self.parent_chain = [] if super.nil?
+    super
+  end
+
+  def increment_mentions_counts
+    unknown_users = []
+    self.mentions.each { |mentioned_user|
+      begin
+        User.inc_mentions mentioned_user
+      rescue Mongoid::Errors::DocumentNotFound => e
+        unknown_users.push mentioned_user
+      rescue => e
+        logger.info "Unable to increment mention for user: #{mentioned_user}: #{e.class.name}: #{e.message}"
+      end
+    }
+    logger.info "Unable to find mentioned user(s) #{unknown_users.join ','} to increment mention count" unless unknown_users.empty?
   end
 
 end

@@ -9,7 +9,18 @@ class StreamController < ApplicationController
 
   def create
     return unless logged_in!
-    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo])
+
+    parent_chain = []
+    if params[:parent]
+      parent = StreamPost.where(id: params[:parent]).first
+      unless parent
+        render json:{errors: ["Parent id: #{params[:parent]} was not found"]}, status: :not_acceptable
+        return
+      end
+      parent_chain = parent.parent_chain + [params[:parent]]
+    end
+
+    post = StreamPost.create(text: params[:text], author: current_username, timestamp: Time.now, photo: params[:photo], parent_chain: parent_chain)
     if post.valid?
       render_json stream_post: post.decorate.to_hash
     else

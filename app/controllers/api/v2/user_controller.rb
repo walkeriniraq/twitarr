@@ -89,6 +89,17 @@ class API::V2::UserController < ApplicationController
     render json:{status:'ok', message:'updated user\'s profile picture'}
   end
 
+  def reset_mentions
+    return unless logged_in!
+    current_user.reset_mentions
+    render status: :ok, json: {status: 'OK', user: UserDecorator.decorate(current_user).self_hash}
+  end
+
+  def mentions
+    return unless logged_in!
+    render status: :ok, json: {mentions: current_user.unnoticed_mentions}
+  end
+
   def likes
     return unless logged_in!
     limit = params[:limit] || 20
