@@ -105,12 +105,14 @@ div.stream-post {
   @include border-radius(5px);
 
   div.content {
-    margin-left: 76px;
+    margin-left: 53px;
   }
 
   img.profile-pic {
     float: left;
-    margin-left: -76px;
+    margin-left: -53px;
+    max-width: 48px;
+    max-height: 48px;
   }
 
   span.author {
