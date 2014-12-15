@@ -8,15 +8,6 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend
       return if @get('next_page') is 0
       @transitionToRoute 'stream.page', @get('next_page')
 
-Twitarr.StreamPostController = Twitarr.ObjectController.extend
-  actions:
-    like: ->
-      @get('model').like()
-    unlike: ->
-      @get('model').unlike()
-    view: ->
-      @transitionToRoute 'stream.view', @get('model').id
-
 Twitarr.StreamNewController = Twitarr.Controller.extend
   photo_id: null
 

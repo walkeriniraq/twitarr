@@ -15,7 +15,7 @@
         {{{text}}}
       </div>
       <div>
-        {{#if post.photo}}
+        {{#if photo}}
           {{render 'photo_mini' photo }}
         {{/if}}
       </div>
@@ -26,9 +26,9 @@
         {{#if logged_in}}
           <div class="pull-right">
             {{#if user_likes}}
-              <a href="#" {{action 'unlike'}}>Unlike</a>
+              <a href="#" {{action 'unlike' model}}>Unlike</a>
             {{else}}
-              <a href="#" {{action 'like'}}>Like</a>
+              <a href="#" {{action 'like' model}}>Like</a>
             {{/if}}
           </div>
         {{/if}}
