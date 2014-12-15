@@ -12,7 +12,9 @@ Twitarr.StreamPost = Ember.Object.extend
     if photo
       @set 'photo', Twitarr.Photo.create(photo)
     if @get('children')
-      children = Ember.A(Twitarr.StreamPost.create(post) for post in @get('children'))
+      @set('children', Ember.A(Twitarr.StreamPost.create(post) for post in @get('children')))
+    else
+      @set('children', Ember.A())
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
