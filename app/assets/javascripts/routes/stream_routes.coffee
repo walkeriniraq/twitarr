@@ -1,5 +1,12 @@
 Twitarr.StreamLoadingRoute = Twitarr.LoadingRoute.extend()
 
+Twitarr.StreamRoute = Ember.Route.extend
+  actions:
+    like: (post) ->
+      post.like()
+    unlike: (post) ->
+      post.unlike()
+
 Twitarr.StreamIndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo 'stream.page', mostRecentTime()
