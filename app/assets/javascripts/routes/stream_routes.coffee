@@ -6,6 +6,8 @@ Twitarr.StreamRoute = Ember.Route.extend
       post.like()
     unlike: (post) ->
       post.unlike()
+    view: (post) ->
+      @transitionTo 'stream.view', post.id
 
 Twitarr.StreamIndexRoute = Ember.Route.extend
   redirect: ->
