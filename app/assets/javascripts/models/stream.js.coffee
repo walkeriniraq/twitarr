@@ -60,7 +60,10 @@ Twitarr.StreamPost.reopenClass
 
   view: (post_id) ->
     $.getJSON("/api/v2/stream/#{post_id}").then (data) =>
-      { stream_post: Ember.A(@create(data)), children: Ember.A(@create(post) for post in data.children) }
+      result = { post: Ember.A(@create(data)), children:[] }
+      if data.children
+        result.children = Ember.A(@create(post) for post in data.children)
+      result
 
   new_post: (text, photo) ->
     $.post('stream', text: text, photo: photo).then (data) =>

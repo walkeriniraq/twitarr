@@ -15,14 +15,7 @@ Twitarr.StreamPostController = Twitarr.ObjectController.extend
     unlike: ->
       @get('model').unlike()
     view: ->
-      Twitarr.StreamPost.view(@get('model').id).then((response) =>
-        if response.errors?
-          @set 'errors', response.errors
-          @set 'posting', false
-          return
-        else
-          response
-      )
+      @transitionToRoute 'stream.view', @get('model').id
 
 Twitarr.StreamNewController = Twitarr.Controller.extend
   photo_id: null
