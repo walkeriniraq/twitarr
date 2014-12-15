@@ -12,3 +12,5 @@ Twitarr.Router.map ()->
   @resource 'stream', ->
     @route 'page', { path: ':page' }
     @route 'new'
+    @route 'view', { path: ':id' }
+

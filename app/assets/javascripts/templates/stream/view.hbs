@@ -1,0 +1,15 @@
+<div class="main-page-header">
+  <span class="controls">
+    {{#if logged_in}}
+      {{#link-to "stream.new"}}Reply{{/link-to}}
+    {{/if}}
+    <a href="#" {{action 'reload'}}>Refresh</a>
+  </span>
+    <h4>Tweets</h4>
+</div>
+
+{{render "stream_post" post}}
+
+{{#each child in children}}
+{{render "stream_post" child}}
+{{/each}}

@@ -12,4 +12,8 @@ Twitarr.StreamPageRoute = Ember.Route.extend
     reload: ->
       @transitionTo 'stream.page', mostRecentTime()
 
+Twitarr.StreamViewRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.StreamPost.view params.post_id
+
 mostRecentTime = -> Math.ceil(new Date().valueOf() + 1000)
