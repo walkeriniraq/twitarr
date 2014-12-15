@@ -8,8 +8,7 @@
     <h4>Tweets</h4>
 
 </div>
-{{post}}
-{{render "stream_post" post}}
+{{partial "stream_post"}}
 
 {{#each child in children}}
 {{render "stream_post" child}}
