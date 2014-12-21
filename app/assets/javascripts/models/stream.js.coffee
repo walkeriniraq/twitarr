@@ -1,12 +1,20 @@
 Twitarr.StreamPost = Ember.Object.extend
-  likes: []
+  author: null
+  text: null
+  timestamp: null
   photo: null
+  likes: []
+  children: []
 
   init: ->
     @set('timestamp', @get('timestamp') * 1000)
     photo = @get('photo')
     if photo
       @set 'photo', Twitarr.Photo.create(photo)
+    if @get('children')
+      @set('children', Ember.A(Twitarr.StreamPost.create(post) for post in @get('children')))
+    else
+      @set('children', Ember.A())
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
@@ -53,6 +61,10 @@ Twitarr.StreamPost.reopenClass
   page: (page) ->
     $.getJSON("stream/#{page}").then (data) =>
       { posts: Ember.A(@create(post) for post in data.stream_posts), next_page: data.next_page }
+
+  view: (post_id) ->
+    $.getJSON("/api/v2/stream/#{post_id}").then (data) =>
+      @create(data)
 
   new_post: (text, photo) ->
     $.post('stream', text: text, photo: photo).then (data) =>
