@@ -13,7 +13,7 @@
     {{/each}}
   </div>
   <div>
-    {{ view Ember.TextField valueBinding='toInput' id='seamail-user-autocomplete' class='input'}}
+    {{ input value=toInput id='seamail-user-autocomplete' class='input'}}
     {{#if searchResults}}
       <ul class="to-autocomplete-list">
         {{#each searchResults}}
