@@ -1,0 +1,27 @@
+<div class="main-page-header">
+  <h3>{{username}}</h3>
+</div>
+
+<div id="profile-photo-upload-div">
+  <img {{bind-attr src=profile_pic}} class="profile-pic"/>
+  {{#if controllers.application.uploads_pending}}
+    <div class="uploading">Uploading...</div>
+  {{else}}
+    Click to change profile photo
+  {{/if}}
+</div>
+<input id="profile-photo-upload" type="file" name="file" data-url="/api/v2/user/photo" accept="image/*" style="display: none;">
+
+<div style="max-width: 25em; margin-bottom: 1.5em;">
+  <h5>Display Name</h5>
+
+  <div>
+    {{ input value=display_name class='input'}}
+  </div>
+  <h5>Email</h5>
+
+  <div>
+    {{ input value=email class='input'}}
+  </div>
+</div>
+<button {{action 'save'}}>Save Changes</button>

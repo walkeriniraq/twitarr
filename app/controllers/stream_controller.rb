@@ -9,7 +9,6 @@ class StreamController < ApplicationController
 
   def create
     return unless logged_in!
-
     parent_chain = []
     if params[:parent]
       parent = StreamPost.where(id: params[:parent]).first

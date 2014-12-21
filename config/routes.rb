@@ -10,6 +10,7 @@ Twitarr::Application.routes.draw do
   get 'user/forgot_password'
   get 'user/logout'
   get 'user/autocomplete'
+  post 'user/save_profile'
 
   resources :forums, except: [:destroy, :edit, :new] do
     collection do
@@ -50,6 +51,7 @@ Twitarr::Application.routes.draw do
       get 'user/autocomplete/:username', to: 'user#autocomplete'
       get 'user/view/:username', to: 'user#show'
       get 'user/photo/:username', to: 'user#get_photo'
+      post 'user/photo', to: 'user#update_photo'
       post 'user/photo/:username', to: 'user#update_photo'
       delete 'user/photo/:username', to: 'user#reset_photo'
     end

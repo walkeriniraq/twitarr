@@ -93,3 +93,19 @@ Twitarr.PhotoMiniController = Ember.ObjectController.extend
     else
       Twitarr.ApplicationController.sm_photo_path @get('id')
   ).property('photo')
+
+Twitarr.ProfileController = Ember.ObjectController.extend
+  needs: ['application']
+
+  count: 0
+
+  profile_pic: (->
+    "/api/v2/user/photo/#{@get('username')}?bust=#{@get('count')}"
+  ).property('username', 'count')
+
+  actions:
+    save: ->
+      @get('model').save()
+
+    file_uploaded: ->
+      @incrementProperty('count')

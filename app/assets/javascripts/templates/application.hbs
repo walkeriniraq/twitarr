@@ -27,6 +27,7 @@
     {{#unless logged_in}}
       <li><a href="#" {{action 'login'}}>Login</a></li>
     {{else}}
+      <li>{{#link-to "profile"}}Profile{{/link-to}}</li>
       <li><a tabindex='-1' href='#' {{ action logout }}>Logout</a></li>
     {{/unless}}
     <li>---</li>

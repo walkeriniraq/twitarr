@@ -25,3 +25,7 @@ Twitarr.ApplicationRoute = Ember.Route.extend
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo 'stream.index'
+
+Twitarr.ProfileRoute = Ember.Route.extend
+  model: ->
+    Twitarr.Profile.get()

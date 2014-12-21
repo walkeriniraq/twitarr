@@ -28,7 +28,7 @@ class API::V2::UserController < ApplicationController
 
   def show
     return unless logged_in!
-    user = User.where(username: params[:username]).first
+    user = User.get params[:username]
     unless user
       render status: :not_found, json: { status: 'Not found', error: "User #{params[:username]} is not found." }
       return
@@ -41,20 +41,20 @@ class API::V2::UserController < ApplicationController
   end
 
   def get_photo
-    user = User.where(username: params[:username]).first
+    user = User.get params[:username]
     send_file user.profile_picture_path, disposition: 'inline'
   end
 
   def reset_photo
     return unless logged_in!
 
-    if params[:username] != current_user and not current_user.is_admin
+    if params[:username] != current_username and not current_user.is_admin
       render json: { message: 'Unable to modify another user\'s profile picture.', status: 'err' }, status: :forbidden
       return
     end
 
     if params[:username] != current_username
-      user = User.where(username: params[:username]).first
+      user = User.get params[:username]
     else
       user = current_user
     end
@@ -70,13 +70,14 @@ class API::V2::UserController < ApplicationController
     puts params
     return render json: { message: 'Must provide a photo to upload.', status: 'err' }, status: :bad_request unless params[:file]
 
+    params[:username] ||= current_username
     if params[:username] != current_username and not current_user.is_admin
       render json: { message: 'Unable to modify another user\'s profile picture.', status: 'err' }, status: :forbidden
       return
     end
 
     if params[:username] != current_user
-      user = User.where(username: params[:username]).first
+      user = User.get params[:username]
     else
       user = current_user
     end

@@ -32,8 +32,8 @@ class UserController < ApplicationController
   def new
     new_username = params[:new_username].downcase
     @user = User.new username: new_username, display_name: new_username,
-                    is_admin: false, status: UserController::ACTIVE_STATUS, email: params[:email],
-                    security_question: params[:security_question], security_answer: params[:security_answer]
+                     is_admin: false, status: UserController::ACTIVE_STATUS, email: params[:email],
+                     security_question: params[:security_question], security_answer: params[:security_answer]
     if !@user.valid?
       render :create_user
     elsif User.where(username: new_username).exists?
@@ -77,6 +77,19 @@ class UserController < ApplicationController
     # redis.user_store.save @user, @user.username
     # @error = 'Password has been reset to "seamonkey"'
     # render :login_page
+  end
+
+  def save_profile
+    return unless logged_in!
+    current_user.email = params[:email]
+    current_user.display_name = params[:display_name]
+    puts "email: #{current_user.email}"
+    puts "display name: #{current_user.display_name}"
+    if (current_user.invalid?)
+      render_json status: current_user.errors.full_messages.join('\n')
+    else
+      render_json status: 'ok'
+    end
   end
 
   def username
