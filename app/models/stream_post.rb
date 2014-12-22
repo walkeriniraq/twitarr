@@ -1,7 +1,18 @@
 # noinspection RubyStringKeysInHashInspection
 class StreamPost
   include Mongoid::Document
+  include Searchable
   include Postable
+
+  # Common fields between stream_post and forum_post
+  field :au, as: :author, type: String
+  field :tx, as: :text, type: String
+  field :ts, as: :timestamp, type: Time
+  field :lk, as: :likes, type: Array, default: []
+  field :ht, as: :hash_tags, type: Array
+  field :mn, as: :mentions, type: Array
+  field :et, as: :entities, type: Array
+
 
   field :p, as: :photo, type: String
   field :pc, as: :parent_chain, type: Array, default: []

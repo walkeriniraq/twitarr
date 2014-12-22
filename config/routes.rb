@@ -60,6 +60,8 @@ Twitarr::Application.routes.draw do
       delete 'user/photo/:username', to: 'user#reset_photo'
       get 'hashtag/repopulate', to: 'hashtag#populate_hashtags'
       get 'hashtag/ac/:query', to: 'hashtag#auto_complete'
+
+      get 'search', to: 'search#search'
     end
   end
 

@@ -188,4 +188,9 @@ class User
       display_name
     end
   end
+
+  def self.search(params = {})
+    query = params[:query].gsub(/\W/,'')
+    User.where(username: Regexp.new(query))
+  end
 end

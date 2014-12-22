@@ -1,5 +1,6 @@
 class Seamail
   include Mongoid::Document
+  include Searchable
 
   field :sj, as: :subject, type: String
   field :us, as: :usernames, type: Array
@@ -85,5 +86,14 @@ class Seamail
     messages.create author: author, text: text, timestamp: right_now
   end
 
+  def self.search(params = {})
+    params[:no_hashtags] = true
+    current_username = params[:current_username]
+    search_object = build_search_object(params)
+    screenames = search_object[:screenames]
+    text_query = search_object[:text]
+
+    where(usernames: current_username).or({ :usernames.in => screenames }, { '$text' => { '$search' => "\"#{text_query}\"" } })
+  end
 
 end
