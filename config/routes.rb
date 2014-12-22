@@ -52,6 +52,8 @@ Twitarr::Application.routes.draw do
       get 'user/photo/:username', to: 'user#get_photo'
       post 'user/photo/:username', to: 'user#update_photo'
       delete 'user/photo/:username', to: 'user#reset_photo'
+
+      get 'search', to: 'search#search'
     end
   end
 
