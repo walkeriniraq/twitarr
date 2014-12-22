@@ -54,6 +54,8 @@ Twitarr::Application.routes.draw do
       post 'user/photo', to: 'user#update_photo'
       post 'user/photo/:username', to: 'user#update_photo'
       delete 'user/photo/:username', to: 'user#reset_photo'
+      resources :hashtag, only: [:index]
+      get 'hashtag/ac/:query', to: 'hashtag#auto_complete'
     end
   end
 
