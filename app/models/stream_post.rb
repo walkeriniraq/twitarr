@@ -17,12 +17,13 @@ class StreamPost
   validate :validate_author
 
   # 1 = ASC, -1 DESC
-  index :likes => 1
-  index :timestamp => -1
-  index :author => 1
-  index :mentions => 1
-  index :hash_tags => 1
-  index :parent_chain => 1
+  index likes: 1
+  index timestamp: -1
+  index author: 1
+  index mentions: 1
+  index hash_tags: 1
+  index parent_chain: 1
+  index text: 'text'
 
   before_validation :parse_hash_tags
   after_create :increment_mentions_counts

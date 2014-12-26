@@ -17,12 +17,15 @@ class User
   field :sa, as: :security_answer, type: String
   field :um, as: :unnoticed_mentions, type: Integer
 
+  index username: 1
+  index :display_name => 'text'
+
   # noinspection RubyResolve
   before_create :set_profile_image_as_identicon
 
   validate :valid_username?
   validate :valid_display_name?
-  validates :email, format: { with: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, message: 'address is not valid.'}
+  validates :email, format: { with: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, message: 'address is not valid.' }
   validates :security_question, :security_answer, presence: true
 
   def self.valid_username?(username)

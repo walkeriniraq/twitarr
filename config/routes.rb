@@ -12,6 +12,8 @@ Twitarr::Application.routes.draw do
   get 'user/autocomplete'
   post 'user/save_profile'
 
+  get 'search/:text', to: 'search#search'
+
   resources :forums, except: [:destroy, :edit, :new] do
     collection do
       post 'new_post'

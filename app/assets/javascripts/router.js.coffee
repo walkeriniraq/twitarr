@@ -14,5 +14,7 @@ Twitarr.Router.map ()->
     @route 'new'
     @route 'view', { path: 'tweet/:id' }
 
+  @resource 'search', ->
+    @route 'results', { path: ':id' }
 
   @route 'profile'

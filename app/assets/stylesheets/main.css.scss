@@ -38,6 +38,11 @@
   }
 }
 
+.inline-input {
+  width: 20em;
+  margin-left: 0.6em;
+}
+
 .next-page-button {
   float: right;
 }
@@ -150,21 +155,25 @@ div.stream-post {
     float: right;
 
     a {
-      @include border-radius(3px);
-      border: 1px outset darkgrey;
-      padding: 4px 7px;
-      background-color: #e0f0ff;
+      @extend button;
       color: #505050;
-      -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
-      -moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
-      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
-
-      &:hover, &:focus {
-        outline: none;
-        color: darkblue;
-        text-decoration: none;
-      }
     }
+  }
+}
+
+button {
+  @include border-radius(3px);
+  border: 1px outset darkgrey;
+  padding: 4px 7px;
+  background-color: #e0f0ff;
+  -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
+
+  &:hover, &:focus {
+    outline: none;
+    color: darkblue;
+    text-decoration: none;
   }
 }
 

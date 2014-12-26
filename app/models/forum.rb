@@ -5,6 +5,8 @@ class Forum
 
   embeds_many :posts, class_name: 'ForumPost', store_as: :fp, order: :timestamp.asc, validate: false
 
+  index({:subject => 'text', :'fp.tx' => 'text'})
+
   validates :subject, presence: true
   validate :validate_posts
 

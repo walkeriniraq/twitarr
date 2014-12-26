@@ -10,7 +10,9 @@ class Seamail
   validate :validate_users
   validate :validate_messages
 
-  index({:usernames => 1, :unread_users => 1})
+  index usernames: 1
+  index unread_users: 1
+  index({:subject => 'text', :'sm.tx' => 'text'})
 
   def validate_users
     errors[:base] << 'Must send email to another user of Twitarr' unless usernames.count > 1
