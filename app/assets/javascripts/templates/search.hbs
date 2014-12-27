@@ -5,12 +5,12 @@
         <span class="glyphicon glyphicon-search"></span>
       </td>
       <td>
-        {{input value=search_text class='input'}}
+        {{input value=text class='input' placeholder='Search...'}}
       </td>
       <td style="width: 3em; padding-left: 1em;">
-        <button {{action 'search' search_text}}>Go</button>
+        <button {{action 'search' text}}>Go</button>
       </td>
     </tr>
   </table>
 </div>
-
+{{outlet}}

@@ -73,10 +73,9 @@ html {
 #main {
   margin-right: auto;
   margin-left: auto;
-  padding-left: 20px;
-  padding-right: 20px;
   max-width: 1000px;
-  padding-top: 55px;
+  margin-top: 50px;
+  padding: 1em;
 }
 
 @media (max-width: 480px) {
@@ -100,64 +99,6 @@ html {
 
   .bold {
     font-weight: bold;
-  }
-}
-
-div.stream-post {
-  border: 1px solid lightgrey;
-  margin-bottom: 5px;
-  padding: 2px 8px;
-  @include border-radius(5px);
-
-  div.content {
-    margin-left: 53px;
-  }
-
-  img.profile-pic {
-    float: left;
-    margin-left: -53px;
-    max-width: 48px;
-    max-height: 48px;
-  }
-
-  span.author {
-    color: darkblue;
-  }
-
-  span.timestamp {
-    float: right;
-  }
-
-  div.text {
-    font-size: large;
-  }
-
-  img.photo {
-    display: block;
-    margin: 0 auto 0.4em;
-    cursor: pointer;
-  }
-
-  div.photos {
-    text-align: center;
-    img {
-      margin: 0 auto 0.4em;
-      cursor: pointer;
-    }
-  }
-}
-
-.main-page-header {
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-
-  .controls {
-    float: right;
-
-    a {
-      @extend button;
-      color: #505050;
-    }
   }
 }
 
@@ -336,6 +277,7 @@ button {
   overflow-y: auto;
   display: none;
   white-space: nowrap;
+  z-index: 1000;
 
   #login-info {
     color: #ccc;
@@ -447,9 +389,99 @@ div#photo-display {
   }
 }
 
-.post-bottom {
-  .controls {
-
+.clearfix {
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
   }
 }
 
+.main-page-header {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 1em;
+}
+
+.display_card {
+  border: 1px solid black;
+  margin-bottom: 1em;
+  padding: 0.2em 0.6em;
+
+  .header {
+    @extend .clearfix;
+    padding: 0.5em 0.2em;
+
+    .title {
+      float: left;
+      font-size: larger;
+      font-weight: bold;
+    }
+
+    .controls {
+      float: right;
+
+      a {
+        @extend button;
+        color: #505050;
+      }
+    }
+
+  }
+
+  .card-section {
+    @extend .clearfix;
+    border-top: 1px solid lightgrey;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+
+    .title {
+      color: darkblue;
+    }
+
+    .timestamp {
+      float: right;
+    }
+
+    .body {
+      //  I don't think I actually want this on all cards
+      font-size: large;
+
+      img.photo {
+        display: block;
+        margin: 0 auto 0.4em;
+        cursor: pointer;
+      }
+
+      div.photos {
+        text-align: center;
+        img {
+          margin: 0 auto 0.4em;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .controls {
+      float: right;
+    }
+  }
+
+  .section-with-photo {
+    min-height: 56px;
+
+    .section-photo {
+      position: absolute;
+      img {
+        max-width: 48px;
+        max-height: 48px;
+      }
+    }
+
+    .title, .timestamp, .body, .controls {
+      margin-left: 53px;
+    }
+  }
+}

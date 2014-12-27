@@ -1,0 +1,96 @@
+<div class="display_card">
+  <div class="header">
+    <div class="title">Users</div>
+  </div>
+  {{#each user in users}}
+    {{render 'search.user_result' user}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_users}}
+    <div class="card-section">
+      View all matching users...
+    </div>
+  {{/if}}
+</div>
+<div class="display_card">
+  <div class="header">
+    <div class="title">Tweets</div>
+  </div>
+  {{#each tweet in tweets}}
+    {{render "stream_post" tweet}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_tweets}}
+    <div class="card-section">
+      View all matching tweets...
+    </div>
+  {{/if}}
+</div>
+<div class="display_card">
+  <div class="header">
+    <div class="title">Forums</div>
+  </div>
+  {{#each forum in forums}}
+    <div class="card-section">
+      <span class="title">
+        {{forum.subject}}
+      </span>
+      <span class="timestamp">
+        {{forum.timestamp}}
+      </span>
+
+      <div class="body">
+        <div class="body-section">
+          {{forum.posts}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_forums}}
+    <div class="card-section">
+      View all matching forums...
+    </div>
+  {{/if}}
+</div>
+<div class="display_card">
+  <div class="header">
+    <div class="title">Your Seamail</div>
+  </div>
+  {{#each seamail in seamails}}
+    <div class="card-section">
+      <span class="title">
+        {{#each user in seamail.users}}
+          {{user}}
+        {{/each}}
+      </span>
+      <span class="timestamp">
+        {{seamail.timestamp}}
+      </span>
+
+      <div class="body">
+        <div class="body-section">
+          {{seamail.subject}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_seamails}}
+    <div class="card-section">
+      View all matching seamails...
+    </div>
+  {{/if}}
+</div>

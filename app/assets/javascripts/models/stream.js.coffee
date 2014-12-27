@@ -54,7 +54,7 @@ Twitarr.StreamPost = Ember.Object.extend
 
   author_small_profile_pic: (->
     "/api/v2/user/photo/#{@get('author')}"
-  ).property('author_small_profile_pic')
+  ).property('author')
 
 
 Twitarr.StreamPost.reopenClass

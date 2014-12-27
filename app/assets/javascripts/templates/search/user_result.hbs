@@ -1,0 +1,15 @@
+<div class="card-section section-with-photo">
+
+  <div class="section-photo">
+    <img {{bind-attr src=profile_pic}} />
+  </div>
+
+  <span class="title">
+    {{#if display_name}}
+      {{display_name}} (@{{username}})
+    {{else}}
+      @{{username}}
+    {{/if}}
+  </span>
+
+</div>

@@ -4,20 +4,23 @@ require 'net/http'
 require 'json'
 require 'peach'
 
+SERVER_URL = 'http://localhost:3000'
+# SERVER_URL = 'https://twitarr.rylath.net'
+
 requests = [
     Proc.new do |http|
-      response = http.request Net::HTTP::Get.new('https://twitarr.rylath.net/posts/all')
+      response = http.request Net::HTTP::Get.new(SERVER_URL + '/posts/all')
       puts "ALL: #{response.msg}"
       data = JSON.parse(response.body)
       photos = data['list'].map { |x| x['data']['photos'] }.flatten.compact!
       photos.each do |photo|
-        photo_response = http.request(Net::HTTP::Get.new("https://twitarr.rylath.net/img/photos/sm_#{photo}"))
+        photo_response = http.request(Net::HTTP::Get.new("#{SERVER_URL}/img/photos/sm_#{photo}"))
         puts "PHOTO #{photo}: #{photo_response.msg}"
       end
       1 + photos.size
     end,
     Proc.new do |http|
-      response = http.request Net::HTTP::Get.new('https://twitarr.rylath.net/posts/popular')
+      response = http.request Net::HTTP::Get.new(SERVER_URL + '/posts/popular')
       puts "POPULAR: #{response.msg}"
       data = JSON.parse(response.body)
       photos = data['list'].map { |x| x['data']['photos'] }.flatten.compact!
@@ -28,12 +31,12 @@ requests = [
       1 + photos.size
     end,
     Proc.new do |http|
-      response = http.request Net::HTTP::Get.new('https://twitarr.rylath.net/user/autocomplete?string=g')
+      response = http.request Net::HTTP::Get.new(SERVER_URL + '/user/autocomplete?string=g')
       puts "AUTOCOMPLETE: #{response.msg}"
       1
     end,
     Proc.new do |http|
-      response = http.request Net::HTTP::Get.new('https://twitarr.rylath.net/api/v1/user/auth?username=kvort&password=foobar')
+      response = http.request Net::HTTP::Get.new(SERVER_URL + '/api/v1/user/auth?username=kvort&password=foobar')
       puts "AUTH: #{response.msg}"
       1
     end

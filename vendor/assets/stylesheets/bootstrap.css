@@ -1329,14 +1329,11 @@ address {
   font-style: normal;
   line-height: 1.42857143;
 }
-.clearfix:before,
-.clearfix:after,
 .dl-horizontal dd:before,
 .dl-horizontal dd:after {
   content: " ";
   display: table;
 }
-.clearfix:after,
 .dl-horizontal dd:after {
   clear: both;
 }
