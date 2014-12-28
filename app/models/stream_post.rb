@@ -25,7 +25,7 @@ class StreamPost
   index :parent_chain => 1
 
   before_validation :parse_hash_tags
-  after_create :increment_mentions_counts
+  after_create :post_create_operations
 
   def validate_author
     return if author.blank?
@@ -82,6 +82,11 @@ class StreamPost
     super
   end
 
+  def post_create_operations
+    increment_mentions_counts
+    record_hashtags
+  end
+
   def increment_mentions_counts
     unknown_users = []
     self.mentions.each { |mentioned_user|
@@ -94,6 +99,12 @@ class StreamPost
       end
     }
     logger.info "Unable to find mentioned user(s) #{unknown_users.join ','} to increment mention count" unless unknown_users.empty?
+  end
+
+  def record_hashtags
+    self.hash_tags.each do |ht|
+      Hashtag.add_tag ht
+    end
   end
 
 end

@@ -23,10 +23,11 @@ class Hashtag
       return nil
     end
     prefix = prefix[1..-1] if prefix[0] == '#'
-    puts "searching for #{prefix}"
+    prefix = prefix.downcase
     Hashtag.where(name: /^#{prefix}/).asc(:name).limit(LIMIT)
   end
 
+  # this is probably not going to be a fast operation
   def self.repopulate_hashtags
     StreamPost.distinct(:hash_tags).each do |ht|
       Hashtag.add_tag ht

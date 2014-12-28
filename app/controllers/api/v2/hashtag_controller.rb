@@ -2,9 +2,8 @@ class API::V2::HashtagController < ApplicationController
   # noinspection RailsParamDefResolve
   skip_before_action :verify_authenticity_token
 
-  def index
+  def populate_hashtags
     Hashtag.repopulate_hashtags
-    Rails.cache.delete('hash_tag:index')
     values = Rails.cache.fetch('hash_tag:index', expires_in: 10.seconds) do
       puts 'Cache Miss for index!'
       Hashtag.all.map {|ht| ht.name }
