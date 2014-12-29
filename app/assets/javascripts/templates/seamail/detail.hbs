@@ -18,9 +18,12 @@
       <span class="timestamp">
         {{message.pretty_timestamp}}
       </span>
+
+      <div class="body">
+        <div class="body-section">
+          {{message.text}}
+        </div>
+      </div>
     </div>
-    <div class="text">
-      {{message.text}}
-    </div>
-  </div>
-{{/each}}
+  {{/each}}
+</div>
