@@ -6,6 +6,7 @@ class SeamailDecorator < Draper::Decorator
     {
         id: id.to_s,
         users: usernames,
+        display_names: display_names,
         subject: subject,
         messages: pluralize(seamail_count, 'message'),
         timestamp: last_message
@@ -16,6 +17,7 @@ class SeamailDecorator < Draper::Decorator
     {
         id: id.to_s,
         users: usernames,
+        display_names: display_names,
         subject: subject,
         messages: messages.map { |x| x.decorate.to_hash }
     }

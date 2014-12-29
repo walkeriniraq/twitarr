@@ -6,8 +6,8 @@ Twitarr.SeamailMeta = Ember.Object.extend
   timestamp: null
 
   users_display: (->
-    @get('users').join(', ')
-  ).property('users')
+    @get('display_names').join(', ')
+  ).property('display_names')
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
@@ -26,8 +26,8 @@ Twitarr.Seamail = Ember.Object.extend
   timestamp: null
 
   users_display: (->
-    @get('users').join(', ')
-  ).property('users')
+    @get('display_names').join(', ')
+  ).property('display_names')
 
   init: ->
     @set('messages', Ember.A(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))
