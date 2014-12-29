@@ -2,8 +2,8 @@ Twitarr.SeamailIndexController = Twitarr.ArrayController.extend()
 
 Twitarr.SeamailMetaPartialController = Twitarr.ObjectController.extend
   users_display: (->
-    @get('users').join(', ')
-  ).property('users')
+    @get('display_names').join(', ')
+  ).property('display_names')
 
   pretty_timestamp: (->
     moment(@get('timestamp')).fromNow(true)
