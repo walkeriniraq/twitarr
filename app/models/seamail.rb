@@ -32,6 +32,10 @@ class Seamail
     end
   end
 
+  def display_names
+    usernames.map { |x| User.display_name_from_username x }
+  end
+
   def usernames=(usernames)
     super usernames.map { |x| User.format_username x }
   end

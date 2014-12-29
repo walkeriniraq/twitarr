@@ -5,6 +5,14 @@ Twitarr.SeamailMeta = Ember.Object.extend
   subject: null
   timestamp: null
 
+  users_display: (->
+    @get('users').join(', ')
+  ).property('users')
+
+  pretty_timestamp: (->
+    moment(@get('timestamp')).fromNow(true)
+  ).property('timestamp')
+
 Twitarr.SeamailMeta.reopenClass
   list: ->
     $.getJSON('seamail').then (data) =>
