@@ -3,6 +3,8 @@ require 'bcrypt'
 class User
   include Mongoid::Document
 
+  USERNAME_CACHE_TIME = 30.minutes
+
   USERNAME_REGEX = /^[\w&-]{3,}$/
   DISPLAY_NAME_REGEX = /^[\w\. &-]{3,40}$/
 
@@ -22,6 +24,7 @@ class User
 
   # noinspection RubyResolve
   before_create :set_profile_image_as_identicon
+  after_save :update_display_name_cache
 
   validate :valid_username?
   validate :valid_display_name?
@@ -159,5 +162,19 @@ class User
 
   def reset_mentions
     set(unnoticed_mentions: 0)
+  end
+
+
+
+  def self.display_name_from_username(username)
+    Rails.cache.fetch("display_name:#{username}", expires_in: USERNAME_CACHE_TIME) do
+      User.where(username: username).map(:display_name)
+    end
+  end
+
+  def update_display_name_cache
+    Rails.cache.fetch("display_name:#{username}", force: true, expires_in: USERNAME_CACHE_TIME ) do
+      display_name
+    end
   end
 end
