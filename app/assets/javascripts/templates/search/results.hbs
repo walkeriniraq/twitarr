@@ -37,20 +37,7 @@
     <div class="title">Forums</div>
   </div>
   {{#each forum in forums}}
-    <div class="card-section">
-      <span class="title">
-        {{forum.subject}}
-      </span>
-      <span class="timestamp">
-        {{forum.timestamp}}
-      </span>
-
-      <div class="body">
-        <div class="body-section">
-          {{forum.posts}}
-        </div>
-      </div>
-    </div>
+    {{render "forums.meta_partial" forum}}
   {{else}}
     <div class="card-section">
       No results.

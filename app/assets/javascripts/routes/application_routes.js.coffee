@@ -23,6 +23,8 @@ Twitarr.ApplicationRoute = Ember.Route.extend
         parentView: 'application'
     display_seamail: (id) ->
       @transitionTo('seamail.detail', id)
+    display_forum: (id) ->
+      @transitionTo('forums.detail', id)
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->

@@ -16,10 +16,6 @@ Twitarr.StreamPost = Ember.Object.extend
     else
       @set('children', Ember.A())
 
-  pretty_timestamp: (->
-    moment(@get('timestamp')).fromNow(true)
-  ).property('timestamp')
-
   user_likes: (->
     @get('likes') && @get('likes')[0] == 'You'
   ).property('likes')
@@ -55,7 +51,6 @@ Twitarr.StreamPost = Ember.Object.extend
   author_small_profile_pic: (->
     "/api/v2/user/photo/#{@get('author')}"
   ).property('author')
-
 
 Twitarr.StreamPost.reopenClass
   page: (page) ->

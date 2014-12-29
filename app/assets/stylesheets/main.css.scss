@@ -38,15 +38,6 @@
   }
 }
 
-.inline-input {
-  width: 20em;
-  margin-left: 0.6em;
-}
-
-.next-page-button {
-  float: right;
-}
-
 .errors-list {
   color: darkred;
   list-style: none;
@@ -115,41 +106,6 @@ button {
     outline: none;
     color: darkblue;
     text-decoration: none;
-  }
-}
-
-.seamail-meta {
-  border: 1px solid lightgrey;
-  margin-bottom: 5px;
-  padding: 2px 8px;
-  @include border-radius(5px);
-
-  .users {
-  }
-
-  .details {
-    float: right;
-    font-size: small;
-  }
-
-  .subject {
-    font-size: large;
-  }
-}
-
-.forum-meta {
-  border: 1px solid lightgrey;
-  margin-bottom: 5px;
-  padding: 2px 8px;
-  @include border-radius(5px);
-
-  .details {
-    float: right;
-    font-size: small;
-  }
-
-  .subject {
-    font-size: large;
   }
 }
 
@@ -426,7 +382,7 @@ div#photo-display {
 
 .display_card {
   border: 1px solid black;
-  margin-bottom: 1em;
+  margin-bottom: 0.6em;
   //  padding: 0.2em 0.6em;
 
   .header {
@@ -470,27 +426,22 @@ div#photo-display {
     }
 
     .title {
-      color: darkblue;
+//      color: darkblue;
     }
 
     .timestamp {
       float: right;
+      color: darkgrey;
     }
 
     .body {
       //  I don't think I actually want this on all cards
       font-size: large;
 
-      img.photo {
-        display: block;
-        margin: 0 auto 0.4em;
-        cursor: pointer;
-      }
-
-      div.photos {
+      .body-section.photos {
         text-align: center;
+        padding-bottom: 0.4em;
         img {
-          margin: 0 auto 0.4em;
           cursor: pointer;
         }
       }
@@ -516,4 +467,9 @@ div#photo-display {
       margin-left: 53px;
     }
   }
+}
+
+.footer-controls {
+  float: right;
+  margin-bottom: 0.6em;
 }

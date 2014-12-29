@@ -8,11 +8,11 @@
 </div>
 
 <div class="display_card">
-{{#each seamail in model}}
-  {{render "seamail.meta_partial" seamail}}
-{{else}}
+  {{#each seamail in model}}
+    {{render "seamail.meta_partial" seamail}}
+  {{else}}
     <div class="card-section">
       No seamail!
     </div>
-{{/each}}
+  {{/each}}
 </div>

@@ -1,20 +1,16 @@
-<div class="main-page-header">
+<div class="main-page-header header-with-controls">
   <span class="controls">
     {{#if logged_in}}
       {{#link-to "forums.new"}}Create Forum{{/link-to}}
     {{/if}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-  <h4>Forums</h4>
+
+  <div class="title">Forums</div>
 </div>
 
-{{#each}}
-  <div class="forum-meta">
-    <div class="subject clearfix">
-      {{#link-to 'forums.detail' id}}{{subject}}{{/link-to}}
-      <span class="details">
-        {{posts}} - {{pretty_timestamp}} ago
-      </span>
-    </div>
-  </div>
-{{/each}}
+<div class="display_card">
+  {{#each forum in model}}
+    {{render "forums.meta_partial" forum}}
+  {{/each}}
+</div>

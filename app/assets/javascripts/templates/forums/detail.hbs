@@ -5,26 +5,26 @@
     {{/if}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-  <h4>{{#link-to 'forums.index'}}Forums{{/link-to}} > {{subject}}</h4>
+
+  <div class="title">{{#link-to 'forums.index'}}Forums{{/link-to}} > {{subject}}</div>
 </div>
 
-{{#each post in posts}}
-  <div class="stream-post">
-    <div>
-      <span class="author">
-        {{post.author}}
-      </span>
-      <span class="timestamp">
-        {{post.pretty_timestamp}}
-      </span>
+<div class="display_card">
+  {{#each post in posts}}
+  <div class="card-section">
+    <span class="title">
+      {{post.author}}
+    </span>
+    {{pretty_timestamp post.timestamp}}
+    <div class="body">
+      <div class="body-section">
+        {{post.text}}
+      </div>
+      <div class="body-section photos">
+        {{#each photo in post.photos}}
+          {{render 'photo_mini' photo }}
+        {{/each}}
+      </div>
     </div>
-    <div class="text">
-      {{post.text}}
-    </div>
-    <div class="photos">
-      {{#each photo in post.photos}}
-        {{render 'photo_mini' photo }}
-      {{/each}}
-    </div>
-  </div>
-{{/each}}
+  {{/each}}
+</div>

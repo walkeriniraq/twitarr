@@ -1,12 +1,12 @@
 <div class="main-page-header">
-  <h4>{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{subject}}</h4>
+  <div class="title">{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{subject}}</div>
   <span class="controls">
     {{#link-to "seamail.new_message" model}}Reply{{/link-to}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-  <h5>
+  <div class="title">
     {{users_display}}
-  </h5>
+  </div>
 </div>
 
 <div class="display_card">
@@ -15,9 +15,7 @@
       <span class="title">
         {{message.author_display_name}}
       </span>
-      <span class="timestamp">
-        {{message.pretty_timestamp}}
-      </span>
+      {{pretty_timestamp timestamp}}
 
       <div class="body">
         <div class="body-section">

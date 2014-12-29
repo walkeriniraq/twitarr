@@ -1,20 +1,21 @@
-<div class="display_card">
-  <div class="header">
-    <span class="title">
-      Tweets
-    </span>
-    <div class="controls">
-      {{#if logged_in}}
-        {{#link-to "stream.new"}}New Post{{/link-to}}
-      {{/if}}
-      <a href="#" {{action 'reload'}}>Refresh</a>
-    </div>
+<div class="main-page-header header-with-controls">
+  <div class="controls">
+    {{#if logged_in}}
+      {{#link-to "stream.new"}}New Post{{/link-to}}
+    {{/if}}
+    <a href="#" {{action 'reload'}}>Refresh</a>
   </div>
 
+  <div class="title">Tweets</div>
+</div>
+
+<div class="display_card">
   {{#each post in posts}}
     {{render "stream.post_partial" post}}
   {{/each}}
+</div>
 
+<div class="footer-controls">
   {{#if has_next_page}}
     <div class="card-section">
       <button {{action 'next_page'}} class="controls">Next</button>

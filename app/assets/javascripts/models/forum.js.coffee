@@ -4,10 +4,6 @@ Twitarr.ForumMeta = Ember.Object.extend
   posts: 0
   timestamp: null
 
-  pretty_timestamp: (->
-    moment(@get('timestamp')).fromNow(true)
-  ).property('timestamp')
-
 Twitarr.ForumMeta.reopenClass
   list: ->
     $.getJSON('forums').then (data) =>
@@ -42,7 +38,3 @@ Twitarr.ForumPost = Ember.Object.extend
 
   init: ->
     @set('photos', Ember.A(Twitarr.Photo.create(photo) for photo in @get('photos')))
-
-  pretty_timestamp: (->
-    moment(@get('timestamp')).fromNow(true)
-  ).property('timestamp')

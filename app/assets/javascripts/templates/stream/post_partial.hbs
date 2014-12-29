@@ -7,15 +7,13 @@
   <span class="title">
     {{author}}
   </span>
-  <span class="timestamp">
-    {{#link-to "stream.view" id}}{{pretty_timestamp}}{{/link-to}}
-  </span>
+  {{pretty_timestamp timestamp}}
 
   <div class="body">
     <div class="body-section">
       {{{text}}}
     </div>
-    <div class="body-section">
+    <div class="body-section photos">
       {{#if photo}}
         {{render 'photo_mini' photo }}
       {{/if}}
