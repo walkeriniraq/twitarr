@@ -303,27 +303,35 @@ div#photo-display {
   padding-left: 0.4em;
   padding-right: 0.5em;
 
-  ul.to-autocomplete-list {
-    list-style-type: none;
-    background-color: white;
-    padding: 0;
-    position: absolute;
-    border: 1px solid #aaa;
-    margin-left: 5px;
-    margin-top: -3px;
-    font-size: larger;
-    @include border-radius(5px);
+  .autocomplete-parent {
+    position: relative;
 
-    li.to-autocomplete-item {
-      padding: 0.5em 1em;
-      cursor: pointer;
-      min-width: 150px;
-      text-align: center;
+    .to-autocomplete-list {
+      list-style-type: none;
+      background-color: white;
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+      margin-top: -2px;
 
-      &:hover {
-        background-color: #ccffcc;
+      .to-autocomplete-item {
+        border-top: 1px solid #aaa;
+        padding: 0.2em 0.4em;
+        font-size: larger;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #BFEEFC;
+          -webkit-box-shadow: 0 0 4px 4px white inset;
+          -moz-box-shadow: 0 0 4px 4px white inset;
+          box-shadow: 0 0 4px 4px white inset;
+        }
       }
     }
+
   }
 
   div.to-users {
@@ -335,6 +343,7 @@ div#photo-display {
       border: 1px solid #aaa;
       padding: 0.2em 0.6em;
       display: inline-block;
+      cursor: pointer;
       @include border-radius(4px);
 
       span {
@@ -426,7 +435,7 @@ div#photo-display {
     }
 
     .title {
-//      color: darkblue;
+      //      color: darkblue;
     }
 
     .timestamp {

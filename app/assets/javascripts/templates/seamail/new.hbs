@@ -1,5 +1,5 @@
 <div class="main-page-header">
-  <h4>{{#link-to 'seamail.index'}}Seamails{{/link-to}} > new</h4>
+  <div class="title">{{#link-to 'seamail.index'}}Seamails{{/link-to}} > new</div>
 </div>
 <div id="new-seamail-form">
   <h5>Users</h5>
@@ -12,7 +12,7 @@
       </span>
     {{/each}}
   </div>
-  <div>
+  <div class="autocomplete-parent">
     {{ input value=toInput id='seamail-user-autocomplete' class='input'}}
     {{#if searchResults}}
       <ul class="to-autocomplete-list">
