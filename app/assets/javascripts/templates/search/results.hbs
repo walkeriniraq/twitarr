@@ -20,7 +20,7 @@
     <div class="title">Tweets</div>
   </div>
   {{#each tweet in tweets}}
-    {{render "stream_post" tweet}}
+    {{render "stream.post_partial" tweet}}
   {{else}}
     <div class="card-section">
       No results.
@@ -67,22 +67,7 @@
     <div class="title">Your Seamail</div>
   </div>
   {{#each seamail in seamails}}
-    <div class="card-section">
-      <span class="title">
-        {{#each user in seamail.users}}
-          {{user}}
-        {{/each}}
-      </span>
-      <span class="timestamp">
-        {{seamail.timestamp}}
-      </span>
-
-      <div class="body">
-        <div class="body-section">
-          {{seamail.subject}}
-        </div>
-      </div>
-    </div>
+    {{render "seamail.meta_partial" seamail}}
   {{else}}
     <div class="card-section">
       No results.

@@ -1,3 +1,14 @@
+Twitarr.SeamailIndexController = Twitarr.ArrayController.extend()
+
+Twitarr.SeamailMetaPartialController = Twitarr.ObjectController.extend
+  users_display: (->
+    @get('users').join(', ')
+  ).property('users')
+
+  pretty_timestamp: (->
+    moment(@get('timestamp')).fromNow(true)
+  ).property('timestamp')
+
 Twitarr.SeamailNewController = Twitarr.Controller.extend
   searchResults: Ember.A()
   toUsers: Ember.A()

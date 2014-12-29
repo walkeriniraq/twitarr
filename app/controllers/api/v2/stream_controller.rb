@@ -34,7 +34,7 @@ class API::V2::StreamController < ApplicationController
     limit = (params[:limit] || PAGE_LENGTH).to_i
     start_loc = (params[:page] || 0).to_i
 
-    children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :desc).map { |x| x.decorate.to_hash(nil, remove:[:parent_chain]) }
+    children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :desc).map { |x| x.decorate.to_hash(current_username, remove:[:parent_chain]) }
     post_result = @post.decorate.to_hash
     if children and children.length > 0
       post_result[:children] = children
@@ -47,7 +47,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:page] || 0
     limit = params[:limit] || PAGE_LENGTH
     query = StreamPost.or({mentions: query_string}, {author: query_string}).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
-    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash }, next:(start_loc+limit)}
+    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
   end
 
   def view_hash_tag
@@ -55,7 +55,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:page] || 0
     limit = params[:limit] || PAGE_LENGTH
     query = StreamPost.where(hash_tags: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
-    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash }, next:(start_loc+limit)}
+    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
 
   end
 
@@ -120,7 +120,7 @@ class API::V2::StreamController < ApplicationController
 
     @post.save
     if @post.valid?
-      render_json stream_post: @post.decorate.to_hash
+      render_json stream_post: @post.decorate.to_hash(current_username)
     else
       render_json errors: @post.errors.full_messages
     end
@@ -162,7 +162,7 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_before(start_loc, author).limit(limit).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
-    {stream_posts: posts.map{|x| x.decorate.to_hash}, next_page: next_page}
+    {stream_posts: posts.map{|x| x.decorate.to_hash(current_username)}, next_page: next_page}
   end
 
   def want_newer_posts?
@@ -175,6 +175,6 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_after(start_loc, author).limit(limit).order_by(timestamp: :asc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
-    {stream_posts: posts.map{|x| x.decorate.to_hash}, next_page: next_page}
+    {stream_posts: posts.map{|x| x.decorate.to_hash(current_username)}, next_page: next_page}
   end
 end

@@ -21,6 +21,8 @@ Twitarr.ApplicationRoute = Ember.Route.extend
       @disconnectOutlet
         outlet: 'modal',
         parentView: 'application'
+    display_seamail: (id) ->
+      @transitionTo('seamail.detail', id)
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->

@@ -1,0 +1,17 @@
+<div class="card-section clickable" {{action 'display_seamail' id}}>
+  <span class="title">
+    {{subject}}
+  </span>
+  <span class="timestamp">
+      {{pretty_timestamp}} ago
+  </span>
+
+  <div class="body">
+    <div class="body-section">
+      {{users_display}}
+    </div>
+    <div class="body-section">
+      {{messages}}
+    </div>
+  </div>
+</div>

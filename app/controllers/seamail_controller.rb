@@ -6,7 +6,7 @@ class SeamailController < ApplicationController
 
   def show
     seamail = Seamail.find(params[:id])
-    was_unread = seamail.unread_users.include?(current_username)
+    was_unread = seamail.unread_users.andand.include?(current_username)
     seamail.mark_as_read current_username
     render_json seamail:seamail.decorate.to_hash.merge!({is_unread: was_unread})
   end

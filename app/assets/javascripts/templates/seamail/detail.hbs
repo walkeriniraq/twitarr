@@ -1,26 +1,30 @@
-<div class="main-page-header">
-  <h4>{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{subject}}</h4>
+<div class="main-page-header header-with-controls">
+  <div class="title">{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{subject}}</div>
   <span class="controls">
     {{#link-to "seamail.new_message" model}}Reply{{/link-to}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-  <h5>
+
+  <div class="title">
     {{users_display}}
-  </h5>
+  </div>
 </div>
 
-{{#each message in messages}}
-  <div class="stream-post">
-    <div>
-      <span class="author">
+<div class="display_card">
+  {{#each message in messages}}
+    <div class="card-section">
+      <span class="title">
         {{message.author}}
       </span>
       <span class="timestamp">
         {{message.pretty_timestamp}}
       </span>
+
+      <div class="body">
+        <div class="body-section">
+          {{message.text}}
+        </div>
+      </div>
     </div>
-    <div class="text">
-      {{message.text}}
-    </div>
-  </div>
-{{/each}}
+  {{/each}}
+</div>

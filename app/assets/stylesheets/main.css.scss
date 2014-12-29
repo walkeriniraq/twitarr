@@ -400,18 +400,38 @@ div#photo-display {
 }
 
 .main-page-header {
+  @extend .cleafix;
   margin-left: 0.5em;
   margin-right: 0.5em;
   margin-bottom: 1em;
+
+  .title {
+    font-size: larger;
+    font-weight: bold;
+  }
+
+  .controls {
+    float: right;
+
+    a {
+      @extend button;
+      color: #505050;
+    }
+  }
+
+  &.header-with-controls {
+    min-height: 1.25em;
+  }
 }
 
 .display_card {
   border: 1px solid black;
   margin-bottom: 1em;
-  padding: 0.2em 0.6em;
+  //  padding: 0.2em 0.6em;
 
   .header {
     @extend .clearfix;
+    margin: 0.2em 0.6em;
     padding: 0.5em 0.2em;
 
     .title {
@@ -428,14 +448,26 @@ div#photo-display {
         color: #505050;
       }
     }
-
   }
 
   .card-section {
     @extend .clearfix;
     border-top: 1px solid lightgrey;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
+    padding: 0.2em;
+    margin: 0.2em 0.4em;
+
+    &.clickable {
+      &:hover {
+        background-color: #BFEEFC;
+        -webkit-box-shadow: 0 0 4px 4px white inset;
+        -moz-box-shadow: 0 0 4px 4px white inset;
+        box-shadow: 0 0 4px 4px white inset;
+      }
+    }
+
+    &:first-child {
+      border-top: 0;
+    }
 
     .title {
       color: darkblue;

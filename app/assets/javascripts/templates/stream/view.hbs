@@ -5,11 +5,13 @@
     {{/if}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-    <h4>Tweets</h4>
+  <h4>Tweets</h4>
 
 </div>
-{{partial "stream_post"}}
+<div class="display_card">
+  {{render "stream.post_partial" model}}
 
-{{#each child in children}}
-{{render "stream_post" child}}
-{{/each}}
+  {{#each child in children}}
+    {{render "stream.post_partial" child}}
+  {{/each}}
+</div>

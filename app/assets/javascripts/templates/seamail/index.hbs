@@ -1,23 +1,18 @@
-<div class="main-page-header">
+<div class="main-page-header header-with-controls">
   <span class="controls">
     {{#link-to "seamail.new"}}New Seamail{{/link-to}}
     <a href="#" {{action 'reload'}}>Refresh</a>
   </span>
-  <h4>Seamails</h4>
+
+  <div class="title">Seamails</div>
 </div>
 
-{{#each}}
-  <div class="seamail-meta">
-    <div class="clearfix">
-      <span class="users">
-        {{users_display}}
-      </span>
-      <span class="details">
-        {{messages}} - {{pretty_timestamp}} ago
-      </span>
+<div class="display_card">
+{{#each seamail in model}}
+  {{render "seamail.meta_partial" seamail}}
+{{else}}
+    <div class="card-section">
+      No seamail!
     </div>
-    <div class="subject">
-      {{#link-to 'seamail.detail' id}}{{subject}}{{/link-to}}
-    </div>
-  </div>
 {{/each}}
+</div>
