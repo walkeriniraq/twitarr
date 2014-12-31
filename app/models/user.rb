@@ -86,8 +86,11 @@ class User
     super val.andand.strip
   end
 
-  def seamails
-    Seamail.where(usernames: username).sort_by { |x| x.last_message }.reverse
+  def seamails(params = {})
+    query = {usernames: username}
+    query[:unread_users] = username if params.has_key?(:unread)
+    query[:last_update.gte] = params[:after] if params.has_key?(:after)
+    Seamail.where(query).sort_by { |x| x.last_message }.reverse
   end
 
   def seamail_unread_count

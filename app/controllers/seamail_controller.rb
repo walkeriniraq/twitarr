@@ -1,7 +1,24 @@
 class SeamailController < ApplicationController
 
   def index
-    render_json seamail_meta: current_user.seamails.map { |x| x.decorate.to_meta_hash.merge!({is_unread: x.unread_users.andand.include?(current_username)}) }
+    extra_query = {}
+    if params[:unread]
+      extra_query[:unread] = true
+    end
+    if params[:after]
+      val = nil
+      if params[:after] =~ /^\d+$/
+        val = Time.at(params[:after].to_i / 1000.0)
+      else
+        val = DateTime.parse params[:after]
+      end
+      if val
+        extra_query[:after] = val
+      end
+    end
+    mails = current_user.seamails extra_query
+    render_json seamail_meta: mails.map { |x| x.decorate.to_meta_hash.merge!({is_unread: x.unread_users.andand.include?(current_username)}) },
+        last_checked: ((Time.now.to_f * 1000).to_i + 1)
   end
 
   def show

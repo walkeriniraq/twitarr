@@ -4,6 +4,7 @@ class Seamail
   field :sj, as: :subject, type: String
   field :us, as: :usernames, type: Array
   field :rd, as: :unread_users, type: Array
+  field :up, as: :last_update, type: Time
   embeds_many :messages, class_name: 'SeamailMessage', store_as: :sm, order: :timestamp.desc, validate: false
 
   validates :subject, presence: true
@@ -65,10 +66,11 @@ class Seamail
   end
 
   def self.create_new_seamail(author, to_users, subject, first_message_text)
+    right_now = Time.now
     to_users ||= []
     to_users << author
-    seamail = Seamail.new(usernames: to_users, subject: subject, unread_users: to_users)
-    seamail.messages << SeamailMessage.new(author: author, text: first_message_text, timestamp: Time.now)
+    seamail = Seamail.new(usernames: to_users, subject: subject, unread_users: to_users, last_update: right_now)
+    seamail.messages << SeamailMessage.new(author: author, text: first_message_text, timestamp: right_now)
     if seamail.valid?
       seamail.save
     end
@@ -76,8 +78,11 @@ class Seamail
   end
 
   def add_message(author, text)
+    right_now = Time.now
     reset_read author
-    messages.create author: author, text: text, timestamp: Time.now
+    self.last_update = right_now
+    self.save
+    messages.create author: author, text: text, timestamp: right_now
   end
 
 
