@@ -18,6 +18,7 @@ class User
   field :sq, as: :security_question, type: String
   field :sa, as: :security_answer, type: String
   field :um, as: :unnoticed_mentions, type: Integer
+  field :al, as: :last_viewed_alerts, type: DateTime
 
   index username: 1
   index :display_name => 'text'
@@ -167,7 +168,14 @@ class User
     set(unnoticed_mentions: 0)
   end
 
+  def reset_last_viewed_alerts
+    reset_mentions
+    self.last_viewed_alerts = DateTime.now
+  end
 
+  def unnoticed_alerts
+    unnoticed_mentions > 0 || seamail_unread_count > 0
+  end
 
   def self.display_name_from_username(username)
     Rails.cache.fetch("display_name:#{username}", expires_in: USERNAME_CACHE_TIME) do

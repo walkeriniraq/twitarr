@@ -42,7 +42,12 @@ class API::V2::UserController < ApplicationController
 
   def get_photo
     user = User.get params[:username]
-    send_file user.profile_picture_path, disposition: 'inline'
+    if user
+      send_file user.profile_picture_path, disposition: 'inline'
+    else
+      Rails.logger.error "get_photo: User #{params[:username]} was not found.  Using 404 image."
+      redirect_to '/img/404_file_not_found_sign_by_zutheskunk.png'
+    end
   end
 
   def reset_photo

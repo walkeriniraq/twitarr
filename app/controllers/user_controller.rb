@@ -101,9 +101,8 @@ class UserController < ApplicationController
       end
       return render_json status: 'User account has been disabled.' if current_user.status != ACTIVE_STATUS || current_user.password.nil?
       current_user.update_last_login.save
-      puts "Successful login for user: #{current_username}"
       return render_json status: 'ok',
-                         user: current_user.decorate.gui_hash,
+                         user: current_user.decorate.self_hash,
                          need_password_change: current_user.correct_password(DEFAULT_PASSWORD),
                          is_read_only: false
     end

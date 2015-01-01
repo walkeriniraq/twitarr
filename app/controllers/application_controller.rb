@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   def login_user(user)
     session[:username] = user.username
     session[:is_admin] = user.is_admin
+    puts "Successful login for user: #{current_username}"
   end
 
   def logout_user
