@@ -8,6 +8,11 @@
     <img src="img/Twitarr - header.png">
     <span>Twit-arr</span>
   </span>
+  {{#if alerts}}
+    {{#link-to "alerts"}}
+      <span class="menu-alerts glyphicon glyphicon-warning-sign" title="You have new alerts!"></span>
+    {{/link-to}}
+  {{/if}}
 </nav>
 <div id="side-menu">
   <div id="login-info">
@@ -25,6 +30,14 @@
     <li>{{#link-to "stream"}}Tweets{{/link-to}}</li>
     <li>---</li>
     <li>{{#link-to "search"}}Search{{/link-to}}</li>
+    <li>
+      {{#link-to "alerts"}}
+        Alerts
+        {{#if alerts}}
+          <span style="color: red; font-size: small;">New!</span>
+        {{/if}}
+      {{/link-to}}
+    </li>
     <li>---</li>
     {{#unless logged_in}}
       <li><a href="#" {{action 'login'}}>Login</a></li>

@@ -17,4 +17,6 @@ Twitarr.Router.map ()->
   @resource 'search', ->
     @route 'results', { path: ':text' }
 
+  @route 'alerts'
+
   @route 'profile'

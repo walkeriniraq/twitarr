@@ -1,4 +1,4 @@
-<div class="card-section section-with-photo">
+<div class="card-section section-with-photo clickable" {{action display_tweet id}}>
 
   <div class="section-photo">
     <img {{bind-attr src=author_small_profile_pic}}/>
@@ -7,7 +7,8 @@
   <span class="title">
     {{author}}
   </span>
-    {{#link-to "stream.view" id}}{{pretty_timestamp timestamp}}{{/link-to}}
+
+  {{pretty_timestamp timestamp}}
 
   <div class="body">
     <div class="body-section">

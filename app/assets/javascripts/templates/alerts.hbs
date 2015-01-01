@@ -1,0 +1,70 @@
+<div class="main-page-header header-with-controls">
+  <span class="controls">
+    <a href="#" {{action 'reload'}}>Refresh</a>
+  </span>
+
+  <div class="title">Your alerts</div>
+</div>
+
+{{#if announcements}}
+  <div class="display_card">
+    <div class="header">
+      <div class="title">Announcements</div>
+    </div>
+    {{#each announcement in announcements}}
+      <div class="card-section section-with-photo">
+
+        <div class="section-photo">
+          <!-- TODO: Fix this-->
+          <img src="/api/v2/user/photo/admin"/>
+        </div>
+
+        <span class="title">
+          {{announcement.author}}
+        </span>
+
+        <div class="body">
+          <div class="body-section">
+            {{announcement.text}}
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
+
+<div class="display_card">
+  <div class="header">
+    <div class="title">Unread Seamail</div>
+  </div>
+  {{#each seamail in seamails}}
+    {{render "seamail.meta_partial" seamail}}
+  {{else}}
+    <div class="card-section">
+      No unread seamail.
+    </div>
+  {{/each}}
+  <div class="card-section">
+    {{#link-to 'seamail.index'}}
+      View all seamail.
+    {{/link-to}}
+  </div>
+</div>
+
+<div class="display_card">
+  <div class="header">
+    <div class="title">Tweet Mentions</div>
+  </div>
+  {{#each tweet in tweet_mentions}}
+    {{render "stream.post_partial" tweet}}
+  {{/each}}
+</div>
+
+<div class="display_card">
+  <div class="header">
+    <div class="title">Forum Mentions</div>
+  </div>
+  {{#each forum in forum_mentions}}
+    {{render "forums.meta_partial" forum}}
+  {{/each}}
+</div>
