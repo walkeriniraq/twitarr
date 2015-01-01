@@ -11,7 +11,7 @@ class StreamPostDecorator < Draper::Decorator
         author: author,
         author_display_name: User.display_name_from_username(author),
         text: auto_link(text),
-        timestamp: timestamp.to_i,
+        timestamp: timestamp,
         likes: some_likes(username),
         mentions: mentions,
         entities: entities,

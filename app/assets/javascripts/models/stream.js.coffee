@@ -7,7 +7,6 @@ Twitarr.StreamPost = Ember.Object.extend
   children: []
 
   init: ->
-    @set('timestamp', @get('timestamp') * 1000)
     photo = @get('photo')
     if photo
       @set 'photo', Twitarr.Photo.create(photo)

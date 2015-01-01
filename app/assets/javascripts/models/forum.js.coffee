@@ -1,7 +1,7 @@
 Twitarr.ForumMeta = Ember.Object.extend
   id: null
   subject: null
-  posts: 0
+  posts: null
   timestamp: null
 
 Twitarr.ForumMeta.reopenClass
