@@ -1,7 +1,6 @@
 # noinspection RubyStringKeysInHashInspection
 class StreamPost
   include Mongoid::Document
-  include Twitter::Extractor
   include Postable
 
   field :p, as: :photo, type: String

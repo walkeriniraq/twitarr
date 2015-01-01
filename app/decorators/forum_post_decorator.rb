@@ -9,7 +9,9 @@ class ForumPostDecorator < Draper::Decorator
         timestamp: timestamp,
         likes: likes,
         likes_counts: likes.length,
-        photos: decorate_photos
+        photos: decorate_photos,
+        hash_tags: hash_tags,
+        mentions: mentions
     }
   end
 

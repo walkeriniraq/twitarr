@@ -1,5 +1,6 @@
 module Postable
   extend ActiveSupport::Concern
+  include Twitter::Extractor
 
   included do
     field :au, as: :author, type: String
