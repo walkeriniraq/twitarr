@@ -4,10 +4,11 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <span class="menu-brand">
+  {{#link-to "stream"}}<span class="menu-brand">
     <img src="img/Twitarr - header.png">
     <span>Twit-arr</span>
   </span>
+  {{/link-to}}
   {{#if alerts}}
     {{#link-to "alerts"}}
       <span class="menu-alerts glyphicon glyphicon-warning-sign" title="You have new alerts!"></span>
