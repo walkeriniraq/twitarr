@@ -11,7 +11,9 @@ class Hashtag
       hashtag = hashtag[1..-1] if hashtag[0] == '#'
       hashtag = hashtag.downcase
       hashtag.strip!
-      Hashtag.create(name:hashtag)
+      doc = Hashtag.new(name:hashtag)
+      doc.upsert
+      doc
     rescue Exception => e
       logger.error e
     end
