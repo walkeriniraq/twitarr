@@ -43,10 +43,14 @@ class API::V2::StreamController < ApplicationController
   end
 
   def view_mention
-    query_string = params[:query]
-    start_loc = params[:page] || 0
-    limit = params[:limit] || PAGE_LENGTH
-    query = StreamPost.or({mentions: query_string}, {author: query_string}).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
+    params[:page] = 0 unless params[:page]
+    params[:limit] = PAGE_LENGTH unless params[:limit]
+    if params[:after]
+      params[:after] = Time.at(params[:after].to_f / 1000)
+    end
+    start_loc = params[:page]
+    limit = params[:limit]
+    query = StreamPost.view_mentions params
     render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
   end
 

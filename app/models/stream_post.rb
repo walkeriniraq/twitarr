@@ -102,6 +102,21 @@ class StreamPost
     logger.info "Unable to find mentioned user(s) #{unknown_users.join ','} to increment mention count" unless unknown_users.empty?
   end
 
+  def self.view_mentions(params = {})
+    query_string = params[:query]
+    start_loc = params[:page] || 0
+    limit = params[:limit] || 20
+    query = if params[:mentions_only]
+      StreamPost.where({mentions: query_string})
+    else
+      StreamPost.or({mentions: query_string}, {author: query_string})
+    end
+    if params[:after]
+      query = query.where(:timestamp.gt => params[:after])
+    end
+    query.order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
+  end
+
   def record_hashtags
     self.hash_tags.each do |ht|
       Hashtag.add_tag ht

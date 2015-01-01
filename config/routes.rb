@@ -11,6 +11,8 @@ Twitarr::Application.routes.draw do
   get 'user/logout'
   get 'user/autocomplete'
   post 'user/save_profile'
+  get 'alerts', to: 'alerts#index'
+  get 'alerts/check', to: 'alerts#check'
 
   get 'search/:text', to: 'search#search'
 

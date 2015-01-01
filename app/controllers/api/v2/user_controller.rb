@@ -47,7 +47,6 @@ class API::V2::UserController < ApplicationController
     else
       Rails.logger.error "get_photo: User #{params[:username]} was not found.  Using 404 image."
       redirect_to '/img/404_file_not_found_sign_by_zutheskunk.png'
-      return
     end
   end
 
