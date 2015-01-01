@@ -44,4 +44,14 @@ class Forum
     posts.create author: author, text: text, timestamp: Time.now, photos: photos
   end
 
+  def self.view_mentions(params = {})
+    query_string = params[:query]
+    start_loc = params[:page] || 0
+    limit = params[:limit] || 20
+    query = where(:'fp.mn' => query_string)
+    if params[:after]
+      query = query.gt(:'fp.ts' => params[:after])
+    end
+    query.order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
+  end
 end

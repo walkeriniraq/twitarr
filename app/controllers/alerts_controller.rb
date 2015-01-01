@@ -10,7 +10,9 @@ class AlertsController < ApplicationController
     tweet_mentions = StreamPost.view_mentions(query: current_username,
                                               after:current_user.last_viewed_alerts,
                                               mentions_only: true).map {|p| p.decorate.to_hash }
-    forum_mentions = []
+    forum_mentions = Forum.view_mentions(query: current_username,
+                                              after:current_user.last_viewed_alerts,
+                                              mentions_only: true).map {|p| p.decorate.to_meta_hash }
     announcements = []
     unread_seamail = current_user.seamails(unread: true).map{|m| m.decorate.to_meta_hash }
 
