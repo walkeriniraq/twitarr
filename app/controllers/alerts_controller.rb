@@ -1,5 +1,7 @@
 class AlertsController < ApplicationController
 
+  before_filter :login_required
+
   def login_required
     head :unauthorized unless logged_in?
   end
