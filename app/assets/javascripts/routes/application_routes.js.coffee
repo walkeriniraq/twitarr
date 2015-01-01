@@ -55,3 +55,10 @@ Twitarr.AlertsRoute = Ember.Route.extend
       Twitarr.ForumMeta.create(subject: "some text", timestamp: new Date(), posts: '5 posts'),
       Twitarr.ForumMeta.create(subject: "other text", timestamp: new Date(), posts: '7 posts')
     ])
+
+Twitarr.UserRoute = Ember.Route.extend
+  model: (params) ->
+    params
+
+  setupController: (controller, model) ->
+    controller.set('username', model.username)

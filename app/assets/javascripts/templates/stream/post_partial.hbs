@@ -1,7 +1,9 @@
-<div class="card-section section-with-photo clickable" {{action display_tweet id}}>
+<div class="card-section section-with-photo clickable" {{action 'display_tweet' id bubbles=false}}>
 
   <div class="section-photo">
-    <img {{bind-attr src=author_small_profile_pic}}/>
+    {{#link-to 'user' author}}
+      <img {{bind-attr src=author_small_profile_pic}}/>
+    {{/link-to}}
   </div>
 
   <span class="title">
@@ -24,9 +26,9 @@
     {{likes_string}}
     {{#if logged_in}}
       {{#if user_likes}}
-        <a href="#" {{action 'unlike' model}}>Unlike</a>
+        <a href="#" {{action 'unlike' model bubbles=false}}>Unlike</a>
       {{else}}
-        <a href="#" {{action 'like' model}}>Like</a>
+        <a href="#" {{action 'like' model bubbles=false}}>Like</a>
       {{/if}}
     {{/if}}
   </div>

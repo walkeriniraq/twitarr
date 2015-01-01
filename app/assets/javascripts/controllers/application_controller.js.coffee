@@ -72,7 +72,7 @@ Twitarr.ApplicationController.reopenClass
     "/photo/full/#{photo}"
 
 
-Twitarr.PhotoViewController = Ember.ObjectController.extend
+Twitarr.PhotoViewController = Twitarr.ObjectController.extend
   photo_path: (->
     if(@get('animated'))
       Twitarr.ApplicationController.full_photo_path(@get('id'))
@@ -84,7 +84,7 @@ Twitarr.PhotoViewController = Ember.ObjectController.extend
     open_full: ->
       window.open Twitarr.ApplicationController.full_photo_path(@get('id'))
 
-Twitarr.PhotoMiniController = Ember.ObjectController.extend
+Twitarr.PhotoMiniController = Twitarr.ObjectController.extend
   sm_photo_path: (->
     if(@get('animated'))
       "background: url('#{Twitarr.ApplicationController.sm_photo_path @get('id')}') no-repeat center center black;"
@@ -92,7 +92,7 @@ Twitarr.PhotoMiniController = Ember.ObjectController.extend
       Twitarr.ApplicationController.sm_photo_path @get('id')
   ).property('photo')
 
-Twitarr.ProfileController = Ember.ObjectController.extend
+Twitarr.ProfileController = Twitarr.ObjectController.extend
   needs: ['application']
 
   count: 0
@@ -107,3 +107,5 @@ Twitarr.ProfileController = Ember.ObjectController.extend
 
     file_uploaded: ->
       @incrementProperty('count')
+
+Twitarr.UserController = Twitarr.Controller.extend()

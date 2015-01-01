@@ -18,5 +18,5 @@ Twitarr.Router.map ()->
     @route 'results', { path: ':text' }
 
   @route 'alerts'
-
+  @route 'user', { path: 'user/:username' }
   @route 'profile'
