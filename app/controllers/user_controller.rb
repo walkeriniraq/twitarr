@@ -85,6 +85,7 @@ class UserController < ApplicationController
     current_user.display_name = params[:display_name]
     puts "email: #{current_user.email}"
     puts "display name: #{current_user.display_name}"
+    current_user.save
     if (current_user.invalid?)
       render_json status: current_user.errors.full_messages.join('\n')
     else
