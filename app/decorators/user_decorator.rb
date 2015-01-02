@@ -5,6 +5,10 @@ class UserDecorator < Draper::Decorator
     attributes.reduce({}) { |h, k| h[k] = send(k); h }
   end
 
+  def public_hash
+    return_attribute_hash %w(username display_name)
+  end
+
   def gui_hash
     return_attribute_hash %w(username is_admin display_name)
   end

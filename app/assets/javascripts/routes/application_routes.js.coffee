@@ -28,6 +28,8 @@ Twitarr.ApplicationRoute = Ember.Route.extend
       @transitionTo('forums.detail', id)
     display_tweet: (id) ->
       @transitionTo('stream.view', id)
+    display_user: (username) ->
+      @transitionTo('user', username)
 
 Twitarr.IndexRoute = Ember.Route.extend
   redirect: ->

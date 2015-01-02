@@ -23,7 +23,7 @@ class API::V2::PhotoController < ApplicationController
     sort_by = (params[:sort_by] || 'upload_time').to_sym
     order = (params[:order] || 'asc').to_sym
     page = params[:page].to_i
-    query = PhotoMetadata.where({}).order_by([sort_by, order]).skip(PAGE_LENGTH * page).limit(PAGE_LENGTH)
+    query = PhotoMetadata.all.order_by([sort_by, order]).skip(PAGE_LENGTH * page).limit(PAGE_LENGTH)
     count = query.length
     result = [status: 'ok', total_count:count, page:page, items:query.length, photos:query]
     respond_to do |format|

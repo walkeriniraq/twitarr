@@ -16,6 +16,8 @@ Twitarr::Application.routes.draw do
 
   get 'search/:text', to: 'search#search'
 
+  get 'user/:username', to: 'user#show'
+
   resources :forums, except: [:destroy, :edit, :new] do
     collection do
       post 'new_post'

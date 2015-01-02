@@ -1,0 +1,1 @@
+Twitarr.UserController = Twitarr.ObjectController.extend()

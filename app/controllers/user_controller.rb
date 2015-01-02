@@ -119,4 +119,13 @@ class UserController < ApplicationController
     render_json names: User.where(username: /^#{params[:string]}/).map(:username)
   end
 
+  def show
+    show_username = User.format_username params[:username]
+    render_json status: 'User does not exist.' and return unless User.exist?(show_username)
+    render_json status: 'ok', user: User.get(show_username).decorate.public_hash.merge(
+        {
+            recent_tweets: StreamPost.where(author: show_username).desc(:timestamp).limit(20).map { |x| x.decorate.to_hash(current_username) }
+        })
+  end
+
 end

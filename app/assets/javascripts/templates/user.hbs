@@ -1,13 +1,21 @@
 <div class="display_card">
   <div class="header">
-    <div class="title">{{username}}</div>
+    <div class="title">
+      {{pretty_username username display_name}}
+    </div>
+  </div>
+
+  <div class="card-section section-with-photo">
+    <div class="section-photo">
+      {{user_picture username}}
+    </div>
   </div>
 </div>
 <div class="display_card">
   <div class="header">
     <div class="title">Tweets</div>
   </div>
-  {{#each tweet in tweets}}
+  {{#each tweet in recent_tweets}}
     {{render "stream.post_partial" tweet}}
   {{else}}
     <div class="card-section">
