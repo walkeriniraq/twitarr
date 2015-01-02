@@ -2,12 +2,12 @@
 
   <div class="section-photo">
     {{#link-to 'user' author}}
-      <img {{bind-attr src=author_small_profile_pic}}/>
+      {{user_picture author}}
     {{/link-to}}
   </div>
 
   <span class="title">
-    {{author}}
+    {{pretty_username author display_name}}
   </span>
 
   {{pretty_timestamp timestamp}}

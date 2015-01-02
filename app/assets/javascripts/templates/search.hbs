@@ -1,16 +1,18 @@
 <div class="main-page-header">
-  <table style="width: 100%;">
-    <tr>
-      <td style="width: 2em;">
-        <span class="glyphicon glyphicon-search"></span>
-      </td>
-      <td>
-        {{input value=text class='input' placeholder='Search...'}}
-      </td>
-      <td style="width: 3em; padding-left: 1em;">
-        <button {{action 'search' text}}>Go</button>
-      </td>
-    </tr>
-  </table>
+  <form>
+    <table style="width: 100%;">
+      <tr>
+        <td style="width: 2em;">
+          <span class="glyphicon glyphicon-search"></span>
+        </td>
+        <td>
+          {{input value=text class='input' placeholder='Search...'}}
+        </td>
+        <td style="width: 3em; padding-left: 1em;">
+          <button {{action 'search' text}}>Go</button>
+        </td>
+      </tr>
+    </table>
+  </form>
 </div>
 {{outlet}}

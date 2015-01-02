@@ -1,1 +1,39 @@
-{{username}}
+<div class="display_card">
+  <div class="header">
+    <div class="title">{{username}}</div>
+  </div>
+</div>
+<div class="display_card">
+  <div class="header">
+    <div class="title">Tweets</div>
+  </div>
+  {{#each tweet in tweets}}
+    {{render "stream.post_partial" tweet}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_tweets}}
+    <div class="card-section">
+      View all matching tweets...
+    </div>
+  {{/if}}
+</div>
+<div class="display_card">
+  <div class="header">
+    <div class="title">Forums</div>
+  </div>
+  {{#each forum in forums}}
+    {{render "forums.meta_partial" forum}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_forums}}
+    <div class="card-section">
+      View all matching forums...
+    </div>
+  {{/if}}
+</div>

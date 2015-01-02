@@ -3,6 +3,7 @@ Twitarr.StreamPost = Ember.Object.extend
   text: null
   timestamp: null
   photo: null
+  display_name: null
   likes: []
   children: []
 
@@ -46,10 +47,6 @@ Twitarr.StreamPost = Ember.Object.extend
         @set('likes', data.likes)
       else
         alert data.status
-
-  author_small_profile_pic: (->
-    "/api/v2/user/photo/#{@get('author')}"
-  ).property('author')
 
 Twitarr.StreamPost.reopenClass
   page: (page) ->

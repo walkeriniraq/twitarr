@@ -1,27 +1,27 @@
 Twitarr.SearchRoute = Ember.Route.extend
-  text: ''
-
   actions:
     search: (text) ->
       if !!text
         @transitionTo('search.results', text)
 
+  setupController: (controller) ->
+    controller.set('text', '')
+
 Twitarr.SearchResultsRoute = Ember.Route.extend
   model: (params) ->
-    params
+    @controllerFor('search').set('text', params.text)
+    $.getJSON("search/#{params.text}")
 
   setupController: (controller, model) ->
-    @controllerFor('search').set('text', model.text)
-    $.getJSON("search/#{model.text}").done (data) =>
-      if data.status is 'ok'
+      if model.status is 'ok'
         controller.set('error', null)
-        controller.set('users', data.users)
-        controller.set('more_users', data.more_users)
-        controller.set('seamails', data.seamails)
-        controller.set('more_seamails', data.more_seamails)
-        controller.set('tweets', Ember.A(Twitarr.StreamPost.create(post) for post in data.tweets))
-        controller.set('more_tweets', data.more_tweets)
-        controller.set('forums', data.forums)
-        controller.set('more_forums', data.more_forums)
+        controller.set('users', model.users)
+        controller.set('more_users', model.more_users)
+        controller.set('seamails', model.seamails)
+        controller.set('more_seamails', model.more_seamails)
+        controller.set('tweets', Twitarr.StreamPost.create(post) for post in model.tweets)
+        controller.set('more_tweets', model.more_tweets)
+        controller.set('forums', Twitarr.ForumMeta.create(forum) for forum in model.forums)
+        controller.set('more_forums', model.more_forums)
       else
         controller.set('error', data.status)
