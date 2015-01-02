@@ -5,6 +5,7 @@ class ForumPostDecorator < Draper::Decorator
     {
         id: id.to_s,
         author: author,
+        display_name: User.display_name_from_username(author),
         text: text,
         timestamp: timestamp,
         likes: likes,
