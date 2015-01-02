@@ -179,7 +179,7 @@ class User
 
   def self.display_name_from_username(username)
     Rails.cache.fetch("display_name:#{username}", expires_in: USERNAME_CACHE_TIME) do
-      User.where(username: username).map(:display_name)
+      User.where(username: username).only(:display_name).map(:display_name).first
     end
   end
 
