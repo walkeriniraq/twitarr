@@ -35,7 +35,7 @@ class Seamail
   end
 
   def display_names
-    usernames.map { |x| User.display_name_from_username x }
+    usernames.map { |x| User.display_name_from_username(x) || x }
   end
 
   def usernames=(usernames)
