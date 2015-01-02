@@ -13,7 +13,7 @@
   {{#each post in posts}}
   <div class="card-section">
     <span class="title">
-      {{post.display_name}} ({{post.author}})
+      {{pretty_username post.author post.display_name}}
     </span>
     {{pretty_timestamp post.timestamp}}
     <div class="body">
