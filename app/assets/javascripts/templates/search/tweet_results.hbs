@@ -1,0 +1,17 @@
+<div class="display_card">
+  <div class="header">
+    <div class="title">Tweets</div>
+  </div>
+  {{#each tweet in tweets}}
+    {{render "stream.post_partial" tweet}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_tweets}}
+    <div class="card-section">
+      Search query returned too many results - please narrow the search.
+    </div>
+  {{/if}}
+</div>

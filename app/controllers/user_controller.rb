@@ -124,7 +124,7 @@ class UserController < ApplicationController
     render_json status: 'User does not exist.' and return unless User.exist?(show_username)
     render_json status: 'ok', user: User.get(show_username).decorate.public_hash.merge(
         {
-            recent_tweets: StreamPost.where(author: show_username).desc(:timestamp).limit(20).map { |x| x.decorate.to_hash(current_username) }
+            recent_tweets: StreamPost.where(author: show_username).desc(:timestamp).limit(10).map { |x| x.decorate.to_hash(current_username) }
         })
   end
 

@@ -191,6 +191,6 @@ class User
 
   def self.search(params = {})
     query = params[:query].gsub(/\W/,'')
-    User.where(username: Regexp.new(query))
+    User.or({username: Regexp.new(query)}, { '$text' => { '$search' => "\"#{query}\"" } })
   end
 end

@@ -16,6 +16,9 @@ Twitarr.Router.map ()->
 
   @resource 'search', ->
     @route 'results', { path: ':text' }
+    @route 'user_results', { path: 'user/:text' }
+    @route 'tweet_results', { path: 'tweet/:text' }
+    @route 'forum_results', { path: 'forum/:text' }
 
   @route 'alerts'
   @route 'user', { path: 'user/:username' }

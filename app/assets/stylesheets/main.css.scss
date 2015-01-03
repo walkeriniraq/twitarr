@@ -429,6 +429,7 @@ div#photo-display {
     margin: 0.2em 0.4em;
 
     &.clickable {
+      cursor: pointer;
       &:hover {
         background-color: #BFEEFC;
         -webkit-box-shadow: 0 0 4px 4px white inset;

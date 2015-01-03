@@ -3,14 +3,14 @@
     <div class="title">Users</div>
   </div>
   {{#each user in users}}
-    {{render 'search.user_result' user}}
+    {{render 'search.user_partial' user}}
   {{else}}
     <div class="card-section">
       No results.
     </div>
   {{/each}}
   {{#if more_users}}
-    <div class="card-section">
+    <div class="card-section clickable" {{action 'user_search'}}>
       View all matching users...
     </div>
   {{/if}}
@@ -27,7 +27,7 @@
     </div>
   {{/each}}
   {{#if more_tweets}}
-    <div class="card-section">
+    <div class="card-section clickable" {{action 'tweet_search'}}>
       View all matching tweets...
     </div>
   {{/if}}
@@ -44,7 +44,7 @@
     </div>
   {{/each}}
   {{#if more_forums}}
-    <div class="card-section">
+    <div class="card-section clickable" {{action 'forum_search'}}>
       View all matching forums...
     </div>
   {{/if}}
@@ -61,8 +61,10 @@
     </div>
   {{/each}}
   {{#if more_seamails}}
-    <div class="card-section">
-      View all matching seamails...
-    </div>
+    {{#link-to "seamail"}}
+      <div class="card-section clickable">
+        View all seamail...
+      </div>
+    {{/link-to}}
   {{/if}}
 </div>

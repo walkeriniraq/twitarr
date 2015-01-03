@@ -1,0 +1,17 @@
+<div class="display_card">
+  <div class="header">
+    <div class="title">Forums</div>
+  </div>
+  {{#each forum in forums}}
+    {{render "forums.meta_partial" forum}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_forums}}
+    <div class="card-section">
+      Search query returned too many results - please narrow the search.
+    </div>
+  {{/if}}
+</div>

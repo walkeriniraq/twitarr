@@ -15,6 +15,9 @@ Twitarr::Application.routes.draw do
   get 'alerts/check', to: 'alerts#check'
 
   get 'search/:text', to: 'search#search'
+  get 'search_users/:text', to: 'search#search_users'
+  get 'search_tweets/:text', to: 'search#search_tweets'
+  get 'search_forums/:text', to: 'search#search_forums'
 
   get 'user/:username', to: 'user#show'
 

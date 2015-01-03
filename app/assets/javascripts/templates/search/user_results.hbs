@@ -1,0 +1,17 @@
+<div class="display_card">
+  <div class="header">
+    <div class="title">Users</div>
+  </div>
+  {{#each user in users}}
+    {{render 'search.user_partial' user}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_users}}
+    <div class="card-section">
+      Search query returned too many results - please narrow the search.
+    </div>
+  {{/if}}
+</div>
