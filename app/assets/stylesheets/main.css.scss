@@ -19,8 +19,6 @@
 }
 
 @mixin border-radius($radius: 5px) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
   border-radius: $radius;
 }
 
@@ -97,25 +95,32 @@ html {
   }
 }
 
+.button {
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3) inset;
+}
+
 button {
+  @extend .button;
   @include border-radius(3px);
-  border: 1px outset darkgrey;
+  border: 1px outset #8D031C;
   padding: 4px 7px;
-  background-color: #e0f0ff;
-  -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
-  -moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08);
+  background-color: #FFCA73;
+  color: #000000;
 
   &:hover, &:focus {
     outline: none;
-    color: darkblue;
+    color: #8D031C;
     text-decoration: none;
   }
 }
 
+body {
+  background-color: #CBFCF0;
+}
+
 #top-bar {
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #eee;
+  background-color: #FFECCE;
+  border-bottom: 1px solid #02614A;
   height: 50px;
   position: fixed;
   left: 0;
@@ -125,15 +130,16 @@ button {
   z-index: 100;
 
   .menu-toggle {
+    @extend .button;
     @include border-radius(4px);
-    background-color: #ddd;
-    border: 1px solid #ccc;
+    background-color: #6BECCC;
+    border: 1px solid #02614A;
     float: left;
     margin: 8px 16px;
     padding: 9px 10px 5px;
 
     .icon-bar {
-      background-color: #888;
+      background-color: #02614A;
       @include border-radius(1px);
       display: block;
       height: 2px;
@@ -163,7 +169,7 @@ button {
     float: right;
     padding: 0.7em 1em;
     font-size: 20px;
-    color: red;
+    color: #F62E51;
   }
 }
 
@@ -336,8 +342,6 @@ div#photo-display {
 
         &:hover {
           background-color: #BFEEFC;
-          -webkit-box-shadow: 0 0 4px 4px white inset;
-          -moz-box-shadow: 0 0 4px 4px white inset;
           box-shadow: 0 0 4px 4px white inset;
         }
       }
@@ -391,7 +395,6 @@ div#photo-display {
 
     a {
       @extend button;
-      color: #505050;
     }
   }
 
@@ -401,9 +404,10 @@ div#photo-display {
 }
 
 .display_card {
-  border: 1px solid black;
+  background-color: #f8fffb;
+  border: 1px solid #02614A;
   margin-bottom: 0.6em;
-  //  padding: 0.2em 0.6em;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
   .header {
     @extend .clearfix;
@@ -436,8 +440,6 @@ div#photo-display {
       cursor: pointer;
       &:hover {
         background-color: #BFEEFC;
-        -webkit-box-shadow: 0 0 4px 4px white inset;
-        -moz-box-shadow: 0 0 4px 4px white inset;
         box-shadow: 0 0 4px 4px white inset;
       }
     }
