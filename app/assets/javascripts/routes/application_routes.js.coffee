@@ -40,23 +40,9 @@ Twitarr.ProfileRoute = Ember.Route.extend
     Twitarr.Profile.get()
 
 Twitarr.AlertsRoute = Ember.Route.extend
-  setupController: (controller, model) ->
-    controller.set('announcements', [
-      Twitarr.Announcement.create(text: "Floggings will continue until morale improves.", author: "Paul & Storm", author_username: 'admin', timestamp: new Date()),
-      Twitarr.Announcement.create(text: "I am the very model of the modern major general.", author: "Paul & Storm", author_username: 'admin', timestamp: new Date())
-    ])
-    controller.set('seamails', [
-      Twitarr.SeamailMeta.create(subject: "some subject", timestamp: new Date(), messages: 4, display_names: ['steve', 'dave']),
-      Twitarr.SeamailMeta.create(subject: "other subject", timestamp: new Date(), messages: 2, display_names: ['fred', 'barney'])
-    ])
-    controller.set('tweet_mentions', [
-      Twitarr.StreamPost.create(text: "some text", timestamp: new Date(), author: 'steve'),
-      Twitarr.StreamPost.create(text: "other text", timestamp: new Date(), author: 'fred')
-    ])
-    controller.set('forum_mentions', [
-      Twitarr.ForumMeta.create(subject: "some text", timestamp: new Date(), posts: '5 posts'),
-      Twitarr.ForumMeta.create(subject: "other text", timestamp: new Date(), posts: '7 posts')
-    ])
+  model: ->
+    $.getJSON("alerts")
+
 
 Twitarr.UserRoute = Ember.Route.extend
   model: (params) ->

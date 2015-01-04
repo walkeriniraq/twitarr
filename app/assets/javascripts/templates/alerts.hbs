@@ -36,7 +36,7 @@
   <div class="header">
     <div class="title">Unread Seamail</div>
   </div>
-  {{#each seamail in seamails}}
+  {{#each seamail in unread_seamail}}
     {{render "seamail.meta_partial" seamail}}
   {{else}}
     <div class="card-section">
