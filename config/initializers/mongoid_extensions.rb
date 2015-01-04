@@ -5,7 +5,7 @@ module Mongoid::Document
   end
 end
 class Mongoid::Criteria
-  def has_more
+  def has_more?
     return false unless options.limit
     count > options.limit + (options.skip || 0)
   end

@@ -22,7 +22,7 @@ class API::V2::SearchController < ApplicationController
   def do_search(params, collection)
     query = collection.search(params)
     matches = query.map { |e| yield e }
-    {matches: matches, count: query.length, more: query.has_more}
+    {matches: matches, count: query.length, more: query.has_more?}
   end
 
 end

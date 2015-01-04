@@ -16,13 +16,13 @@ class SearchController < ApplicationController
 
     render_json status: 'ok',
                 users: user_query.map { |x| x.decorate.gui_hash },
-                more_users: user_query.has_more,
+                more_users: user_query.has_more?,
                 seamails: seamail_query.map { |x| x.decorate.to_meta_hash },
-                more_seamails: seamail_query.has_more,
+                more_seamails: seamail_query.has_more?,
                 tweets: tweet_query.map { |x| x.decorate.to_hash(current_username) },
-                more_tweets: tweet_query.has_more,
+                more_tweets: tweet_query.has_more?,
                 forums: forum_query.map { |x| x.decorate.to_meta_hash },
-                more_forums: forum_query.has_more
+                more_forums: forum_query.has_more?
   end
 
   def search_users
@@ -33,7 +33,7 @@ class SearchController < ApplicationController
     render_json status: 'ok',
                 text: search_text,
                 users: user_query.map { |x| x.decorate.gui_hash },
-                more_users: user_query.has_more
+                more_users: user_query.has_more?
   end
 
   def search_tweets
@@ -44,7 +44,7 @@ class SearchController < ApplicationController
     render_json status: 'ok',
                 text: search_text,
                 tweets: tweet_query.map { |x| x.decorate.to_hash(current_username) },
-                more_tweets: tweet_query.has_more
+                more_tweets: tweet_query.has_more?
   end
 
   def search_forums
@@ -55,7 +55,7 @@ class SearchController < ApplicationController
     render_json status: 'ok',
                 text: search_text,
                 forums: forum_query.map { |x| x.decorate.to_meta_hash },
-                more_forums: forum_query.has_more
+                more_forums: forum_query.has_more?
   end
 
 end
