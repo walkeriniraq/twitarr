@@ -42,6 +42,9 @@ Twitarr.ProfileRoute = Ember.Route.extend
 Twitarr.AlertsRoute = Ember.Route.extend
   model: ->
     $.getJSON("alerts")
+  actions:
+    reload: ->
+      @refresh()
 
 
 Twitarr.UserRoute = Ember.Route.extend
