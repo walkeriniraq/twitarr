@@ -86,14 +86,13 @@ class Seamail
     messages.create author: author, text: text, timestamp: right_now
   end
 
-  def self.search(params = {})
-    params[:no_hashtags] = true
-    current_username = params[:current_username]
-    search_object = build_search_object(params)
-    screenames = search_object[:screenames]
-    text_query = search_object[:text]
 
-    where(usernames: current_username).or({ :usernames.in => screenames }, { '$text' => { '$search' => "\"#{text_query}\"" } })
+  def self.search(params = {})
+    search_text = params[:text].strip.downcase
+    current_username = params[:current_username]
+    criteria = Seamail.where(usernames: current_username).or({ usernames: /^#{search_text}/ },
+                                                              { '$text' => { '$search' => "\"#{search_text}\"" } })
+    limit_criteria(criteria, params).order_by(last_update: :desc)
   end
 
 end

@@ -2,6 +2,7 @@ require 'bcrypt'
 
 class User
   include Mongoid::Document
+  include Searchable
 
   USERNAME_CACHE_TIME = 30.minutes
 
@@ -190,7 +191,8 @@ class User
   end
 
   def self.search(params = {})
-    query = params[:query].gsub(/\W/,'')
-    User.or({username: Regexp.new(query)}, { '$text' => { '$search' => "\"#{query}\"" } })
+    query = params[:text].gsub(/\W/,'')
+    criteria = User.or({username: Regexp.new(query)}, { '$text' => { '$search' => "\"#{query}\"" } })
+    limit_criteria(criteria, params)
   end
 end

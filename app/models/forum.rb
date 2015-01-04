@@ -57,18 +57,8 @@ class Forum
   end
 
   def self.search(params = {})
-    search_object = build_search_object(params)
-    hash_tags = search_object[:hash_tags]
-    screenames = search_object[:screenames]
-    text_query = search_object[:text]
-    posts_after = search_object[:posts_after]
-    criteria = Forum
-    criteria = criteria.where((:'fp.ht').all => hash_tags) unless hash_tags.empty?
-    criteria = criteria.where(:$or => [{(:'fp.mn').all => screenames}, {(:'fp.au').in => screenames}]) unless screenames.empty?
-    criteria = criteria.where(:'fp.tx' => Regexp.new(text_query)) unless text_query.empty?
-    if posts_after
-      criteria = criteria.gt(timestamp: posts_after)
-    end
-    criteria.limit(20)
+    search_text = params[:text].strip.downcase
+    criteria = Forum.where({ '$text' => { '$search' => "\"#{search_text}\"" } })
+    limit_criteria(criteria, params)
   end
 end
