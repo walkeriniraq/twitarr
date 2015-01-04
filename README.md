@@ -69,6 +69,12 @@ Then you will need to setup the application's secret token and mongoid configura
    $ cp config/mongoid_example.yml config/mongoid.yml
 ```
 
+Now you have to tell mongoid to create the required indexes.  If you forget to do this you will get strange errors that claims you must have indexes created in order to perform text searches.
+
+```
+  $ rake db:mongoid:create_indexes
+```
+
 Now you can seed the database with some initial data:
 
 ```
