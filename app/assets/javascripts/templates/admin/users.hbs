@@ -6,8 +6,9 @@
   <div class="title">Tweets</div>
 </div>
 
-<div class="display_card">
-  {{#each user in model}}
+{{#each user in model}}
+  <div class="display_card">
     {{render "admin.user_partial" user}}
-  {{/each}}
-</div>
+  </div>
+{{/each}}
+
