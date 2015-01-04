@@ -281,10 +281,11 @@ body {
 }
 
 #photo-upload-div {
-  border: 1px solid black;
+  border: 1px solid #02614A;
   padding: 0.6em;
   margin: 1em;
   text-align: center;
+  background-color: #ffffff;
 
   .uploading {
     color: #bb7100;
@@ -388,6 +389,15 @@ div#photo-display {
   .title {
     font-size: larger;
     font-weight: bold;
+
+    a {
+      color: #8D031C;
+      &:hover, &:focus {
+        outline: none;
+        color: #F62E51;
+        text-decoration: none;
+      }
+    }
   }
 
   .controls {

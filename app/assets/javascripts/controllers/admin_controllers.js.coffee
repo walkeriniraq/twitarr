@@ -11,3 +11,5 @@ Twitarr.AdminUserPartialController = Twitarr.ObjectController.extend
   values_changed: (->
     @set('changed', true)
   ).observes('display_name', 'is_admin', 'status', 'email')
+
+Twitarr.AdminAnnouncementsController = Twitarr.Controller.extend()

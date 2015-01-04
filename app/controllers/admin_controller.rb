@@ -61,4 +61,18 @@ class AdminController < ApplicationController
     render_json status: 'ok'
   end
 
+  def new_announcement
+    return no_access unless has_access?
+    time = Time.now
+    valid_until = time + params[:hours].to_i.hours
+    return render_json status: 'Announcement hours must be greater than zero.' unless valid_until > time
+    Announcement.create(author: current_username, text: params[:text], timestamp: time, valid_until: valid_until)
+    render_json status: 'ok'
+  end
+
+  def announcements
+    return no_access unless has_access?
+    render_json status: 'ok', list: Announcement.all.desc(:timestamp).map { |x| x.decorate.to_admin_hash }
+  end
+
 end

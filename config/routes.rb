@@ -29,6 +29,8 @@ Twitarr::Application.routes.draw do
   post 'admin/activate'
   post 'admin/reset_password'
   post 'admin/update_user'
+  post 'admin/new_announcement'
+  get 'admin/announcements'
 
   resources :forums, except: [:destroy, :edit, :new] do
     collection do

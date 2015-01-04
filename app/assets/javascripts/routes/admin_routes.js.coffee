@@ -40,3 +40,23 @@ Twitarr.AdminUsersRoute = Ember.Route.extend
           alert data.status
         else
           @refresh()
+
+Twitarr.AdminAnnouncementsRoute = Ember.Route.extend
+  model: ->
+    $.getJSON("admin/announcements")
+
+  setupController: (controller, model) ->
+    controller.set('text', '')
+    controller.set('hours', 4)
+    if model.status isnt 'ok'
+      alert model.status
+    else
+      controller.set('model', model.list)
+
+  actions:
+    new: (text, hours) ->
+      $.post('admin/new_announcement', { text: text, hours: hours }).then (data) =>
+        if (data.status isnt 'ok')
+          alert data.status
+        else
+          @refresh()
