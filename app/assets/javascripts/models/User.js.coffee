@@ -15,6 +15,6 @@ Twitarr.User = Twitarr.UserMeta.extend
 
 Twitarr.User.reopenClass
   get: (username) ->
-    $.getJSON("user/#{username}").then (data) =>
+    $.getJSON("user/profile/#{username}").then (data) =>
       alert(data.status) unless data.status is 'ok'
       @create data.user

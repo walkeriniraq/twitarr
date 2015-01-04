@@ -23,7 +23,7 @@ Twitarr::Application.routes.draw do
   get 'user/logout'
   get 'user/autocomplete'
   post 'user/save_profile'
-  get 'user/:username', to: 'user#show'
+  get 'user/profile/:username', to: 'user#show'
 
   get 'admin/users'
   post 'admin/activate'
