@@ -50,11 +50,11 @@ Twitarr.ApplicationController = Ember.Controller.extend
     clearTimeout(@timer)
 
   tick: ->
-#    $.ajax('user/update_status', dataType: 'json', cache: false).done (data) =>
-#      if data.status is 'ok'
-#        @set('email_count', data.new_email)
-#        @set('posts_count', data.new_posts)
-    @set('alerts', true)
+    $.ajax('alerts/check', dataType: 'json', cache: false).done (data) =>
+      if data.status is 'ok'
+        @set('email_count', data.user.seamail_unread_count)
+        @set('posts_count', data.user.unnoticed_mentions)
+        @set('alerts', data.user.unnoticed_alerts)
     @timer = setTimeout (=> @tick()), 300000
 
   logged_in: (->
