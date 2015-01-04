@@ -51,29 +51,29 @@ class UserController < ApplicationController
   end
 
   def security_question
-    # @user = redis.user_store.get(params[:username].downcase)
-    # if @user.nil?
-    #   @error = 'User does not exist.'
-    #   render :forgot_password
-    # end
+    @user = User.where(username: params[:username].downcase).first
+    if @user.nil?
+      @error = 'User does not exist.'
+      render :forgot_password
+    end
   end
 
   def security_answer
-    # @user = redis.user_store.get(params[:username].downcase)
-    # if @user.nil?
-    #   @error = 'User does not exist.'
-    #   render :forgot_password
-    # end
-    # if params[:security_answer].downcase.strip != @user.security_answer ||
-    #     params[:email].strip != @user.email
-    #   sleep 30.seconds.to_i
-    #   @error = 'Email or security answer did not match.'
-    #   render :security_question and return
-    # end
-    # @user.set_password User::RESET_PASSWORD
-    # redis.user_store.save @user, @user.username
-    # @error = 'Password has been reset to "seamonkey"'
-    # render :login_page
+    @user = User.where(username: params[:username].downcase).first
+    if @user.nil?
+      @error = 'User does not exist.'
+      render :forgot_password
+    end
+    if params[:security_answer].downcase.strip != @user.security_answer ||
+         params[:email].strip != @user.email
+       sleep 30.seconds.to_i
+       @error = 'Email or security answer did not match.'
+       render :security_question and return
+    end
+    @user.set_password User::RESET_PASSWORD
+    @user.save!
+    @error = 'Password has been reset to "seamonkey"'
+    render :login_page
   end
 
   def save_profile
