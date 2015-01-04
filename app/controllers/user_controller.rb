@@ -3,9 +3,6 @@ require 'json'
 
 class UserController < ApplicationController
 
-  DEFAULT_PASSWORD = 'seamonkey'
-  ACTIVE_STATUS = 'active'
-
   layout 'login'
 
   def login
@@ -13,7 +10,7 @@ class UserController < ApplicationController
     if user.nil?
       @error = 'User does not exist.'
       render :login_page
-    elsif user.status != ACTIVE_STATUS || user.empty_password?
+    elsif user.status != User::ACTIVE_STATUS || user.empty_password?
       @error = 'User account has been disabled.'
       render :login_page
     elsif !user.correct_password(params[:password])
@@ -32,7 +29,7 @@ class UserController < ApplicationController
   def new
     new_username = params[:new_username].downcase
     @user = User.new username: new_username, display_name: new_username,
-                     is_admin: false, status: UserController::ACTIVE_STATUS, email: params[:email],
+                     is_admin: false, status: User::ACTIVE_STATUS, email: params[:email],
                      security_question: params[:security_question], security_answer: params[:security_answer]
     if !@user.valid?
       render :create_user
@@ -73,7 +70,7 @@ class UserController < ApplicationController
     #   @error = 'Email or security answer did not match.'
     #   render :security_question and return
     # end
-    # @user.set_password 'seamonkey'
+    # @user.set_password User::RESET_PASSWORD
     # redis.user_store.save @user, @user.username
     # @error = 'Password has been reset to "seamonkey"'
     # render :login_page
@@ -94,17 +91,18 @@ class UserController < ApplicationController
   end
 
   def username
+    puts 'wha?'
     if logged_in?
       if current_user.nil?
         # this is a special case - need to log the current user out
         logout_user
         return render_json status: 'User does not exist.'
       end
-      return render_json status: 'User account has been disabled.' if current_user.status != ACTIVE_STATUS || current_user.password.nil?
+      return render_json status: 'User account has been disabled.' if current_user.status != User::ACTIVE_STATUS || current_user.password.nil?
       current_user.update_last_login.save
       return render_json status: 'ok',
                          user: current_user.decorate.self_hash,
-                         need_password_change: current_user.correct_password(DEFAULT_PASSWORD),
+                         need_password_change: current_user.correct_password(User::RESET_PASSWORD),
                          is_read_only: false
     end
     render_json status: 'logout'

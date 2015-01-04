@@ -4,13 +4,7 @@ Twitarr::Application.routes.draw do
   get 'login', to: 'user#login_page'
   post 'login', to: 'user#login'
   get 'help', to: 'home#help'
-  get 'user/new', to: 'user#create_user'
-  post 'user/new', to: 'user#new'
-  get 'user/username'
-  get 'user/forgot_password'
-  get 'user/logout'
-  get 'user/autocomplete'
-  post 'user/save_profile'
+
   get 'alerts', to: 'alerts#index'
   get 'alerts/check', to: 'alerts#check'
 
@@ -19,7 +13,19 @@ Twitarr::Application.routes.draw do
   get 'search_tweets/:text', to: 'search#search_tweets'
   get 'search_forums/:text', to: 'search#search_forums'
 
+  get 'user/username'
   get 'user/:username', to: 'user#show'
+  get 'user/new', to: 'user#create_user'
+  post 'user/new', to: 'user#new'
+  get 'user/forgot_password'
+  get 'user/logout'
+  get 'user/autocomplete'
+  post 'user/save_profile'
+
+  get 'admin/users'
+  post 'admin/activate'
+  post 'admin/reset_password'
+  post 'admin/update_user'
 
   resources :forums, except: [:destroy, :edit, :new] do
     collection do

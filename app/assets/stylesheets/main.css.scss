@@ -32,6 +32,10 @@
   padding: 0.1em 0.6em;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
+  &.input-short {
+    width: 10em;
+  }
+
   &:focus {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
     border-color: #66afe9;
@@ -444,6 +448,9 @@ div#photo-display {
 
     .title {
       //      color: darkblue;
+      &.big-title {
+        font-size: medium;
+      }
     }
 
     .timestamp {
@@ -452,8 +459,17 @@ div#photo-display {
     }
 
     .body {
-      //  I don't think I actually want this on all cards
       font-size: large;
+
+      .body-section.form {
+        font-size: small;
+        padding-left: 1em;
+        padding-top: 0.5em;
+
+        input {
+          margin-top: 0.2em;
+        }
+      }
 
       .body-section.photos {
         text-align: center;

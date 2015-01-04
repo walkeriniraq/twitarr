@@ -1,0 +1,36 @@
+<div class="card-section section-with-photo">
+  <div class="section-photo">
+    {{user_picture username}}
+  </div>
+
+  {{#if last_login}}
+    {{pretty_timestamp last_login}}
+  {{/if}}
+
+  <span class="title big-title">
+    {{pretty_username username display_name}}
+  </span>
+
+  <div class="body">
+    <div class="body-section form">
+      <button {{action 'reset_password' username}}>Reset Password</button>
+      {{#if empty_password?}}
+        <span style="color: darkred; padding-left: 1em;">
+          Empty password!
+        </span>
+      {{/if}}
+      {{input value=display_name class='input' placeholder='Display Name'}}
+      {{input value=email class='input' placeholder='Email'}}
+      <div>
+        {{input checked=is_admin type="checkbox" name="is_admin"}} Admin
+        {{input value=status class='input input-short' placeholder='Status' }}
+        {{#unless is_active}}
+          <button {{action 'activate' username}}>Activate</button>
+        {{/unless}}
+      </div>
+      {{#if changed}}
+        <button {{action 'save' model}}>Save Changes</button>
+      {{/if}}
+    </div>
+  </div>
+</div>

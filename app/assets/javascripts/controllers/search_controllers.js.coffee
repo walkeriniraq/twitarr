@@ -1,4 +1,4 @@
-Twitarr.SearchController = Twitarr.Controller.extend()
+Twitarr.SearchIndexController = Twitarr.Controller.extend()
 
 Twitarr.SearchResultsController = Twitarr.ObjectController.extend
   error: ''
@@ -14,10 +14,26 @@ Twitarr.SearchResultsController = Twitarr.ObjectController.extend
 Twitarr.SearchUserResultsController = Twitarr.ObjectController.extend
   error: ''
 
+  actions:
+    search: ->
+      if !!text
+        @transitionToRoute('search.user_results', @get('text'))
+
 Twitarr.SearchTweetResultsController = Twitarr.ObjectController.extend
   error: ''
 
+  actions:
+    search: ->
+      if !!text
+        @transitionToRoute('search.tweet_results', @get('text'))
+
 Twitarr.SearchForumResultsController = Twitarr.ObjectController.extend
   error: ''
+
+  actions:
+    search: ->
+      if !!text
+        @transitionToRoute('search.forum_results', @get('text'))
+
 
 Twitarr.SearchUserPartialController = Twitarr.ObjectController.extend()

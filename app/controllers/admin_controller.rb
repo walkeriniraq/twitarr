@@ -12,59 +12,52 @@ class AdminController < ApplicationController
 
   def users
     return no_access unless has_access?
-    users = redis.user_store.get(redis.users.members.sort!)
-    render_json status: 'ok', list: UserDecorator.decorate_collection(users).map { |x| x.admin_hash }
-  end
-
-  def find_user
-    return no_access unless has_access?
-    user = redis.user_store.get(params[:username])
-    return render_json status: 'User does not exist.' unless user
-    render_json status: 'ok', user: user.decorate.admin_hash
+    render_json status: 'ok', list: User.all.asc(:username).map { |x| x.decorate.admin_hash }
   end
 
   def update_user
     return no_access unless has_access?
-    user = redis.user_store.get(params[:username])
+    user = User.get(params[:username])
     return render_json status: 'User does not exist.' unless user
     user.is_admin = params[:is_admin] == 'true'
     # don't let the user turn off his own admin status
     user.is_admin = true if user.username == current_username
     user.status = params[:status]
     user.email = params[:email]
-    redis.user_store.save(user, user.username)
+    user.display_name = params[:display_name]
+    if user.invalid?
+      render_json(status: 'invalid', errors: user.errors.full_messages) and return
+    end
+    user.save
     render_json status: 'ok'
   end
 
   def add_user
     return no_access unless has_access?
-    return render_json status: 'Username already exists.' if redis.user_store.get(params[:username])
-    return render_json status: 'Username cannot contain spaces or the following characters: %#:' unless User.valid_username? params[:username]
-    return render_json status: 'Username must be at least six characters.' if params[:username].nil? || params[:username].length < 6
-    user = User.new
-    user.username = params[:username]
+    user = User.new(params)
     user.is_admin = params[:is_admin] == 'true'
-    user.status = params[:status]
-    user.email = params[:email]
-    TwitarrDb.add_user user
+    if user.invalid?
+      render_json(status: 'invalid', errors: user.errors.full_messages) and return
+    end
+    user.save
     render_json status: 'ok'
   end
 
   def activate
     return no_access unless has_access?
-    user = redis.user_store.get(params[:username])
+    user = User.get(params[:username])
     return render_json status: 'User does not exist.' unless user
-    user.status = 'active'
-    redis.user_store.save(user, user.username)
+    user.status = User::ACTIVE_STATUS
+    user.save
     render_json status: 'ok'
   end
 
   def reset_password
     return no_access unless has_access?
-    user = redis.user_store.get(params[:username])
+    user = User.get(params[:username])
     return render_json status: 'User does not exist.' unless user
-    user.password = BCrypt::Password.create 'seamonkey'
-    redis.user_store.save(user, user.username)
+    user.password = BCrypt::Password.create User::RESET_PASSWORD
+    user.save
     render_json status: 'ok'
   end
 

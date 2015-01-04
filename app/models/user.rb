@@ -8,6 +8,9 @@ class User
   USERNAME_REGEX = /^[\w&-]{3,}$/
   DISPLAY_NAME_REGEX = /^[\w\. &-]{3,40}$/
 
+  ACTIVE_STATUS = 'active'
+  RESET_PASSWORD = 'seamonkey'
+
   field :un, as: :username, type: String
   field :pw, as: :password, type: String
   field :ia, as: :is_admin, type: Boolean
@@ -174,7 +177,7 @@ class User
   end
 
   def unnoticed_alerts
-    unnoticed_mentions > 0 || seamail_unread_count > 0
+    (unnoticed_mentions || 0) > 0 || (seamail_unread_count || 0) > 0
   end
 
   def self.display_name_from_username(username)

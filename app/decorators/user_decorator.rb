@@ -14,7 +14,7 @@ class UserDecorator < Draper::Decorator
   end
   
   def admin_hash
-    return_attribute_hash %w(username display_name is_admin status last_login email empty_password? seamail_unread_count unnoticed_mentions)
+    return_attribute_hash %w(username is_admin status email display_name last_login empty_password?)
   end
 
   def self_hash

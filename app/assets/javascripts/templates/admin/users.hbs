@@ -1,0 +1,13 @@
+<div class="main-page-header header-with-controls">
+  <div class="controls">
+    <button {{action 'reload'}}>Refresh</button>
+  </div>
+
+  <div class="title">Tweets</div>
+</div>
+
+<div class="display_card">
+  {{#each user in model}}
+    {{render "admin.user_partial" user}}
+  {{/each}}
+</div>
