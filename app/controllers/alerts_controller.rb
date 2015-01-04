@@ -13,7 +13,7 @@ class AlertsController < ApplicationController
     forum_mentions = Forum.view_mentions(query: current_username,
                                               after:current_user.last_viewed_alerts,
                                               mentions_only: true).map {|p| p.decorate.to_meta_hash }
-    announcements = []
+    announcements = Announcement.valid_announcements.map { |x| x.decorate.to_hash }
     unread_seamail = current_user.seamails(unread: true).map{|m| m.decorate.to_meta_hash }
 
     current_user.reset_last_viewed_alerts
