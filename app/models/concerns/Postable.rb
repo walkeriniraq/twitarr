@@ -88,21 +88,5 @@ module Postable
       end
       query.order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
     end
-
-    def search(params = {})
-      search_object = build_search_object(params)
-      hash_tags = search_object[:hash_tags]
-      screenames = search_object[:screenames]
-      text_query = search_object[:text]
-      posts_after = search_object[:posts_after]
-      criteria = self
-      criteria = criteria.where(:hash_tags.all => hash_tags) unless hash_tags.empty?
-      criteria = criteria.where(:$or => [{:mentions.all => screenames}, {:author.in => screenames}]) unless screenames.empty?
-      criteria = criteria.where(:text => Regexp.new(text_query)) unless text_query.empty?
-      if posts_after
-        criteria = criteria.gt(timestamp: posts_after)
-      end
-      criteria.limit(20)
-    end
   end
 end

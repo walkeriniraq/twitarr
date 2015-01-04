@@ -6,63 +6,58 @@ class SearchController < ApplicationController
   def search
     search_text = params[:text].strip.downcase
     render_json status: 'no text' and return if search_text.blank?
-    params[:query] = params.delete :text
+    params[:limit] = GENERIC_SEARCH_MAX unless params[:limit]
+    params[:current_username] = current_username
 
-    # user_query = User.or({ username: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
-    # seamail_query = Seamail.where(usernames: current_username).or({ usernames: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
-    # tweet_query = StreamPost.or({ author: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
-    # forum_query = Forum.where({ '$text' => { '$search' => "\"#{search_text}\"" } })
-
-    search_op = StreamPost.build_search_object(params)
-    tweet_query = StreamPost.search(params).desc(:timestamp)
+    tweet_query = StreamPost.search(params)
     forum_query = Forum.search(params)
     user_query = User.search(params)
-    seamail_query = Seamail.search(params).desc(:last_update)
+    seamail_query = Seamail.search(params)
 
     render_json status: 'ok',
-                text: params[:query],
-                users: user_query.limit(GENERIC_SEARCH_MAX).map { |x| x.decorate.gui_hash },
-                more_users: user_query.count > GENERIC_SEARCH_MAX,
-                seamails: seamail_query.limit(GENERIC_SEARCH_MAX).map { |x| x.decorate.to_meta_hash },
-                more_seamails: seamail_query.count > GENERIC_SEARCH_MAX,
-                tweets: tweet_query.limit(GENERIC_SEARCH_MAX).map { |x| x.decorate.to_hash(current_username) },
-                more_tweets: tweet_query.count > GENERIC_SEARCH_MAX,
-                forums: forum_query.limit(GENERIC_SEARCH_MAX).map { |x| x.decorate.to_meta_hash },
-                more_forums: forum_query.count > GENERIC_SEARCH_MAX,
-                query: search_op
+                users: user_query.map { |x| x.decorate.gui_hash },
+                more_users: user_query.has_more?,
+                seamails: seamail_query.map { |x| x.decorate.to_meta_hash },
+                more_seamails: seamail_query.has_more?,
+                tweets: tweet_query.map { |x| x.decorate.to_hash(current_username) },
+                more_tweets: tweet_query.has_more?,
+                forums: forum_query.map { |x| x.decorate.to_meta_hash },
+                more_forums: forum_query.has_more?,
+                text: search_text,
+                query: {text: search_text}
   end
 
   def search_users
     search_text = params[:text].strip.downcase
     render_json status: 'no text' and return if search_text.blank?
-    params[:query] = params.delete :text
+    params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
     user_query = User.search(params)
     render_json status: 'ok',
-                text: params[:query],
-                users: user_query.limit(DETAILED_SEARCH_MAX).map { |x| x.decorate.gui_hash },
-                more_users: user_query.count > DETAILED_SEARCH_MAX
+                text: search_text,
+                users: user_query.map { |x| x.decorate.gui_hash },
+                more_users: user_query.has_more?
   end
 
   def search_tweets
     search_text = params[:text].strip.downcase
     render_json status: 'no text' and return if search_text.blank?
-    params[:query] = params.delete :text
-    tweet_query = StreamPost.search(params).desc(:timestamp)
+    params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
+    tweet_query = StreamPost.search(params)
     render_json status: 'ok',
-                text: params[:query],
-                tweets: tweet_query.limit(DETAILED_SEARCH_MAX).map { |x| x.decorate.to_hash(current_username) },
-                more_tweets: tweet_query.count > DETAILED_SEARCH_MAX
+                text: search_text,
+                tweets: tweet_query.map { |x| x.decorate.to_hash(current_username) },
+                more_tweets: tweet_query.has_more?
   end
 
   def search_forums
     search_text = params[:text].strip.downcase
     render_json status: 'no text' and return if search_text.blank?
-    params[:query] = params.delete :text
+    params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
     forum_query = Forum.search(params)
     render_json status: 'ok',
-                text: params[:query],
-                forums: forum_query.limit(DETAILED_SEARCH_MAX).map { |x| x.decorate.to_meta_hash },
-                more_forums: forum_query.count > DETAILED_SEARCH_MAX
+                text: search_text,
+                forums: forum_query.map { |x| x.decorate.to_meta_hash },
+                more_forums: forum_query.has_more?
   end
 
 end
