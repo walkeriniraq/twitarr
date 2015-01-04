@@ -177,8 +177,12 @@ class User
     self.last_viewed_alerts = DateTime.now
   end
 
+  def unnoticed_announcements
+    Announcement.new_announcements(last_viewed_alerts).count
+  end
+
   def unnoticed_alerts
-    (unnoticed_mentions || 0) > 0 || (seamail_unread_count || 0) > 0
+    (unnoticed_mentions || 0) > 0 || (seamail_unread_count || 0) > 0 || unnoticed_announcements >= 1
   end
 
   def self.display_name_from_username(username)

@@ -12,4 +12,8 @@ class Announcement
     where(:valid_until.gt => Time.now)
   end
 
+  def self.new_announcements(since_ts)
+    valid_announcements.where(:timestamp.gt => since_ts).limit(1)
+  end
+
 end
