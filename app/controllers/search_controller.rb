@@ -22,7 +22,9 @@ class SearchController < ApplicationController
                 tweets: tweet_query.map { |x| x.decorate.to_hash(current_username) },
                 more_tweets: tweet_query.has_more?,
                 forums: forum_query.map { |x| x.decorate.to_meta_hash },
-                more_forums: forum_query.has_more?
+                more_forums: forum_query.has_more?,
+                text: search_text,
+                query: {text: search_text}
   end
 
   def search_users
