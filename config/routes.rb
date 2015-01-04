@@ -14,13 +14,13 @@ Twitarr::Application.routes.draw do
   get 'search_forums/:text', to: 'search#search_forums'
 
   get 'user/username'
-  get 'user/:username', to: 'user#show'
   get 'user/new', to: 'user#create_user'
   post 'user/new', to: 'user#new'
   get 'user/forgot_password'
   get 'user/logout'
   get 'user/autocomplete'
   post 'user/save_profile'
+  get 'user/:username', to: 'user#show'
 
   get 'admin/users'
   post 'admin/activate'
