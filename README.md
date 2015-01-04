@@ -50,7 +50,7 @@ You will also need to download and run [Mongodb](http://www.mongodb.org/)
 Since I like to keep my database just for this project, when I execute the mongod process I run:
 
 ```
- $ mongod --dbpath temp/data/db
+ $ mkdir -p temp/data/db && mongod --dbpath temp/data/db
 ```
 
 This will create the mongo database within this project's temp directory.  The temp directory is also explictly ignored in the `.gitignore` file, so you don't have to worry about checking it in.
@@ -66,7 +66,7 @@ Then you will need to setup the application's secret token and mongoid configura
 
 ```
    $ echo "SECRET_TOKEN: '$(rake secret)'" > config/application.yml
-   $ cp config/mongoid_example.yml config/mongoid.yml
+   $ cp config/mongoid-example.yml config/mongoid.yml
 ```
 
 Now you have to tell mongoid to create the required indexes.  If you forget to do this you will get strange errors that claims you must have indexes created in order to perform text searches.
