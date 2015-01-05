@@ -55,7 +55,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
         @set('email_count', data.user.seamail_unread_count)
         @set('posts_count', data.user.unnoticed_mentions)
         @set('alerts', data.user.unnoticed_alerts)
-    @timer = setTimeout (=> @tick()), 300000
+    @timer = setTimeout (=> @tick()), 60000
 
   logged_in: (->
     @get('login_user')?
