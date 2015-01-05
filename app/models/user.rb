@@ -22,7 +22,7 @@ class User
   field :sq, as: :security_question, type: String
   field :sa, as: :security_answer, type: String
   field :um, as: :unnoticed_mentions, type: Integer
-  field :al, as: :last_viewed_alerts, type: DateTime
+  field :al, as: :last_viewed_alerts, type: DateTime, default: Time.at(0)
 
   index username: 1
   index :display_name => 'text'
