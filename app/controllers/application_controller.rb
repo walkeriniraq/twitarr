@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     result = {user: user}
     if user.nil?
       result[:error] = 'User does not exist.'
-    elsif user.status != UserController::ACTIVE_STATUS|| user.empty_password?
+    elsif user.status != User::ACTIVE_STATUS|| user.empty_password?
       result[:error] = 'User account has been disabled.'
     elsif !user.correct_password(password)
       result[:error] = 'Invalid username or password.'
