@@ -22,6 +22,11 @@ Twitarr.SearchResultsRoute = Ember.Route.extend
       controller.set('error', model.status)
 
 Twitarr.SearchUserResultsRoute = Ember.Route.extend
+  actions:
+    search: (text) ->
+      if !!text
+        @transitionTo('search.user_results', text)
+
   model: (params) ->
     $.getJSON("search_users/#{params.text}")
 
@@ -34,6 +39,11 @@ Twitarr.SearchUserResultsRoute = Ember.Route.extend
       controller.set('error', model.status)
 
 Twitarr.SearchTweetResultsRoute = Ember.Route.extend
+  actions:
+    search: (text) ->
+      if !!text
+        @transitionTo('search.tweet_results', text)
+
   model: (params) ->
     $.getJSON("search_tweets/#{params.text}")
 
@@ -46,6 +56,11 @@ Twitarr.SearchTweetResultsRoute = Ember.Route.extend
       controller.set('error', model.status)
 
 Twitarr.SearchForumResultsRoute = Ember.Route.extend
+  actions:
+    search: (text) ->
+      if !!text
+        @transitionTo('search.forum_results', text)
+
   model: (params) ->
     $.getJSON("search_forums/#{params.text}")
 
