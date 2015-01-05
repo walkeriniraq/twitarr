@@ -91,7 +91,6 @@ class UserController < ApplicationController
   end
 
   def username
-    puts 'wha?'
     if logged_in?
       if current_user.nil?
         # this is a special case - need to log the current user out
