@@ -24,7 +24,7 @@ module Postable
     end
 
     def remove_like(username)
-          where(id: id).
+          self.class.where(id: id).
           find_and_modify({ '$pull' => { lk: username } }, new: true)
     end
 
