@@ -27,13 +27,40 @@ class PhotoStore
     photo = store(temp_file, uploader)
     img.resize_to_fit(200, 200).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
-    puts "SMALL THUMB PATH: #{sm_thumb_path photo.store_filename}"
     img.resize_to_fit(800, 800).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
     photo.save
     { status: 'ok', photo: photo.id.to_s }
   rescue EXIFR::MalformedJPEG
     { status: 'Photo extension is jpg but could not be opened as jpeg.' }
+  end
+
+  def upload_profile_photo(temp_file, username)
+    temp_file = UploadFile.new(temp_file)
+    return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
+    begin
+      img = Magick::Image::read(temp_file.tempfile.path).first
+    rescue Java::JavaLang::NullPointerException
+      # yeah, ImageMagick throws a NPE if the photo isn't a photo
+      return { status: 'Photo could not be opened - is it an image?' }
+    end
+    tmp_store_path = "tmp/#{username}.jpg"
+    img.resize_to_fit(384, 384).write tmp_store_path
+    FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
+    img.resize_to_fit(73, 73).write tmp_store_path
+    FileUtils.move tmp_store_path, PhotoStore.instance.small_profile_path(username)
+    { status: 'ok', md5_hash: temp_file.md5_hash }
+  end
+
+  def reset_profile_photo(username)
+    identicon = Identicon.create(username)
+    tmp_store_path = "tmp/#{username}.jpg"
+    identicon.resize_to_fit(384, 384).write tmp_store_path
+    FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
+    identicon.resize_to_fit(73, 73).write tmp_store_path
+    small_profile_path = PhotoStore.instance.small_profile_path(username)
+    FileUtils.move tmp_store_path, small_profile_path
+    { status: 'ok', md5_hash: Digest::MD5.file(small_profile_path).hexdigest }
   end
 
   def store(file, uploader)
@@ -76,30 +103,12 @@ class PhotoStore
     (build_directory(@thumb, filename) + ('md_' + filename)).to_s
   end
 
-  def small_profile_path(store_filename)
-    (build_directory(@profiles_small, store_filename) + (store_filename)).to_s
+  def small_profile_path(username)
+    @profiles_small + "#{username}.jpg"
   end
 
-  def small_profile_img(store_filename)
-    begin
-      return Magick::Image::read(small_profile_path(store_filename)).first
-    rescue Java::JavaLang::NullPointerException
-      # yeah, ImageMagick throws a NPE if the photo isn't a photo
-      return { status: 'Photo could not be opened - is it an image?' }
-    end
-  end
-
-  def full_profile_path(store_filename)
-    (build_directory(@profiles_full, store_filename) + (store_filename)).to_s
-  end
-
-  def full_profile_img(store_filename)
-    begin
-      return Magick::Image::read(full_profile_path(store_filename)).first
-    rescue Java::JavaLang::NullPointerException
-      # yeah, ImageMagick throws a NPE if the photo isn't a photo
-      return { status: 'Photo could not be opened - is it an image?' }
-    end
+  def full_profile_path(username)
+    @profiles_full + "#{username}.jpg"
   end
 
   @@mutex = Mutex.new

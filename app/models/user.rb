@@ -116,11 +116,6 @@ class User
     username.andand.downcase.andand.strip
   end
 
-  def set_profile_image_as_identicon
-    identicon = Identicon.create(username)
-    save_profile_picture(identicon)
-  end
-
   def self.exist?(username)
     where(username: format_username(username)).exists?
   end
@@ -129,49 +124,34 @@ class User
     where(username: format_username(username)).first
   end
 
-  def profile_picture_from_file(temp_file, options = {})
-    img = PhotoStore.instance.read_image temp_file
-    return img if img.is_a? Hash
-    save_profile_picture(img, options)
+  def reset_photo
+    result = PhotoStore.instance.reset_profile_photo username
+    if result[:status] == 'ok'
+      self.photo_hash = result[:md5_hash]
+      save
+    end
+    result
   end
 
-  # @param [Magick::Image] img
-  # @param [hash] options
-  def save_profile_picture(img, options = {})
-    store_filename = "#{username}.png"
-    tmp_store_path = "tmp/#{store_filename}"
-    small_thumbnail_width = options[:small_thumbnail_width] || 73
-    img.resize_to_fit(small_thumbnail_width, small_thumbnail_width).write tmp_store_path
-    small_profile_path = PhotoStore.instance.small_profile_path(store_filename)
-    puts "Saving profile image (#{tmp_store_path}) => #{small_profile_path}"
-    FileUtils.move tmp_store_path, small_profile_path
-    self
+  def update_photo(file)
+    result = PhotoStore.instance.upload_profile_photo(file, username)
+    if result[:status] == 'ok'
+      self.photo_hash = result[:md5_hash]
+      save
+    end
+    result
   end
 
   def profile_picture_path
-    path = PhotoStore.instance.small_profile_path("#{username}.png")
-    unless File.exists? path
-      set_profile_image_as_identicon
-      save
-    end
+    path = PhotoStore.instance.small_profile_path(username)
+    reset_photo unless File.exists? path
     path
-  end
-
-  def profile_picture
-    PhotoStore.instance.small_profile_img("#{username}.png")
   end
 
   def full_profile_picture_path
-    path = PhotoStore.instance.full_profile_path("#{username}.png")
-    unless File.exists? path
-      set_profile_image_as_identicon
-      save
-    end
+    path = PhotoStore.instance.full_profile_path(username)
+    reset_photo unless File.exists? path
     path
-  end
-
-  def full_profile_picture
-    PhotoStore.instance.full_profile_img("#{username}.png")
   end
 
   def inc_mentions
