@@ -3,7 +3,6 @@ Twitarr::Application.routes.draw do
 
   get 'login', to: 'user#login_page'
   post 'login', to: 'user#login'
-  get 'help', to: 'home#help'
 
   get 'alerts', to: 'alerts#index'
   get 'alerts/check', to: 'alerts#check'

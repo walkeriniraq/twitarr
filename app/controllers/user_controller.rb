@@ -46,7 +46,7 @@ class UserController < ApplicationController
       @user.set_password params[:new_password]
       @user.update_last_login.save
       login_user(@user)
-      redirect_to :root
+      redirect_to "/#/help"
     end
   end
 
