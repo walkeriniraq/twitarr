@@ -25,8 +25,8 @@
 .input {
   width: 100%;
   border: 1px solid #ccc;
+  font-size: 130%;
   @include border-radius(4px);
-  line-height: 2em;
   padding: 0.1em 0.6em;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
@@ -189,7 +189,7 @@ body {
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 9999;
+  z-index: 999;
 }
 
 #photo-modal {
@@ -240,40 +240,42 @@ body {
 }
 
 #side-menu {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  top: 50px;
-  width: 250px;
-  background-color: #222;
-  overflow-x: hidden;
-  overflow-y: auto;
   display: none;
-  white-space: nowrap;
-  z-index: 1000;
+  #menu {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 50px;
+    width: 250px;
+    background-color: #222;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+    z-index: 1000;
 
-  #login-info {
-    color: #ccc;
-    padding: 10px;
-  }
+    #login-info {
+      color: #ccc;
+      padding: 10px;
+    }
 
-  ul {
-    list-style: none outside none;
-    padding-left: 0;
+    ul {
+      list-style: none outside none;
+      padding-left: 0;
 
-    li {
-      a {
-        padding: 10px;
-        display: block;
-        font-size: large;
+      li {
+        a {
+          padding: 10px;
+          display: block;
+          font-size: large;
 
-        &:focus {
-          text-decoration: none;
-        }
+          &:focus {
+            text-decoration: none;
+          }
 
-        &:hover {
-          background-color: #333;
-          text-decoration: none;
+          &:hover {
+            background-color: #333;
+            text-decoration: none;
+          }
         }
       }
     }
