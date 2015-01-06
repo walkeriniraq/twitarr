@@ -7,6 +7,9 @@ Twitarr.UploadView = Ember.View.extend
       dataType: 'json'
       dropZone: $('#photo-upload-div')
       add: (e, data) =>
+        if (data.files[0].size > 10000000)
+          alert 'File exceeds maximum file size of 10MB'
+          return false
         @get('controller').send('start_upload')
         data.submit()
       always: =>

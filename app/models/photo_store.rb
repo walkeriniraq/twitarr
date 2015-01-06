@@ -32,6 +32,7 @@ class PhotoStore
 
   def upload(temp_file, uploader)
     temp_file = UploadFile.new(temp_file)
+    return { status: 'File exceeds maximum file size of 10MB' } if temp_file.tempfile.size >= 10000000 # 10MB
     img = read_image temp_file, true
     return img if img.is_a? Hash
     photo = store(temp_file, uploader)
