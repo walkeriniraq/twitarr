@@ -10,7 +10,7 @@ class StreamPostDecorator < Draper::Decorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
-        text: auto_link(text),
+        text: auto_link(CGI.escapeHTML text),
         timestamp: timestamp,
         likes: some_likes(username),
         mentions: mentions,
