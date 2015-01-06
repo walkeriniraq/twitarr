@@ -29,7 +29,7 @@ class User
   index :display_name => 'text'
 
   # noinspection RubyResolve
-  before_create :set_profile_image_as_identicon
+  before_create :reset_photo
   after_save :update_display_name_cache
 
   validate :valid_username?
