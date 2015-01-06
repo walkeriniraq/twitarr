@@ -1,4 +1,4 @@
-class ForumPostDecorator < Draper::Decorator
+class ForumPostDecorator < BaseDecorator
   delegate_all
 
   def to_hash
@@ -6,7 +6,7 @@ class ForumPostDecorator < Draper::Decorator
         id: id.to_s,
         author: author,
         display_name: User.display_name_from_username(author),
-        text: text,
+        text: clean_text_with_cr(text),
         timestamp: timestamp,
         likes: likes,
         likes_counts: likes.length,

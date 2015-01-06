@@ -1,5 +1,5 @@
 # noinspection RubyResolve
-class StreamPostDecorator < Draper::Decorator
+class StreamPostDecorator < BaseDecorator
   delegate_all
   include Twitter::Autolink
 
@@ -10,7 +10,7 @@ class StreamPostDecorator < Draper::Decorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
-        text: auto_link(CGI.escapeHTML text),
+        text: auto_link(clean_text_with_cr(text)),
         timestamp: timestamp,
         likes: some_likes(username),
         mentions: mentions,

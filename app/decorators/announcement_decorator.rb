@@ -5,7 +5,7 @@ class AnnouncementDecorator < Draper::Decorator
     {
         author: author,
         display_name: User.display_name_from_username(author),
-        text: text,
+        text: text.gsub("\n", '<br />'),
         timestamp: timestamp
     }
   end
