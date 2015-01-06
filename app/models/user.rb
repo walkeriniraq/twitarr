@@ -166,6 +166,19 @@ class User
     PhotoStore.instance.small_profile_img("#{username}.png")
   end
 
+  def full_profile_picture_path
+    path = PhotoStore.instance.full_profile_path("#{username}.png")
+    unless File.exists? path
+      set_profile_image_as_identicon
+      save
+    end
+    path
+  end
+
+  def full_profile_picture
+    PhotoStore.instance.full_profile_img("#{username}.png")
+  end
+
   def inc_mentions
     inc(unnoticed_mentions: 1)
   end
