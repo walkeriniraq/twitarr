@@ -66,7 +66,7 @@ class Seamail
     right_now = Time.now
     to_users ||= []
     to_users << author
-    seamail = Seamail.new(usernames: to_users, subject: subject, unread_users: to_users, last_update: right_now)
+    seamail = Seamail.new(usernames: to_users, subject: subject, unread_users: to_users - [author], last_update: right_now)
     seamail.messages << SeamailMessage.new(author: author, text: first_message_text, timestamp: right_now)
     if seamail.valid?
       seamail.save
