@@ -1,19 +1,46 @@
-<div class="main-page-header">
-  <div class="title">{{#link-to 'seamail.index'}}Seamails{{/link-to}} > {{subject}}</div>
-  <span class="controls">
-    {{#link-to "seamail.new_message" model}}Reply{{/link-to}}
-    <a href="#" {{action 'reload'}}>Refresh</a>
-  </span>
-  <div class="title">
-    {{users_display}}
+<div class="display_card">
+  <div class="header">
+    <div class="title">{{subject}}</div>
+  </div>
+  <div class="card-section">
+    <div class="body">
+      <div class="body-section form">
+        {{#each user in users}}
+          {{#link-to 'user' user.username}}
+            <span class="pull-left" style="padding: 0.5em;">
+              {{pretty_username user.username user.display_name}}
+              <div style="text-align: center;">
+                {{tiny_user_picture user.username}}
+              </div>
+          </span>
+          {{/link-to}}
+        {{/each}}
+      </div>
+    </div>
   </div>
 </div>
-
 <div class="display_card">
+  <div class="card-section">
+    <span class="title big-title">Post a message</span>
+    {{textarea value=text rows='3' class='input'}}
+    <ul class="errors-list">
+      {{#each error in errors}}
+        <li>{{error}}</li>
+      {{/each}}
+    </ul>
+    <button {{action 'post' text}}>Post</button>
+    <span class="controls">
+      <button {{action 'reload'}}>Refresh</button>
+    </span>
+  </div>
   {{#each message in messages}}
-    <div class="card-section">
+    <div class="card-section section-with-photo">
+      <div class="section-photo">
+        {{user_picture message.author}}
+      </div>
+
       <span class="title">
-        {{message.author_display_name}}
+        {{pretty_username message.author message.author_display_name}}
       </span>
       {{pretty_timestamp message.timestamp}}
 

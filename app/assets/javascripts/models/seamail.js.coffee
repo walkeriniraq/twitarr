@@ -1,14 +1,9 @@
 Twitarr.SeamailMeta = Ember.Object.extend
   id: null
   users: []
-  display_names: []
   messages: 0
   subject: null
   timestamp: null
-
-  users_display: (->
-    @get('users').join(', ')
-  ).property('users')
 
 Twitarr.SeamailMeta.reopenClass
   list: ->
@@ -17,14 +12,9 @@ Twitarr.SeamailMeta.reopenClass
 
 Twitarr.Seamail = Ember.Object.extend
   id: null
-  users: []
   messages: []
   subject: null
   timestamp: null
-
-  users_display: (->
-    @get('users').join(', ')
-  ).property('users')
 
   init: ->
     @set('messages', Ember.A(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))

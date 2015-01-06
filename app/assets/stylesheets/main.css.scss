@@ -22,6 +22,11 @@
   border-radius: $radius;
 }
 
+.small_user_picture {
+  max-height: 40px;
+  max-width: 40px;
+}
+
 .input {
   width: 100%;
   border: 1px solid #ccc;
@@ -429,18 +434,12 @@ div#photo-display {
     padding: 0.5em 0.2em;
 
     .title {
-      float: left;
       font-size: larger;
       font-weight: bold;
     }
 
     .controls {
       float: right;
-
-      a {
-        @extend button;
-        color: #505050;
-      }
     }
   }
 
@@ -477,21 +476,24 @@ div#photo-display {
     .body {
       font-size: large;
 
-      .body-section.form {
-        font-size: small;
-        padding-left: 1em;
-        padding-top: 0.5em;
+      .body-section {
+        @extend .clearfix;
+        &.form {
+          font-size: small;
+          padding-left: 1em;
+          padding-top: 0.5em;
 
-        input {
-          margin-top: 0.2em;
+          input {
+            margin-top: 0.2em;
+          }
         }
-      }
 
-      .body-section.photos {
-        text-align: center;
-        padding-bottom: 0.4em;
-        img {
-          cursor: pointer;
+        &.photos {
+          text-align: center;
+          padding-bottom: 0.4em;
+          img {
+            cursor: pointer;
+          }
         }
       }
     }

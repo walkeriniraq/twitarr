@@ -15,3 +15,6 @@ Ember.Handlebars.helper 'pretty_timestamp', (timestamp) ->
 
 Ember.Handlebars.helper 'user_picture', (username) ->
   new Ember.Handlebars.SafeString("<img src='/api/v2/user/photo/#{username}'/>")
+
+Ember.Handlebars.helper 'tiny_user_picture', (username) ->
+  new Ember.Handlebars.SafeString("<img src='/api/v2/user/photo/#{username}' class='small_user_picture'/>")

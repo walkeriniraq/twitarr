@@ -1,9 +1,29 @@
 Twitarr.SeamailIndexController = Twitarr.ArrayController.extend()
 
-Twitarr.SeamailMetaPartialController = Twitarr.ObjectController.extend
-  users_display: (->
-    @get('display_names').join(', ')
-  ).property('display_names')
+Twitarr.SeamailMetaPartialController = Twitarr.ObjectController.extend()
+
+Twitarr.SeamailDetailController = Twitarr.ObjectController.extend
+  errors: Ember.A()
+  text: ''
+
+  actions:
+    post: ->
+      return if @get('posting')
+      @set 'posting', true
+      Twitarr.Seamail.new_message(@get('id'), @get('text')).then((response) =>
+        if response.errors?
+          @set 'errors', response.errors
+          @set 'posting', false
+          return
+        Ember.run =>
+          @set 'posting', false
+          @set 'text', ''
+          @get('errors').clear()
+          @send('reload')
+      , ->
+        @set 'posting', false
+        alert 'Message could not be sent! Please try again later. Or try again someplace without so many seamonkeys.'
+      )
 
 Twitarr.SeamailNewController = Twitarr.Controller.extend
   searchResults: Ember.A()
@@ -60,27 +80,5 @@ Twitarr.SeamailNewController = Twitarr.Controller.extend
       @get('searchResults').clear()
       @last_search = ''
       $('#to-autocomplete').focus()
-
-Twitarr.SeamailNewMessageController = Twitarr.Controller.extend
-  actions:
-    new: ->
-      return if @get('posting')
-      @set 'posting', true
-      Twitarr.Seamail.new_message(@get('id'), @get('new_message')).then((response) =>
-        if response.errors?
-          @set 'errors', response.errors
-          @set 'posting', false
-          return
-        Ember.run =>
-          @set 'posting', false
-          @set('new_message', '')
-          @get('errors').clear()
-          window.history.go(-1)
-      , ->
-        @set 'posting', false
-        alert 'Message could not be sent! Please try again later. Or try again someplace without so many seamonkeys.'
-      )
-    cancel: ->
-      window.history.go(-1)
 
 

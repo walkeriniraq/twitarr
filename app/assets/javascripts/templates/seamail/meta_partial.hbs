@@ -1,15 +1,26 @@
 <div class="card-section clickable" {{action 'display_seamail' id}}>
   <span class="title">
-    {{subject}}
+    {{messages}}
   </span>
   {{pretty_timestamp timestamp}}
 
   <div class="body">
     <div class="body-section">
-      {{users_display}}
+      {{subject}}
     </div>
-    <div class="body-section">
-      {{messages}}
+    <div class="body-section form">
+      {{#each user in users}}
+        <span class="pull-left" style="padding: 0.5em;">
+          {{#if user.display_name}}
+            {{user.display_name}}
+          {{else}}
+            @{{user.username}}
+          {{/if}}
+          <div style="text-align: center;">
+            {{tiny_user_picture user.username}}
+          </div>
+        </span>
+      {{/each}}
     </div>
   </div>
 </div>

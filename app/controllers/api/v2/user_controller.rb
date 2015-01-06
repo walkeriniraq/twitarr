@@ -42,6 +42,7 @@ class API::V2::UserController < ApplicationController
 
   def get_photo
     user = User.get params[:username]
+    response.headers['Etag'] = user.photo_hash
     if user
       send_file user.profile_picture_path, disposition: 'inline'
     else
@@ -72,26 +73,17 @@ class API::V2::UserController < ApplicationController
 
   def update_photo
     return unless logged_in!
-    puts params
-    return render json: { message: 'Must provide a photo to upload.', status: 'err' }, status: :bad_request unless params[:file]
-
-    params[:username] ||= current_username
-    if params[:username] != current_username and not current_user.is_admin
-      render json: { message: 'Unable to modify another user\'s profile picture.', status: 'err' }, status: :forbidden
-      return
-    end
-
-    if params[:username] != current_user
-      user = User.get params[:username]
-    else
-      user = current_user
-    end
-    unless user
-      render status: :not_found, json: { status: 'Not found', error: "User #{params[:username]} is not found." }
-      return
-    end
-
-    user.profile_picture_from_file params[:file]
+    render_json(message: 'Must provide a photo to upload.', status: 'err') and return unless params[:file]
+    image = PhotoStore::UploadFile.new(params[:file])
+    render_json(message: 'File was not an allowed image type - only jpg, gif, and png accepted.', status: 'err') and return unless image.photo_type?
+    img = PhotoStore.instance.read_image temp_file
+    return img if img.is_a? Hash
+    store_filename = "#{username}.png"
+    tmp_store_path = "tmp/#{store_filename}"
+    img.resize_to_fit(73, 73).write tmp_store_path
+    small_profile_path = PhotoStore.instance.small_profile_path(store_filename)
+    puts "Saving profile image (#{tmp_store_path}) => #{small_profile_path}"
+    FileUtils.move tmp_store_path, small_profile_path
     render json: { status: 'ok', message: 'updated user\'s profile picture' }
   end
 

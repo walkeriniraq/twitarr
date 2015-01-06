@@ -5,15 +5,11 @@ require 'singleton'
 class PhotoStore
   include Singleton
 
-
-  # @return [Magick::Image]
-  def read_image(temp_file, check_if_existing = false)
-    temp_file = UploadFile.new(temp_file) unless temp_file.is_a? UploadFile
+  def upload(temp_file, uploader)
+    temp_file = UploadFile.new(temp_file)
     return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
-    if check_if_existing
-      existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
-      return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
-    end
+    existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
+    return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
     begin
       img = Magick::Image::read(temp_file.tempfile.path).first
     rescue Java::JavaLang::NullPointerException
@@ -27,13 +23,6 @@ class PhotoStore
         img = orientation.transform_rmagick(img)
       end
     end
-    img
-  end
-
-  def upload(temp_file, uploader)
-    temp_file = UploadFile.new(temp_file)
-    img = read_image temp_file, true
-    return img if img.is_a? Hash
     photo = store(temp_file, uploader)
     img.resize_to_fit(200, 200).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)

@@ -5,7 +5,7 @@ class BaseDecorator < Draper::Decorator
   end
 
   def clean_text_with_cr(text)
-    CGI.escapeHTML(text).gsub("\n", '<br />')
+    CGI.escapeHTML(text || '').gsub("\n", '<br />')
   end
 
 end
