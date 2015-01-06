@@ -98,7 +98,7 @@ Twitarr.ProfileController = Twitarr.ObjectController.extend
   count: 0
 
   profile_pic: (->
-    "/api/v2/user/photo/#{@get('username')}"
+    "/api/v2/user/photo/#{@get('username')}?bust=#{@get('count')}"
   ).property('username', 'count')
 
   actions:
