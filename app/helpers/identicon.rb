@@ -44,7 +44,7 @@ module Identicon
     # set the stroke color based off of the hash
     # set the foreground color by using the first three bytes of the hash value
     color = '#%02X%02X%02X' % [(hash & 0xff), ((hash >> 8) & 0xff), ((hash >> 16) & 0xff)]
-    puts "Using color #{color}"
+    # puts "Using color #{color}"
     blocks.stroke color
     blocks.fill color
     # remove the first three bytes that were used for the foreground color
