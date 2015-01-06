@@ -23,6 +23,7 @@ class PhotoStore
         img = orientation.transform_rmagick(img)
       end
     end
+    return { status: 'File exceeds maximum file size of 10MB' } if temp_file.tempfile.size >= 10000000 # 10MB
     photo = store(temp_file, uploader)
     img.resize_to_fit(200, 200).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
@@ -55,10 +56,12 @@ class PhotoStore
     @thumb = @root + 'thumb'
     @profiles = @root + 'profiles/'
     @profiles_small = @profiles + 'small'
+    @profiles_full = @profiles + 'full'
     @full.mkdir unless @full.exist?
     @thumb.mkdir unless @thumb.exist?
     @profiles.mkdir unless @profiles.exist?
     @profiles_small.mkdir unless @profiles_small.exist?
+    @profiles_full.mkdir unless @profiles_full.exist?
   end
 
   def photo_path(filename)
@@ -80,6 +83,19 @@ class PhotoStore
   def small_profile_img(store_filename)
     begin
       return Magick::Image::read(small_profile_path(store_filename)).first
+    rescue Java::JavaLang::NullPointerException
+      # yeah, ImageMagick throws a NPE if the photo isn't a photo
+      return { status: 'Photo could not be opened - is it an image?' }
+    end
+  end
+
+  def full_profile_path(store_filename)
+    (build_directory(@profiles_full, store_filename) + (store_filename)).to_s
+  end
+
+  def full_profile_img(store_filename)
+    begin
+      return Magick::Image::read(full_profile_path(store_filename)).first
     rescue Java::JavaLang::NullPointerException
       # yeah, ImageMagick throws a NPE if the photo isn't a photo
       return { status: 'Photo could not be opened - is it an image?' }

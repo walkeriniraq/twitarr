@@ -129,6 +129,25 @@ class User
     where(username: format_username(username)).first
   end
 
+  def profile_picture_from_file(temp_file, options = {})
+    img = PhotoStore.instance.read_image temp_file
+    return img if img.is_a? Hash
+    save_profile_picture(img, options)
+  end
+
+  # @param [Magick::Image] img
+  # @param [hash] options
+  def save_profile_picture(img, options = {})
+    store_filename = "#{username}.png"
+    tmp_store_path = "tmp/#{store_filename}"
+    small_thumbnail_width = options[:small_thumbnail_width] || 73
+    img.resize_to_fit(small_thumbnail_width, small_thumbnail_width).write tmp_store_path
+    small_profile_path = PhotoStore.instance.small_profile_path(store_filename)
+    puts "Saving profile image (#{tmp_store_path}) => #{small_profile_path}"
+    FileUtils.move tmp_store_path, small_profile_path
+    self
+  end
+
   def profile_picture_path
     path = PhotoStore.instance.small_profile_path("#{username}.png")
     unless File.exists? path
@@ -140,6 +159,19 @@ class User
 
   def profile_picture
     PhotoStore.instance.small_profile_img("#{username}.png")
+  end
+
+  def full_profile_picture_path
+    path = PhotoStore.instance.full_profile_path("#{username}.png")
+    unless File.exists? path
+      set_profile_image_as_identicon
+      save
+    end
+    path
+  end
+
+  def full_profile_picture
+    PhotoStore.instance.full_profile_img("#{username}.png")
   end
 
   def inc_mentions

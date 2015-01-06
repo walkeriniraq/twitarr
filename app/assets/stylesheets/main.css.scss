@@ -524,3 +524,10 @@ div#photo-display {
   float: right;
   margin-bottom: 0.6em;
 }
+
+.alert {
+  &.alert-warning {
+    font-weight: bold;
+    color: orangered;
+  }
+}
