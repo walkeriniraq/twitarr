@@ -15,10 +15,6 @@ class ForumPost
   field :ph, as: :photos, type: Array
   embedded_in :forum, inverse_of: :posts
 
-  # 1 = ASC, -1 DESC
-  index :likes => 1
-  index :timestamp => -1
-
   validates :text, :author, :timestamp, presence: true
   validate :validate_author
 
