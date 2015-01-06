@@ -31,7 +31,6 @@
       <li>{{#link-to "forums"}}Forums{{/link-to}}</li>
       <li>{{#link-to "stream"}}Tweets{{/link-to}}</li>
       <li>---</li>
-      <li>{{#link-to "search"}}Search{{/link-to}}</li>
       {{#if logged_in}}
         <li>
           {{#link-to "alerts"}}
@@ -42,20 +41,21 @@
           {{/link-to}}
         </li>
       {{/if}}
+      <li>{{#link-to "search"}}Search{{/link-to}}</li>
+      <li>---</li>
+      <li><a href="#" {{action 'help'}}>Help</a></li>
       <li>---</li>
       {{#unless logged_in}}
         <li><a href="#" {{action 'login'}}>Login</a></li>
       {{else}}
-        <li>{{#link-to "profile"}}Profile{{/link-to}}</li>
-        <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
         {{#if login_admin}}
-          <li>---</li>
           <li>{{#link-to "admin.users"}}User administration{{/link-to}}</li>
           <li>{{#link-to "admin.announcements"}}New announcement{{/link-to}}</li>
+          <li>---</li>
         {{/if}}
+        <li>{{#link-to "profile"}}Profile{{/link-to}}</li>
+        <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
       {{/unless}}
-      <li>---</li>
-      <li><a href="#" {{action 'help'}}>Help</a></li>
     </ul>
   </div>
 </div>
