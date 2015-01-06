@@ -137,12 +137,18 @@ class User
   # @param [Magick::Image] img
   # @param [hash] options
   def save_profile_picture(img, options = {})
+
     store_filename = "#{username}.png"
     tmp_store_path = "tmp/#{store_filename}"
+    # write original photo
+    img.write tmp_store_path
+    full_profile_path = PhotoStore.instance.full_profile_path(store_filename)
+    FileUtils.move tmp_store_path, full_profile_path
+
     small_thumbnail_width = options[:small_thumbnail_width] || 73
     img.resize_to_fit(small_thumbnail_width, small_thumbnail_width).write tmp_store_path
     small_profile_path = PhotoStore.instance.small_profile_path(store_filename)
-    puts "Saving profile image (#{tmp_store_path}) => #{small_profile_path}"
+    puts "Saving profile image (#{tmp_store_path}) => #{small_profile_path}, #{full_profile_path}"
     FileUtils.move tmp_store_path, small_profile_path
     self
   end
