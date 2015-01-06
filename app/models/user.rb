@@ -141,7 +141,8 @@ class User
     store_filename = "#{username}.png"
     tmp_store_path = "tmp/#{store_filename}"
     # write original photo
-    img.write tmp_store_path
+    full_thumbnail_width = options[:full_thumbnail_width] || 384
+    img.resize_to_fit(full_thumbnail_width, full_thumbnail_width).write tmp_store_path
     full_profile_path = PhotoStore.instance.full_profile_path(store_filename)
     FileUtils.move tmp_store_path, full_profile_path
 
