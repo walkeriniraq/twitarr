@@ -11,7 +11,13 @@
 
 <div class="display_card">
   {{#each post in posts}}
-  <div class="card-section">
+  <div class="card-section section-with-photo" >
+    <div class="section-photo">
+      {{#link-to 'user' post.author}}
+        {{user_picture post.author}}
+      {{/link-to}}
+    </div>
+    
     <span class="title">
       {{pretty_username post.author post.display_name}}
     </span>
