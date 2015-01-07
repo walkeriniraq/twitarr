@@ -19,6 +19,9 @@ gem 'underscore-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
+# handle CORS
+gem 'rack-cors', :require => 'rack/cors'
+
 gem 'mongoid'
 
 gem 'ember-rails'

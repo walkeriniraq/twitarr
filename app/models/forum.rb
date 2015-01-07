@@ -7,6 +7,10 @@ class Forum
   embeds_many :posts, class_name: 'ForumPost', store_as: :fp, order: :timestamp.asc, validate: false
 
   index({:subject => 'text', :'fp.tx' => 'text'})
+  # 1 = ASC, -1 DESC
+  index 'fp.au' => 1
+  index 'fp.lk' => 1
+  index 'fp.ts' => -1
 
   validates :subject, presence: true
   validate :validate_posts
@@ -58,7 +62,7 @@ class Forum
 
   def self.search(params = {})
     search_text = params[:text].strip.downcase
-    criteria = Forum.where({ '$text' => { '$search' => "\"#{search_text}\"" } })
+    criteria = Forum.or({:'fp.au' => search_text}, { '$text' => { '$search' => "\"#{search_text}\"" } })
     limit_criteria(criteria, params)
   end
 end
