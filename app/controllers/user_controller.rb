@@ -78,6 +78,16 @@ class UserController < ApplicationController
 
   def save_profile
     return unless logged_in!
+
+    if params[:new_password] && params[:current_password]
+      unless current_user.correct_password(params[:current_password])
+        render_json(status: 'Current password does not match.')
+        return
+      end
+      current_user.set_password params[:new_password]
+      puts "Changing #{current_username}'s password."
+    end
+
     current_user.email = params[:email]
     current_user.display_name = params[:display_name]
     puts "email: #{current_user.email}"
