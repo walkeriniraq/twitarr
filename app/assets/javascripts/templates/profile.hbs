@@ -23,5 +23,16 @@
   <div>
     {{ input value=email class='input'}}
   </div>
+  <br/>
+
+  <button id="show-change-password" onclick="$('#change-password,#change-password-hdr').show(); $('#show-change-password').hide()">Change password</button>
+
+  <h5 id="change-password-hdr" style="display: none">Change Password</h5>
+  <div id="change-password" style="display: none">
+      Current: {{ input type="password" value=current_password class='input' }}<br/>
+      New: {{ input type="password" value=new_password class='input' }}
+      Confirm: {{ input type="password" value=confirm_password class='input' }}
+  </div>
+
 </div>
 <button {{action 'save'}}>Save Changes</button>

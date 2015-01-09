@@ -1,6 +1,14 @@
 Twitarr.Profile = Ember.Object.extend
   save: ->
-    $.post('user/save_profile', { display_name: @get('display_name'), email: @get('email') }).then (data) =>
+    post_data = { display_name: @get('display_name'), email: @get('email') }
+    if @get('current_password') and @get('new_password') and @get('confirm_password')
+      if @get('new_password') != @get('confirm_password')
+        alert "Current password and confirm password do not match!"
+        return
+      post_data["current_password"] = @get('current_password')
+      post_data["new_password"] = @get('new_password')
+
+    $.post('user/save_profile', post_data).then (data) =>
       if (data.status isnt 'ok')
         alert data.status
 

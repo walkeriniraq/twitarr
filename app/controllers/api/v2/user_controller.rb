@@ -2,7 +2,7 @@ class API::V2::UserController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def auth
-    login_result = validate_login params[:username], params[:password]
+    login_result =       params[:username], params[:password]
     if login_result.has_key? :error
       render json: { :status => 'incorrect password or username' }, status: 401 and return
     else
