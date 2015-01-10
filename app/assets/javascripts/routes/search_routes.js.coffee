@@ -2,7 +2,7 @@ Twitarr.SearchRoute = Ember.Route.extend
   actions:
     search: (text) ->
       if !!text
-        @transitionTo('search.results', text)
+        @transitionTo('search.results', encodeURIComponent(text))
 
   setupController: (controller) ->
     controller.set('text', '')

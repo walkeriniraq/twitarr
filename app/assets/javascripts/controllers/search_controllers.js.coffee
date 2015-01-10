@@ -5,11 +5,11 @@ Twitarr.SearchResultsController = Twitarr.ObjectController.extend
 
   actions:
     user_search: ->
-      @transitionToRoute('search.user_results', @get('text'))
+      @transitionToRoute('search.user_results', encodeURI(@get('text')))
     tweet_search: ->
-      @transitionToRoute('search.tweet_results', @get('text'))
+      @transitionToRoute('search.tweet_results', encodeURI(@get('text')))
     forum_search: ->
-      @transitionToRoute('search.forum_results', @get('text'))
+      @transitionToRoute('search.forum_results', encodeURI(@get('text')))
 
 Twitarr.SearchUserResultsController = Twitarr.ObjectController.extend
   error: ''
