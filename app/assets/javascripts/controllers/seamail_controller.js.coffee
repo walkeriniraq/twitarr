@@ -4,7 +4,7 @@ Twitarr.SeamailMetaPartialController = Twitarr.ObjectController.extend()
 
 Twitarr.SeamailDetailController = Twitarr.ObjectController.extend
   errors: Ember.A()
-  text: ''
+  text: null
 
   actions:
     post: ->
@@ -17,7 +17,7 @@ Twitarr.SeamailDetailController = Twitarr.ObjectController.extend
           return
         Ember.run =>
           @set 'posting', false
-          @set 'text', ''
+          @set 'text', null
           @get('errors').clear()
           @send('reload')
       , ->
@@ -41,7 +41,8 @@ Twitarr.SeamailNewController = Twitarr.Controller.extend
     $.getJSON("user/autocomplete?string=#{encodeURIComponent val}").then (data) =>
       if @last_search is val
         @get('searchResults').clear()
-        names = (name for name in data.names when name not in @get('toUsers'))
+        existing_usernames = (user.username for user in @get('toUsers'))
+        names = (user for user in data.names when user.username not in existing_usernames)
         @get('searchResults').pushObjects names
   ).observes('toInput')
 
@@ -52,8 +53,7 @@ Twitarr.SeamailNewController = Twitarr.Controller.extend
     new: ->
       return if @get('posting')
       @set 'posting', true
-      users = @get('toUsers').filter((user) ->
-        !!user)
+      users = @get('toUsers').filter((user) -> !!user).map((user) -> user.username)
       Twitarr.Seamail.new_seamail(users, @get('subject'), @get('text')).then((response) =>
         if response.errors?
           @set 'errors', response.errors
@@ -66,19 +66,19 @@ Twitarr.SeamailNewController = Twitarr.Controller.extend
           @set 'subject', ''
           @set 'text', ''
           window.history.go(-1)
-      , ->
+      , =>
         @set 'posting', false
         alert 'Message could not be sent. Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
-    remove: (name) ->
-      @get('toUsers').removeObject(name.toString())
+    remove: (user) ->
+      @get('toUsers').removeObject(user)
 
     select: (name) ->
-      @get('toUsers').addObject(name.toString())
+      @get('toUsers').unshiftObject(name)
       @set 'toInput', ''
       @get('searchResults').clear()
       @last_search = ''
-      $('#to-autocomplete').focus()
+      $('#seamail-user-autocomplete').focus()
 
 

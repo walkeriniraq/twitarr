@@ -25,9 +25,10 @@
 .input {
   width: 100%;
   border: 1px solid #ccc;
-  font-size: 130%;
+  font-size: large;
+  margin-top: 0.3em;
   @include border-radius(4px);
-  padding: 0.1em 0.6em;
+  padding: 0.1em 0.4em;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
   &.input-short {
@@ -99,7 +100,7 @@ html {
   box-shadow: 1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3) inset;
 }
 
-button {
+.btn {
   @extend .button;
   @include border-radius(3px);
   border: 1px outset #8D031C;
@@ -111,6 +112,18 @@ button {
     outline: none;
     color: #8D031C;
     text-decoration: none;
+  }
+}
+
+.btn-link {
+  border-color: transparent;
+  background-color: transparent;
+  color: #337ab7;
+  padding: 0.2em;
+
+  &:hover, &:focus {
+    color: #2a6496;
+    text-decoration: underline;
   }
 }
 
@@ -323,55 +336,48 @@ div#photo-display {
   display: none;
 }
 
-#new-seamail-form {
-  padding-left: 0.4em;
-  padding-right: 0.5em;
+.seamail-autocomplete-parent {
+  position: relative;
 
-  .autocomplete-parent {
-    position: relative;
+  .to-autocomplete-list {
+    list-style-type: none;
+    background-color: white;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-top: -2px;
+    font-size: larger;
+    z-index: 200;
 
-    .to-autocomplete-list {
-      list-style-type: none;
-      background-color: white;
-      padding: 0;
-      position: absolute;
-      width: 100%;
-      border-left: 1px solid black;
-      border-right: 1px solid black;
-      border-bottom: 1px solid black;
-      margin-top: -2px;
+    .to-autocomplete-item {
+      border-top: 1px solid #aaa;
+      padding: 0.2em 0.4em;
+      cursor: pointer;
 
-      .to-autocomplete-item {
-        border-top: 1px solid #aaa;
-        padding: 0.2em 0.4em;
-        font-size: larger;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #BFEEFC;
-          box-shadow: 0 0 4px 4px white inset;
-        }
+      &:hover {
+        background-color: #BFEEFC;
+        box-shadow: 0 0 4px 4px white inset;
       }
     }
-
   }
+}
 
-  div.to-users {
-    margin-bottom: 0.8em;
-    font-size: larger;
+.seamail-to-users {
+  .to-user {
+    margin-right: 0.2em;
+    border: 1px solid #aaa;
+    padding: 0.2em 0.6em;
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 0.4em;
+    @include border-radius(4px);
 
-    .to-user {
-      margin-right: 0.2em;
-      border: 1px solid #aaa;
-      padding: 0.2em 0.6em;
-      display: inline-block;
-      cursor: pointer;
-      @include border-radius(4px);
-
-      span {
-        color: red;
-        top: 0.2em;
-      }
+    span {
+      color: red;
+      top: 0.2em;
     }
   }
 }
@@ -475,15 +481,6 @@ div#photo-display {
 
       .body-section {
         @extend .clearfix;
-        &.form {
-          font-size: small;
-          padding-left: 1em;
-          padding-top: 0.5em;
-
-          input {
-            margin-top: 0.2em;
-          }
-        }
 
         &.photos {
           text-align: center;
@@ -492,6 +489,15 @@ div#photo-display {
             cursor: pointer;
           }
         }
+      }
+    }
+
+    .form {
+      padding: 0.2em 0.2em 0;
+
+      .label {
+        color: darkgray;
+        font-size: larger;
       }
     }
 
@@ -507,8 +513,8 @@ div#photo-display {
       position: absolute;
     }
 
-    .title, .timestamp, .body, .controls {
-      margin-left: 53px;
+    .title, .timestamp, .body, .controls, .form {
+      margin-left: 60px;
     }
   }
 
@@ -523,10 +529,15 @@ div#photo-display {
       }
     }
 
-    .title, .timestamp, .body, .controls {
+    .title, .timestamp, .body, .controls, .form {
       margin-left: 115px;
     }
   }
+}
+
+.profile_photo {
+  height: 50px;
+  width: 50px;
 }
 
 .footer-controls {
@@ -539,11 +550,6 @@ div#photo-display {
     font-weight: bold;
     color: orangered;
   }
-}
-
-.profile_photo {
-  height: 48px;
-  width: 48px;
 }
 
 .hidden {

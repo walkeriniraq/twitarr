@@ -16,4 +16,13 @@ Twitarr.StreamViewRoute = Ember.Route.extend
   model: (params) ->
     Twitarr.StreamPost.view params.id
 
+  setupController: (controller, model) ->
+    controller.set 'model', model
+    controller.set 'base_reply_text', "@#{model.author} "
+    controller.set 'reply_text', "@#{model.author} "
+
+  actions:
+    reload: ->
+      @refresh()
+
 mostRecentTime = -> Math.ceil(new Date().valueOf() + 1000)

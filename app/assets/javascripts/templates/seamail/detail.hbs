@@ -3,38 +3,35 @@
     <div class="title">{{subject}}</div>
   </div>
   <div class="card-section">
-    <div class="body">
-      <div class="body-section form">
-        {{#each user in users}}
-          {{#link-to 'user' user.username}}
-            <span class="pull-left" style="padding: 0.5em;">
+    {{#each user in users}}
+      {{#link-to 'user' user.username}}
+        <span class="pull-left" style="padding: 0.5em;">
               {{unbound pretty_username user.username user.display_name}}
-              <div style="text-align: center;">
-                {{unbound user_picture user.username}}
-              </div>
+          <div style="text-align: center;">
+            {{unbound user_picture user.username}}
+          </div>
           </span>
-          {{/link-to}}
-        {{/each}}
-      </div>
-    </div>
+      {{/link-to}}
+    {{/each}}
   </div>
   <div class="card-section">
-    <span class="title big-title">Post a message</span>
-    {{textarea value=text rows='2' class='input'}}
-    <ul class="errors-list">
-      {{#each error in errors}}
-        <li>{{error}}</li>
-      {{/each}}
-    </ul>
+    <div class="form">
+      {{textarea value=text rows='2' class='input' placeholder='Send a message'}}
+      <ul class="errors-list">
+        {{#each error in errors}}
+          <li>{{error}}</li>
+        {{/each}}
+      </ul>
     <span class="controls">
-      <button {{action 'post' text}}>Post</button>
+      <button class="btn" {{action 'post' text}}>Send</button>
     </span>
+    </div>
   </div>
 </div>
 <div class="display_card">
   <div class="card-section">
     <span class="controls">
-      <button {{action 'reload'}}>Refresh</button>
+      <button class="btn" {{action 'reload'}}>Refresh</button>
     </span>
   </div>
   {{#each message in messages}}

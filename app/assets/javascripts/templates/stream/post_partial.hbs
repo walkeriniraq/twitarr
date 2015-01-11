@@ -24,7 +24,8 @@
   </div>
   <div class="controls">
     {{likes_string}}
-    <a href="#" {{action 'unlike' model bubbles=false}} {{bind-attr class="unlike_visible"}}>Unlike</a>
-    <a href="#" {{action 'like' model bubbles=false}} {{bind-attr class="like_visible"}}>Like</a>
+    <button {{action 'unlike' model bubbles=false}} {{bind-attr class="unlike_visible :btn-link"}}>Unlike</button>
+    <button {{action 'like' model bubbles=false}} {{bind-attr class="like_visible :btn-link"}}>Like</button>
+    <button {{action 'display_tweet' id bubbles=false}} {{bind-attr class="logged_in::hidden :btn-link"}}>Reply</button>
   </div>
 </div>

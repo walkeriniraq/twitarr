@@ -8,19 +8,13 @@
     <div class="body-section">
       {{subject}}
     </div>
-    <div class="body-section form">
-      {{#each user in users}}
-        <span class="pull-left" style="padding: 0.5em;">
-          {{#if user.display_name}}
-            {{user.display_name}}
-          {{else}}
-            @{{user.username}}
-          {{/if}}
-          <div style="text-align: center;">
-            {{user_picture user.username}}
-          </div>
-        </span>
-      {{/each}}
-    </div>
   </div>
+  {{#each user in users}}
+    <span class="pull-left" style="padding: 0.5em;">
+        {{pretty_username user.username user.display_name}}
+      <div style="text-align: center;">
+        {{user_picture user.username}}
+      </div>
+      </span>
+  {{/each}}
 </div>

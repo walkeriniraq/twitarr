@@ -1,17 +1,37 @@
 <div class="main-page-header">
   <span class="controls">
-    {{#if logged_in}}
-      {{#link-to "stream.new"}}Reply{{/link-to}}
-    {{/if}}
-    <a href="#" {{action 'reload'}}>Refresh</a>
+    <button class="btn" {{action 'reload'}}>Refresh</button>
   </span>
-  <h4>Tweets</h4>
-
 </div>
+
 <div class="display_card">
   {{render "stream.post_partial" model}}
-
-  {{#each child in children}}
-    {{render "stream.post_partial" child}}
-  {{/each}}
 </div>
+
+{{#if children}}
+  <div class="display_card">
+    {{#each child in children}}
+      {{render "stream.post_partial" child}}
+    {{/each}}
+  </div>
+{{/if}}
+
+<div class="display_card">
+  <div class="card-section">
+    <div class="title big-title">Reply</div>
+    <div class="form">
+      {{textarea value=reply_text rows='3' class='input'}}
+      {{view 'upload'}}
+
+      <ul class="errors-list">
+        {{#each error in errors}}
+          <li>{{error}}</li>
+        {{/each}}
+      </ul>
+      <span class="controls">
+        <button class="btn" {{action 'new'}}>Post</button>
+      </span>
+    </div>
+  </div>
+</div>
+

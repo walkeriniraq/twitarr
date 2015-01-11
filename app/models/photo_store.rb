@@ -2,31 +2,10 @@ require 'digest'
 require 'RMagick'
 require 'singleton'
 
-# module Magick
-#   class Image
-#     def resize_and_pad(width, height, background=:transparent, gravity=Magick::CenterGravity)
-#       # manipulate! do |img|
-#         new_img = resize_to_fit(width, height)
-#         if background == :transparent
-#           filled = new_img.matte_floodfill(1, 1)
-#         else
-#           filled = new_img.color_floodfill(1, 1, Magick::Pixel.from_color(background))
-#         end
-#         # destroy_image(new_img)
-#         filled.composite(@image, gravity, Magick::OverCompositeOp)
-#         # destroy_image(img)
-#         # filled = yield(filled) if block_given?
-#         # filled
-#       # end
-#     end
-#
-#   end
-# end
-
 class PhotoStore
   include Singleton
 
-  SMALL_PROFILE_PHOTO_SIZE = 48
+  SMALL_PROFILE_PHOTO_SIZE = 100
   LARGE_PROFILE_PHOTO_SIZE = 400
 
   def upload(temp_file, uploader)

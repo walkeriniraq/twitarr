@@ -1,12 +1,29 @@
 <div class="main-page-header header-with-controls">
   <div class="controls">
-    {{#if logged_in}}
-      {{#link-to "stream.new"}}New Post{{/link-to}}
-    {{/if}}
-    <a href="#" {{action 'reload'}}>Refresh</a>
+    <button {{action 'show_new_post'}} {{bind-attr class="new_post_button_visible::hidden :btn"}}>New Post</button>
+    <button class="btn" {{action 'reload'}}>Refresh</button>
   </div>
 
   <div class="title">Tweets</div>
+</div>
+
+<div {{bind-attr class="new_post_visible::hidden :display_card"}}>
+  <div class="card-section">
+    <div class="form">
+      {{textarea value=new_post rows='3' class='input'}}
+      {{view 'upload'}}
+
+      <ul class="errors-list">
+        {{#each error in errors}}
+          <li>{{error}}</li>
+        {{/each}}
+      </ul>
+      <span class="controls">
+        <button class="btn" {{action 'cancel'}}>Cancel</button>
+        <button class="btn" {{action 'new'}}>Post</button>
+      </span>
+    </div>
+  </div>
 </div>
 
 <div class="display_card">
@@ -18,7 +35,7 @@
 <div class="footer-controls">
   {{#if has_next_page}}
     <div class="card-section">
-      <button {{action 'next_page'}} class="controls">Next</button>
+      <button class="btn" {{action 'next_page'}} class="controls">Next</button>
     </div>
   {{/if}}
 </div>

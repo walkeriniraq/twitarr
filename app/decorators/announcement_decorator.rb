@@ -16,7 +16,7 @@ class AnnouncementDecorator < Draper::Decorator
         author: author,
         text: text,
         timestamp: timestamp,
-        valid_until: valid_until.strftime('%F %T')
+        valid_until: valid_until.strftime('%F %l:%M%P')
     }
   end
 

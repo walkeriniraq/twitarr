@@ -118,3 +118,7 @@ Twitarr.ProfileController = Twitarr.ObjectController.extend
       @incrementProperty('count')
 
 Twitarr.UserController = Twitarr.Controller.extend()
+
+Twitarr.AlertsController = Twitarr.ObjectController.extend
+  init: ->
+    @set 'controllers.application.alerts', false

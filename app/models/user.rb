@@ -28,6 +28,7 @@ class User
   field :pe, as: :is_email_public, type: Boolean
 
   index username: 1
+  index display_name: 1
   index :display_name => 'text'
 
   # noinspection RubyResolve

@@ -65,7 +65,7 @@ class Seamail
   def self.create_new_seamail(author, to_users, subject, first_message_text)
     right_now = Time.now
     to_users ||= []
-    to_users << author
+    to_users << author unless to_users.include? author
     seamail = Seamail.new(usernames: to_users, subject: subject, unread_users: to_users - [author], last_update: right_now)
     seamail.messages << SeamailMessage.new(author: author, text: first_message_text, timestamp: right_now)
     if seamail.valid?

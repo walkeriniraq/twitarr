@@ -61,3 +61,8 @@ Twitarr.StreamPost.reopenClass
     $.post('stream', text: text, photo: photo).then (data) =>
       data.stream_post = Twitarr.StreamPost.create(data.stream_post) if data.stream_post?
       data
+
+  reply: (id, text, photo) ->
+    $.post('stream', text: text, photo: photo, parent: id).then (data) =>
+      data.stream_post = Twitarr.StreamPost.create(data.stream_post) if data.stream_post?
+      data

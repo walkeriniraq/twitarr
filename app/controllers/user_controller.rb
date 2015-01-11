@@ -65,10 +65,10 @@ class UserController < ApplicationController
       render :forgot_password
     end
     if params[:security_answer].downcase.strip != @user.security_answer ||
-         params[:email].strip != @user.email
-       sleep 30.seconds.to_i
-       @error = 'Email or security answer did not match.'
-       render :security_question and return
+        params[:email].strip != @user.email
+      sleep 30.seconds.to_i
+      @error = 'Email or security answer did not match.'
+      render :security_question and return
     end
     @user.set_password User::RESET_PASSWORD
     @user.save!
@@ -123,7 +123,13 @@ class UserController < ApplicationController
   end
 
   def autocomplete
-    render_json names: User.where(username: /^#{params[:string]}/).map(:username)
+    search_string = params[:string].downcase
+    render_json names:
+                    User.or(
+                        { username: /^#{search_string}/ },
+                        { display_name: /^#{search_string}/i },
+                        { '$text' => { '$search' => search_string } })
+                    .map { |x| { username: x.username, display_name: x.display_name } }
   end
 
   def show
