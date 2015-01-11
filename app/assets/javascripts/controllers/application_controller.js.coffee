@@ -38,23 +38,26 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $('#side-menu').animate { width: 'toggle' }, 100
 
   login: (user) ->
-    @set 'login_user', user.username
-    @set 'login_admin', user.is_admin
-    @set 'display_name', user.display_name
+    Ember.run =>
+      @set 'login_user', user.username
+      @set 'login_admin', user.is_admin
+      @set 'display_name', user.display_name
     @tick()
 
   logout: ->
-    @set 'login_user', null
-    @set 'login_admin', false
-    @set 'display_name', null
+    Ember.run =>
+      @set 'login_user', null
+      @set 'login_admin', false
+      @set 'display_name', null
     clearTimeout(@timer)
 
   tick: ->
     $.ajax('alerts/check', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
-        @set('email_count', data.user.seamail_unread_count)
-        @set('posts_count', data.user.unnoticed_mentions)
-        @set('alerts', data.user.unnoticed_alerts)
+        Ember.run =>
+          @set('email_count', data.user.seamail_unread_count)
+          @set('posts_count', data.user.unnoticed_mentions)
+          @set('alerts', data.user.unnoticed_alerts)
     @timer = setTimeout (=> @tick()), 60000
 
   logged_in: (->

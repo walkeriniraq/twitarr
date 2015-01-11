@@ -8,9 +8,9 @@
         {{#each user in users}}
           {{#link-to 'user' user.username}}
             <span class="pull-left" style="padding: 0.5em;">
-              {{pretty_username user.username user.display_name}}
+              {{unbound pretty_username user.username user.display_name}}
               <div style="text-align: center;">
-                {{tiny_user_picture user.username}}
+                {{unbound tiny_user_picture user.username}}
               </div>
           </span>
           {{/link-to}}
@@ -40,17 +40,17 @@
   {{#each message in messages}}
     <div class="card-section section-with-photo">
       <div class="section-photo">
-        {{user_picture message.author}}
+        {{unbound user_picture message.author}}
       </div>
 
       <span class="title">
-        {{pretty_username message.author message.author_display_name}}
+        {{unbound pretty_username message.author message.author_display_name}}
       </span>
-      {{pretty_timestamp message.timestamp}}
+      {{unbound pretty_timestamp message.timestamp}}
 
       <div class="body">
         <div class="body-section">
-          {{{message.text}}}
+          {{{unbound message.text}}}
         </div>
       </div>
     </div>

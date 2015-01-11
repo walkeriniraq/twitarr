@@ -22,11 +22,6 @@
   border-radius: $radius;
 }
 
-.small_user_picture {
-  max-height: 40px;
-  max-width: 40px;
-}
-
 .input {
   width: 100%;
   border: 1px solid #ccc;
@@ -556,4 +551,13 @@ div#photo-display {
     font-weight: bold;
     color: orangered;
   }
+}
+
+.small_user_picture {
+  max-height: 40px;
+  max-width: 40px;
+}
+
+.hidden {
+  display: none;
 }

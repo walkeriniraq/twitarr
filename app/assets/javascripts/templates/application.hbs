@@ -4,9 +4,10 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  {{#link-to "stream"}}<span class="menu-brand">
-    Twit-arr
-  </span>
+  {{#link-to "stream"}}
+    <span class="menu-brand">
+      Twit-arr
+    </span>
   {{/link-to}}
   {{#if alerts}}
     {{#link-to "alerts"}}
@@ -18,44 +19,30 @@
   <div class="full-screen-overlay" {{action 'menu_toggle'}} ></div>
   <div id="menu">
     <div id="login-info">
-      {{#unless logged_in}}
-        Not logged in.
-      {{else}}
-        {{ display_name }}
-      {{/unless}}
+      <span {{bind-attr class="logged_in:hidden"}}>Not logged in.</span>
+      <span {{bind-attr class="logged_in::hidden"}}>{{ display_name }}</span>
     </div>
     <ul {{action 'menu_close'}}>
-      {{#if logged_in}}
-        <li>{{#link-to "seamail"}}Seamail{{/link-to}}</li>
-      {{/if}}
+      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "seamail"}}Seamail{{/link-to}}</li>
       <li>{{#link-to "forums"}}Forums{{/link-to}}</li>
       <li>{{#link-to "stream"}}Tweets{{/link-to}}</li>
       <li>---</li>
-      {{#if logged_in}}
-        <li>
-          {{#link-to "alerts"}}
-            Alerts
-            {{#if alerts}}
-              <span style="color: red; font-size: small;">New!</span>
-            {{/if}}
-          {{/link-to}}
-        </li>
-      {{/if}}
+      <li {{bind-attr class="logged_in::hidden"}}>
+        {{#link-to "alerts"}}
+          Alerts
+          <span style="color: red; font-size: small;" {{bind-attr class="alerts::hidden"}}>New!</span>
+        {{/link-to}}
+      </li>
       <li>{{#link-to "search"}}Search{{/link-to}}</li>
       <li>---</li>
       <li>{{#link-to 'help'}}Help{{/link-to}}</li>
       <li>---</li>
-      {{#unless logged_in}}
-        <li><a href="#" {{action 'login'}}>Login</a></li>
-      {{else}}
-        {{#if login_admin}}
-          <li>{{#link-to "admin.users"}}User administration{{/link-to}}</li>
-          <li>{{#link-to "admin.announcements"}}New announcement{{/link-to}}</li>
-          <li>---</li>
-        {{/if}}
-        <li>{{#link-to "profile"}}Profile{{/link-to}}</li>
-        <li><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
-      {{/unless}}
+      <li><a href="#" {{action 'login'}} {{bind-attr class="logged_in:hidden"}}>Login</a></li>
+      <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.users"}}User administration{{/link-to}}</li>
+      <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.announcements"}}New announcement{{/link-to}}</li>
+      <li {{bind-attr class="login_admin::hidden"}}>---</li>
+      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "profile"}}Profile{{/link-to}}</li>
+      <li {{bind-attr class="logged_in::hidden"}}><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
     </ul>
   </div>
 </div>

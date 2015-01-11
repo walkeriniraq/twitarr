@@ -5,9 +5,9 @@
   <h5>Users</h5>
 
   <div class="to-users">
-    {{#each toUsers}}
-      <span class="to-user" {{ action 'remove' this }}>
-        {{this}}
+    {{#each user in toUsers}}
+      <span class="to-user" {{ action 'remove' user }}>
+        {{user}}
         <span class="glyphicon glyphicon-remove"></span>
       </span>
     {{/each}}
@@ -16,8 +16,8 @@
     {{ input value=toInput id='seamail-user-autocomplete' class='input'}}
     {{#if searchResults}}
       <ul class="to-autocomplete-list">
-        {{#each searchResults}}
-          <li class="to-autocomplete-item" href="#" {{ action 'select' this }}>{{this}}</li>
+        {{#each result in searchResults}}
+          <li class="to-autocomplete-item" href="#" {{ action 'select' result }}>{{result}}</li>
         {{/each}}
       </ul>
     {{/if}}

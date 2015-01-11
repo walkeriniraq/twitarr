@@ -2,6 +2,27 @@ require 'digest'
 require 'RMagick'
 require 'singleton'
 
+# module Magick
+#   class Image
+#     def resize_and_pad(width, height, background=:transparent, gravity=Magick::CenterGravity)
+#       # manipulate! do |img|
+#         new_img = resize_to_fit(width, height)
+#         if background == :transparent
+#           filled = new_img.matte_floodfill(1, 1)
+#         else
+#           filled = new_img.color_floodfill(1, 1, Magick::Pixel.from_color(background))
+#         end
+#         # destroy_image(new_img)
+#         filled.composite(@image, gravity, Magick::OverCompositeOp)
+#         # destroy_image(img)
+#         # filled = yield(filled) if block_given?
+#         # filled
+#       # end
+#     end
+#
+#   end
+# end
+
 class PhotoStore
   include Singleton
 
@@ -11,43 +32,46 @@ class PhotoStore
     existing_photo = PhotoMetadata.where(md5_hash: temp_file.md5_hash).first
     return { status: 'File has already been uploaded.', photo: existing_photo.id.to_s } unless existing_photo.nil?
     begin
-      img = Magick::Image::read(temp_file.tempfile.path).first
+      img = read_image(temp_file)
     rescue Java::JavaLang::NullPointerException
       # yeah, ImageMagick throws a NPE if the photo isn't a photo
       return { status: 'Photo could not be opened - is it an image?' }
     end
-    if temp_file.extension == 'jpg' || temp_file.extension == 'jpeg'
-      exif = EXIFR::JPEG.new(temp_file.tempfile)
-      orientation = exif.orientation
-      if orientation
-        img = orientation.transform_rmagick(img)
-      end
-    end
     return { status: 'File exceeds maximum file size of 10MB' } if temp_file.tempfile.size >= 10000000 # 10MB
     photo = store(temp_file, uploader)
-    img.resize_to_fit(200, 200).write "tmp/#{photo.store_filename}"
-    FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
-    img.resize_to_fit(800, 800).write "tmp/#{photo.store_filename}"
+    img.resize_to_fit(800).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
+    img.resize_to_fill(200).write "tmp/#{photo.store_filename}"
+    FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     photo.save
     { status: 'ok', photo: photo.id.to_s }
   rescue EXIFR::MalformedJPEG
     { status: 'Photo extension is jpg but could not be opened as jpeg.' }
   end
 
+  def read_image(temp_file)
+    img = Magick::Image::read(temp_file.tempfile.path).first
+    if temp_file.extension == 'jpg' || temp_file.extension == 'jpeg'
+      exif = EXIFR::JPEG.new(temp_file.tempfile)
+      orientation = exif.orientation
+      img = orientation.transform_rmagick(img) if orientation
+    end
+    img
+  end
+
   def upload_profile_photo(temp_file, username)
     temp_file = UploadFile.new(temp_file)
     return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
     begin
-      img = Magick::Image::read(temp_file.tempfile.path).first
+      img = read_image(temp_file)
     rescue Java::JavaLang::NullPointerException
       # yeah, ImageMagick throws a NPE if the photo isn't a photo
       return { status: 'Photo could not be opened - is it an image?' }
     end
     tmp_store_path = "tmp/#{username}.jpg"
-    img.resize_to_fit(384, 384).write tmp_store_path
+    img.resize_to_fit(384).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
-    img.resize_to_fit(73, 73).write tmp_store_path
+    img.resize_to_fill(73).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.small_profile_path(username)
     { status: 'ok', md5_hash: temp_file.md5_hash }
   end
@@ -55,9 +79,9 @@ class PhotoStore
   def reset_profile_photo(username)
     identicon = Identicon.create(username)
     tmp_store_path = "tmp/#{username}.jpg"
-    identicon.resize_to_fit(384, 384).write tmp_store_path
+    identicon.resize_to_fit(384).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
-    identicon.resize_to_fit(73, 73).write tmp_store_path
+    identicon.resize_to_fill(73).write tmp_store_path
     small_profile_path = PhotoStore.instance.small_profile_path(username)
     FileUtils.move tmp_store_path, small_profile_path
     { status: 'ok', md5_hash: Digest::MD5.file(small_profile_path).hexdigest }
@@ -74,6 +98,15 @@ class PhotoStore
                               animated: animated_image
     FileUtils.copy file.tempfile, photo_path(photo.store_filename)
     photo
+  end
+
+  def reindex_photos
+    PhotoMetadata.each do |photo|
+      puts photo.store_filename
+      img = Magick::Image::read(photo_path photo.store_filename).first
+      img.resize_to_fill(200, 200).write "tmp/#{photo.store_filename}"
+      FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
+    end
   end
 
   def initialize

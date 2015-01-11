@@ -17,6 +17,16 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
     view: ->
       @transitionTo 'stream.view', @get('id')
 
+  unlike_visible: (->
+    return 'hidden' unless @get('logged_in') and @get('user_likes')
+    ''
+  ).property('logged_in', 'user_likes')
+
+  like_visible: (->
+    return 'hidden' unless @get('logged_in') and not @get('user_likes')
+    ''
+  ).property('logged_in', 'user_likes')
+
 Twitarr.StreamNewController = Twitarr.Controller.extend
   photo_id: null
 

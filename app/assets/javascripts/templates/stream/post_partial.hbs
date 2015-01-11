@@ -2,19 +2,19 @@
 
   <div class="section-photo">
     {{#link-to 'user' author}}
-      {{user_picture author}}
+      {{unbound user_picture author}}
     {{/link-to}}
   </div>
 
   <span class="title">
-    {{pretty_username author display_name}}
+    {{unbound pretty_username author display_name}}
   </span>
 
-  {{pretty_timestamp timestamp}}
+  {{unbound pretty_timestamp timestamp}}
 
   <div class="body">
     <div class="body-section">
-      {{{text}}}
+      {{{unbound text}}}
     </div>
     <div class="body-section photos">
       {{#if photo}}
@@ -24,12 +24,7 @@
   </div>
   <div class="controls">
     {{likes_string}}
-    {{#if logged_in}}
-      {{#if user_likes}}
-        <a href="#" {{action 'unlike' model bubbles=false}}>Unlike</a>
-      {{else}}
-        <a href="#" {{action 'like' model bubbles=false}}>Like</a>
-      {{/if}}
-    {{/if}}
+    <a href="#" {{action 'unlike' model bubbles=false}} {{bind-attr class="unlike_visible"}}>Unlike</a>
+    <a href="#" {{action 'like' model bubbles=false}} {{bind-attr class="like_visible"}}>Like</a>
   </div>
 </div>
