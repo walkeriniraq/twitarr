@@ -7,7 +7,7 @@
 
   <div class="card-section section-with-profile-photo">
     <div class="section-photo">
-      {{user_picture username}}
+        <img {{bind-attr src=photo_path}} {{action 'display_photo' model bubbles=false}} />
     </div>
     <div class="body">
         <dl>
@@ -17,8 +17,8 @@
         {{#if room_number}}
         <dt>Room number</dt><dd>{{room_number}}</dd>
         {{/if}}
-        <dt>Number of tweets</dt><dd>{{number_of_tweets}}</dd>
-        <dt>Number of mentions</dt><dd>{{number_of_mentions}}</dd>
+        <dt>Tweets</dt><dd>{{number_of_tweets}}</dd>
+        <dt>Mentions</dt><dd>{{number_of_mentions}}</dd>
         </dl>
     </div>
   </div>
