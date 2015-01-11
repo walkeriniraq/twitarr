@@ -112,7 +112,11 @@ Twitarr.ProfileController = Twitarr.ObjectController.extend
 
   actions:
     save: ->
-      @get('model').save()
+      @get('model').save().then (response) =>
+        if response.status is 'ok'
+          alert 'Profile was saved.'
+        else
+          alert response.status
 
     file_uploaded: ->
       @incrementProperty('count')

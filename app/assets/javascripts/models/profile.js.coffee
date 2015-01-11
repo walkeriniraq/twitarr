@@ -8,9 +8,7 @@ Twitarr.Profile = Ember.Object.extend
       post_data["current_password"] = @get('current_password')
       post_data["new_password"] = @get('new_password')
 
-    $.post('user/save_profile', post_data).then (data) =>
-      if (data.status isnt 'ok')
-        alert data.status
+    $.post('user/save_profile', post_data)
 
 Twitarr.Profile.reopenClass
   get: ->
