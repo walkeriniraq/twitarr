@@ -27,17 +27,12 @@ class API::V2::UserController < ApplicationController
   end
 
   def show
-    return unless logged_in!
     user = User.get params[:username]
-    unless user
+    if user.nil?
       render status: :not_found, json: { status: 'Not found', error: "User #{params[:username]} is not found." }
       return
     end
-    if current_user.is_admin && params[:admin]
-      render status: :ok, json: { status: 'Found', user: UserDecorator.decorate(user).admin_hash }
-    else
-      render status: :ok, json: { status: 'Found', user: UserDecorator.decorate(user).gui_hash }
-    end
+    render status: :ok, json: { status: 'Found', user: UserDecorator.decorate(user).gui_hash }
   end
 
   def get_photo
