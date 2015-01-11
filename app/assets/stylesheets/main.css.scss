@@ -533,6 +533,16 @@ div#photo-display {
     .title, .timestamp, .body, .controls {
       margin-left: 215px;
     }
+    .body {
+      dl {
+        dt {
+          clear: left;
+          float: left;
+          padding-right: 5px;
+          width: 30%
+        }
+      }
+    }
   }
 }
 

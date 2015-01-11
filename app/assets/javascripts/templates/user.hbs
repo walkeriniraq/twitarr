@@ -10,14 +10,16 @@
       {{user_picture username}}
     </div>
     <div class="body">
+        <dl>
         {{#if email}}
-        <b>Email</b>: {{email}}<br/>
+        <dt>Email</dt><dd>{{email}}</dd>
         {{/if}}
         {{#if room_number}}
-        <b>Room number:</b> {{room_number}}<br/>
+        <dt>Room number</dt><dd>{{room_number}}</dd>
         {{/if}}
-        <b>Number of tweets:</b> {{number_of_tweets}}<br/>
-        <b>Number of mentions:</b> {{number_of_mentions}}<br/>
+        <dt>Number of tweets</dt><dd>{{number_of_tweets}}</dd>
+        <dt>Number of mentions</dt><dd>{{number_of_mentions}}</dd>
+        </dl>
     </div>
   </div>
 </div>
