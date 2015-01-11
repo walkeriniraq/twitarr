@@ -1,7 +1,7 @@
 Twitarr.UserMeta = Ember.Object.extend
   username: null
   display_name: null
-  public_email: null
+  email: null
   room_number: null
   number_of_tweets: null
   number_of_mentions: null

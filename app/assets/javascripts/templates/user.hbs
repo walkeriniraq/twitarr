@@ -10,6 +10,9 @@
       {{user_picture username}}
     </div>
     <div class="body">
+        {{#if email}}
+        Email: {{email}}<br/>
+        {{/if}}
         {{#if room_number}}
         <b>Room number:</b> {{room_number}}<br/>
         {{/if}}

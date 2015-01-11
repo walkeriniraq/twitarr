@@ -25,6 +25,7 @@ class User
   field :al, as: :last_viewed_alerts, type: DateTime, default: Time.at(0)
   field :ph, as: :photo_hash, type: String
   field :rn, as: :room_number, type: String
+  field :pe, as: :is_email_public, type: Boolean
 
   index username: 1
   index :display_name => 'text'
@@ -74,6 +75,14 @@ class User
   def update_last_login
     self.last_login = Time.now.to_f
     self
+  end
+
+  def email_public?
+    self[:is_email_public]
+  end
+
+  def email_public=(val)
+    self[:is_email_public] = !val.nil? && val.to_bool
   end
 
   def username=(val)

@@ -91,6 +91,7 @@ class UserController < ApplicationController
     current_user.email = params[:email]
     current_user.display_name = params[:display_name]
     current_user.room_number = params[:room_number]
+    current_user.email_public = params[:email_public?]
     current_user.save
     if (current_user.invalid?)
       render_json status: current_user.errors.full_messages.join('\n')
