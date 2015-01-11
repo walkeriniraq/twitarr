@@ -23,25 +23,25 @@
       <span {{bind-attr class="logged_in::hidden"}}>{{ display_name }}</span>
     </div>
     <ul {{action 'menu_close'}}>
-      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "seamail"}}Seamail{{/link-to}}</li>
-      <li>{{#link-to "forums"}}Forums{{/link-to}}</li>
-      <li>{{#link-to "stream"}}Tweets{{/link-to}}</li>
+      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "seamail"}}<span class="glyphicon glyphicon-envelope"></span>Seamail{{/link-to}}</li>
+      <li>{{#link-to "forums"}}<span class="glyphicon glyphicon-list"></span>Forums{{/link-to}}</li>
+      <li>{{#link-to "stream"}}<span class="glyphicon glyphicon-bullhorn"></span>Tweets{{/link-to}}</li>
       <li>---</li>
       <li {{bind-attr class="logged_in::hidden"}}>
         {{#link-to "alerts"}}
-          Alerts
-          <span style="color: red; font-size: small;" {{bind-attr class="alerts::hidden"}}>New!</span>
+          <!-- If this isn't lined up this way some whitespace creeps in -->
+          <span {{bind-attr class="alerts::hidden :glyphicon :glyphicon-warning-sign"}} style="color: #F62E51;"></span><span {{bind-attr class="alerts:hidden :glyphicon :glyphicon-warning-sign"}}></span>Alerts
         {{/link-to}}
       </li>
-      <li>{{#link-to "search"}}Search{{/link-to}}</li>
+      <li>{{#link-to "search"}}<span class="glyphicon glyphicon-search"></span>Search{{/link-to}}</li>
       <li>---</li>
-      <li>{{#link-to 'help'}}Help{{/link-to}}</li>
+      <li>{{#link-to 'help'}}<span class="glyphicon glyphicon-question-sign"></span>Help{{/link-to}}</li>
       <li>---</li>
       <li><a href="#" {{action 'login'}} {{bind-attr class="logged_in:hidden"}}>Login</a></li>
       <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.users"}}User administration{{/link-to}}</li>
       <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.announcements"}}New announcement{{/link-to}}</li>
       <li {{bind-attr class="login_admin::hidden"}}>---</li>
-      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "profile"}}Profile{{/link-to}}</li>
+      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "profile"}}<span class="glyphicon glyphicon-user"></span>Profile{{/link-to}}</li>
       <li {{bind-attr class="logged_in::hidden"}}><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
     </ul>
   </div>

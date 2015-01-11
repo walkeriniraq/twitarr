@@ -276,6 +276,11 @@ body {
       padding-left: 0;
 
       li {
+        .glyphicon {
+          color: #666;
+          margin-right: 0.6em;
+        }
+
         a {
           padding: 10px;
           display: block;
@@ -286,8 +291,12 @@ body {
           }
 
           &:hover {
+            color: #4ca0e9;
             background-color: #333;
             text-decoration: none;
+            .glyphicon {
+              color: #999;
+            }
           }
         }
       }
