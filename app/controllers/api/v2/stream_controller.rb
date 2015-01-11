@@ -151,7 +151,7 @@ class API::V2::StreamController < ApplicationController
   end
 
   def newest_posts
-    start = DateTime.now.to_f * 1000
+    start = (DateTime.now.to_f * 1000).to_i
     params[:start] = start
     older_posts.merge!({next_page: start+1})
   end
