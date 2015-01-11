@@ -24,6 +24,7 @@ class User
   field :um, as: :unnoticed_mentions, type: Integer
   field :al, as: :last_viewed_alerts, type: DateTime, default: Time.at(0)
   field :ph, as: :photo_hash, type: String
+  field :rn, as: :room_number, type: String
 
   index username: 1
   index :display_name => 'text'
@@ -88,6 +89,10 @@ class User
   end
 
   def display_name=(val)
+    super val.andand.strip
+  end
+
+  def room_number=(val)
     super val.andand.strip
   end
 

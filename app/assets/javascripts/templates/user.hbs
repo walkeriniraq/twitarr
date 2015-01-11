@@ -10,6 +10,9 @@
       {{user_picture username}}
     </div>
     <div class="body">
+        {{#if room_number}}
+        <b>Room number:</b> {{room_number}}<br/>
+        {{/if}}
         <b>Number of tweets:</b> {{number_of_tweets}}<br/>
         <b>Number of mentions:</b> {{number_of_mentions}}<br/>
     </div>

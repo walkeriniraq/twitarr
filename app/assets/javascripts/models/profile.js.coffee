@@ -1,6 +1,6 @@
 Twitarr.Profile = Ember.Object.extend
   save: ->
-    post_data = { display_name: @get('display_name'), email: @get('email') }
+    post_data = { display_name: @get('display_name'), email: @get('email'), room_number: @get('room_number') }
     if @get('current_password') and @get('new_password') and @get('confirm_password')
       if @get('new_password') != @get('confirm_password')
         alert "Current password and confirm password do not match!"
@@ -11,7 +11,6 @@ Twitarr.Profile = Ember.Object.extend
     $.post('user/save_profile', post_data).then (data) =>
       if (data.status isnt 'ok')
         alert data.status
-
 
 Twitarr.Profile.reopenClass
   get: ->
