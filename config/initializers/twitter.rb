@@ -11,6 +11,7 @@ module Twitter::Autolink
         cashtag_url_base: '#/tag/',
         suppress_lists: true,
         suppress_no_follow: true,
+        username_include_symbol: true,
 
         invisible_tag_attrs: DEFAULT_INVISIBLE_TAG_ATTRS
       }.freeze
