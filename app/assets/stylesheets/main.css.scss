@@ -313,6 +313,8 @@ div#photo-display {
 
     img.photo {
       margin: 0 auto 0.6em;
+      width: 200px;
+      height: 200px;
     }
   }
 }
@@ -503,10 +505,6 @@ div#photo-display {
 
     .section-photo {
       position: absolute;
-      img {
-        max-width: 48px;
-        max-height: 48px;
-      }
     }
 
     .title, .timestamp, .body, .controls {
@@ -543,9 +541,9 @@ div#photo-display {
   }
 }
 
-.small_user_picture {
-  max-height: 40px;
-  max-width: 40px;
+.profile_photo {
+  height: 48px;
+  width: 48px;
 }
 
 .hidden {

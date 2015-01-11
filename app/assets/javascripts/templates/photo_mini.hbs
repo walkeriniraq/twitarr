@@ -1,5 +1,5 @@
 {{#if animated}}
-  <img height="200" width="200" src="/img/play_overlay.png" {{action 'display_photo' model bubbles=false}} class="photo" style="{{unbound sm_photo_path}}" />
+  <img src="/img/play_overlay.png" {{action 'display_photo' model bubbles=false}} class="photo" style="{{unbound sm_photo_path}}" />
 {{else}}
-  <img height="200" width="200" src="{{unbound sm_photo_path}}" {{action 'display_photo' model bubbles=false}} class="photo"/>
+  <img src="{{unbound sm_photo_path}}" {{action 'display_photo' model bubbles=false}} class="photo"/>
 {{/if}}

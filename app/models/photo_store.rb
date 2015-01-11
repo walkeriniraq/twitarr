@@ -26,6 +26,9 @@ require 'singleton'
 class PhotoStore
   include Singleton
 
+  SMALL_PROFILE_PHOTO_SIZE = 48
+  LARGE_PROFILE_PHOTO_SIZE = 400
+
   def upload(temp_file, uploader)
     temp_file = UploadFile.new(temp_file)
     return { status: 'File was not an allowed image type - only jpg, gif, and png accepted.' } unless temp_file.photo_type?
@@ -69,9 +72,9 @@ class PhotoStore
       return { status: 'Photo could not be opened - is it an image?' }
     end
     tmp_store_path = "tmp/#{username}.jpg"
-    img.resize_to_fit(384).write tmp_store_path
+    img.resize_to_fit(LARGE_PROFILE_PHOTO_SIZE).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
-    img.resize_to_fill(73).write tmp_store_path
+    img.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.small_profile_path(username)
     { status: 'ok', md5_hash: temp_file.md5_hash }
   end
@@ -79,9 +82,9 @@ class PhotoStore
   def reset_profile_photo(username)
     identicon = Identicon.create(username)
     tmp_store_path = "tmp/#{username}.jpg"
-    identicon.resize_to_fit(384).write tmp_store_path
+    identicon.resize_to_fit(LARGE_PROFILE_PHOTO_SIZE).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
-    identicon.resize_to_fill(73).write tmp_store_path
+    identicon.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
     small_profile_path = PhotoStore.instance.small_profile_path(username)
     FileUtils.move tmp_store_path, small_profile_path
     { status: 'ok', md5_hash: Digest::MD5.file(small_profile_path).hexdigest }
