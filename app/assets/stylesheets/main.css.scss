@@ -518,6 +518,22 @@ div#photo-display {
       margin-left: 53px;
     }
   }
+
+  .section-with-profile-photo {
+    min-height: 212px;
+
+    .section-photo {
+      position: absolute;
+      img {
+        max-width: 210px;
+        max-height: 210px;
+      }
+    }
+
+    .title, .timestamp, .body, .controls {
+      margin-left: 215px;
+    }
+  }
 }
 
 .footer-controls {

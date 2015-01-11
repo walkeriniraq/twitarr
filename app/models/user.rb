@@ -111,6 +111,15 @@ class User
     ForumPost.where(:likes.in => [self.username]).union(StreamPost.where(:likes.in => [self.username])).order_by(timestamp: :desc)
   end
 
+
+  def number_of_tweets
+    StreamPost.where(author: self.username).count
+  end
+
+  def number_of_mentions
+    StreamPost.where(mentions: self.username).count
+  end
+
   def self.format_username(username)
     username.andand.downcase.andand.strip
   end

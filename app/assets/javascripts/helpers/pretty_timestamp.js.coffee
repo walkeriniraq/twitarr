@@ -14,7 +14,7 @@ Ember.Handlebars.helper 'pretty_timestamp', (timestamp) ->
   new Ember.Handlebars.SafeString("<span class='timestamp' title='#{timestamp}'>#{moment(timestamp).fromNow(true)} ago</span>")
 
 Ember.Handlebars.helper 'user_picture', (username) ->
-  new Ember.Handlebars.SafeString("<img src='/api/v2/user/photo/#{username}'/>")
+  new Ember.Handlebars.SafeString("<img src='/api/v2/user/photo/#{username}?full=true'/>")
 
 Ember.Handlebars.helper 'tiny_user_picture', (username) ->
   new Ember.Handlebars.SafeString("<img src='/api/v2/user/photo/#{username}' class='small_user_picture'/>")

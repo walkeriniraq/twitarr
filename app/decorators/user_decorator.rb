@@ -6,7 +6,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def public_hash
-    return_attribute_hash %w(username display_name)
+    return_attribute_hash %w(username display_name number_of_tweets number_of_mentions)
   end
 
   def gui_hash
