@@ -1,36 +1,52 @@
 <div class="main-page-header">
-  <span class="controls">
-    {{#if logged_in}}
-      {{#link-to "forums.new_post" model}}Reply{{/link-to}}
-    {{/if}}
-    <a href="#" {{action 'reload'}}>Refresh</a>
-  </span>
-
   <div class="title">{{#link-to 'forums.index'}}Forums{{/link-to}} > {{subject}}</div>
 </div>
 
 <div class="display_card">
   {{#each post in posts}}
-  <div class="card-section section-with-photo" >
-    <div class="section-photo">
-      {{#link-to 'user' post.author}}
-        {{user_picture post.author}}
-      {{/link-to}}
-    </div>
-    
+    <div class="card-section section-with-photo">
+      <div class="section-photo">
+        {{#link-to 'user' post.author}}
+          {{user_picture post.author}}
+        {{/link-to}}
+      </div>
+
     <span class="title">
       {{pretty_username post.author post.display_name}}
     </span>
-    {{pretty_timestamp post.timestamp}}
-    <div class="body">
-      <div class="body-section">
-        {{{post.text}}}
-      </div>
-      <div class="body-section photos">
-        {{#each photo in post.photos}}
-          {{render 'photo_mini' photo }}
-        {{/each}}
+      {{pretty_timestamp post.timestamp}}
+      <div class="body">
+        <div class="body-section">
+          {{{post.text}}}
+        </div>
+        <div class="body-section photos">
+          {{#each photo in post.photos}}
+            {{render 'photo_mini' photo }}
+          {{/each}}
+        </div>
       </div>
     </div>
   {{/each}}
+  <div class="card-section">
+    <span class="controls">
+      <button {{action 'reload'}}>Refresh</button>
+    </span>
+  </div>
 </div>
+{{#if logged_in}}
+  <div class="display_card">
+    <div class="card-section">
+      <span class="title big-title">Post a message</span>
+      {{textarea value=new_post rows='3' class='input'}}
+      <ul class="errors-list">
+        {{#each error in errors}}
+          <li>{{error}}</li>
+        {{/each}}
+      </ul>
+      {{view 'upload'}}
+      <span class="controls">
+        <button {{action 'new'}}>Post</button>
+      </span>
+    </div>
+  </div>
+{{/if}}
