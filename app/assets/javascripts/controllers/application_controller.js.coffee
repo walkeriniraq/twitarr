@@ -77,15 +77,21 @@ Twitarr.ApplicationController.reopenClass
 
 Twitarr.PhotoViewController = Twitarr.ObjectController.extend
   photo_path: (->
-    if(@get('animated'))
-      Twitarr.ApplicationController.full_photo_path(@get('id'))
+    if @get('model').get('constructor').toString() == 'Twitarr.User'
+      "/api/v2/user/photo/#{@get('username')}?full=true"
     else
-      Twitarr.ApplicationController.md_photo_path @get('id')
-  ).property('animated', 'id')
+      if(@get('animated'))
+        Twitarr.ApplicationController.full_photo_path(@get('id'))
+      else
+        Twitarr.ApplicationController.md_photo_path @get('id')
+  ).property('username', 'animated', 'id')
 
   actions:
     open_full: ->
-      window.open Twitarr.ApplicationController.full_photo_path(@get('id'))
+      if @get('model').get('constructor').toString() == 'Twitarr.User'
+        window.open "/api/v2/user/photo/#{@get('username')}?full=true"
+      else
+        window.open Twitarr.ApplicationController.full_photo_path(@get('id'))
 
 Twitarr.PhotoMiniController = Twitarr.ObjectController.extend
   sm_photo_path: (->

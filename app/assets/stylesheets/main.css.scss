@@ -515,28 +515,18 @@ div#photo-display {
   }
 
   .section-with-profile-photo {
-    min-height: 212px;
+    min-height: 112px;
 
     .section-photo {
       position: absolute;
       img {
-        max-width: 210px;
-        max-height: 210px;
+        max-width: 110px;
+        max-height: 110px;
       }
     }
 
     .title, .timestamp, .body, .controls {
-      margin-left: 215px;
-    }
-    .body {
-      dl {
-        dt {
-          clear: left;
-          float: left;
-          padding-right: 5px;
-          width: 30%
-        }
-      }
+      margin-left: 115px;
     }
   }
 }
