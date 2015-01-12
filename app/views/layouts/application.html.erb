@@ -4,15 +4,15 @@
   <title>Twit-arr!</title>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <!-- This is included here because it helps to load it before the page renders. -->
-  <%= javascript_include_tag "respond" %>
+  <%= javascript_include_tag 'respond' %>
   <%= csrf_meta_tags %>
   <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"></head>
 <body>
 
 <%= yield %>
 
-<%= javascript_include_tag "application" %>
+<%= javascript_include_tag 'application' %>
 </body>
 </html>

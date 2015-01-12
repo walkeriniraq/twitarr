@@ -72,15 +72,31 @@ html {
   padding: 1em;
 }
 
+.static-main {
+  margin-top: 1em;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1000px;
+  padding: 1em;
+}
+
 @media (max-width: 480px) {
   #main {
     padding-left: 0;
     padding-right: 0;
   }
+  .static-main {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 @media (max-width: 767px) and (min-width: 480px) {
   #main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .static-main {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -583,3 +599,4 @@ div#photo-display {
 .hidden {
   display: none;
 }
+
