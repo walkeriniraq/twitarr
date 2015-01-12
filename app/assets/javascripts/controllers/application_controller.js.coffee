@@ -126,3 +126,5 @@ Twitarr.UserController = Twitarr.Controller.extend()
 Twitarr.AlertsController = Twitarr.ObjectController.extend
   init: ->
     @set 'controllers.application.alerts', false
+
+Twitarr.TagController = Twitarr.Controller.extend()

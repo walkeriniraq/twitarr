@@ -26,6 +26,7 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
   )
   document.querySelector('head').appendChild(msViewportStyle)
 
+# These two functions are useful if we end up doing hashtag and username autocompletion
 (($, undefined_) ->
   $.fn.getCursorPosition = ->
     el = $(this).get(0)
@@ -40,6 +41,7 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
       pos = Sel.text.length - SelLength
     pos) jQuery
 
+# These two functions are useful if we end up doing hashtag and username autocompletion
 (($, undefined_) ->
   $.fn.setCursorPosition = (pos) ->
     if @get(0).setSelectionRange
@@ -53,8 +55,8 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
 
 Ember.FEATURES['ember-routing-drop-deprecated-action-style'] = true
 window.Twitarr = Ember.Application.create
-  LOG_TRANSITIONS: true
-  LOG_BINDINGS: true
+#  LOG_TRANSITIONS: true
+#  LOG_BINDINGS: true
   ready: ->
     $("#app-loading").remove()
 

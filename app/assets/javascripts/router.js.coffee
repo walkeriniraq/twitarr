@@ -24,6 +24,7 @@ Twitarr.Router.map ()->
     @route 'users'
 
   @route 'user', { path: 'user/:username' }
+  @route 'tag', { path: 'tag/:tag_name' }
   @route 'alerts'
   @route 'profile'
   @route 'help'

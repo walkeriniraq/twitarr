@@ -53,3 +53,16 @@ Twitarr.UserRoute = Ember.Route.extend
 
   setupController: (controller, model) ->
     controller.set('username', model.username)
+
+Twitarr.TagRoute = Ember.Route.extend
+  model: (params) ->
+    $.getJSON("api/v2/stream/h/#{params.tag_name}").then (data) ->
+      data.tag_name = params.tag_name
+      data
+
+  setupController: (controller, model) ->
+    controller.set 'tag_name', model.tag_name
+    if model.status is 'ok'
+      controller.set 'recent_tweets', model.posts
+    else
+      alert(model.status)

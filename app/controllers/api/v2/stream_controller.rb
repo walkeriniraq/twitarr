@@ -60,7 +60,6 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     query = StreamPost.where(hash_tags: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
     render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
-
   end
 
   def destroy
