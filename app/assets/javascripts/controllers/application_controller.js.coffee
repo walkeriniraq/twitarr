@@ -49,9 +49,11 @@ Twitarr.ApplicationController = Ember.Controller.extend
       @set 'login_user', null
       @set 'login_admin', false
       @set 'display_name', null
+      @set 'alerts', false
     clearTimeout(@timer)
 
   tick: ->
+    return unless @get('logged_in')
     $.ajax('alerts/check', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         Ember.run =>
