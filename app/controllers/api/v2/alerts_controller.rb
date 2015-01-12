@@ -1,4 +1,4 @@
-class AlertsController < ApplicationController
+class API::V2::AlertsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_filter :login_required
 
