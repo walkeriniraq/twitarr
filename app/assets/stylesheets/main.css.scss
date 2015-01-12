@@ -304,20 +304,6 @@ body {
   }
 }
 
-#photo-upload-div {
-  border: 1px solid #02614A;
-  padding: 0.6em;
-  margin: 1em;
-  text-align: center;
-  background-color: #ffffff;
-  cursor: pointer;
-
-  .uploading {
-    color: #bb7100;
-    font-size: larger;
-  }
-}
-
 div#photo-display {
   text-align: center;
 
@@ -341,8 +327,41 @@ div#photo-display {
   }
 }
 
+#photo-upload-div {
+  border: 1px solid #02614A;
+  padding: 0.6em;
+  margin: 1em;
+  text-align: center;
+  background-color: #ffffff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  .uploading {
+    color: #bb7100;
+    font-size: larger;
+  }
+}
+
 #fileupload {
-  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px;
+  direction: ltr;
+  cursor: pointer;
+  z-index: 100;
+}
+
+@media screen\9 {
+  #fileupload {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
 }
 
 .seamail-autocomplete-parent {

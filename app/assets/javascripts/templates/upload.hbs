@@ -1,4 +1,5 @@
 <div id="photo-upload-div">
+  <input id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>
   {{#if controllers.application.uploads_pending}}
     <div class="uploading">Uploading...</div>
   {{else}}
@@ -14,4 +15,3 @@
     </div>
   {{/each}}
 </div>
-<input id="fileupload" type="file" name="files[]" data-url="/photo/upload" accept="image/*" multiple>

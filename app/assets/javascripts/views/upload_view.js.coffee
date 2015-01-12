@@ -19,5 +19,5 @@ Twitarr.UploadView = Ember.View.extend
       fail: ->
         alert 'An upload has failed!'
 
-    $('#photo-upload-div').click ->
-      $('#fileupload').click()
+#    $('#photo-upload-div').click ->
+#      $('#fileupload').click()
