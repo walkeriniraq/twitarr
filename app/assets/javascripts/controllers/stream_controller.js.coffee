@@ -104,10 +104,10 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
     unlike: ->
       @get('model').unlike()
     view: ->
-      @transitionTo 'stream.view', @get('id')
+      @transitionToRoute 'stream.view', @get('id')
     view_parent: ->
       [..., p] = @get('parent_chain')
-      @transitionTo 'stream.view', p
+      @transitionToRoute 'stream.view', p
 
   show_parent: (->
       @get('parentController').get('parent_link_visible') && @get('parent_chain')

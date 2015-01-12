@@ -12,7 +12,9 @@
       </div>
 
     <span class="title">
-      {{unbound pretty_username post.author post.display_name}}
+      {{#link-to 'user' post.author}}
+        {{unbound pretty_username post.author post.display_name}}
+      {{/link-to}}
     </span>
       {{unbound pretty_timestamp post.timestamp}}
       <div class="body">
