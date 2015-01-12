@@ -6,6 +6,7 @@ Twitarr.StreamPost = Ember.Object.extend
   display_name: null
   likes: []
   children: []
+  parent_chain: []
 
   init: ->
     photo = @get('photo')

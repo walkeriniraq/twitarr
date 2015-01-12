@@ -22,6 +22,9 @@ Twitarr.SinglePhotoMixin = Ember.Mixin.create
       @set 'photo_id', null
 
 Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
+  init: ->
+    @set 'parent_link_visible', true
+
   actions:
     show_new_post: ->
       @set 'new_post_visible', true
@@ -102,6 +105,13 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @get('model').unlike()
     view: ->
       @transitionTo 'stream.view', @get('id')
+    view_parent: ->
+      [..., p] = @get('parent_chain')
+      @transitionTo 'stream.view', p
+
+  show_parent: (->
+      @get('parentController').get('parent_link_visible') && @get('parent_chain')
+  ).property('parent_chain', 'new_post_visible')
 
   unlike_visible: (->
     return 'hidden' unless @get('logged_in') and @get('user_likes')
@@ -112,6 +122,7 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
     return 'hidden' unless @get('logged_in') and not @get('user_likes')
     ''
   ).property('logged_in', 'user_likes')
+
 
 Twitarr.StreamNewController = Twitarr.Controller.extend
   photo_id: null
