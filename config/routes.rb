@@ -76,6 +76,8 @@ Twitarr::Application.routes.draw do
       get 'hashtag/ac/:query', to: 'hashtag#auto_complete'
 
       get 'search', to: 'search#search'
+      get 'alerts', to: 'alerts#index'
+      get 'alerts/check', to: 'alerts#check'
     end
   end
 
