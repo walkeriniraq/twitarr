@@ -27,5 +27,8 @@
     <button {{action 'unlike' model bubbles=false}} {{bind-attr class="unlike_visible :btn-link"}}>Unlike</button>
     <button {{action 'like' model bubbles=false}} {{bind-attr class="like_visible :btn-link"}}>Like</button>
     <button {{action 'display_tweet' id bubbles=false}} {{bind-attr class="logged_in::hidden :btn-link"}}>Reply</button>
+    {{#if show_parent}}
+      <button {{action 'view_parent' model bubbles=false}} {{bind-attr class=":btn-link"}}>Parent</button>
+    {{/if}}
   </div>
 </div>
