@@ -7,7 +7,7 @@ class API::V2::StreamController < ApplicationController
   before_filter :fetch_post, :except => [:index, :create, :view_mention, :view_hash_tag]
 
   def login_required
-    head :unauthorized unless logged_in?
+    head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
   def fetch_post

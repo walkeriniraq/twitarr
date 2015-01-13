@@ -8,7 +8,7 @@ class API::V2::PhotoController < ApplicationController
   before_filter :fetch_photo, :except => [:index]
 
   def login_required
-    head :unauthorized unless logged_in?
+    head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
   def fetch_photo
