@@ -21,7 +21,7 @@ class User
   field :ll, as: :last_login, type: DateTime
   field :sq, as: :security_question, type: String
   field :sa, as: :security_answer, type: String
-  field :um, as: :unnoticed_mentions, type: Integer
+  field :um, as: :unnoticed_mentions, type: Integer, default: 0
   field :al, as: :last_viewed_alerts, type: DateTime, default: Time.at(0)
   field :ph, as: :photo_hash, type: String
   field :rn, as: :room_number, type: String
