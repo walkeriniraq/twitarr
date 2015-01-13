@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in!
-    unless logged_in?
+    unless logged_in? || valid_key?(params[:key])
       render json: {:status => 'key not valid'}, status: 401 and return false
     end
     true

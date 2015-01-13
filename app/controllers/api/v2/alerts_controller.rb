@@ -4,7 +4,7 @@ class API::V2::AlertsController < ApplicationController
 
 
   def login_required
-    head :unauthorized unless logged_in? || valid_key?(params[:params])
+    head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
   def index
