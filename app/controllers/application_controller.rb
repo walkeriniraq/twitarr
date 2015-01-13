@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_username
+    return @user.username if @user
     session[:username]
   end
 
@@ -25,11 +26,11 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-    session[:is_admin]
+    (@user && @user.is_admin) || session[:is_admin]
   end
 
   def logged_in!
-    unless logged_in? || valid_key?(params[:key])
+    unless valid_key?(params[:key]) || logged_in?
       render json: {:status => 'key not valid'}, status: 401 and return false
     end
     true
@@ -67,12 +68,19 @@ class ApplicationController < ActionController::Base
     key.split(':').first
   end
 
+  def login_with_key(key)
+    @user = User.get get_username(key)
+  end
+
   def valid_key?(key)
     return false if key.nil?
     return false unless key.include? ':'
     username = get_username key
     CHECK_DAYS_BACK.times do |x|
-      return true if build_key(username, x) == key
+      if build_key(username, x) == key
+        login_with_key key
+        return true
+      end
     end
     false
   end
