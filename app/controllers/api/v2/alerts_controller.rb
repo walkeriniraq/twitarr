@@ -15,8 +15,10 @@ class API::V2::AlertsController < ApplicationController
     announcements = Announcement.valid_announcements.map { |x| x.decorate.to_hash }
     unread_seamail = current_user.seamails(unread: true).map{|m| m.decorate.to_meta_hash }
 
-    current_user.reset_last_viewed_alerts
-    current_user.save!
+    unless params[:no_reset]
+      current_user.reset_last_viewed_alerts
+      current_user.save!
+    end
     render_json tweet_mentions: tweet_mentions, forum_mentions: forum_mentions,
                 announcements: announcements, unread_seamail: unread_seamail
   end
