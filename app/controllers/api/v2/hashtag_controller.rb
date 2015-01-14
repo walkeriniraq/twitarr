@@ -23,7 +23,7 @@ class API::V2::HashtagController < ApplicationController
     #   #puts "cache miss: #{query}"
     #   Hashtag.auto_complete(query).map{|e|e}
     # end
-    values = Hashtag.auto_complete(query).map{|e|e}
+    values = Hashtag.auto_complete(query).map{|e|e[:id]}
     render json: {values: values}
   end
 

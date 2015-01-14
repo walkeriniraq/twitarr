@@ -81,6 +81,10 @@ Twitarr::Application.routes.draw do
       get 'search', to: 'search#search'
       get 'alerts', to: 'alerts#index'
       get 'alerts/check', to: 'alerts#check'
+
+      resources :seamail, except: [:destroy, :edit, :new]
+      post 'seamail/:id/new_message', to: 'seamail#new_message'
+      put 'seamail/:id/recipients', to: 'seamail#recipients'
     end
   end
 
