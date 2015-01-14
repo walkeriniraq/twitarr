@@ -44,6 +44,7 @@ Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePho
           @set 'posting', false
           return
         Ember.run =>
+          @get('errors').clear()
           @set 'posting', false
           @set 'reply_text', @get('base_reply_text1')
           @set 'photo_id', null
@@ -83,6 +84,7 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
           @set 'posting', false
           return
         Ember.run =>
+          @get('errors').clear()
           @set 'posting', false
           @set 'new_post', null
           @set 'photo_id', null
@@ -105,6 +107,8 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @get('model').unlike()
     view: ->
       @transitionToRoute 'stream.view', @get('id')
+    edit: ->
+      @transitionToRoute 'stream.edit', @get('id')
     view_parent: ->
       [..., p] = @get('parent_chain')
       @transitionToRoute 'stream.view', p
@@ -113,19 +117,20 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @get('parentController').get('parent_link_visible') && @get('parent_chain')
   ).property('parent_chain', 'new_post_visible')
 
-  unlike_visible: (->
-    return 'hidden' unless @get('logged_in') and @get('user_likes')
-    ''
+  editable: (->
+    @get('logged_in') and (@get('author') is @get('login_user') or @get('login_admin'))
+  ).property('logged_in', 'author', 'login_user', 'login_admin')
+
+  unlikeable: (->
+    @get('logged_in') and @get('user_likes')
   ).property('logged_in', 'user_likes')
 
-  like_visible: (->
-    return 'hidden' unless @get('logged_in') and not @get('user_likes')
-    ''
+  likeable: (->
+    @get('logged_in') and not @get('user_likes')
   ).property('logged_in', 'user_likes')
 
-
-Twitarr.StreamNewController = Twitarr.Controller.extend
-  photo_id: null
+Twitarr.StreamEditController = Twitarr.ObjectController.extend
+  errors: Ember.A()
 
   photos: (->
     photo_id = @get('photo_id')
@@ -136,22 +141,21 @@ Twitarr.StreamNewController = Twitarr.Controller.extend
   ).property('photo_id')
 
   actions:
-    new: ->
+    save: ->
       if @get('controllers.application.uploads_pending')
         alert('Please wait for uploads to finish.')
         return
       return if @get('posting')
       @set 'posting', true
-      Twitarr.StreamPost.new_post(@get('new_post'), @get('photo_id')).then((response) =>
+      Twitarr.StreamPost.edit(@get('id'), @get('text'), @get('photo_id')).then((response) =>
         if response.errors?
           @set 'errors', response.errors
           @set 'posting', false
           return
         Ember.run =>
+          @get('errors').clear()
           @set 'posting', false
-          @set 'new_post', ''
-          @set 'photo_id', null
-          @transitionToRoute 'stream'
+          @transitionToRoute 'stream.view', @get('id')
       , ->
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'

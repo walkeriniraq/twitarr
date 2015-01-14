@@ -58,6 +58,16 @@ Twitarr.StreamPost.reopenClass
     $.getJSON("/api/v2/stream/#{post_id}").then (data) =>
       @create(data)
 
+  get: (post_id) ->
+    $.getJSON("tweet/#{post_id}").then (data) =>
+      data.post.photo = Twitarr.Photo.create(data.post.photo) if data.post and data.post.photo
+      data
+
+  edit: (post_id, text, photo) ->
+    $.post("tweet/edit/#{post_id}", text: text, photo: photo).then (data) =>
+      data.stream_post = Twitarr.StreamPost.create(data.stream_post) if data.stream_post?
+      data
+
   new_post: (text, photo) ->
     $.post('stream', text: text, photo: photo).then (data) =>
       data.stream_post = Twitarr.StreamPost.create(data.stream_post) if data.stream_post?

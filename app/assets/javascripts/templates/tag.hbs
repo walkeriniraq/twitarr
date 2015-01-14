@@ -1,14 +1,12 @@
 <div class="display_card">
-  <div class="header">
-    <div class="title">
-      #{{tag_name}}
-    </div>
+  <div class="card_title">
+    #{{tag_name}}
   </div>
   {{#each tweet in recent_tweets}}
     {{render "stream.post_partial" tweet}}
   {{else}}
-  <div class="card-section">
-    No results.
-  </div>
+    <div class="card-section">
+      No results.
+    </div>
   {{/each}}
 </div>

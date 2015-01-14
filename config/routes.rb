@@ -42,10 +42,13 @@ Twitarr::Application.routes.draw do
     end
   end
   put 'seamail/:id/recipients', to: 'seamail#recipients'
+
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'
+  post 'tweet/edit/:id', to: 'stream#edit'
   get 'tweet/like/:id', to: 'stream#like'
   get 'tweet/unlike/:id', to: 'stream#unlike'
+  get 'tweet/:id', to: 'stream#get'
 
   post 'photo/upload'
   get 'photo/small_thumb/:id', to: 'photo#small_thumb'

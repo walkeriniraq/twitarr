@@ -18,6 +18,11 @@ Twitarr.PhotosUploadMixin = Ember.Mixin.create
     remove_photo: (id) ->
       @get('photo_ids').removeObject id
 
+Twitarr.ForumsIndexController = Twitarr.Controller.extend
+  actions:
+    create_forum: ->
+      @transitionToRoute('forums.new')
+
 Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosUploadMixin,
   actions:
     new: ->

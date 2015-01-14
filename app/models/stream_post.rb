@@ -12,7 +12,7 @@ class StreamPost
   field :ht, as: :hash_tags, type: Array
   field :mn, as: :mentions, type: Array
   field :et, as: :entities, type: Array
-
+  field :ed, as: :edits
 
   field :p, as: :photo, type: String
   field :pc, as: :parent_chain, type: Array, default: []

@@ -1,8 +1,6 @@
 {{partial 'search/search'}}
 <div class="display_card">
-  <div class="header">
-    <div class="title">Users</div>
-  </div>
+  <div class="card_title">Users</div>
   {{#each user in users}}
     {{render 'search.user_partial' user}}
   {{else}}

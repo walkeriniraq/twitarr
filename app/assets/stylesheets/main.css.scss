@@ -475,19 +475,10 @@ div#photo-display {
   margin-bottom: 0.6em;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
-  .header {
+  .card_title {
     @extend .clearfix;
-    margin: 0.2em 0.6em;
-    padding: 0.5em 0.2em;
-
-    .title {
-      font-size: larger;
-      font-weight: bold;
-    }
-
-    .controls {
-      float: right;
-    }
+    margin: 0.2em 0.4em;
+    font-size: larger;
   }
 
   .card-section {
@@ -509,9 +500,11 @@ div#photo-display {
     }
 
     .title {
-      //      color: darkblue;
+      font-size: medium;
+      margin: 0.2em 0.4em;
+
       &.big-title {
-        font-size: medium;
+        font-size: large;
       }
     }
 
@@ -537,6 +530,7 @@ div#photo-display {
     }
 
     .form {
+      @extend .clearfix;
       padding: 0.2em 0.2em 0;
 
       .label {
@@ -547,6 +541,9 @@ div#photo-display {
 
     .controls {
       float: right;
+      div {
+        text-align: right;
+      }
     }
   }
 

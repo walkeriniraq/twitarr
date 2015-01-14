@@ -8,9 +8,7 @@
 
 {{#if announcements}}
   <div class="display_card">
-    <div class="header">
-      <div class="title">Announcements</div>
-    </div>
+    <div class="card_title">Announcements</div>
     {{#each announcement in announcements}}
       <div class="card-section section-with-photo">
 
@@ -33,9 +31,7 @@
 {{/if}}
 
 <div class="display_card">
-  <div class="header">
-    <div class="title">Unread Seamail</div>
-  </div>
+  <div class="card_title">Unread Seamail</div>
   {{#each seamail in unread_seamail}}
     {{render "seamail.meta_partial" seamail}}
   {{else}}
@@ -51,18 +47,14 @@
 </div>
 
 <div class="display_card">
-  <div class="header">
-    <div class="title">Tweet Mentions</div>
-  </div>
+  <div class="card_title">Tweet Mentions</div>
   {{#each tweet in tweet_mentions}}
     {{render "stream.post_partial" tweet}}
   {{/each}}
 </div>
 
 <div class="display_card">
-  <div class="header">
-    <div class="title">Forum Mentions</div>
-  </div>
+  <div class="card_title">Forum Mentions</div>
   {{#each forum in forum_mentions}}
     {{render "forums.meta_partial" forum}}
   {{/each}}

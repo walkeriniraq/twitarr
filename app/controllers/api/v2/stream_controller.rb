@@ -35,7 +35,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = (params[:page] || 0).to_i
 
     children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :asc).map { |x| x.decorate.to_hash(current_username, remove:[:parent_chain]) }
-    post_result = @post.decorate.to_hash
+    post_result = @post.decorate.to_hash(current_username)
     if children and children.length > 0
       post_result[:children] = children
     end

@@ -1,8 +1,6 @@
 {{partial 'search/search'}}
 <div class="display_card">
-  <div class="header">
-    <div class="title">Users</div>
-  </div>
+  <div class="card_title">Users</div>
   {{#each user in users}}
     {{render 'search.user_partial' user}}
   {{else}}
@@ -17,9 +15,7 @@
   {{/if}}
 </div>
 <div class="display_card">
-  <div class="header">
-    <div class="title">Tweets</div>
-  </div>
+  <div class="card_title">Tweets</div>
   {{#each tweet in tweets}}
     {{render "stream.post_partial" tweet}}
   {{else}}
@@ -34,9 +30,7 @@
   {{/if}}
 </div>
 <div class="display_card">
-  <div class="header">
-    <div class="title">Forums</div>
-  </div>
+  <div class="card_title">Forums</div>
   {{#each forum in forums}}
     {{render "forums.meta_partial" forum}}
   {{else}}
@@ -51,9 +45,7 @@
   {{/if}}
 </div>
 <div class="display_card">
-  <div class="header">
-    <div class="title">Your Seamail</div>
-  </div>
+  <div class="card_title">Your Seamail</div>
   {{#each seamail in seamails}}
     {{render "seamail.meta_partial" seamail}}
   {{else}}

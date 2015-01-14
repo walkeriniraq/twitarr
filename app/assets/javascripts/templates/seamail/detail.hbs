@@ -1,7 +1,5 @@
 <div class="display_card">
-  <div class="header">
-    <div class="title">{{subject}}</div>
-  </div>
+  <div class="card_title">{{subject}}</div>
   <div class="card-section">
     {{#each user in users}}
       {{#link-to 'user' user.username}}
@@ -22,7 +20,7 @@
           <li>{{error}}</li>
         {{/each}}
       </ul>
-    <span class="controls">
+    <span class="footer">
       <button class="btn" {{action 'post' text}}>Send</button>
     </span>
     </div>

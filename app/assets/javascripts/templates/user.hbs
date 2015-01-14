@@ -1,32 +1,32 @@
 <div class="display_card">
-  <div class="header">
-    <div class="title">
-      {{display_name_plus_username username display_name}}
-    </div>
+  <div class="card_title">
+    {{display_name_plus_username username display_name}}
   </div>
 
   <div class="card-section section-with-profile-photo">
     <div class="section-photo">
-        <img {{bind-attr src=photo_path}} {{action 'display_photo' model bubbles=false}} />
+      <img {{bind-attr src=photo_path}} {{action 'display_photo' model bubbles=false}} />
     </div>
     <div class="body">
-        <dl>
+      <dl>
         {{#if email}}
-        <dt>Email</dt><dd>{{email}}</dd>
+          <dt>Email</dt>
+          <dd>{{email}}</dd>
         {{/if}}
         {{#if room_number}}
-        <dt>Room number</dt><dd>{{room_number}}</dd>
+          <dt>Room number</dt>
+          <dd>{{room_number}}</dd>
         {{/if}}
-        <dt>Tweets</dt><dd>{{number_of_tweets}}</dd>
-        <dt>Mentions</dt><dd>{{number_of_mentions}}</dd>
-        </dl>
+        <dt>Tweets</dt>
+        <dd>{{number_of_tweets}}</dd>
+        <dt>Mentions</dt>
+        <dd>{{number_of_mentions}}</dd>
+      </dl>
     </div>
   </div>
 </div>
 <div class="display_card">
-  <div class="header">
-    <div class="title">Recent Tweets</div>
-  </div>
+  <div class="card_title">Recent Tweets</div>
   {{#each tweet in recent_tweets}}
     {{render "stream.post_partial" tweet}}
   {{else}}

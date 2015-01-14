@@ -11,14 +11,14 @@
         <li>{{error}}</li>
       {{/each}}
     </ul>
-    <button class="btn" {{action 'new' text hours}}>Announce</button>
+    <div class="controls">
+      <button class="btn" {{action 'new' text hours}}>Announce</button>
+    </div>
   </div>
 </div>
 
 <div class="display_card">
-  <div class="header">
-    <span class="title">Previous announcements</span>
-  </div>
+  <span class="card_title">Previous announcements</span>
   {{#each announcement in model}}
     <div class="card-section">
       <span class="title">

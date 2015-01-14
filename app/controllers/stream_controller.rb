@@ -41,4 +41,28 @@ class StreamController < ApplicationController
     render_json status: 'ok', likes: post.decorate.some_likes(current_username)
   end
 
+  def get
+    post = StreamPost.find(params[:id])
+    render_json status: 'ok', post: post.decorate.to_base_hash
+  end
+
+  def edit
+    return unless logged_in!
+    post = StreamPost.find(params[:id])
+    if !is_admin? && post.author != current_username
+      render_json status: 'You cannot edit a post that does not belong to you.'
+      return
+    end
+    post.edits = [] if post.edits.nil?
+    post.edits << { user: current_username, old_text: post.text }
+    post.text = params[:text]
+    post.photo = params[:photo]
+    post.save
+    if post.valid?
+      render_json stream_post: post.decorate.to_hash
+    else
+      render_json errors: post.errors.full_messages
+    end
+  end
+
 end
