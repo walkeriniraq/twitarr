@@ -449,3 +449,44 @@ Perform a search against the database for results.  Will search for Stream and F
         "text": "used text query" (this may be modified from what is passed in, if required)
         }
     }
+
+## User information
+
+### GET /api/v2/user/auth
+
+Log in user, returning a 'key' that can be used in each /api/v2 request that requires authentication.  This can be used
+instead of having a session cookie.
+
+### GET /api/v2/user/logout
+
+Removes any session data for the request.  This really has no effect if using the 'key' style.
+
+### GET /api/v2/user/whoami
+
+Returns the logged in user's information
+
+### GET /api/v2/user/autocomplete/:username
+
+Get auto completion list for usernames.  Username string must be greater than 3, and not include the '@' symbol
+
+### GET /api/v2/user/view/:username
+
+View the user information
+
+### GET /api/v2/user/photo/:username
+
+Get the user's profile picture
+
+#### Query args
+* full=true - Optional(Default: false) - Returns a larger version of the profile image
+
+#### Returns
+[ binary data that makes up the photo ]
+
+### POST /api/v2/user/photo
+
+Modify the user's profile photo
+
+### DELETE /api/v2/user/photo
+
+Reset the user's profile to the default identicon image
