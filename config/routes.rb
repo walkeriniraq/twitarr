@@ -34,8 +34,10 @@ Twitarr::Application.routes.draw do
   resources :forums, except: [:destroy, :edit, :new] do
     collection do
       post 'new_post'
+      put ':forum_id/:forum_post_id', to: 'forums#update'
     end
   end
+
   resources :seamail, except: [:destroy, :edit, :new] do
     collection do
       post 'new_message'
