@@ -7,6 +7,7 @@ class ForumDecorator < Draper::Decorator
         id: id.to_s,
         subject: subject,
         created_by: created_by,
+        created_by_display_name: User.display_name_from_username(created_by),
         posts: pluralize(post_count, 'post'),
         timestamp: last_post
     }
@@ -17,6 +18,7 @@ class ForumDecorator < Draper::Decorator
         id: id.to_s,
         subject: subject,
         created_by: created_by,
+        created_by_display_name: User.display_name_from_username(created_by),
         posts: posts.map { |x| x.decorate.to_hash }
     }
   end
