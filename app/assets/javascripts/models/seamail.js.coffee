@@ -16,8 +16,9 @@ Twitarr.Seamail = Ember.Object.extend
   subject: null
   timestamp: null
 
-  init: ->
+  objectize: (->
     @set('messages', Ember.A(Twitarr.SeamailMessage.create(message)) for message in @get('messages'))
+  ).on('init')
 
 Twitarr.Seamail.reopenClass
   get: (id) ->

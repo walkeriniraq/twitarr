@@ -12,8 +12,9 @@ Twitarr.UserMeta = Ember.Object.extend
 Twitarr.User = Twitarr.UserMeta.extend
   recent_tweets: []
 
-  init: ->
+  objectize: (->
     @set('recent_tweets', Ember.A(Twitarr.StreamPost.create(tweet)) for tweet in @get('recent_tweets'))
+  ).on('init')
 
 Twitarr.User.reopenClass
   get: (username) ->

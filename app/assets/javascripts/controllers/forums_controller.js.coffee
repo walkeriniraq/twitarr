@@ -1,5 +1,6 @@
 Twitarr.PhotosUploadMixin = Ember.Mixin.create
   init: ->
+    @_super()
     @set 'photo_ids', Ember.A()
     @set 'errors', Ember.A()
 

@@ -8,7 +8,7 @@ Twitarr.StreamPost = Ember.Object.extend
   children: []
   parent_chain: []
 
-  init: ->
+  objectize: (->
     photo = @get('photo')
     if photo
       @set 'photo', Twitarr.Photo.create(photo)
@@ -16,6 +16,7 @@ Twitarr.StreamPost = Ember.Object.extend
       @set('children', Ember.A(Twitarr.StreamPost.create(post) for post in @get('children')))
     else
       @set('children', Ember.A())
+  ).on('init')
 
   user_likes: (->
     @get('likes') && @get('likes')[0] == 'You'

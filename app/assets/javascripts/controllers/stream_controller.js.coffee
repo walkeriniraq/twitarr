@@ -1,5 +1,6 @@
 Twitarr.SinglePhotoMixin = Ember.Mixin.create
   init: ->
+    @_super()
     @set 'photo_id', null
     @set 'errors', Ember.A()
 
@@ -22,8 +23,9 @@ Twitarr.SinglePhotoMixin = Ember.Mixin.create
       @set 'photo_id', null
 
 Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
-  init: ->
+  set_defaults: (->
     @set 'parent_link_visible', true
+  ).on('init')
 
   actions:
     show_new_post: ->
@@ -114,7 +116,7 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @transitionToRoute 'stream.view', p
 
   show_parent: (->
-      @get('parentController').get('parent_link_visible') && @get('parent_chain')
+    @get('parentController').get('parent_link_visible') && @get('parent_chain')
   ).property('parent_chain', 'new_post_visible')
 
   editable: (->

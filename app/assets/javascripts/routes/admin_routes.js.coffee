@@ -46,7 +46,7 @@ Twitarr.AdminAnnouncementsRoute = Ember.Route.extend
     $.getJSON("admin/announcements")
 
   setupController: (controller, model) ->
-    controller.set('text', '')
+    controller.set('text', null)
     controller.set('hours', 4)
     if model.status isnt 'ok'
       alert model.status

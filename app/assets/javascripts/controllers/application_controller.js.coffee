@@ -10,7 +10,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
     @get('uploads_pending')
   ).property('uploads_pending')
 
-  init: ->
+  setup: (->
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         @login data.user
@@ -20,6 +20,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
     Ember.run.later ->
       window.location.reload()
     , 1000 * 60 * 60 * 24
+  ).on('init')
 
   actions:
     menu_toggle: ->
@@ -126,7 +127,8 @@ Twitarr.ProfileController = Twitarr.ObjectController.extend
 Twitarr.UserController = Twitarr.Controller.extend()
 
 Twitarr.AlertsController = Twitarr.ObjectController.extend
-  init: ->
+  reset_alerts: (->
     @set 'controllers.application.alerts', false
+  ).on('init')
 
 Twitarr.TagController = Twitarr.Controller.extend()
