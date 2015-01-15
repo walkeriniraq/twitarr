@@ -23,9 +23,7 @@ Twitarr.SinglePhotoMixin = Ember.Mixin.create
       @set 'photo_id', null
 
 Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
-  set_defaults: (->
-    @set 'parent_link_visible', true
-  ).on('init')
+  parent_link_visible: true
 
   actions:
     show_new_post: ->

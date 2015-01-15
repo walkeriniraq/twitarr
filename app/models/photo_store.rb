@@ -86,6 +86,12 @@ class PhotoStore
     PhotoMetadata.each do |photo|
       puts photo.store_filename
       img = Magick::Image::read(photo_path photo.store_filename).first
+      extension = Pathname.new(photo.original_filename).extname[1..-1].downcase
+      if extension == 'jpg' || extension == 'jpeg'
+        exif = EXIFR::JPEG.new(photo_path photo.store_filename)
+        orientation = exif.orientation
+        img = orientation.transform_rmagick(img) if orientation
+      end
       img.resize_to_fill(200, 200).write "tmp/#{photo.store_filename}"
       FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     end
