@@ -26,6 +26,7 @@ class User
   field :ph, as: :photo_hash, type: String
   field :rn, as: :room_number, type: String
   field :pe, as: :is_email_public, type: Boolean
+  field :an, as: :real_name, type: String
 
   index username: 1
   index display_name: 1
@@ -103,6 +104,10 @@ class User
   end
 
   def room_number=(val)
+    super val.andand.strip
+  end
+
+  def real_name=(val)
     super val.andand.strip
   end
 
