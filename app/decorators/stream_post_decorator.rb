@@ -6,11 +6,14 @@ class StreamPostDecorator < BaseDecorator
   MAX_LIST_LIKES = 5
 
   def to_hash(username = nil, options = {})
+    length_limit = options[:length_limit] || text.length
+    adjusted_text = (text)[0...length_limit]
+
     result = {
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
-        text: auto_link(clean_text_with_cr(text)),
+        text: auto_link(clean_text_with_cr(adjusted_text)),
         timestamp: timestamp,
         likes: some_likes(username),
         mentions: mentions,
@@ -23,6 +26,9 @@ class StreamPostDecorator < BaseDecorator
     end
     if options.has_key? :remove
       options[:remove].each { |k| result.delete k }
+    end
+    if options.has_key? :length_limit
+      result[:text] << "<br><a href=\"/#/stream/tweet/#{as_str(id)}\">Read More</a>" if text.length > options[:length_limit]
     end
     result
   end
