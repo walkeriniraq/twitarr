@@ -11,6 +11,9 @@ Twitarr.SeamailNewView = Ember.View.extend
         $('#to-autocomplete').focus()
         return false
 
+  keyDown: (e) ->
+    @get('controller').send('new') if e.ctrlKey and e.keyCode == 13      
+
   moveUp: ->
     if $('.to-autocomplete-item:first').is(':focus')
       $('#to-autocomplete').focus()
