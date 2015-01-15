@@ -28,7 +28,7 @@ class SearchController < ApplicationController
   end
 
   def search_users
-    search_text = params[:text].strip.downcase
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_]/, '')
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
     user_query = User.search(params)
@@ -39,7 +39,7 @@ class SearchController < ApplicationController
   end
 
   def search_tweets
-    search_text = params[:text].strip.downcase
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
     tweet_query = StreamPost.search(params)
@@ -50,7 +50,7 @@ class SearchController < ApplicationController
   end
 
   def search_forums
-    search_text = params[:text].strip.downcase
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
     forum_query = Forum.search(params)
