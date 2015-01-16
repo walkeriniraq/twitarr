@@ -51,7 +51,7 @@ class StreamPost
   end
 
   def self.search(params = {})
-    search_text = params[:text].strip.downcase
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
     criteria = StreamPost.or({ author: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
     limit_criteria(criteria, params).order_by(timestamp: :desc)
   end
