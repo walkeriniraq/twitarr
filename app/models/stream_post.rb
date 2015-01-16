@@ -30,7 +30,7 @@ class StreamPost
   index text: 'text'
 
   before_validation :parse_hash_tags
-  after_create :post_create_operations
+  before_save :post_create_operations
 
 
   def self.at_or_before(ms_since_epoch, filter_author = nil)

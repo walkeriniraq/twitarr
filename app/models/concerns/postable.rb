@@ -39,6 +39,7 @@ module Postable
       self.hash_tags = []
       self.mentions = []
       entities.each do |entity|
+        entity = entity.inject({}) {|x, (k,v)| x[k.to_sym] = v; x }
         if entity.has_key? :hashtag
           self.hash_tags << entity[:hashtag]
         elsif entity.has_key? :screen_name
