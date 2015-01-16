@@ -597,3 +597,9 @@ div#photo-display {
   display: none;
 }
 
+@media (max-width: 500px) {
+  .top-bar-search {
+    display: none;
+  }
+}
+

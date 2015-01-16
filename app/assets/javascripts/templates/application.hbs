@@ -14,6 +14,23 @@
       <span class="menu-alerts glyphicon glyphicon-warning-sign" title="You have new alerts!"></span>
     {{/link-to}}
   {{/if}}
+  <div class="pull-right top-bar-search">
+    <form>
+        <table style="width: 20em;">
+          <tr>
+            <td style="width: 2em;">
+              <span class="glyphicon glyphicon-search"></span>
+            </td>
+            <td>
+              {{input value=text class='input top-bar-search-text' placeholder='Search...'}}
+            </td>
+            <td style="width: 3em; padding-left: 1em;">
+              <button class="btn" style="margin: 5px 15px 5px 0px;" {{action 'search' text}}>Go</button>
+            </td>
+          </tr>
+        </table>
+    </form>
+  </div>
 </nav>
 <div id="side-menu">
   <div class="full-screen-overlay" {{action 'menu_toggle'}} ></div>

@@ -29,6 +29,11 @@ Twitarr.ApplicationController = Ember.Controller.extend
     menu_close: ->
       @menu_toggle()
 
+    search: (text)->
+      @search(text)
+      $('.top-bar-search-text').val('')
+      $('.top-bar-search-text').blur()
+
     login: ->
       window.location = '/login'
 
@@ -38,6 +43,9 @@ Twitarr.ApplicationController = Ember.Controller.extend
 
   menu_toggle: ->
     $('#side-menu').animate { width: 'toggle' }, 100
+
+  search: (text) ->
+    @transitionToRoute('search.results', encodeURI(@get('text')))
 
   login: (user) ->
     Ember.run =>
