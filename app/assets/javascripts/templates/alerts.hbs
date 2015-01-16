@@ -17,7 +17,9 @@
         </div>
 
         <span class="title">
-          {{pretty_username announcement.author announcement.display_name}}
+          {{#link-to 'user' announcement.author}}
+            {{pretty_username announcement.author announcement.display_name}}
+          {{/link-to}}
         </span>
 
         <div class="body">
