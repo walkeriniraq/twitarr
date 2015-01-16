@@ -518,7 +518,7 @@ div#photo-display {
 
       .body-section {
         @extend .clearfix;
-
+        word-wrap: break-word;
         &.photos {
           text-align: center;
           padding-bottom: 0.4em;
