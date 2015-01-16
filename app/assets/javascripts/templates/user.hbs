@@ -8,27 +8,31 @@
       <img {{bind-attr src=photo_path}} {{action 'display_photo' model bubbles=false}} />
     </div>
     <div class="body">
-      <dl>
-        {{#if real_name}}
-          <dt>Real name</dt>
-          <dd>{{real_name}}</dd>
-        {{/if}}
-        {{#if home_location}}
-          <dt>Lives in</dt>
-          <dd>{{home_location}}</dd>
-        {{/if}}
-        {{#if email}}
-          <dt>Email</dt>
-          <dd>{{email}}</dd>
-        {{/if}}
-        {{#if room_number}}
-          <dt>Room number</dt>
-          <dd>{{room_number}}</dd>
-        {{/if}}
-        <dt>Tweets</dt>
-        <dd>{{number_of_tweets}}</dd>
-        <dt>Mentions</dt>
-        <dd>{{number_of_mentions}}</dd>
+      <dl class="row">
+        <div class="col-md-4">
+          <dt>Tweets</dt>
+          <dd>{{number_of_tweets}}</dd>
+          <dt>Mentions</dt>
+          <dd>{{number_of_mentions}}</dd>
+          {{#if real_name}}
+            <dt>Real name</dt>
+            <dd>{{real_name}}</dd>
+          {{/if}}
+        </div>
+        <div class="col-md-4">
+          {{#if home_location}}
+            <dt>Lives in</dt>
+            <dd>{{home_location}}</dd>
+          {{/if}}
+          {{#if email}}
+            <dt>Email</dt>
+            <dd>{{email}}</dd>
+          {{/if}}
+          {{#if room_number}}
+            <dt>Room number</dt>
+            <dd>{{room_number}}</dd>
+          {{/if}}
+        </div>
       </dl>
     </div>
   </div>

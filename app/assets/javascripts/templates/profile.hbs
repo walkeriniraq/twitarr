@@ -1,55 +1,72 @@
-<div class="main-page-header">
-  <h3>{{username}}</h3>
+<div class="display_card">
+  <div class="card_title">
+    {{display_name_plus_username username display_name}}
+  </div>
+
+  <div id="profile-photo-upload-div" class="card-section">
+    <img {{bind-attr src=profile_pic}} class="profile-pic"/>
+    {{#if controllers.application.uploads_pending}}
+      <div class="uploading">Uploading...</div>
+    {{else}}
+      Click to change profile photo
+    {{/if}}
+  </div>
+  <input id="profile-photo-upload" type="file" name="file" data-url="/api/v2/user/photo" accept="image/*" style="display: none;">
+
+  <div class="body" style="padding: 1em;">
+    <div class="row" style="margin: 1em 0;">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="display_name">Display Name</label>
+          {{ input value=display_name class='input' name="display_name"}}
+        </div>
+
+        <div class="form-group">
+          <label for="real_name">Real Name (Optional, public)</label>
+          {{ input value=real_name class='input' name="real_name"}}
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="room_number">Room Number (Optional, public)</label>
+          {{ input value=room_number class='input' name="room_number"}}
+        </div>
+        <div class="form-group">
+          <label for="home_location">Where are you from? (Optional, public)</label>
+          {{ input value=home_location class='input' name="home_location"}}
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="email">Email</label>
+          {{ input value=email class='input' name="email"}}
+          {{ input type="checkbox" checked=email_public?}} Public email
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin: 0.5em 1em;">
+      <button class="btn" id="show-change-password" onclick="$('#change-password').show(); $('#show-change-password').hide()">Change password</button>
+        <div id="change-password" class="col-md-4" style="display: none">
+          <h5 style="display: none">Change Password</h5>
+        
+          <div class="form-group">
+            <label for="current_password">Current</label>
+            {{ input type="password" value=current_password class='input' name="current_password" }}
+          </div>
+          <div class="form-group">
+            <label for="new_password">New</label>
+            {{ input type="password" value=new_password class='input' name="new_password" }}
+          </div>
+          <div class="form-group">
+            <label for="confirm_password">Confirm</label>
+            {{ input type="password" value=confirm_password class='input' name="confirm_password" }}
+          </div>
+        </div>
+    </div>
+    <div class="row" style="margin: 0.5em 1em;">
+      <button class="btn" {{action 'save'}}>Save Changes</button>
+    </div>
+  </div>
+  
 </div>
-
-<div id="profile-photo-upload-div">
-  <img {{bind-attr src=profile_pic}} class="profile-pic"/>
-  {{#if controllers.application.uploads_pending}}
-    <div class="uploading">Uploading...</div>
-  {{else}}
-    Click to change profile photo
-  {{/if}}
-</div>
-<input id="profile-photo-upload" type="file" name="file" data-url="/api/v2/user/photo" accept="image/*" style="display: none;">
-
-<div style="max-width: 25em; margin-bottom: 1.5em;">
-  <h5>Display Name</h5>
-
-  <div>
-    {{ input value=display_name class='input'}}
-  </div>
-  <h5>Real Name (Optional, public)</h5>
-  <div>
-      {{ input value=real_name class='input'}}
-  </div>
-  <h5>Email</h5>
-
-  <div>
-    {{ input value=email class='input'}}
-  </div>
-  <div>
-    {{input type="checkbox" checked=email_public?}} Public email
-  </div>
-  <h5>Room Number (Optional, public)</h5>
-
-  <div>
-      {{ input value=room_number class='input'}}
-  </div>
-
-  <h5>Where are you from? (Optional, public)</h5>
-  <div>
-      {{ input value=home_location class='input'}}
-  </div>
-  <br/>
-
-  <button class="btn" id="show-change-password" onclick="$('#change-password,#change-password-hdr').show(); $('#show-change-password').hide()">Change password</button>
-
-  <h5 id="change-password-hdr" style="display: none">Change Password</h5>
-  <div id="change-password" style="display: none">
-      Current: {{ input type="password" value=current_password class='input' }}<br/>
-      New: {{ input type="password" value=new_password class='input' }}
-      Confirm: {{ input type="password" value=confirm_password class='input' }}
-  </div>
-
-</div>
-<button class="btn" {{action 'save'}}>Save Changes</button>

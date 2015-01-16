@@ -596,6 +596,10 @@ div#photo-display {
 .hidden {
   display: none;
 }
+.user_display_name {
+  display: inline-block;
+  margin: 0;
+}
 
 @media (max-width: 500px) {
   .top-bar-search {
