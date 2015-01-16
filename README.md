@@ -50,7 +50,7 @@ You will also need to download and run [Mongodb](http://www.mongodb.org/)
 Since I like to keep my database just for this project, when I execute the mongod process I run:
 
 ```
- $ mkdir -p temp/data/db && mongod --dbpath temp/data/db --setParameter textSearchEnabled=true
+ $ mkdir -p temp/data/db && mongod --dbpath temp/data/db
 ```
 
 This will create the mongo database within this project's temp directory.  The temp directory is also explictly ignored in the `.gitignore` file, so you don't have to worry about checking it in.
