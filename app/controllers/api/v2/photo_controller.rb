@@ -4,8 +4,8 @@ class API::V2::PhotoController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   PAGE_LENGTH = 20
-  before_filter :login_required
-  before_filter :fetch_photo, :except => [:index]
+  before_filter :login_required, :only => [:create, :destroy, :update]
+  before_filter :fetch_photo, :except => [:index, :create]
 
   def login_required
     head :unauthorized unless logged_in? || valid_key?(params[:key])
@@ -36,6 +36,19 @@ class API::V2::PhotoController < ApplicationController
     respond_to do |format|
       format.json { render json: @photo }
       format.xml { render xml: @photo }
+    end
+  end
+
+  def create
+    return render_json status: 'Must provide photos to upload.' if params[:files].blank?
+    params[:files] = [params[:files]] if params[:files].is_a? ActionDispatch::Http::UploadedFile
+    files = params[:files].map do |file|
+      PhotoStore.instance.upload(file, current_username)
+    end
+    if browser.ie?
+      render text: { files: files }.to_json
+    else
+      render_json files: files
     end
   end
 

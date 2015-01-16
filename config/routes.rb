@@ -59,7 +59,7 @@ Twitarr::Application.routes.draw do
 
   namespace :api do
     namespace :v2 do
-      resources :photo, only: [:index, :destroy, :update, :show], :defaults => { :format => 'json' }
+      resources :photo, only: [:index, :create, :destroy, :update, :show], :defaults => { :format => 'json' }
       resources :stream, only: [:index, :new, :create, :show, :destroy, :update]
       post 'stream/:id/like', to: 'stream#like'
       delete 'stream/:id/like', to: 'stream#unlike'
