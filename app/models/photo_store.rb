@@ -5,8 +5,10 @@ require 'singleton'
 class PhotoStore
   include Singleton
 
-  SMALL_PROFILE_PHOTO_SIZE = 100
-  LARGE_PROFILE_PHOTO_SIZE = 400
+  SMALL_PROFILE_PHOTO_SIZE = 200
+  LARGE_PROFILE_PHOTO_SIZE = 1000
+  SMALL_IMAGE_SIZE = 500
+  MEDIUM_IMAGE_SIZE = 1600
 
   def upload(temp_file, uploader)
     temp_file = UploadFile.new(temp_file)
@@ -21,9 +23,9 @@ class PhotoStore
     end
     return { status: 'File exceeds maximum file size of 10MB' } if temp_file.tempfile.size >= 10000000 # 10MB
     photo = store(temp_file, uploader)
-    img.resize_to_fit(800).write "tmp/#{photo.store_filename}"
+    img.resize_to_fit(MEDIUM_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
-    img.resize_to_fill(200).write "tmp/#{photo.store_filename}"
+    img.resize_to_fill(SMALL_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
     FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     photo.save
     { status: 'ok', photo: photo.id.to_s }
@@ -87,12 +89,16 @@ class PhotoStore
       puts photo.store_filename
       img = Magick::Image::read(photo_path photo.store_filename).first
       extension = Pathname.new(photo.original_filename).extname[1..-1].downcase
-      if extension == 'jpg' || extension == 'jpeg'
-        exif = EXIFR::JPEG.new(photo_path photo.store_filename)
-        orientation = exif.orientation
-        img = orientation.transform_rmagick(img) if orientation
+      begin
+        if extension == 'jpg' || extension == 'jpeg'
+          exif = EXIFR::JPEG.new(photo_path photo.store_filename)
+          orientation = exif.orientation
+          img = orientation.transform_rmagick(img) if orientation
+        end
+      rescue => e
+        puts e
       end
-      img.resize_to_fill(200, 200).write "tmp/#{photo.store_filename}"
+      img.resize_to_fill(SMALL_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
       FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     end
   end

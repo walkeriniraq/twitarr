@@ -334,13 +334,12 @@ div#photo-display {
       margin: 0.3em;
       cursor: pointer;
     }
-
-    img.photo {
-      margin: 0 auto 0.6em;
-      width: 200px;
-      height: 200px;
-    }
   }
+}
+
+img.photo {
+  width: 200px;
+  height: 200px;
 }
 
 #photo-upload-div {
