@@ -1,5 +1,11 @@
 class PhotoController < ApplicationController
 
+  before_filter :login_required, only: [:upload]
+
+  def login_required
+    head :unauthorized unless logged_in?
+  end
+
   def upload
     return render_json status: 'Must provide photos to upload.' if params[:files].blank?
     files = params[:files].map do |file|
