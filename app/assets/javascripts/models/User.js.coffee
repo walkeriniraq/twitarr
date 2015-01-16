@@ -4,6 +4,7 @@ Twitarr.UserMeta = Ember.Object.extend
   email: null
   room_number: null
   real_name: null
+  home_location: null
   number_of_tweets: null
   number_of_mentions: null
   # TODO: this is an interesting idea, but don't have time now
