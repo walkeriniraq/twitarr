@@ -45,7 +45,9 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $('#side-menu').animate { width: 'toggle' }, 100
 
   search: (text) ->
-    @transitionToRoute('search.results', encodeURI(@get('text')))
+    text = @get('text')
+    text = " " if text == undefined
+    @transitionToRoute('search.results', encodeURI(text))
 
   login: (user) ->
     Ember.run =>
