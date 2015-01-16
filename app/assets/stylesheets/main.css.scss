@@ -535,7 +535,14 @@ div#photo-display {
 
       .label {
         color: darkgray;
-        font-size: larger;
+        font-size: small;
+        word-wrap: break-word;
+      }
+
+      .data {
+        font-size: medium;
+        margin-bottom: 0.5em;
+        word-wrap: break-word;
       }
     }
 
@@ -560,10 +567,8 @@ div#photo-display {
   }
 
   .section-with-profile-photo {
-    min-height: 112px;
-
     .section-photo {
-      position: absolute;
+      float: left;
       img {
         max-width: 110px;
         max-height: 110px;
@@ -596,12 +601,7 @@ div#photo-display {
 .hidden {
   display: none;
 }
-.user_display_name {
-  display: inline-block;
-  margin: 0;
-}
-
-@media (max-width: 500px) {
+@media (max-width: 550px) {
   .top-bar-search {
     display: none;
   }

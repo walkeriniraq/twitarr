@@ -1,39 +1,38 @@
 <div class="display_card">
-  <div class="card_title">
-    {{display_name_plus_username username display_name}}
-  </div>
-
   <div class="card-section section-with-profile-photo">
     <div class="section-photo">
       <img {{bind-attr src=photo_path}} {{action 'display_photo' model bubbles=false}} />
     </div>
-    <div class="body">
-      <dl class="row">
-        <div class="col-xs-6">
-          <dt>Tweets</dt>
-          <dd>{{number_of_tweets}}</dd>
-          <dt>Mentions</dt>
-          <dd>{{number_of_mentions}}</dd>
-          {{#if real_name}}
-            <dt>Real name</dt>
-            <dd>{{real_name}}</dd>
-          {{/if}}
-        </div>
-        <div class="col-xs-6">
-          {{#if home_location}}
-            <dt>Lives in</dt>
-            <dd>{{home_location}}</dd>
-          {{/if}}
-          {{#if email}}
-            <dt>Email</dt>
-            <dd>{{email}}</dd>
-          {{/if}}
-          {{#if room_number}}
-            <dt>Room number</dt>
-            <dd>{{room_number}}</dd>
-          {{/if}}
-        </div>
-      </dl>
+    <div class="title big-title">
+      {{display_name_plus_username username display_name}}
+    </div>
+  </div>
+  <div class="card-section">
+    <div class="form row">
+      <div class="col-xs-6">
+        <div class="label">Tweets</div>
+        <div class="data">{{number_of_tweets}}</div>
+        <div class="label">Mentions</div>
+        <div class="data">{{number_of_mentions}}</div>
+        {{#if real_name}}
+          <div class="label">Real name</div>
+          <div class="data">{{real_name}}</div>
+        {{/if}}
+      </div>
+      <div class="col-xs-6">
+        {{#if home_location}}
+          <div class="label">Lives in</div>
+          <div class="data">{{home_location}}</div>
+        {{/if}}
+        {{#if email}}
+          <div class="label">Email</div>
+          <div class="data">{{email}}</div>
+        {{/if}}
+        {{#if room_number}}
+          <div class="label">Room number</div>
+          <div class="data">{{room_number}}</div>
+        {{/if}}
+      </div>
     </div>
   </div>
 </div>
