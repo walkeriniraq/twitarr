@@ -15,7 +15,8 @@ Twitarr.ApplicationController = Ember.Controller.extend
       if data.status is 'ok'
         @login data.user
         if data.need_password_change
-          @transitionToRoute('user.change_password')
+          @transitionToRoute('profile')
+          alert('You need to change your password before you continue')
     # this reloads the page once per day - may solve some javascript issues
     Ember.run.later ->
       window.location.reload()
