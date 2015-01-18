@@ -101,6 +101,13 @@ class PhotoStore
       img.resize_to_fill(SMALL_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
       FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     end
+    User.each do |user|
+      puts user.username
+      img = Magick::Image::read(full_profile_path user.username).first
+      tmp_store_path = "tmp/#{user.username}.jpg"
+      img.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
+      FileUtils.move tmp_store_path, small_profile_path(user.username)
+    end
   end
 
   def initialize
