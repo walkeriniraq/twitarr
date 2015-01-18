@@ -18,7 +18,7 @@
 </div>
 
 <div class="display_card">
-  <span class="card_title">Previous announcements</span>
+  <div class="card_title">Previous announcements</div>
   {{#each announcement in model}}
     <div class="card-section">
       <span class="title">
@@ -29,7 +29,7 @@
         <div class="body-section">
           {{announcement.text}}
         </div>
-        <div class="body-section" style="text-align: right;">
+        <div class="controls">
           Displayed until: {{announcement.valid_until}}
         </div>
       </div>
