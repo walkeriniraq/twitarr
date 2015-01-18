@@ -32,7 +32,7 @@ class API::V2::UserController < ApplicationController
       render status: :not_found, json: { status: 'Not found', error: "User #{params[:username]} is not found." }
       return
     end
-    render status: :ok, json: { status: 'Found', user: UserDecorator.decorate(user).gui_hash }
+    render status: :ok, json: { status: 'Found', user: UserDecorator.decorate(user).public_hash }
   end
 
   def get_photo
