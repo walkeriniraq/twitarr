@@ -103,10 +103,14 @@ class PhotoStore
     end
     User.each do |user|
       puts user.username
-      img = Magick::Image::read(full_profile_path user.username).first
-      tmp_store_path = "tmp/#{user.username}.jpg"
-      img.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
-      FileUtils.move tmp_store_path, small_profile_path(user.username)
+      begin
+        img = Magick::Image::read(full_profile_path user.username).first
+        tmp_store_path = "tmp/#{user.username}.jpg"
+        img.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
+        FileUtils.move tmp_store_path, small_profile_path(user.username)
+      rescue => e
+        puts e
+      end
     end
   end
 
