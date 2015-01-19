@@ -101,6 +101,9 @@ class PhotoStore
       img.resize_to_fill(SMALL_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
       FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     end
+  end
+
+  def reindex_profiles
     User.each do |user|
       puts user.username
       begin
