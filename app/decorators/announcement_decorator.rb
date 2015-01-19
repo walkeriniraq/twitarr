@@ -1,11 +1,12 @@
-class AnnouncementDecorator < Draper::Decorator
+class AnnouncementDecorator < BaseDecorator
   delegate_all
+  include Twitter::Autolink
 
   def to_hash
     {
         author: author,
         display_name: User.display_name_from_username(author),
-        text: text.gsub("\n", '<br />'),
+        text: auto_link(clean_text_with_cr(text)),
         timestamp: timestamp
     }
   end
