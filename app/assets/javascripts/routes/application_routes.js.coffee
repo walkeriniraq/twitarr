@@ -41,7 +41,9 @@ Twitarr.ProfileRoute = Ember.Route.extend
 
 Twitarr.AlertsRoute = Ember.Route.extend
   model: ->
-    $.getJSON("alerts")
+    $.getJSON("alerts").then (data) =>
+      data.tweet_mentions = Ember.A(Twitarr.StreamPost.create(post) for post in data.tweet_mentions)
+      data
   actions:
     reload: ->
       @refresh()
