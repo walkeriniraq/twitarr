@@ -28,6 +28,7 @@ class User
   field :pe, as: :is_email_public, type: Boolean
   field :an, as: :real_name, type: String
   field :hl, as: :home_location, type: String
+  field :lf, as: :forum_view_timestamps, type: Hash, default: {}
 
   index username: 1
   index display_name: 1
@@ -199,6 +200,11 @@ class User
     set(unnoticed_mentions: 0)
   end
 
+  def update_forum_view(forum_id)
+    self.forum_view_timestamps[forum_id] = Time.now
+    save
+  end
+
   def reset_last_viewed_alerts
     reset_mentions
     self.last_viewed_alerts = DateTime.now
@@ -222,6 +228,10 @@ class User
     Rails.cache.fetch("display_name:#{username}", force: true, expires_in: USERNAME_CACHE_TIME ) do
       display_name
     end
+  end
+
+  def last_forum_view(forum_id)
+    self.forum_view_timestamps[forum_id] || Time.new(0)
   end
 
   def self.search(params = {})

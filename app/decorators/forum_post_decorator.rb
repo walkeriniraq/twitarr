@@ -1,8 +1,8 @@
 class ForumPostDecorator < BaseDecorator
   delegate_all
 
-  def to_hash
-    {
+  def to_hash(last_view = nil)
+    ret = {
         id: id.to_s,
         author: author,
         display_name: User.display_name_from_username(author),
@@ -14,6 +14,8 @@ class ForumPostDecorator < BaseDecorator
         hash_tags: hash_tags,
         mentions: mentions
     }
+    ret[:new] = (timestamp > last_view) unless last_view.nil?
+    ret
   end
 
   def decorate_photos

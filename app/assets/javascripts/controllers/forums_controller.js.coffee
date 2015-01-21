@@ -25,6 +25,20 @@ Twitarr.ForumsIndexController = Twitarr.Controller.extend
       @transitionToRoute('forums.new')
 
 Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosUploadMixin,
+
+  has_new_posts: (->
+    for post in @get('posts')
+      return true if post.timestamp > @get('latest_read')
+    false
+  ).property('posts', 'latest_read')
+
+  calculate_first_unread_post: (->
+    for post in @get('posts')
+      if post.timestamp > @get('latest_read')
+        post.set('first_unread', true)
+        return
+  ).observes('posts', 'latest_read')
+
   actions:
     new: ->
       if @get('controllers.application.uploads_pending')
@@ -71,3 +85,8 @@ Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixi
         @set 'posting', false
         alert 'Forum could not be added. Please try again later. Or try again someplace without so many seamonkeys.'
       )
+
+Twitarr.ForumsMetaPartialController = Twitarr.ObjectController.extend
+  posts_sentence: (->
+    @get('new_posts') || @get('posts')
+  ).property('posts', 'new_posts')

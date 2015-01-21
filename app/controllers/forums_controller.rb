@@ -1,11 +1,20 @@
 class ForumsController < ApplicationController
 
   def index
-    render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash }
+    if logged_in?
+      render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash(current_user) }
+    else
+      render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash }
+    end
   end
 
   def show
-    render_json forum: Forum.find(params[:id]).decorate.to_hash
+    if logged_in?
+      render_json forum: Forum.find(params[:id]).decorate.to_hash(current_user)
+      current_user.update_forum_view(params[:id]) if logged_in?
+    else
+      render_json forum: Forum.find(params[:id]).decorate.to_hash
+    end
   end
 
   def create
@@ -45,7 +54,7 @@ class ForumsController < ApplicationController
 
     puts post_params.keys - %w(subject text photos forum)
     unless (post_params.keys - %w(subject text photos forum)).empty?
-      render json:[{error:'Unable to modify fields other than subject, text or photos'}], status: :bad_request
+      render json: [{ error: 'Unable to modify fields other than subject, text or photos' }], status: :bad_request
       return
     end
 

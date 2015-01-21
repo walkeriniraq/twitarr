@@ -2,8 +2,8 @@ class ForumDecorator < Draper::Decorator
   delegate_all
   include ActionView::Helpers::TextHelper
 
-  def to_meta_hash
-    {
+  def to_meta_hash(user = nil)
+    ret = {
         id: id.to_s,
         subject: subject,
         last_post_username: posts.last.author,
@@ -11,14 +11,29 @@ class ForumDecorator < Draper::Decorator
         posts: pluralize(post_count, 'post'),
         timestamp: last_post
     }
+    unless user.nil?
+      count = post_count_since(user.last_forum_view(id.to_s))
+      ret[:new_posts] = pluralize(count, 'new post') if count > 0
+    end
+    ret
   end
 
-  def to_hash
-    {
-        id: id.to_s,
-        subject: subject,
-        posts: posts.map { |x| x.decorate.to_hash }
-    }
+  def to_hash(user = nil)
+    if user.nil?
+      {
+          id: id.to_s,
+          subject: subject,
+          posts: posts.map { |x| x.decorate.to_hash }
+      }
+    else
+      last_view = user.last_forum_view(id.to_s)
+      {
+          id: id.to_s,
+          subject: subject,
+          posts: posts.map { |x| x.decorate.to_hash(last_view) },
+          latest_read: last_view
+      }
+    end
   end
 
 end

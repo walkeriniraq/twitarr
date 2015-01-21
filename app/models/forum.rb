@@ -36,6 +36,10 @@ class Forum
     posts.size
   end
 
+  def post_count_since(timestamp)
+    posts.select { |x| x.ts > timestamp } .count
+  end
+
   def created_by
     posts.first.author
   end

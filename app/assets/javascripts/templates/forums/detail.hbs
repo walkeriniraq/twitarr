@@ -4,7 +4,7 @@
 
 <div class="display_card">
   {{#each post in posts}}
-    <div class="card-section section-with-photo">
+    <div {{bind-attr class="post.first_unread:scroll_to :card-section :section-with-photo"}}>
       <div class="section-photo">
         {{#link-to 'user' post.author}}
           {{unbound user_picture post.author}}
@@ -27,6 +27,7 @@
           {{/each}}
         </div>
       </div>
+      <span {{bind-attr class="post.new::hidden :controls"}} style="color: red;">new</span>
     </div>
   {{/each}}
   <div class="card-section">
@@ -35,7 +36,7 @@
     </span>
   </div>
 </div>
-<div {{bind-attr class="logged_in::hidden :display_card"}}>
+<div {{bind-attr class="logged_in::hidden has_new_posts::scroll_to :display_card"}}>
   <div class="card-section">
     <span class="title big-title">Post a message</span>
     {{textarea value=new_post rows='3' class='input'}}
