@@ -4,7 +4,7 @@ class StreamController < ApplicationController
     posts = StreamPost.at_or_before(params[:page]).limit(20).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
     next_page = 0 if StreamPost.at_or_before(next_page).count < 1
-    render_json stream_posts: posts.map { |x| x.decorate.to_hash(current_username, length_limit: 140) }, next_page: next_page
+    render_json stream_posts: posts.map { |x| x.decorate.to_hash(current_username, length_limit: 300) }, next_page: next_page
   end
 
   def create
