@@ -7,6 +7,8 @@ Twitarr::Application.routes.draw do
   get 'alerts', to: 'alerts#index'
   get 'alerts/check', to: 'alerts#check'
 
+  get 'announcements', to: 'announcements#index'
+
   get 'search/:text', to: 'search#search'
   get 'search_users/:text', to: 'search#search_users'
   get 'search_tweets/:text', to: 'search#search_tweets'
