@@ -5,23 +5,13 @@
     By signing up and using this system, you agree to abide by the JCCC convention / harassment policy that you were
     required to sign. Basically: follow Wheaton's Law and please don't try to ruin this for someone else.
   </p>
+
   <p>
     Having said this, if someone on Twit-arr is behaving in a manner that does NOT follow the harassment policy, then
     please seek out any of the fine helper monkeys and they can assist. Helper monkeys should seek assistance from @kvort
     on anything technical that needs doing re: Harassment.
   </p>
-  <% if Rails.env == 'boat' %>
-    <hr />
-    <p>
-      Due to technical restrictions, the security used on this server is akin to
-      <span style="font-weight: bold;">writing your password on a post-it and placing said post-it on your forehead.</span>
-      At least, it is to anyone skilled and motivated to do such things.
-    </p>
-    <h4>
-      DO NOT USE the same password or security question for ANYTHING ELSE.
-    </h4>
-    <p>Really not kidding here. Please don't do it.</p>
-  <% end %>
+
 </div>
 
 <% if @user && @user.errors.any? %>
@@ -32,63 +22,52 @@
   </ul>
 <% end %>
 
-<%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 20px;') do %>
-  <legend>Create an account</legend>
+<%= form_tag(user_new_path, class: 'form-horizontal', style: 'margin-top: 1em;') do %>
   <div class="form-group">
-    <label class="control-label col-sm-2">Username</label>
+    <label for="new_username">Username</label>
 
-    <div class="col-sm-5">
-      <%= text_field_tag :new_username, params[:new_username], class: 'form-control' %>
-    </div>
+    <%= text_field_tag :new_username, params[:new_username], class: 'form-control' %>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2">Email</label>
+    <label for="email">Email - only visible to administrators.</label>
+   <%= text_field_tag :email, params[:email], class: 'form-control' %>
+  </div>
+  <div style="margin-top: 1em;">
+    <p>
+      Due to technical restrictions, the security available on the ship is akin to
+      <span style="font-weight: bold;">writing your password on a post-it and placing the post-it on your forehead.</span>
+      At least, it is to anyone skilled and motivated to do such things. (I think we left those people on shore, but just to be safe...)
+    </p>
+    <h4>
+      DO NOT USE the same password or security question for ANYTHING ELSE.
+    </h4>
 
-    <div class="col-sm-5">
-      <%= text_field_tag :email, params[:email], class: 'form-control' %>
-    </div>
+    <p>Really not kidding here. Please don't do it.</p>
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 5px;">
-      Your email is only visible to administrators.
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-2">Password</label>
+    <label for="new_password">Password</label>
 
-    <div class="col-sm-5">
-      <%= password_field_tag :new_password, params[:new_password], class: 'form-control' %>
-    </div>
+    <%= password_field_tag :new_password, params[:new_password], class: 'form-control' %>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2">Repeat password</label>
+    <label for="new_password2">Repeat password</label>
 
-    <div class="col-sm-5">
-      <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
-    </div>
+    <%= password_field_tag :new_password2, params[:new_password2], class: 'form-control' %>
+  </div>
+  <div style="margin-top: 1em;">
+    This password reset question and answer will be asked in case you lose your password
   </div>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-8" style="margin-top: 5px;">
-      This password reset question and answer will be asked in case you lose your password
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-2">Security Question</label>
+    <label for="security_question">Security Question</label>
 
-    <div class="col-sm-5">
-      <%= text_field_tag :security_question, params[:security_question], class: 'form-control' %>
-    </div>
+    <%= text_field_tag :security_question, params[:security_question], class: 'form-control' %>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2">Security Answer</label>
+    <label for="security_answer">Security Answer</label>
 
-    <div class="col-sm-5">
-      <%= text_field_tag :security_answer, params[:security_answer], class: 'form-control' %>
-    </div>
+    <%= text_field_tag :security_answer, params[:security_answer], class: 'form-control' %>
   </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-5">
-      <%= submit_tag 'Create', class: 'btn btn-primary' %>
-    </div>
+  <div style="margin-top: 1em;">
+    <%= submit_tag 'Create', class: 'btn btn-primary' %>
   </div>
 <% end %>
