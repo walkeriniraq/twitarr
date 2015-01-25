@@ -4,6 +4,7 @@ class AnnouncementDecorator < BaseDecorator
 
   def to_hash
     {
+        id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
         text: auto_link(clean_text_with_cr(text)),
@@ -13,7 +14,7 @@ class AnnouncementDecorator < BaseDecorator
 
   def to_admin_hash
     {
-        id: id.to_s,
+        id: as_str(id),
         author: author,
         text: text,
         timestamp: timestamp,
