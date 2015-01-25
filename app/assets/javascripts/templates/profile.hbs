@@ -40,7 +40,8 @@
         <div class="form-group">
           <label for="email">Email</label>
           {{ input value=email class='input' name="email"}}
-          {{ input type="checkbox" checked=email_public?}} Public email
+          <label>{{ input type="checkbox" checked=email_public?}} Public email</label><br>
+          <label>{{ input type="checkbox" checked=vcard_public?}} Allow download of your contact?</label>
         </div>
       </div>
     </div>

@@ -34,6 +34,9 @@
         {{/if}}
       </div>
     </div>
+    {{#if vcard_public? }}
+      <a href="/user/profile/{{unbound username}}/vcf">Download user as contact</a>
+    {{/if}}
   </div>
 </div>
 <div class="display_card">

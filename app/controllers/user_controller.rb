@@ -94,6 +94,7 @@ class UserController < ApplicationController
     current_user.real_name = params[:real_name]
     current_user.home_location = params[:home_location]
     current_user.email_public = params[:email_public?]
+    current_user.vcard_public = params[:vcard_public?]
     current_user.save
     if (current_user.invalid?)
       render_json status: current_user.errors.full_messages.join('\n')
@@ -141,6 +142,26 @@ class UserController < ApplicationController
         {
             recent_tweets: StreamPost.where(author: show_username).desc(:timestamp).limit(10).map { |x| x.decorate.to_hash(current_username) }
         })
+  end
+
+  def vcard
+    # I apologize for this mess. It's not clean but it works.
+    user = User.get params[:username]
+    render body: 'User has vcard disabled', content_type: 'text/plain' and return unless user.is_vcard_public?
+    formatted_name = (user.real_name if user.real_name?) || (user.display_name if user.display_name?) || user.username
+
+    card_string = "BEGIN:VCARD\n"
+    card_string << "VERSION:4.0\n"
+    card_string << "FN:#{formatted_name}\n"
+    card_string << "PHOTO;MEDIATYPE=image/jpeg:#{request.protocol}#{request.host_with_port}/api/v2/user/photo/#{user.username}?full=true\n"
+    card_string << "EMAIL:#{user.email}\n" if user.email? and user.is_email_public?
+    card_string << "NOTE:Room Number: #{user.room_number}\n" if user.room_number?
+    card_string << "SOURCE:#{request.original_url}\n"
+    # We should probably add more fields for users to fill out for this stuff :)
+    card_string << "END:VCARD"
+    headers['Content-Disposition'] = "inline; filename=\"#{user.username}.vcf\""
+
+    render body: card_string, content_type: 'text/vcard', layout: false 
   end
 
 end

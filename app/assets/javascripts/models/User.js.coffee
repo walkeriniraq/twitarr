@@ -7,6 +7,7 @@ Twitarr.UserMeta = Ember.Object.extend
   home_location: null
   number_of_tweets: null
   number_of_mentions: null
+  "vcard_public?": null
   # TODO: this is an interesting idea, but don't have time now
 #  current_location: null
 #  location_timestamp: null

@@ -25,6 +25,7 @@ Twitarr::Application.routes.draw do
   get 'user/autocomplete'
   post 'user/save_profile'
   get 'user/profile/:username', to: 'user#show'
+  get 'user/profile/:username/vcf', to: 'user#vcard', format: false
 
   get 'admin/users'
   post 'admin/activate'
