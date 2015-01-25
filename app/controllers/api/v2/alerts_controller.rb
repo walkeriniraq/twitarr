@@ -1,11 +1,5 @@
 class API::V2::AlertsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_filter :login_required, only:[:check]
-
-
-  def login_required
-    head :unauthorized unless logged_in? || valid_key?(params[:key])
-  end
 
   def index
     announcements = Announcement.valid_announcements.map { |x| x.decorate.to_hash }
@@ -33,6 +27,12 @@ class API::V2::AlertsController < ApplicationController
   end
 
   def check
-    render_json status: 'ok', user: current_user.decorate.alerts_meta
+    if logged_in? || valid_key?(params[:key])
+      render_json status: 'ok', user: current_user.decorate.alerts_meta
+    else
+      last_checked_time = session[:last_viewed_alerts] || Time.at(0).to_datetime
+      render_json status: 'ok', user:{unnoticed_announcements:Announcement.new_announcements(last_checked_time).count}
+    end
+
   end
 end

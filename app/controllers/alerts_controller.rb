@@ -1,11 +1,5 @@
 class AlertsController < ApplicationController
 
-  before_filter :login_required, only:[:check]
-
-  def login_required
-    head :unauthorized unless logged_in?
-  end
-
   def index
     announcements = Announcement.valid_announcements.map { |x| x.decorate.to_hash }
     if logged_in?
@@ -32,6 +26,11 @@ class AlertsController < ApplicationController
   end
 
   def check
-    render_json status: 'ok', user: current_user.decorate.alerts_meta
+    if logged_in?
+      render_json status: 'ok', user: current_user.decorate.alerts_meta
+    else
+      last_checked_time = session[:last_viewed_alerts] || Time.at(0).to_datetime
+      render_json status: 'ok', user:{unnoticed_announcements:Announcement.new_announcements(last_checked_time).count}
+    end
   end
 end
