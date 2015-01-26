@@ -44,7 +44,7 @@
       <li>{{#link-to "forums"}}<span class="glyphicon glyphicon-list"></span>Forums{{/link-to}}</li>
       <li>{{#link-to "stream"}}<span class="glyphicon glyphicon-bullhorn"></span>Tweets{{/link-to}}</li>
       <li>---</li>
-      <li {{bind-attr class="logged_in::hidden"}}>
+      <li>
         {{#link-to "alerts"}}
           <!-- If this isn't lined up this way some whitespace creeps in -->
           <span {{bind-attr class="alerts::hidden :glyphicon :glyphicon-warning-sign"}} style="color: #F62E51;"></span><span {{bind-attr class="alerts:hidden :glyphicon :glyphicon-warning-sign"}}></span>Alerts
