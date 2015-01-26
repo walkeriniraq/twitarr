@@ -149,11 +149,12 @@ class UserController < ApplicationController
     user = User.get params[:username]
     render body: 'User has vcard disabled', content_type: 'text/plain' and return unless user.is_vcard_public?
     formatted_name = (user.real_name if user.real_name?) || (user.display_name if user.display_name?) || user.username
+    photo = Base64.encode64(open(user.profile_picture_path) { |io| io.read }).tr("\n", "")
 
     card_string = "BEGIN:VCARD\n"
     card_string << "VERSION:4.0\n"
     card_string << "FN:#{formatted_name}\n"
-    card_string << "PHOTO;MEDIATYPE=image/jpeg:#{request.protocol}#{request.host_with_port}/api/v2/user/photo/#{user.username}?full=true\n"
+    card_string << "PHOTO;JPEG;ENCODING=BASE64:#{photo}\n"
     card_string << "EMAIL:#{user.email}\n" if user.email? and user.is_email_public?
     card_string << "NOTE:Room Number: #{user.room_number}\n" if user.room_number?
     card_string << "SOURCE:#{request.original_url}\n"
