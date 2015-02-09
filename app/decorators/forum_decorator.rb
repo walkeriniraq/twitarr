@@ -13,7 +13,7 @@ class ForumDecorator < Draper::Decorator
     }
     unless user.nil?
       count = post_count_since(user.last_forum_view(id.to_s))
-      ret[:new_posts] = pluralize(count, 'new post') if count > 0
+      ret[:new_posts] = pluralize(count, '<b class="highlight">new</b> post')  if count > 0
     end
     ret
   end

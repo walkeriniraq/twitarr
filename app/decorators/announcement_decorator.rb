@@ -7,7 +7,7 @@ class AnnouncementDecorator < BaseDecorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
-        text: auto_link(clean_text_with_cr(text)),
+        text: auto_link(text.gsub("\n", '<br />')),
         timestamp: timestamp
     }
   end
