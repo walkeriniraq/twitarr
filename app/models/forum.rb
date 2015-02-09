@@ -47,6 +47,7 @@ class Forum
 
   def self.create_new_forum(author, subject, first_post_text, photos)
     forum = Forum.new subject: subject
+    forum.last_post_time = Time.now
     forum.posts << ForumPost.new(author: author, text: first_post_text, timestamp: Time.now, photos: photos)
     if forum.valid?
       forum.save

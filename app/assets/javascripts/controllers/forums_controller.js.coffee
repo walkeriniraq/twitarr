@@ -75,7 +75,7 @@ Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixi
           @set 'text', ''
           @get('errors').clear()
           @get('photo_ids').clear()
-          window.history.go(-1)
+          @transitionToRoute 'forums.detail', response.forum_meta.id
       , ->
         @set 'posting', false
         alert 'Forum could not be added. Please try again later. Or try again someplace without so many seamonkeys.'
