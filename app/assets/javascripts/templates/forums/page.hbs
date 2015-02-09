@@ -1,0 +1,27 @@
+<div class="main-page-header header-with-controls">
+  <span class="controls">
+    <button class="btn" {{action 'create_forum'}}>Create Forum</button>
+    <button class="btn" {{action 'reload'}}>Refresh</button>
+  </span>
+
+  <div class="title">Forums</div>
+</div>
+
+<div class="display_card">
+  {{#each forum in forums}}
+    {{render "forums.meta_partial" forum}}
+  {{/each}}
+</div>
+
+<div class="footer-controls">
+  {{#if has_prev_page}}
+    <div class="card-section left">
+      <button class="btn" {{action 'prev_page'}} class="controls">Previous</button>
+    </div>
+  {{/if}}
+  {{#if has_next_page}}
+    <div class="card-section">
+      <button class="btn" {{action 'next_page'}} class="controls">Next</button>
+    </div>
+  {{/if}}
+</div>

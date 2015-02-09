@@ -9,6 +9,10 @@ Twitarr.ForumMeta.reopenClass
     $.getJSON('forums').then (data) =>
       Ember.A(@create(meta)) for meta in data.forum_meta
 
+  page: (page) ->
+    $.getJSON("forums/#{page}").then (data) =>
+      { forums: Ember.A(@create(meta)) for meta in data.forum_meta, next_page: data.next_page, prev_page: data.prev_page }
+
 Twitarr.Forum = Ember.Object.extend
   id: null
   subject: null
@@ -21,7 +25,7 @@ Twitarr.Forum = Ember.Object.extend
 
 Twitarr.Forum.reopenClass
   get: (id) ->
-    $.getJSON("forums/#{id}").then (data) =>
+    $.getJSON("forums/thread/#{id}").then (data) =>
       @create(data.forum)
 
   new_post: (forum_id, text, photos) ->

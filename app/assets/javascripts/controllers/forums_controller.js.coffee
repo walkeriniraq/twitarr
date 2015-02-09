@@ -19,11 +19,6 @@ Twitarr.PhotosUploadMixin = Ember.Mixin.create
     remove_photo: (id) ->
       @get('photo_ids').removeObject id
 
-Twitarr.ForumsIndexController = Twitarr.Controller.extend
-  actions:
-    create_forum: ->
-      @transitionToRoute('forums.new')
-
 Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosUploadMixin,
 
   has_new_posts: (->
@@ -86,9 +81,27 @@ Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixi
         alert 'Forum could not be added. Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
+Twitarr.ForumsPageController = Twitarr.ObjectController.extend
+  has_next_page: (->
+    @get('next_page') isnt null or undefined
+  ).property('next_page')
+
+  has_prev_page: (->
+    @get('prev_page') isnt null or undefined
+  ).property('prev_page')
+
+  actions:
+    next_page: ->
+      return if @get('next_page') is null or undefined
+      @transitionToRoute 'forums.page', @get('next_page')
+    prev_page: ->
+      return if @get('prev_page') is null or undefined
+      @transitionToRoute 'forums.page', @get('prev_page')
+    create_forum: ->
+      @transitionToRoute 'forums.new'
+
 Twitarr.ForumsMetaPartialController = Twitarr.ObjectController.extend
   posts_sentence: (->
-#    alert(@get('new_posts'))
     if @get('new_posts') != undefined
       "#{@get('posts')}, #{@get('new_posts')}"
     else

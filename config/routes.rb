@@ -34,10 +34,12 @@ Twitarr::Application.routes.draw do
   post 'admin/new_announcement'
   get 'admin/announcements'
 
-  resources :forums, except: [:destroy, :edit, :new] do
+  resources :forums, except: [:show, :destroy, :edit, :new] do
     collection do
+      get ':page', to: 'forums#page'
+      get 'thread/:id', to: 'forums#show'
       post 'new_post'
-      put ':forum_id/:forum_post_id', to: 'forums#update'
+      put 'thread/:forum_id/:forum_post_id', to: 'forums#update'
     end
   end
 

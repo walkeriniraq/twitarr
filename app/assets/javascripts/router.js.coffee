@@ -4,8 +4,10 @@ Twitarr.Router.map ()->
     @route 'new'
 
   @resource 'forums', ->
+    @route 'page', { path: '/' }
+    @route 'page', { path: ':page' }
     @route 'new_post', { path: ':id/new' }
-    @route 'detail', { path: ':id' }
+    @route 'detail', { path: 'thread/:id' }
     @route 'new'
 
   @resource 'stream', ->

@@ -3,6 +3,7 @@ class Forum
   include Searchable
 
   field :sj, as: :subject, type: String
+  field :lp, as: :last_post_time, type: Time
 
   embeds_many :posts, class_name: 'ForumPost', store_as: :fp, order: :timestamp.asc, validate: false
 
@@ -54,6 +55,7 @@ class Forum
   end
 
   def add_post(author, text, photos)
+    self.last_post_time = Time.now
     posts.create author: author, text: text, timestamp: Time.now, photos: photos
   end
 

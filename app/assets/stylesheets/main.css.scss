@@ -586,8 +586,13 @@ img.photo {
 }
 
 .footer-controls {
-  float: right;
   margin-bottom: 0.6em;
+  .card-section { 
+    display: inline-block;
+    &:last-child {
+      float: right;  
+    }
+  }
 }
 
 .alert {
@@ -615,4 +620,12 @@ img.photo {
 }
 .highlight {
   color: red;
+}
+
+.left {
+  float: left !important;
+}
+
+.right {
+  float: right !important;
 }

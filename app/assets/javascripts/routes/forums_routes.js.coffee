@@ -1,12 +1,17 @@
 Twitarr.ForumsLoadingRoute = Twitarr.LoadingRoute.extend()
 
-Twitarr.ForumsIndexRoute = Ember.Route.extend
-  model: ->
-    Twitarr.ForumMeta.list()
+Twitarr.ForumsPageRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.ForumMeta.page params.page
 
   actions:
     reload: ->
       @refresh()
+
+
+Twitarr.ForumsRoute = Twitarr.ForumsPageRoute.extend
+  model: ->
+    Twitarr.ForumMeta.page {page: 0}
 
 Twitarr.ForumsDetailRoute = Ember.Route.extend
   model: (params) ->

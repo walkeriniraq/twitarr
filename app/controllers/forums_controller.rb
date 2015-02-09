@@ -1,10 +1,27 @@
 class ForumsController < ApplicationController
 
+  def page
+    per_page = 20
+    offset = params[:page].to_i || 0
+
+    threads = Forum.offset(offset * per_page).limit(per_page).order_by(:last_post_time.desc)
+    if logged_in?
+      threads = threads.map { |x| x.decorate.to_meta_hash(current_user) }
+    else
+      threads = threads.map { |x| x.decorate.to_meta_hash }
+    end
+    next_page = offset + 1
+    next_page = nil if Forum.offset((offset + 1) * per_page).limit(per_page).to_a.count ==  0
+    prev_page = offset - 1
+    prev_page = nil if prev_page < 0
+    render_json forum_meta: threads, next_page: next_page, prev_page: prev_page
+  end
+
   def index
     if logged_in?
-      render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash(current_user) }
+      render_json forum_meta: Forum.all.sort_by(&:last_post).reverse.map { |x| x.decorate.to_meta_hash(current_user) }
     else
-      render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash }
+      render_json forum_meta: Forum.all.sort_by(&:last_post).reverse.map { |x| x.decorate.to_meta_hash }
     end
   end
 
