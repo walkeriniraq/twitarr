@@ -22,17 +22,26 @@ Twitarr.PhotosUploadMixin = Ember.Mixin.create
 Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosUploadMixin,
 
   has_new_posts: (->
-    for post in @get('posts')
-      return true if post.timestamp > @get('latest_read')
+    for post in @get('forum.posts')
+      return true if post.timestamp > @get('forum.latest_read')
     false
-  ).property('posts', 'latest_read')
+  ).property('forum.posts', 'forum.latest_read')
 
   calculate_first_unread_post: (->
-    for post in @get('posts')
-      if post.timestamp > @get('latest_read')
+    for post in @get('forum.posts')
+      if post.timestamp > @get('forum.latest_read')
         post.set('first_unread', true)
         return
-  ).observes('posts', 'latest_read')
+  ).observes('forum.posts', 'forum.latest_read')
+
+  has_next_page: (->
+    @get('next_page') isnt null or undefined
+  ).property('next_page')
+
+  has_prev_page: (->
+    @get('prev_page') isnt null or undefined
+  ).property('prev_page')
+    
 
   actions:
     new: ->
@@ -55,6 +64,12 @@ Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosU
       , ->
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
+    next_page: ->
+      return if @get('next_page') is null or undefined
+      @transitionToRoute 'forums.detail', @get('next_page')
+    prev_page: ->
+      return if @get('prev_page') is null or undefined
+      @transitionToRoute 'forums.detail', @get('prev_page')
 
 Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixin,
   actions:

@@ -1,9 +1,14 @@
 <div class="main-page-header">
-  <div class="title">{{#link-to 'forums' }}Forums{{/link-to}} > {{subject}}</div>
+  <div class="title">{{#link-to 'forums' }}Forums{{/link-to}} > {{forum.subject}}</div>
 </div>
 
 <div class="display_card">
-  {{#each post in posts}}
+  <div class="card-section">
+    <span class="header">
+      <button class="btn right" {{action 'reload'}}>Refresh</button>
+    </span>
+  </div>
+  {{#each post in forum.posts}}
     <div {{bind-attr class="post.first_unread:scroll_to :card-section :section-with-photo"}}>
       <div class="section-photo">
         {{#link-to 'user' post.author}}
@@ -31,17 +36,23 @@
     </div>
   {{/each}}
   <div class="card-section">
-    <span class="footer">
-      <button class="btn" {{action 'reload'}}>Refresh</button>
-    </span>
+    <div class="footer">
+      {{#if has_prev_page}}
+        <button class="btn left" {{action 'prev_page'}} class="controls">Previous</button>
+      {{/if}}
+      {{#if has_next_page}}
+        <button class="btn right" {{action 'next_page'}} class="controls">Next</button>
+      {{/if}}
+    </div>
   </div>
 </div>
+
 <div {{bind-attr class="logged_in::hidden has_new_posts::scroll_to :display_card"}}>
   <div class="card-section">
     <span class="title big-title">Post a message</span>
     {{textarea value=new_post rows='3' class='input'}}
     <ul class="errors-list">
-      {{#each error in errors}}
+      {{#each error in forum.errors}}
         <li>{{error}}</li>
       {{/each}}
     </ul>

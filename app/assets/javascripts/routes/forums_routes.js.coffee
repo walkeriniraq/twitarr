@@ -15,7 +15,7 @@ Twitarr.ForumsRoute = Twitarr.ForumsPageRoute.extend
 
 Twitarr.ForumsDetailRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.Forum.get params.id
+    Twitarr.Forum.get params.id, params.page
 
   setupController: (controller, model) ->
     controller.set('model', model)

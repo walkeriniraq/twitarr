@@ -24,8 +24,8 @@ Twitarr.ApplicationRoute = Ember.Route.extend
         parentView: 'application'
     display_seamail: (id) ->
       @transitionTo('seamail.detail', id)
-    display_forum: (id) ->
-      @transitionTo('forums.detail', id)
+    display_forum: (id, page) ->
+      @transitionTo('forums.detail', id, page)
     display_tweet: (id) ->
       @transitionTo('stream.view', id)
     display_user: (username) ->
