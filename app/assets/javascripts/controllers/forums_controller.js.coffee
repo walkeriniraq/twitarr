@@ -88,5 +88,9 @@ Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixi
 
 Twitarr.ForumsMetaPartialController = Twitarr.ObjectController.extend
   posts_sentence: (->
-    @get('new_posts') || @get('posts')
-  ).property('posts', 'new_posts')
+#    alert(@get('new_posts'))
+    if @get('new_posts') != undefined
+      "#{@get('posts')}, #{@get('new_posts')}"
+    else
+      @get('posts')
+  ).property('posts', 'new_posts') 
