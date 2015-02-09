@@ -38,6 +38,7 @@ Twitarr::Application.routes.draw do
     collection do
       get ':page', to: 'forums#page'
       get 'thread/:id', to: 'forums#show'
+      get 'thread/:id/:page', to: 'forums#show'
       post 'new_post'
       put 'thread/:forum_id/:forum_post_id', to: 'forums#update'
     end

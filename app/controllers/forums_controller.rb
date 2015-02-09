@@ -26,11 +26,12 @@ class ForumsController < ApplicationController
   end
 
   def show
+    page = params[:page].to_i || 0
     if logged_in?
-      render_json forum: Forum.find(params[:id]).decorate.to_hash(current_user)
+      render_json forum: Forum.find(params[:id]).decorate.to_hash(page,current_user)
       current_user.update_forum_view(params[:id]) if logged_in?
     else
-      render_json forum: Forum.find(params[:id]).decorate.to_hash
+      render_json forum: Forum.find(params[:id]).decorate.to_hash(page)
     end
   end
 
