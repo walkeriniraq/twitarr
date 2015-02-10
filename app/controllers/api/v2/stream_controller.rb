@@ -55,7 +55,7 @@ class API::V2::StreamController < ApplicationController
   end
 
   def view_hash_tag
-    query_string = params[:query]
+    query_string = params[:query].downcase
     start_loc = params[:page] || 0
     limit = params[:limit] || PAGE_LENGTH
     query = StreamPost.where(hash_tags: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)

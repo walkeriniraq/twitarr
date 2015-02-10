@@ -41,9 +41,9 @@ module Postable
       entities.each do |entity|
         entity = entity.inject({}) {|x, (k,v)| x[k.to_sym] = v; x }
         if entity.has_key? :hashtag
-          self.hash_tags << entity[:hashtag]
+          self.hash_tags << entity[:hashtag].downcase
         elsif entity.has_key? :screen_name
-          self.mentions << entity[:screen_name]
+          self.mentions << entity[:screen_name].downcase
         end
       end
     end
