@@ -1,6 +1,8 @@
 class API::V2::UserController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  before_filter :require_allow_modification!, only: [:new_seamail, :reset_mentions, :reset_photo, :update_photo]
+
   def auth
     login_result = validate_login params[:username], params[:password]
     if login_result.has_key? :error

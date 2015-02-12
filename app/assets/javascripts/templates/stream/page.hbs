@@ -1,6 +1,9 @@
 <div class="main-page-header header-with-controls">
   <div class="controls">
+      {{read_only}}
+    {{#unless read_only}}
     <button {{action 'show_new_post'}} {{bind-attr class="new_post_button_visible::hidden :btn"}}>New Post</button>
+    {{/unless}}
     <button class="btn" {{action 'reload'}}>Refresh</button>
   </div>
 

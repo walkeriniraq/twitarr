@@ -34,4 +34,8 @@ Twitarr::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  config.read_only = false
+
+  config.allow_new_users = true
+
 end

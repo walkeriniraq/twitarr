@@ -5,6 +5,8 @@ class UserController < ApplicationController
 
   layout 'login'
 
+  before_filter :require_allow_modification!, only: [:new, :save_profile, :security_answer, :security_question]
+
   def login
     user = User.get params[:username]
     if user.nil?

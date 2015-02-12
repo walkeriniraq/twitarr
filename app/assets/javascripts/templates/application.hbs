@@ -6,7 +6,9 @@
   </button>
   {{#link-to "stream"}}
     <span class="menu-brand">
-      Twit-arr
+      Twit-arr {{#unless read_only}}
+        (read only)
+        {{/unless}}
     </span>
   {{/link-to}}
   {{#if alerts}}
@@ -55,7 +57,9 @@
       <li>{{#link-to 'help'}}<span class="glyphicon glyphicon-question-sign"></span>Help{{/link-to}}</li>
       <li>---</li>
       <li><a href="#" {{action 'login'}} {{bind-attr class="logged_in:hidden"}}>Login</a></li>
+      {{#unless read_only}}
       <li><a href="#" {{action 'signup'}} {{bind-attr class="logged_in:hidden"}}>Sign up</a></li>
+      {{/unless}}
       <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.users"}}User administration{{/link-to}}</li>
       <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.announcements"}}New announcement{{/link-to}}</li>
       <li {{bind-attr class="login_admin::hidden"}}>---</li>

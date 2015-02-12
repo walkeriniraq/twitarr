@@ -1,5 +1,7 @@
 class ForumsController < ApplicationController
 
+  before_filter :require_allow_modification!, only: [:create, :new_post, :update]
+
   def index
     if logged_in?
       render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash(current_user) }

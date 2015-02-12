@@ -29,10 +29,12 @@
       {{likes_string}}
     </div>
     <div>
+      {{#unless read_only}}
       <button {{action 'unlike' model bubbles=false}} {{bind-attr class="unlikeable::hidden :btn-link"}}>Unlike</button>
       <button {{action 'like' model bubbles=false}} {{bind-attr class="likeable::hidden :btn-link"}}>Like</button>
       <button {{action 'edit' id bubbles=false}} {{bind-attr class="editable::hidden :btn-link"}}>Edit</button>
       <button {{action 'display_tweet' id bubbles=false}} {{bind-attr class="logged_in::hidden :btn-link"}}>Reply</button>
+      {{/unless}}
       <button {{action 'view_parent' model bubbles=false}} {{bind-attr class="show_parent::hidden :btn-link"}}>Original Tweet</button>
     </div>
   </div>

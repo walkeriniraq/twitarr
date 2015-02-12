@@ -5,6 +5,7 @@ class API::V2::StreamController < ApplicationController
   PAGE_LENGTH = 20
   before_filter :login_required,  :only => [:create, :destroy, :update, :like, :unlike]
   before_filter :fetch_post, :except => [:index, :create, :view_mention, :view_hash_tag]
+  before_filter :require_allow_modification!, only: [:create, :destroy, :update, :like, :unlike]
 
   def login_required
     head :unauthorized unless logged_in? || valid_key?(params[:key])

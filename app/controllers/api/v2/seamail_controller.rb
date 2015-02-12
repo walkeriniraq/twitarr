@@ -5,6 +5,8 @@ class API::V2::SeamailController < ApplicationController
   before_filter :login_required
   before_filter :fetch_seamail, :only => [:show, :new_message, :recipients]
 
+  before_filter :require_allow_modification!, only: [:create, :new_message]
+
   def login_required
     head :unauthorized unless logged_in? || valid_key?(params[:key])
   end

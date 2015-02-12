@@ -1,5 +1,7 @@
 class StreamController < ApplicationController
 
+  before_filter :require_allow_modification!, only: [:create, :like, :unlike, :edit]
+
   def page
     posts = StreamPost.at_or_before(params[:page]).limit(20).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1

@@ -27,7 +27,9 @@
           {{/each}}
         </div>
       </div>
+      {{#unless read_only}}
       <span {{bind-attr class="post.new::hidden :controls"}} style="color: red;">new</span>
+      {{/unless}}
     </div>
   {{/each}}
   <div class="card-section">
@@ -36,6 +38,7 @@
     </span>
   </div>
 </div>
+{{#unless read_only}}
 <div {{bind-attr class="logged_in::hidden has_new_posts::scroll_to :display_card"}}>
   <div class="card-section">
     <span class="title big-title">Post a message</span>
@@ -51,3 +54,4 @@
     </span>
   </div>
 </div>
+{{/unless}}
