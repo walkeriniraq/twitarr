@@ -10,6 +10,7 @@
 /config/secrets.yml
 
 /public/img/photos/*
+/public/assets
 
 *.gem
 *.rbc

@@ -1,5 +1,7 @@
 class SeamailController < ApplicationController
 
+  before_filter :require_allow_modification!, only: [:create, :new_message]
+
   def index
     extra_query = {}
     if params[:unread]

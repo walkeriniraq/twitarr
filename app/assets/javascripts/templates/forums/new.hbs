@@ -1,6 +1,7 @@
 <div class="main-page-header">
   <div class="title">{{#link-to 'forums'}}Forums{{/link-to}} > new</div>
 </div>
+{{#unless read_only}}
 <div class="display_card">
   <div class="card-section">
     <div class="form">
@@ -19,4 +20,4 @@
     </div>
   </div>
 </div>
-
+{{/unless}}

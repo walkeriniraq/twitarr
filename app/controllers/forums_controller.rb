@@ -1,5 +1,7 @@
 class ForumsController < ApplicationController
 
+  before_filter :require_allow_modification!, only: [:create, :new_post, :update]
+
   def page
     per_page = 20
     offset = params[:page].to_i || 0

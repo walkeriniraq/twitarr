@@ -12,6 +12,7 @@
       {{/link-to}}
     {{/each}}
   </div>
+  {{#unless read_only}}
   <div class="card-section">
     <div class="form">
       {{textarea value=text rows='2' class='input' placeholder='Send a message'}}
@@ -25,6 +26,7 @@
     </span>
     </div>
   </div>
+  {{/unless}}
 </div>
 <div class="display_card">
   <div class="card-section">

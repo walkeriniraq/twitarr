@@ -1,6 +1,7 @@
 class PhotoController < ApplicationController
 
   before_filter :login_required, only: [:upload]
+  before_filter :require_allow_modification!, only: [:upload]
 
   def login_required
     head :unauthorized unless logged_in?

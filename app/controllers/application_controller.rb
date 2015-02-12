@@ -1,6 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  def require_allow_modification!
+    unless is_admin? || !  Rails.configuration.read_only
+      render json: {:status => 'Read-only mode'}, status: 403 and return false
+    end
+    true
+  end
+
+
   def logged_in?
     !current_username.nil?
   end

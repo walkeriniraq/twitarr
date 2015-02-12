@@ -79,5 +79,7 @@ Twitarr::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.ember.variant = :production
+  config.read_only = false
 
+  config.allow_new_users = true
 end

@@ -1,6 +1,8 @@
 <div class="main-page-header header-with-controls">
   <span class="controls">
+    {{#unless read_only}}
     <button class="btn" {{action 'create_forum'}}>Create Forum</button>
+    {{/unless}}
     <button class="btn" {{action 'reload'}}>Refresh</button>
   </span>
 
