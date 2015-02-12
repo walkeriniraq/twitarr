@@ -9,11 +9,13 @@ class ForumDecorator < Draper::Decorator
         last_post_username: posts.last.author,
         last_post_display_name: User.display_name_from_username(posts.last.author),
         posts: pluralize(post_count, 'post'),
-        timestamp: last_post
+        timestamp: last_post,
+        last_post_page: posts.count / 10
     }
     unless user.nil?
       count = post_count_since(user.last_forum_view(id.to_s))
       ret[:new_posts] = "#{count} <b class=\"highlight\">new</b>" if count > 0
+      ret[:last_post_page] = count / 10 if count > 0
     end
     ret
   end

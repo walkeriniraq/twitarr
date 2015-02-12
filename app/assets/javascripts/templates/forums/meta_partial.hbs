@@ -1,4 +1,4 @@
-<div class="card-section clickable" {{action 'display_forum' id 0}}  {{!-- Should link to last unread post page, not the first --}}>
+<div class="card-section clickable" {{action 'display_forum' id last_post_page}}  {{!-- Should link to last unread post page, not the first --}}>
   <span class="title big-title">
     {{unbound subject}}
   </span>
@@ -7,7 +7,7 @@
   <div class="form">
     {{{unbound posts_sentence}}}
     <div class="controls">
-      Most recent: {{unbound pretty_username last_post_username last_post_display_name}}
+      Most recent: {{unbound pretty_username last_post_username last_post_display_name }}
     </div>
   </div>
 
