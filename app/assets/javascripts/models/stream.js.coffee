@@ -50,6 +50,14 @@ Twitarr.StreamPost = Ember.Object.extend
       else
         alert data.status
 
+  delete: ->
+    $.getJSON("tweet/destroy/#{@get('id')}").then (data) =>
+      if(data.status == 'ok')
+        alert("Successfully deleted")
+        @transitionToRoute 'application'
+      else
+        alert data.status
+
 Twitarr.StreamPost.reopenClass
   page: (page) ->
     $.getJSON("stream/#{page}").then (data) =>

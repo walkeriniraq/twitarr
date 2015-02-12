@@ -56,6 +56,7 @@ Twitarr::Application.routes.draw do
   post 'tweet/edit/:id', to: 'stream#edit'
   get 'tweet/like/:id', to: 'stream#like'
   get 'tweet/unlike/:id', to: 'stream#unlike'
+  get 'tweet/destroy/:id', to: 'stream#destroy'
   get 'tweet/:id', to: 'stream#get'
 
   post 'photo/upload'

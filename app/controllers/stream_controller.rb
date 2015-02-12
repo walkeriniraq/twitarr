@@ -65,4 +65,14 @@ class StreamController < ApplicationController
     end
   end
 
+  def destroy
+    return unless logged_in!
+    post = StreamPost.find(params[:id])
+    if !is_admin? && post.author != current_username
+      render_json status: 'You cannot delete a post that does not belong to you' and return
+    end
+    post.destroy
+    render_json status: 'ok'
+  end
+
 end

@@ -105,6 +105,8 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @get('model').like()
     unlike: ->
       @get('model').unlike()
+    delete: ->
+      @get('model').delete()
     view: ->
       @transitionToRoute 'stream.view', @get('id')
     edit: ->
@@ -128,6 +130,10 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
   likeable: (->
     @get('logged_in') and not @get('user_likes')
   ).property('logged_in', 'user_likes')
+
+  deleteable: (->
+    @get('logged_in') and (@get('author') is @get('login_user') or @get('login_admin'))
+  ).property('logged_in', 'author', 'login_user', 'login_admin')
 
 Twitarr.StreamEditController = Twitarr.ObjectController.extend
   errors: Ember.A()
