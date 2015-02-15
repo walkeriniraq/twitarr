@@ -38,6 +38,8 @@ module Twitarr
       end
     end
 
+    Draper::Railtie.initializers.delete_if {|initializer| initializer.name == 'draper.setup_active_model_serializers' }
+
     config.assets.precompile += ['respond.js']
 
     config.autoload_paths += Dir[Rails.root.join('app', 'contexts', '{**}')]

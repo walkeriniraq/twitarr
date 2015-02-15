@@ -459,7 +459,7 @@ img.photo {
     float: right;
 
     a {
-      @extend button;
+      @extend .button;
     }
   }
 

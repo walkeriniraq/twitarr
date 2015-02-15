@@ -24,6 +24,10 @@ Twitarr::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
+  # yet still be able to expire them through the digest params.
+  config.assets.digest = true
+
   config.read_only = false
   config.allow_new_users = true
 
