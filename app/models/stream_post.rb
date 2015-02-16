@@ -13,12 +13,14 @@ class StreamPost
   field :mn, as: :mentions, type: Array
   field :et, as: :entities, type: Array
   field :ed, as: :edits, type: Array, default: []
+  field :lc, as: :location, type: String
 
   field :p, as: :photo, type: String
   field :pc, as: :parent_chain, type: Array, default: []
 
   validates :text, :author, :timestamp, presence: true
   validate :validate_author
+  validate :validate_location
 
   # 1 = ASC, -1 DESC
   index likes: 1
@@ -55,5 +57,4 @@ class StreamPost
     criteria = StreamPost.or({ author: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
     limit_criteria(criteria, params).order_by(timestamp: :desc)
   end
-
 end

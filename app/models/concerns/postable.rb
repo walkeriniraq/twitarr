@@ -17,6 +17,10 @@ module Postable
       super User.format_username username
     end
 
+    def location=(loc)
+      super loc
+    end
+
 
     def add_like(username)
           self.class.where(id: id).
@@ -71,6 +75,15 @@ module Postable
       self.hash_tags.each do |ht|
         Hashtag.add_tag ht
       end
+    end
+
+    def validate_location
+      post_location = self[:location]
+      result = Location.valid_location? post_location
+      unless result
+        errors[:base] << "Invalid location: #{post_location}"
+      end
+      result
     end
   end
 

@@ -30,6 +30,7 @@ class User
   field :hl, as: :home_location, type: String
   field :lf, as: :forum_view_timestamps, type: Hash, default: {}
   field :pv, as: :is_vcard_public, type: Boolean, default: true
+  field :lc, as: :current_location, type: String
 
   index username: 1
   index display_name: 1
@@ -40,9 +41,10 @@ class User
 
   validate :valid_username?
   validate :valid_display_name?
+  validate :valid_location?
   validates :email, format: { with: /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i, message: 'address is not valid.' }
   validates :security_question, :security_answer, presence: true
-
+  
   def self.valid_username?(username)
     return false unless username
     !username.match(USERNAME_REGEX).nil?
@@ -63,6 +65,11 @@ class User
     unless User.valid_display_name? (display_name)
       errors.add(:display_name, 'must be three or more characters and cannot include any of ~!@#$%^*()+=<>{}[]\\|;:/?')
     end
+  end
+
+  def valid_location?
+    user_location = self[:current_location]
+    Location.valid_location? user_location
   end
 
   def empty_password?
@@ -90,8 +97,13 @@ class User
     self[:is_email_public] = !val.nil? && val.to_bool
   end
 
+
   def username=(val)
     super User.format_username val
+  end
+
+  def current_location=(loc)
+    super loc
   end
 
   def security_answer=(val)

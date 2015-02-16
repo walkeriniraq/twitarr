@@ -12,6 +12,7 @@ class ForumPostDecorator < BaseDecorator
         likes_counts: likes.length,
         photos: decorate_photos,
         hash_tags: hash_tags,
+        location: location,
         mentions: mentions
     }
     ret[:new] = (timestamp > last_view) unless last_view.nil?

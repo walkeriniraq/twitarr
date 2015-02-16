@@ -64,6 +64,11 @@ Twitarr::Application.routes.draw do
   get 'photo/medium_thumb/:id', to: 'photo#medium_thumb'
   get 'photo/full/:id', to: 'photo#full'
 
+  get 'location/autocomplete/:query', to: 'location#auto_complete'
+  get 'location', to: 'location#index'
+  post 'location', to: 'location#create'
+  delete 'location/:name', to: 'location#delete'
+
   namespace :api do
     namespace :v2 do
       resources :photo, only: [:index, :create, :destroy, :update, :show], :defaults => { :format => 'json' }

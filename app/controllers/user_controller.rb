@@ -95,8 +95,9 @@ class UserController < ApplicationController
     current_user.home_location = params[:home_location]
     current_user.email_public = params[:email_public?]
     current_user.vcard_public = params[:vcard_public?]
+    current_user.current_location = params[:current_location]
     current_user.save
-    if (current_user.invalid?)
+    if current_user.invalid?
       render_json status: current_user.errors.full_messages.join('\n')
     else
       render_json status: 'ok'

@@ -19,6 +19,7 @@ class StreamPostDecorator < BaseDecorator
         mentions: mentions,
         entities: entities,
         hash_tags: hash_tags,
+        location: location,
         parent_chain: parent_chain
     }
     unless photo.blank?
