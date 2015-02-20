@@ -48,11 +48,18 @@ Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePho
           @set 'posting', false
           @set 'reply_text', @get('base_reply_text1')
           @set 'photo_id', null
-          @send 'reload'
+          [p, ...] = response.stream_post['parent_chain']
+          @transitionToRoute 'stream.view', p
       , =>
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
+    post_view: (model) ->
+      console.log("model =>")
+      console.log(model)
+      p = model.get('id')
+      console.log("ID = " + p)
+      @transitionToRoute 'stream.view', p
 
 Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
   new_post_visible: false
@@ -98,6 +105,13 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
     next_page: ->
       return if @get('next_page') is 0
       @transitionToRoute 'stream.page', @get('next_page')
+    post_view: (model) ->
+      console.log("model =>")
+      console.log(model)
+      [p, ...] = model.get('parent_chain')
+      p = model.get('id') unless p
+      console.log("ID = " + p)
+      @transitionToRoute 'stream.view', p
 
 Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
   actions:
@@ -111,9 +125,10 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @transitionToRoute 'stream.view', @get('id')
     edit: ->
       @transitionToRoute 'stream.edit', @get('id')
-    view_parent: ->
-      [..., p] = @get('parent_chain')
-      @transitionToRoute 'stream.view', p
+    view_thread: ->
+      console.log("controller #{@get('parentController').toString()} = ")
+      console.log( @get('parentController'))
+      @get('parentController').send('post_view', @get('model'))
 
   show_parent: (->
     @get('parentController').get('parent_link_visible') && @get('parent_chain')

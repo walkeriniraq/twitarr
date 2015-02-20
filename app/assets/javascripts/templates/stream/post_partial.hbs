@@ -1,4 +1,4 @@
-<div class="card-section section-with-photo clickable" {{action 'display_tweet' id bubbles=false}}>
+<div class="card-section section-with-photo clickable" {{action 'view_thread' model bubbles=false}}>
 
   <div class="section-photo">
     {{#link-to 'user' author}}
@@ -33,7 +33,6 @@
       <button {{action 'like' model bubbles=false}} {{bind-attr class="likeable::hidden :btn-link"}}>Like</button>
       <button {{action 'edit' id bubbles=false}} {{bind-attr class="editable::hidden :btn-link"}}>Edit</button>
       <button {{action 'display_tweet' id bubbles=false}} {{bind-attr class="logged_in::hidden :btn-link"}}>Reply</button>
-      <button {{action 'view_parent' model bubbles=false}} {{bind-attr class="show_parent::hidden :btn-link"}}>Original Tweet</button>
       <Button {{action 'delete' id bubbles=false}} {{bind-attr class="deleteable::hidden :btn-link"}}>Delete</button>
     </div>
   </div>
