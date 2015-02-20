@@ -56,6 +56,7 @@ Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePho
       )
     post_view: (model) ->
       p = model.get('id')
+      [p,...] = @get('parent_chain') if p == @get('id') && @get('parent_chain')?.length
       @transitionToRoute 'stream.view', p
 
 Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
