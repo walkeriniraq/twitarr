@@ -45,6 +45,7 @@ class Server
           if data[0..3] != "ack," and data.length == 32
             puts "New message from #{clientAddr[3]}".cyan
             message = Response.new(data, ip_addr)
+            sleep 0.1 # Give the client a few ms to start listening
             puts "Responding".yellow
             socket.send(message.to_csv, 0, CAST_ADDR, PORT)
           end
