@@ -2,6 +2,7 @@
 class StreamPostDecorator < BaseDecorator
   delegate_all
   include Twitter::Autolink
+  include ActionView::Helpers::DateHelper
 
   MAX_LIST_LIKES = 5
 
@@ -15,7 +16,9 @@ class StreamPostDecorator < BaseDecorator
         display_name: User.display_name_from_username(author),
         text: auto_link(clean_text_with_cr(adjusted_text)),
         timestamp: timestamp,
+        display_timestamp: "#{time_ago_in_words(timestamp)} ago",
         likes: some_likes(username),
+        all_likes: all_likes(username),
         mentions: mentions,
         entities: entities,
         hash_tags: hash_tags,
@@ -63,4 +66,13 @@ class StreamPostDecorator < BaseDecorator
     favs
   end
 
+  def all_likes(username)
+    favs = []
+    unless username.nil?
+      favs << 'You' if likes.include? username
+    end
+    favs += likes.reject { |x| x == username }
+    return nil if favs.empty?
+    favs
+  end
 end
