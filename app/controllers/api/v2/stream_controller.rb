@@ -10,6 +10,12 @@ class API::V2::StreamController < ApplicationController
     head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
+  def request_options
+    ret = {}
+    ret[:app] = params[:app] if params[:app]
+    ret
+  end
+
   def fetch_post
     begin
       @post = StreamPost.find(params[:id])
@@ -33,9 +39,10 @@ class API::V2::StreamController < ApplicationController
   def show
     limit = (params[:limit] || PAGE_LENGTH).to_i
     start_loc = (params[:page] || 0).to_i
-
-    children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :asc).map { |x| x.decorate.to_hash(current_username, remove:[:parent_chain]) }
-    post_result = @post.decorate.to_hash(current_username)
+    show_options = request_options
+    show_options[:remove] = [:parent_chain]
+    children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :asc).map { |x| x.decorate.to_hash(current_username, show_options) }
+    post_result = @post.decorate.to_hash(current_username, request_options)
     if children and children.length > 0
       post_result[:children] = children
     end
@@ -171,7 +178,7 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_before(start_loc, author).limit(limit).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
-    {stream_posts: posts.map{|x| x.decorate.to_hash(current_username)}, next_page: next_page}
+    {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end
 
   def want_newer_posts?
@@ -184,6 +191,6 @@ class API::V2::StreamController < ApplicationController
     limit = params[:limit] || PAGE_LENGTH
     posts = StreamPost.at_or_after(start_loc, author).limit(limit).order_by(timestamp: :asc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
-    {stream_posts: posts.map{|x| x.decorate.to_hash(current_username)}, next_page: next_page}
+    {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end
 end

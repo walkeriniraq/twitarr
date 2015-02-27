@@ -7,7 +7,7 @@ class AnnouncementDecorator < BaseDecorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
-        text: auto_link(text.gsub("\n", '<br />')),
+        text: twitarr_auto_linker(text.gsub("\n", '<br />')),
         timestamp: timestamp
     }
   end

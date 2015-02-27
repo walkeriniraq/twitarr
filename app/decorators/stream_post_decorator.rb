@@ -1,7 +1,6 @@
 # noinspection RubyResolve
 class StreamPostDecorator < BaseDecorator
   delegate_all
-  include Twitter::Autolink
   include ActionView::Helpers::DateHelper
 
   MAX_LIST_LIKES = 5
@@ -14,7 +13,7 @@ class StreamPostDecorator < BaseDecorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
-        text: auto_link(clean_text_with_cr(adjusted_text)),
+        text: twitarr_auto_linker(clean_text_with_cr(adjusted_text), options),
         timestamp: timestamp,
         display_timestamp: "#{time_ago_in_words(timestamp)} ago",
         likes: some_likes(username),
