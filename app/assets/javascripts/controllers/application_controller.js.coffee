@@ -44,7 +44,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
 
 
   menu_toggle: ->
-    $('#side-menu').animate { width: 'toggle' }, 100
+    $('#side-menu').animate {width: 'toggle'}, 100
 
   search: (text) ->
     text = @get('text')
@@ -75,7 +75,10 @@ Twitarr.ApplicationController = Ember.Controller.extend
           @set('email_count', data.user.seamail_unread_count)
           @set('posts_count', data.user.unnoticed_mentions)
           @set('alerts', data.user.unnoticed_alerts)
-    @timer = setTimeout (=> @tick()), 60000
+    if @get('read_only')
+      @timer = setTimeout (=> @tick()), 3600000
+    else
+      @timer = setTimeout (=> @tick()), 60000
 
   logged_in: (->
     @get('login_user')?
