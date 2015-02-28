@@ -3,6 +3,7 @@ class ForumsController < ApplicationController
   before_filter :require_allow_modification!, only: [:create, :new_post, :update]
 
   def index
+    return if !logged_in? and read_only_mode!
     if logged_in?
       render_json forum_meta: Forum.all.sort_by { |x| x.last_post }.reverse.map { |x| x.decorate.to_meta_hash(current_user) }
     else
@@ -11,6 +12,7 @@ class ForumsController < ApplicationController
   end
 
   def show
+    return if !logged_in? and read_only_mode!
     if logged_in?
       render_json forum: Forum.find(params[:id]).decorate.to_hash(current_user)
       current_user.update_forum_view(params[:id]) if logged_in?
@@ -20,6 +22,7 @@ class ForumsController < ApplicationController
   end
 
   def create
+    return if read_only_mode!
     forum = Forum.create_new_forum current_username, params[:subject], params[:text], params[:photos]
     if forum.valid?
       render_json forum_meta: forum.decorate.to_meta_hash
@@ -29,6 +32,7 @@ class ForumsController < ApplicationController
   end
 
   def new_post
+    return if read_only_mode!
     forum = Forum.find(params[:forum_id])
     post = forum.add_post current_username, params[:text], params[:photos]
     if post.valid?
@@ -39,6 +43,7 @@ class ForumsController < ApplicationController
   end
 
   def update
+    return if read_only_mode!
     forum = Forum.find(params[:forum_id])
     forum_post = forum.posts.find(params[:forum_post_id])
 

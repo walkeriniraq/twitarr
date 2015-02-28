@@ -8,6 +8,7 @@ class PhotoController < ApplicationController
   end
 
   def upload
+    return if read_only_mode!
     return render_json status: 'Must provide photos to upload.' if params[:files].blank?
     files = params[:files].map do |file|
       PhotoStore.instance.upload(file, current_username)
@@ -20,6 +21,7 @@ class PhotoController < ApplicationController
   end
 
   def small_thumb
+    return if !logged_in? and read_only_mode!
     photo = PhotoMetadata.find params[:id]
     expires_in 30.days, public: true
     response.headers['Etag'] = params[:id]
@@ -27,6 +29,7 @@ class PhotoController < ApplicationController
   end
 
   def medium_thumb
+    return if !logged_in? and read_only_mode!
     photo = PhotoMetadata.find params[:id]
     expires_in 30.days, public: true
     response.headers['Etag'] = params[:id]
@@ -34,6 +37,7 @@ class PhotoController < ApplicationController
   end
 
   def full
+    return if !logged_in? and read_only_mode!
     photo = PhotoMetadata.find params[:id]
     expires_in 30.days, public: true
     response.headers['Etag'] = params[:id]

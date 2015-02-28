@@ -64,8 +64,15 @@ class ApplicationController < ActionController::Base
     render json: { status: 'Not logged in.' }
   end
 
-  def read_only_mode
-    render json: { status: 'Twit-arr is in storage (read-only) mode.' }
+  def read_only_mode!
+    if read_only_mode?
+      render json: { status: 'Twit-arr is in read-only mode.' } and return true
+    end
+    false
+  end
+
+  def read_only_mode?
+    Rails.configuration.read_only
   end
 
   def render_json(hash)

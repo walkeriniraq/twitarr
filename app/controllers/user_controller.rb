@@ -29,6 +29,7 @@ class UserController < ApplicationController
   end
 
   def new
+    return if read_only_mode!
     new_username = params[:new_username].downcase
     @user = User.new username: new_username, display_name: new_username,
                      is_admin: false, status: User::ACTIVE_STATUS, email: params[:email],
@@ -117,7 +118,7 @@ class UserController < ApplicationController
       return render_json status: 'ok',
                          user: current_user.decorate.self_hash,
                          need_password_change: current_user.correct_password(User::RESET_PASSWORD),
-                         is_read_only: false
+                         is_read_only: read_only_mode?
     end
     render_json status: 'logout'
   end
@@ -138,6 +139,7 @@ class UserController < ApplicationController
   end
 
   def show
+    return if !logged_in? and read_only_mode!
     show_username = User.format_username params[:username]
     render_json status: 'User does not exist.' and return unless User.exist?(show_username)
     render_json status: 'ok', user: User.get(show_username).decorate.public_hash.merge(
@@ -147,6 +149,7 @@ class UserController < ApplicationController
   end
 
   def vcard
+    return if !logged_in? and read_only_mode!
     # I apologize for this mess. It's not clean but it works.
     user = User.get params[:username]
     render body: 'User has vcard disabled', content_type: 'text/plain' and return unless user.is_vcard_public?

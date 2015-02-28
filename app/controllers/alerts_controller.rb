@@ -1,6 +1,7 @@
 class AlertsController < ApplicationController
 
   def index
+    return if !logged_in? and read_only_mode!
     announcements = Announcement.valid_announcements.map { |x| x.decorate.to_hash }
     if logged_in?
       last_checked_time = current_user[:last_viewed_alerts]

@@ -3,6 +3,7 @@ class StreamController < ApplicationController
   before_filter :require_allow_modification!, only: [:create, :like, :unlike, :edit]
 
   def page
+    return if !logged_in? and read_only_mode!
     posts = StreamPost.at_or_before(params[:page]).limit(20).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
     next_page = 0 if StreamPost.at_or_before(next_page).count < 1
@@ -10,7 +11,7 @@ class StreamController < ApplicationController
   end
 
   def create
-    return unless logged_in!
+    return if !logged_in? or read_only_mode!
     parent_chain = []
     if params[:parent]
       parent = StreamPost.where(id: params[:parent]).first
@@ -30,26 +31,27 @@ class StreamController < ApplicationController
   end
 
   def like
-    return unless logged_in!
+    return if !logged_in? or read_only_mode!
     post = StreamPost.find(params[:id])
     post = post.add_like current_username
     render_json status: 'ok', likes: post.decorate.some_likes(current_username)
   end
 
   def unlike
-    return unless logged_in!
+    return if !logged_in? or read_only_mode!
     post = StreamPost.find(params[:id])
     post = post.remove_like current_username
     render_json status: 'ok', likes: post.decorate.some_likes(current_username)
   end
 
   def get
+    return if !logged_in? or read_only_mode!
     post = StreamPost.find(params[:id])
     render_json status: 'ok', post: post.decorate.to_base_hash
   end
 
   def edit
-    return unless logged_in!
+    return if !logged_in? or read_only_mode!
     post = StreamPost.find(params[:id])
     if !is_admin? && post.author != current_username
       render_json status: 'You cannot edit a post that does not belong to you.'

@@ -3,6 +3,7 @@ class SeamailController < ApplicationController
   before_filter :require_allow_modification!, only: [:create, :new_message]
 
   def index
+    return if !logged_in?
     extra_query = {}
     if params[:unread]
       extra_query[:unread] = true
@@ -24,6 +25,7 @@ class SeamailController < ApplicationController
   end
 
   def show
+    return if !logged_in?
     seamail = Seamail.find(params[:id])
     was_unread = seamail.unread_users.andand.include?(current_username)
     seamail.mark_as_read current_username
@@ -31,6 +33,7 @@ class SeamailController < ApplicationController
   end
 
   def create
+    return if !logged_in? or read_only_mode!
     seamail = Seamail.create_new_seamail current_username, params[:users], params[:subject], params[:text]
     if seamail.valid?
       render_json seamail_meta: seamail.decorate.to_meta_hash.merge!({is_unread: seamail.unread_users.include?(current_username)})
@@ -40,6 +43,7 @@ class SeamailController < ApplicationController
   end
 
   def new_message
+    return if !logged_in? or read_only_mode!
     seamail = Seamail.find(params[:seamail_id])
     message = seamail.add_message current_username, params[:text]
     if message.valid?

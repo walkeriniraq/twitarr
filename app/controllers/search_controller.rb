@@ -4,6 +4,7 @@ class SearchController < ApplicationController
   DETAILED_SEARCH_MAX = 50
 
   def search
+    return if !logged_in? and read_only_mode!
     search_text = params[:text].strip.downcase
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = GENERIC_SEARCH_MAX unless params[:limit]
@@ -28,6 +29,7 @@ class SearchController < ApplicationController
   end
 
   def search_users
+    return if !logged_in? and read_only_mode!
     search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_]/, '')
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
@@ -39,6 +41,7 @@ class SearchController < ApplicationController
   end
 
   def search_tweets
+    return if !logged_in? and read_only_mode!
     search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
@@ -50,6 +53,7 @@ class SearchController < ApplicationController
   end
 
   def search_forums
+    return if !logged_in? and read_only_mode!
     search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
     render_json status: 'no text' and return if search_text.blank?
     params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]

@@ -17,7 +17,8 @@ class AnnouncementsController < ApplicationController
   # end
 
   def index
-     render_json announcements: Announcement.valid_announcements.map { |x| x.decorate.to_hash }
+    return if !logged_in? and read_only_mode!
+    render_json announcements: Announcement.valid_announcements.map { |x| x.decorate.to_hash }
   end
 
 end
