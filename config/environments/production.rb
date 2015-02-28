@@ -80,8 +80,6 @@ Twitarr::Application.configure do
 
   config.ember.variant = :production
 
-  config.read_only = false
-
-  config.allow_new_users = true
+  config.read_only = true
 
 end

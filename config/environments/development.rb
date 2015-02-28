@@ -24,8 +24,7 @@ Twitarr::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  config.read_only = false
-  config.allow_new_users = true
+  config.read_only = true
 
   config.ember.variant = :development
 
