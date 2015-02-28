@@ -8,9 +8,7 @@
     {{#if controllers.application.uploads_pending}}
       <div class="uploading">Uploading...</div>
     {{else}}
-      {{#unless read_only}}
       Click to change profile photo
-      {{/unless}}
     {{/if}}
   </div>
   <input id="profile-photo-upload" type="file" name="file" data-url="/api/v2/user/photo" accept="image/*" style="display: none;">

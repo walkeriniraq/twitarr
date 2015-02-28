@@ -6,9 +6,10 @@
   </button>
   {{#link-to "stream"}}
     <span class="menu-brand">
-      Twit-arr {{#unless read_only}}
+      Twit-arr
+      {{#if read_only}}
         (read only)
-        {{/unless}}
+      {{/if}}
     </span>
   {{/link-to}}
   {{#if alerts}}

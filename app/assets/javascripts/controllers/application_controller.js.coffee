@@ -14,6 +14,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
     $.ajax('user/username', dataType: 'json', cache: false).done (data) =>
       if data.status is 'ok'
         @login data.user
+        @set 'read_only', data.is_read_only
         if data.need_password_change
           @transitionToRoute('profile')
           alert('You need to change your password before you continue')
@@ -64,6 +65,7 @@ Twitarr.ApplicationController = Ember.Controller.extend
       @set 'display_name', null
       @set 'alerts', false
     clearTimeout(@timer)
+    window.location = '/login'
 
   tick: ->
     return unless @get('logged_in')
