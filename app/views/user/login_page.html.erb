@@ -15,5 +15,9 @@
   </div>
 <% end %>
 
-<h4><%= link_to 'I want to join!', user_new_path %></h4>
+<% unless Rails.configuration.read_only %>
+  <h4><%= link_to 'I want to join!', user_new_path %></h4>
+<% else %>
+  <h5>Twitarr is in read-only mode. User accounts cannot be created at this time.</h5>
+<% end %>
 <h4><%= link_to 'I forgot my daggone password!', user_forgot_password_path %></h4>
