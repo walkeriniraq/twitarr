@@ -46,7 +46,6 @@
       </div>
     </div>
 
-    {{#unless read_only}}
     <div class="row" style="margin: 0.5em 1em;">
       <button class="btn" id="show-change-password" onclick="$('#change-password').show(); $('#show-change-password').hide()">Change password</button>
         <div id="change-password" class="col-md-4" style="display: none">
@@ -69,7 +68,6 @@
     <div class="row" style="margin: 0.5em 1em;">
       <button class="btn" {{action 'save'}}>Save Changes</button>
     </div>
-    {{/unless}}
   </div>
   
 </div>
