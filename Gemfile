@@ -24,8 +24,7 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'mongoid'
 
-gem 'ember-rails'
-gem 'ember-source'
+gem 'angularjs-rails'
 
 gem 'tzinfo-data'
 

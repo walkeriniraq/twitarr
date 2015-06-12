@@ -1,0 +1,35 @@
+<div class="card-section section-with-photo clickable" {{action 'view_thread' model bubbles=false}}>
+
+  <div class="section-photo">
+    <a href="#user/author"><img class='profile_photo' src='/api/v2/user/photo/{{post.author}}'/></a>
+  </div>
+
+  <span class="title">
+
+    <a href="#user/author">{{post.author? post.display_name : post.author}}</a>
+  </span>
+
+  <span class='timestamp' title='{{post.timestamp}}'>{{post.timestamp_ago.fromNow()}}</span>
+
+  <div class="body">
+    <div class="body-section" ng-bind-html="post.text">
+    </div>
+    <div class="body-section photos">
+      <!-- {{#if photo}}
+        {{render 'photo_mini' photo }}
+      {{/if}} -->
+    </div>
+  </div>
+  <div class="controls">
+    <div>
+      {{post.likes}}
+    </div>
+    <div>
+      <button class="btn-link" {{action 'unlike' model bubbles=false}} ng-if="post.unlikable">Unlike</button>
+      <button class="btn-link" {{action 'like' model bubbles=false}} ng-if="post.likeable">Like</button>
+      <button class="btn-link" {{action 'edit' id bubbles=false}} ng-if="post.editable">Edit</button>
+      <button class="btn-link" {{action 'display_tweet' id bubbles=false}} {{bind-attr class="logged_in::hidden :btn-link"}}>Reply</button>
+      <Button class="btn-link" {{action 'delete' id bubbles=false}} ng-if="post.deleteable">Delete</button>
+    </div>
+  </div>
+</div>

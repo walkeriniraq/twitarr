@@ -5,9 +5,12 @@
 #= require underscore
 #= require moment
 
-#= require handlebars
-#= require ember
-#= require ember-data
+#= require angular
+#= require angular-route
+# require angular-animate
+#= require angular-resource
+#= require angular-sanitize
+
 #= require_self
 #= require twitarr
 
@@ -27,36 +30,34 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
   document.querySelector('head').appendChild(msViewportStyle)
 
 # These two functions are useful if we end up doing hashtag and username autocompletion
-(($, undefined_) ->
-  $.fn.getCursorPosition = ->
-    el = $(this).get(0)
-    pos = 0
-    if "selectionStart" of el
-      pos = el.selectionStart
-    else if "selection" of document
-      el.focus()
-      Sel = document.selection.createRange()
-      SelLength = document.selection.createRange().text.length
-      Sel.moveStart "character", -el.value.length
-      pos = Sel.text.length - SelLength
-    pos) jQuery
+# (($, undefined_) ->
+#   $.fn.getCursorPosition = ->
+#     el = $(this).get(0)
+#     pos = 0
+#     if "selectionStart" of el
+#       pos = el.selectionStart
+#     else if "selection" of document
+#       el.focus()
+#       Sel = document.selection.createRange()
+#       SelLength = document.selection.createRange().text.length
+#       Sel.moveStart "character", -el.value.length
+#       pos = Sel.text.length - SelLength
+#     pos) jQuery
 
 # These two functions are useful if we end up doing hashtag and username autocompletion
-(($, undefined_) ->
-  $.fn.setCursorPosition = (pos) ->
-    if @get(0).setSelectionRange
-      @get(0).setSelectionRange pos, pos
-    else if @get(0).createTextRange
-      range = @get(0).createTextRange()
-      range.collapse true
-      range.moveEnd "character", pos
-      range.moveStart "character", pos
-      range.select()) jQuery
+# (($, undefined_) ->
+#   $.fn.setCursorPosition = (pos) ->
+#     if @get(0).setSelectionRange
+#       @get(0).setSelectionRange pos, pos
+#     else if @get(0).createTextRange
+#       range = @get(0).createTextRange()
+#       range.collapse true
+#       range.moveEnd "character", pos
+#       range.moveStart "character", pos
+#       range.select()) jQuery
 
-Ember.FEATURES['ember-routing-drop-deprecated-action-style'] = true
-window.Twitarr = Ember.Application.create
 #  LOG_TRANSITIONS: true
 #  LOG_BINDINGS: true
-  ready: ->
-    $("#app-loading").remove()
+  # ready: ->
+  #   $("#app-loading").remove()
 

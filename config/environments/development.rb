@@ -30,7 +30,4 @@ Twitarr::Application.configure do
 
   config.read_only = false
   config.allow_new_users = true
-
-  config.ember.variant = :development
-
 end

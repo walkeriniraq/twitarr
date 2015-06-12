@@ -1,1 +1,0 @@
-Twitarr.Photo = Ember.Object.extend()

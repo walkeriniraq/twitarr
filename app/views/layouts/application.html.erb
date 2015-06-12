@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="twitarr">
 <head>
   <title>Twit-arr!</title>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
@@ -7,12 +7,82 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <!-- This is included here because it helps to load it before the page renders. -->
   <%= javascript_include_tag 'respond' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"></head>
 <body>
+  
+  <div ng-controller="NavCtrl">
+    <nav id="top-bar" role="navigation">
+      <button type="button" class="menu-toggle" ng-click="menu_toggle()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#stream">
+        <span class="menu-brand">
+          Twit-arr
+        </span>
+      </a>
+      <a ng-if="alerts" href="#alerts">
+        <span class="menu-alerts glyphicon glyphicon-warning-sign" title="You have new alerts!"></span>
+      </a>
+      <div class="pull-right top-bar-search">
+        <form>
+            <table style="width: 20em;">
+              <tr>
+                <td style="width: 2em;">
+                  <span class="glyphicon glyphicon-search"></span>
+                </td>
+                <td>
+                  <input ng-model="search" class='input top-bar-search-text' placeholder='Search...'>
+                </td>
+                <td style="width: 3em; padding-left: 1em;">
+                  <button class="btn" style="margin: 5px 15px 5px 0px;" {{action 'search' text}}>Go</button>
+                </td>
+              </tr>
+            </table>
+        </form>
+      </div>
+    </nav>
+    <div id="side-menu">
+      <div class="full-screen-overlay" ng-click="menu_toggle()" ></div>
+      <div id="menu">
+        <div id="login-info">
+          <span ng-if="!logged_in">Not logged in.</span>
+          <span ng-if="logged_in">{{ display_name }}</span>
+        </div>
+        <ul {{action 'menu_close'}}>
+          <li ng-if="logged_in"><a href="#seamail"><span class="glyphicon glyphicon-envelope"></span>Seamail</a></li>
+          <li><a href="#forums"><span class="glyphicon glyphicon-list"></span>Forums</a></li>
+          <li><a href="#stream"><span class="glyphicon glyphicon-bullhorn"></span>Tweets</a></li>
+          <li>---</li>
+          <li>
+            <a href="#alerts">
+              <!-- If this isn't lined up this way some whitespace creeps in -->
+              <span ng-if="alerts" class="glyphicon glyphicon-warning-sign" style="color: #F62E51;"></span>
+              <span ng-if="alerts" class="glyphicon glyphicon-warning-sign"></span>Alerts
+            </a>
+          </li>
+          <li><a href="#search"><span class="glyphicon glyphicon-search"></span>Search</a></li>
+          <li>---</li>
+          <li><a href="#help"><span class="glyphicon glyphicon-question-sign"></span>Help</a></li>
+          <li>---</li>
+          <li><a href="#" ng-if="!logged_in" {{action 'login'}}>Login</a></li>
+          <li><a href="#" ng-if="logged_in" {{action 'signup'}}>Sign up</a></li>
+          <li ng-if="logged_in_admin"><a href="#admin/users">User administration</a></li>
+          <li ng-if="logged_in_admin"><a href="#admin/announcement">New announcement</a></li>
+          <li ng-if="logged_in_admin">---</li>
+          <li ng-if="logged_in"><a href="#profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+          <li ng-if="logged_in"><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<%= yield %>
+  <div id='main' ng-view>
+    <%= yield %>
+  </div>
 
-<%= javascript_include_tag 'application' %>
 </body>
 </html>

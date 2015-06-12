@@ -1,0 +1,37 @@
+<div class="main-page-header">
+  <span class="controls">
+    <button class="btn" {{#action 'reload'}}>Refresh</button>
+  </span>
+</div>
+
+<div class="display_card">
+  <ng-include src="'/templates/stream/post_partial.html'"></ng-include>
+  <!-- {{#render "stream.post_partial" model}} -->
+</div>
+
+<!-- {{#if children}} -->
+  <div class="display_card">
+    <!-- {{#each child in children}} -->
+      <!-- {{#render "stream.post_partial" child}} -->
+    <!-- {{#/each}} -->
+  </div>
+<!-- {{#/if}} -->
+
+<div class="display_card">
+  <div class="card-section">
+    <div class="title big-title">Reply</div>
+    <div class="form">
+      <!-- {{#textarea value=reply_text rows='3' class='input'}} -->
+      <!-- {{#view 'upload'}} -->
+
+      <ul class="errors-list">
+        <!-- {{#each error in errors}} -->
+          <li><!-- {{#error}} --></li>
+        <!-- {{#/each}} -->
+      </ul>
+      <span class="controls">
+        <button class="btn" {{#action 'new'}}>Post</button>
+      </span>
+    </div>
+  </div>
+</div>
