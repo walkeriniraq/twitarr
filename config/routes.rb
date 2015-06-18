@@ -73,11 +73,14 @@ Twitarr::Application.routes.draw do
     namespace :v2 do
       resources :photo, only: [:index, :create, :destroy, :update, :show], :defaults => { :format => 'json' }
       resources :stream, only: [:index, :new, :create, :show, :destroy, :update]
+      resources :event, only: [:index, :show, :create, :destroy, :update], :defaults => { :format => 'json' }
+
       post 'stream/:id/like', to: 'stream#like'
       delete 'stream/:id/like', to: 'stream#unlike'
       get 'stream/m/:query', to: 'stream#view_mention'
       get 'stream/h/:query', to: 'stream#view_hash_tag'
       get 'stream/:id/like', to: 'stream#show_likes'
+
       get 'user/new_seamail', to: 'user#new_seamail'
       delete 'user/mentions', to:'user#reset_mentions'
       get 'user/mentions', to:'user#mentions'
@@ -89,6 +92,7 @@ Twitarr::Application.routes.draw do
       get 'user/photo/:username', to: 'user#get_photo'
       post 'user/photo', to: 'user#update_photo'
       delete 'user/photo', to: 'user#reset_photo'
+
       get 'hashtag/repopulate', to: 'hashtag#populate_hashtags'
       get 'hashtag/ac/:query', to: 'hashtag#auto_complete'
 
