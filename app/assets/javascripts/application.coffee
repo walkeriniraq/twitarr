@@ -13,12 +13,16 @@
 
 #= require_self
 #= require twitarr
+#= require router
 
 window.console = { log: -> } unless window.console?
 
 $.ajaxSetup
   beforeSend: (jqXHR) ->
     jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+
+@ie_browser = !!navigator.userAgent.match(/Trident\/\d+/)
+@ff_browser = !!navigator.userAgent.match(/Firefox\/\d+/)
 
 if (navigator.userAgent.match(/IEMobile\/10\.0/))
   msViewportStyle = document.createElement('style')

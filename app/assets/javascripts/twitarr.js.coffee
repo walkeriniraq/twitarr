@@ -1,20 +1,12 @@
+#= require_tree ./modules
 #= require_self
 #= require_tree ./controllers
 # require_tree ./helpers
-#= require_tree ./models
 # require_tree ./routes
-#= require_tree ./templates
-#= require_tree ./views
+# require_tree ./templates
+# require_tree ./views
 
 @Twitarr = angular.module('twitarr', ['ngRoute', 'ngSanitize'])
-
-@Twitarr.config(['$routeProvider', ($routeProvider) ->
-  $routeProvider.
-    otherwise({
-      templateUrl: '/templates/stream.html',
-      controller: 'StreamCtrl'
-    }) 
-])
 
 pretty_username = (username, display_name) ->
   if !!display_name && username isnt display_name

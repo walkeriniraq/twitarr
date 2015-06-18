@@ -1,4 +1,4 @@
-<div class="card-section section-with-photo clickable" {{action 'view_thread' model bubbles=false}}>
+<div class="card-section section-with-photo clickable" ng-click="viewThread(post.id)" {{model}}>
 
   <div class="section-photo">
     <a href="#user/author"><img class='profile_photo' src='/api/v2/user/photo/{{post.author}}'/></a>
@@ -6,7 +6,7 @@
 
   <span class="title">
 
-    <a href="#user/author">{{post.author? post.display_name : post.author}}</a>
+    <a href="#/user/{{post.author}}">{{post.author? post.display_name : post.author}}</a>
   </span>
 
   <span class='timestamp' title='{{post.timestamp}}'>{{post.timestamp_ago.fromNow()}}</span>

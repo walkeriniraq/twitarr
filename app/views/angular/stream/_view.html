@@ -1,0 +1,39 @@
+<div class="main-page-header">
+  <span class="controls">
+    <button class="btn" {{#action 'reload'}}>Refresh</button>
+  </span>
+</div>
+
+<div ng-if="parents.length > 0">
+  <div class="display_card small" ng-repeat="post in parents | orderBy :'timestamp' track by post.id">
+    <ng-include src="'/stream/post_partial.html'"></ng-include>
+  </div>
+</div>
+
+<div class="display_card">
+  <ng-include src="'/stream/post_partial.html'"></ng-include>
+</div>
+
+<div class="display_card small" ng-if="post.children != []" ng-repeat="post in children | orderBy :'timestamp' track by post.id">
+  <ng-include src="'/stream/post_partial.html'"></ng-include>
+</div>
+
+<div class="display_card">
+  <div class="card-section">
+    <div class="title big-title">Reply</div>
+    <div class="form">
+
+      <textarea rows="3" class="input"></textarea>
+      <!-- {{#view 'upload'}} -->
+
+      <ul class="errors-list">
+        <!-- {{#each error in errors}}
+          <li>{{#error}}</li>
+        {{#/each}} -->
+      </ul>
+      <span class="controls">
+        <button class="btn" {{#action 'new'}}>Post</button>
+      </span>
+    </div>
+  </div>
+</div>

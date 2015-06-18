@@ -1,17 +1,16 @@
 <div class="main-page-header header-with-controls">
   <div class="controls">
-    <button class="btn" {{action 'show_new_post'}} {{bind-attr class="new_post_button_visible::hidden :btn"}}>New Post</button>
-    <button class="btn" {{action 'reload'}}>Refresh</button>
+    <button class="btn" ng-click="toggle_new_post()" ng-if="new_post_button_visible">New Post</button>
+    <button class="btn" ng-click="reloadTweets()">Refresh</button>
   </div>
 
   <div class="title">Tweets</div>
 </div>
 
-<div class="display_card" {{bind-attr class="new_post_visible::hidden :display_card"}}>
+<div class="display_card" ng-if="new_post_visible">
   <div class="card-section">
     <div class="form">
       <textarea rows="3" class="input"></textarea>
-      <!-- {{textarea value=new_post rows='3' class='input'}} -->
       <!-- {{view 'upload'}} -->
 
       <ul class="errors-list">
@@ -20,24 +19,27 @@
         {{/each}} -->
       </ul>
       <span class="controls">
-        <button class="btn" {{action 'cancel'}}>Cancel</button>
+        <button class="btn" ng-click="toggle_new_post()">Cancel</button>
         <button class="btn" {{action 'new'}}>Post</button>
       </span>
     </div>
   </div>
 </div>
 
-<div class="display_card" ng-repeat="post in posts">
-  <ng-include src="'/templates/stream/post_partial.html'"></ng-include>
-  <!-- {{#each post in posts}}
-    {{render "stream.post_partial" post}}
-  {{/each}} -->
+<div class="display_card" ng-repeat="post in posts track by post.id">
+  <ng-include src="'/stream/post_partial.html'"></ng-include>
 </div>
 
+<div class="display_card center" ng-if="loading_posts">
+  <h4>Loading...</h4>
+</div>
+
+<!--
 <div class="footer-controls">
-  <!-- {{#if has_next_page}} -->
+   {{#if has_next_page}}
     <div class="card-section">
       <button class="controls btn" {{action 'next_page'}}>Next</button>
     </div>
-  <!-- {{/if}} -->
+  {{/if}}
 </div>
+-->

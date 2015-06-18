@@ -1,4 +1,4 @@
-@Twitarr.controller 'NavCtrl', ($scope) ->
+@Twitarr.controller 'NavCtrl', ['$scope', ($scope) ->
 	$scope.logged_in = false
 	$scope.logged_in_admin = false
 	$scope.user = ""
@@ -7,3 +7,4 @@
 	$scope.menu_toggle = ->
 		$('#side-menu').animate { width: 'toggle' }, 100
 		return
+]

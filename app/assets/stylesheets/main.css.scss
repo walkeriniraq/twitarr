@@ -161,11 +161,14 @@ body {
   .menu-toggle {
     @extend .button;
     @include border-radius(4px);
+    border-radius: 0;
     background-color: #FFCA73;
-    border: 1px solid #02614A;
+    border: none;
+    border-right: 1px solid #02614A;
     float: left;
-    margin: 8px 16px;
-    padding: 9px 10px 5px;
+    padding: 9px 14px 5px;
+    height: 100%;
+    box-shadow: none;
 
     .icon-bar {
       background-color: #02614A;
@@ -180,7 +183,7 @@ body {
   .menu-brand {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     float: left;
-    padding: 10px;
+    padding: 12px;
     font-size: 18px;
     color: #444;
 
@@ -474,6 +477,13 @@ img.photo {
   margin-bottom: 0.6em;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
+  &.small {
+    margin: 0.6em 10px;
+    .card-section .body {
+      font-size: medium;
+    }
+  }
+
   .card_title {
     @extend .clearfix;
     margin: 0.2em 0.4em;
@@ -605,6 +615,12 @@ img.photo {
 .hidden {
   display: none;
 }
+.top-bar-search {
+  margin: 3px;
+  .top-bar-search-text {
+    width: 74%
+  }
+}
 @media (max-width: 550px) {
   .top-bar-search {
     display: none;
@@ -628,4 +644,7 @@ img.photo {
 
 .right {
   float: right !important;
+}
+.center {
+  text-align: center;
 }
