@@ -33,6 +33,10 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
   )
   document.querySelector('head').appendChild(msViewportStyle)
 
+@close_photo = ->
+  $("#photo_modal").hide()
+  $("#photo_modal #photo-holder img").attr("src", "")
+
 # These two functions are useful if we end up doing hashtag and username autocompletion
 # (($, undefined_) ->
 #   $.fn.getCursorPosition = ->

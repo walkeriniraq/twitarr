@@ -58,10 +58,12 @@ html {
 }
 
 #app-loading {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 200px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;  
 }
 
 #main {

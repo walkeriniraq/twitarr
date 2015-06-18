@@ -22,7 +22,6 @@ class StreamPostDecorator < BaseDecorator
         entities: entities,
         hash_tags: hash_tags,
         location: location,
-        parent_chain: parent_chain
     }
     unless photo.blank?
       result[:photo] = { id: photo, animated: PhotoMetadata.find(photo).animated }

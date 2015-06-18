@@ -75,7 +75,6 @@
 
 @Twitarr.controller 'StreamPostCtrl', ['$scope', '$http', '$routeParams', "$location", ($scope, $http, $routeParams, $location) ->
   $scope.post = null
-  $scope.replies = []
   $scope.parents = []
   $scope.children = []
 
@@ -91,33 +90,51 @@
     last = likes.pop()
     likes.join(', ') + " and #{last} like this."
 
+  formatTweet = (data) ->
+    tweet = data
+    tweet.root = true
+    tweet.likes = likes_string(data.likes)
+    tweet.timestamp_ago = moment(data.timestamp)
+    return tweet
+
+  formatTweets = (data) ->
+    tweets = []
+    i = 0
+    while i < data.length
+      data[i].likes = likes_string(data[i].likes)
+      data[i].timestamp_ago = moment(data[i].timestamp)
+      tweets.push data[i]
+      i++
+    return tweets
+
   getTweet = (id) ->
     $http.get("/api/v2/stream/#{id}").success (data) ->
-      $scope.post = data
-      $scope.post.likes = likes_string(data.likes)
-      $scope.post.timestamp_ago = moment(data.timestamp)
-      $scope.children = data.children
-      
-  getParents = (post) ->
-    if post == null
+      $scope.post = formatTweet(data)
+      $scope.children = formatTweets(data.children) if data.children != undefined
+      $scope.parents = formatTweets(data.parents) if data.parents != undefined
+
+  finishLoading = ->
+    if $scope.post == null
       # Loop until useful.
-      window.setTimeout(getParents,100, $scope.post)
+      window.setTimeout(finishLoading,10)
     else
-      parents = []
-      i = 0
-      while i < post.parent_chain.length
-        $http.get("/api/v2/stream/#{post.parent_chain[i]}").success (data) ->
-          tweet = data
-          tweet.likes = likes_string(data.likes)
-          tweet.timestamp_ago = moment(data.timestamp)
-          $scope.parents.push tweet
-        i++
-
-
+      $("#tweetContainer").fadeIn(80)
 
   $scope.viewThread = (id) ->
     $location.path("/stream/tweet/#{id}")
 
+  $scope.refresh = ->
+    $("#tweetContainer").hide()
+    $scope.post = null
+    $scope.parents = []
+    $scope.children = []
+    getTweet($routeParams.page)
+    finishLoading()
+
+  $scope.displayPhoto = (id) -> 
+    $("#photo_modal #photo-holder img").attr("src", "/photo/full/#{id}")
+    $("#photo_modal").show()
+
   getTweet($routeParams.page)
-  getParents($scope.post)
+  finishLoading()
 ]

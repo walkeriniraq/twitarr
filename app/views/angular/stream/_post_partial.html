@@ -1,4 +1,4 @@
-<div class="card-section section-with-photo clickable" ng-click="viewThread(post.id)" {{model}}>
+<div class="card-section section-with-photo" ng-click="viewThread(post.id)" ng-class="{clickable: !post.root}" {{model}}>
 
   <div class="section-photo">
     <a href="#user/author"><img class='profile_photo' src='/api/v2/user/photo/{{post.author}}'/></a>
@@ -12,12 +12,9 @@
   <span class='timestamp' title='{{post.timestamp}}'>{{post.timestamp_ago.fromNow()}}</span>
 
   <div class="body">
-    <div class="body-section" ng-bind-html="post.text">
-    </div>
-    <div class="body-section photos">
-      <!-- {{#if photo}}
-        {{render 'photo_mini' photo }}
-      {{/if}} -->
+    <div class="body-section" ng-bind-html="post.text"></div>
+    <div class="body-section photos" ng-if="post.photo">
+      <ng-include src="'/shared/photo_mini.html'"></ng-include>
     </div>
   </div>
   <div class="controls">

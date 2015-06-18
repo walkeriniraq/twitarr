@@ -1,0 +1,2 @@
+<img ng-if="post.photo.animated" src="/img/play_overlay.png" {{action 'display_photo' model}} ng-click="displayPhoto(post.photo.id)" class="photo" style="/photo/small_thumb/{{post.photo.id}}" />
+<img ng-if="!post.photo.animated" src="/photo/small_thumb/{{post.photo.id}}" ng-click="displayPhoto(post.photo.id)" {{action 'display_photo' model}} class="photo"/>

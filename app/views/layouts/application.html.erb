@@ -81,8 +81,12 @@
     <div id='main' ng-view>
       <%= yield %>
     </div>
+
   </div>
 
+  <div id="photo_modal" style="display: none;">
+    <ng-include src="'/shared/photo_view.html'"></ng-include>
+  </div>
   <%# Show everything once we're all loaded. -%>
   <script type="text/javascript">
     $("#app-loading").hide()

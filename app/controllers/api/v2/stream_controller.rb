@@ -42,10 +42,11 @@ class API::V2::StreamController < ApplicationController
     show_options = request_options
     show_options[:remove] = [:parent_chain]
     children = StreamPost.where(parent_chain: params[:id]).limit(limit).skip(start_loc*limit).order_by(timestamp: :asc).map { |x| x.decorate.to_hash(current_username, show_options) }
+    parents = StreamPost.find(@post.parent_chain).map { |x| x.decorate.to_hash(current_username, show_options) }
+    puts parents
     post_result = @post.decorate.to_hash(current_username, request_options)
-    if children and children.length > 0
-      post_result[:children] = children
-    end
+    post_result[:children] = children if children and children.length > 0
+    post_result[:parents] = parents if parents and parents.length > 0
     render_json post_result
   end
 
