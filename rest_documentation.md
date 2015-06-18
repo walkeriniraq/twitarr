@@ -490,3 +490,121 @@ Modify the user's profile photo
 ### DELETE /api/v2/user/photo
 
 Reset the user's profile to the default identicon image
+
+## Event Information
+
+Get/post information on events.
+
+### Stream specific types
+
+    JSON EventMeta {
+        "id": "id_string",
+        "author": "username_string",
+        "display_name": "displayname_string",
+        "title": "title_string",
+        "location": "location_string",
+        "start_time": "ISO_8601_DATETIME",
+        "end_time": "ISO_8601_DATETIME",
+        "signups": ["username_string", …],
+        "description": "marked up text",
+        "max_signups": null|Integer
+    }
+
+### GET /api/v2/event/
+
+#### Requires
+
+#### Query parameters
+
+* sort_by=variable name - Optional (Default: start_time) - First variable query is sorted by
+* order=asc|desc - Optional (Default: desc) - Second variable query is searched by, ascending or descending
+
+#### Returns
+
+    JSON Object { "total_count": 5,
+                  "events": Array[ EventMeta {…}, … ],
+                }
+
+
+### POST /api/v2/event/
+
+Posts an event.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+#### Json Request Body
+
+    JSON Object {
+      "title": "string",
+      "start_time": "ISO_8601_DATETIME",
+      "location": "string",
+      "description": "string",
+      "end_time": "ISO_8601_DATETIME",
+      "max_signups": integer
+    }
+    
+
+* Description, end_time and max_signups are all optional fields. 
+
+#### Returns
+
+    JSON EventMeta {…}
+
+
+### GET /api/v2/event/:id
+
+Get details of an event.
+
+#### Requires
+
+#### Query parameters
+
+#### Returns
+
+    JSON EventMeta {…}
+
+
+### DELETE /api/v2/event/:id
+
+Destroy an owned event.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+A user may only delete their events, unless they are an admin.
+
+#### Returns
+
+No body. 200-OK
+
+
+### PUT /api/v2/event/:id
+
+Allows the user to edit the description, location, start and end times and max signups. Title is not modifyable.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+A user may only edit their events, unless they are an admin.
+
+#### Json Request Body
+
+    JSON Object {
+      "description": "string",
+      "location": "string",
+      "start_time": "ISO_8601_DATETIME",
+      "end_time": "ISO_8601_DATETIME",
+      "max_signups": integer
+    }
+    
+
+#### Returns
+
+    JSON EventMeta {…}
