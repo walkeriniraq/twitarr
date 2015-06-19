@@ -118,12 +118,14 @@
       # Loop until useful.
       window.setTimeout(finishLoading,10)
     else
+      $("#loading-overlay").fadeOut(50)
       $("#tweetContainer").fadeIn(80)
 
   $scope.viewThread = (id) ->
     $location.path("/stream/tweet/#{id}")
 
   $scope.refresh = ->
+    $("#loading-overlay").show()
     $("#tweetContainer").hide()
     $scope.post = null
     $scope.parents = []
@@ -135,6 +137,7 @@
     $("#photo_modal #photo-holder img").attr("src", "/photo/full/#{id}")
     $("#photo_modal").show()
 
+  $("#loading-overlay").fadeIn(50)
   getTweet($routeParams.page)
   finishLoading()
 ]
