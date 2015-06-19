@@ -1,0 +1,12 @@
+<div class="full-screen-overlay" ng-click="hide_login()"></div>
+<form id="login-modal" ng-submit="submit_login(user)">
+  <img class="close" ng-click="hide_login()" src="/img/close-icon.png" />
+  <h3>Sign in</h3>
+  <div class="input-container">
+    <input type="text" id="loginUsername" class="form-control" ng-model="user.username" placeholder="Username" required>
+    <input type="password" id="loginPassword" class="form-control" ng-model="user.password" placeholder="Password" required>
+  </div>
+  <button class="btn right" type="submit" ng-disabled="form.$invalid">Sign in</button>
+  <a href="/#/signup">I want to join!</a><br>
+  <a href="/#/forgot_password">I forgot my daggone password!</a>
+</form>

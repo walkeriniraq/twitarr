@@ -10,6 +10,8 @@
 # require angular-animate
 #= require angular-resource
 #= require angular-sanitize
+#= require angular-cookies
+#= require angularLocalStorage
 
 #= require_self
 #= require twitarr

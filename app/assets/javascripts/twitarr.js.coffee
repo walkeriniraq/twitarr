@@ -6,7 +6,7 @@
 # require_tree ./templates
 # require_tree ./views
 
-@Twitarr = angular.module('twitarr', ['ngRoute', 'ngSanitize'])
+@Twitarr = angular.module('twitarr', ['ngRoute', 'ngSanitize', 'angularLocalStorage', 'twitarr.User'])
 
 pretty_username = (username, display_name) ->
   if !!display_name && username isnt display_name
