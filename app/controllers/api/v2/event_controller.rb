@@ -1,8 +1,9 @@
+require 'csv'
 class API::V2::EventController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   before_filter :login_required, :only => [:create, :destroy, :updater, :signup, :destroy_signup]
-  before_filter :fetch_event, :except => [:index, :create]
+  before_filter :fetch_event, :except => [:index, :create, :csv]
 
   def login_required
     head :unauthorized unless logged_in? || valid_key?(params[:key])
@@ -14,6 +15,55 @@ class API::V2::EventController < ApplicationController
     rescue Mongoid::Errors::DocumentNotFound
       render status: 404, json: {status:'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
     end
+  end
+
+  def csv
+    sort_by = (params[:sort_by] || 'start_time').to_sym
+    order = (params[:order] || 'desc').to_sym
+    query = Event.all.order_by([sort_by, order])
+    puts query
+    result = CSV.generate do |csv|
+      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Signups", "Maximum Signups"]
+      query.each do |q|
+        csv << [
+          q.id,
+          q.title,
+          q.author,
+          User.display_name_from_username(q.author),
+          q.location,
+          q.start_time,
+          q.end_time,
+          q.description,
+          q.signups.join(", "),
+          q.max_signups
+        ]
+      end
+    end
+    send_data result, type: "text/csv", disposition: "attachment; filename=events.csv"
+  end
+
+
+  def ical
+    # Yes this is based off vcard. They're really similar!
+    cal_string = "BEGIN:VCALENDAR\n"
+    cal_string << "VERSION:2.0\n"
+    cal_string << "PRODID:-//twitarrteam/twitarr//NONSGML v1.0//END\n"
+
+    cal_string << "BEGIN:VEVENT\n"
+    cal_string << "UID:#{@event.id}@twitarr.local\n"
+    cal_string << "DTSTAMP:#{@event.start_time.strftime('%Y%m%dT%H%M%S')}\n"
+    cal_string << "ORGANIZER:CN=#{User.display_name_from_username(@event.author)}\n"
+    cal_string << "DTSTART:#{@event.start_time.strftime('%Y%m%dT%H%M%S')}\n"
+    cal_string << "DTEND:#{@event.end_time.strftime('%Y%m%dT%H%M%S')}\n" unless @event.end_time.blank?
+    cal_string << "SUMMARY:#{@event.title}\n"
+    cal_string << "DESCRIPTION:#{@event.description}\n"
+    cal_string << "LOCATION:#{@event.location}\n"
+    cal_string << "END:VEVENT\n"
+
+    cal_string << "END:VCALENDAR"
+    headers['Content-Disposition'] = "inline; filename=\"#{@event.title.parameterize('_')}.ics\""
+
+    render body: cal_string, content_type: 'text/vcard', layout: false
   end
 
   def signup
