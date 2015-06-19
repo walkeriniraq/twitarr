@@ -1,7 +1,7 @@
 class API::V2::EventController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_filter :login_required, :only => [:create, :destroy, :updater]
+  before_filter :login_required, :only => [:create, :destroy, :updater, :signup, :destroy_signup]
   before_filter :fetch_event, :except => [:index, :create]
 
   def login_required
@@ -12,7 +12,30 @@ class API::V2::EventController < ApplicationController
     begin
       @event = Event.find(params[:id])
     rescue Mongoid::Errors::DocumentNotFound
-      render status:404, json: {status:'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
+      render status: 404, json: {status:'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
+    end
+  end
+
+  def signup
+    render json:[{error:'Max signups has already been reached'}], status: :forbidden and return if @event.signups.length >= @event.max_signups
+    render json:[{error:'You have already signed up for this event'}], status: :forbidden and return if @event.signups.include? current_username
+    @event.signups << current_username
+    @event.save
+    if @event.valid?
+      render_json event: @event.decorate.to_hash
+    else
+      render_json errors: @event.errors.full_messages
+    end
+  end
+
+  def destroy_signup
+    render json:[{error:'You have not signed up for this event'}], status: :forbidden and return if !@event.signups.include? current_username
+    @event.signups = @event.signups - [current_username]
+    @event.save
+    if @event.valid?
+      render_json event: @event.decorate.to_hash
+    else
+      render_json errors: @event.errors.full_messages
     end
   end
 

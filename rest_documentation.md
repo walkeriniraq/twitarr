@@ -608,3 +608,34 @@ A user may only edit their events, unless they are an admin.
 #### Returns
 
     JSON EventMeta {…}
+
+
+### POST /api/v2/event/:id/signup
+
+Allows the user signup to an event.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+#### Query parameters
+
+#### Returns
+
+    JSON EventMeta {…}
+
+### DELETE /api/v2/event/:id/signup
+
+Allows the user to remove their signup from an event.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+#### Query parameters
+
+#### Returns
+
+    JSON EventMeta {…}
