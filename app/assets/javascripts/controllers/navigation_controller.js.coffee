@@ -1,4 +1,4 @@
-@Twitarr.controller 'NavCtrl', ['$scope','$http', 'UserService', ($scope, $http,UserService) ->
+@Twitarr.controller 'NavCtrl', ($scope, $http, $route, UserService) ->
   $scope.user = UserService.get()
   $scope.display_name = ""
   $scope.alerts = false
@@ -17,9 +17,18 @@
 
   $scope.logout = (user) ->
     console.log 'Logging out'
-    user.loggedIn = false
-    UserService.reset user
-    user = UserService.get()
+    url = '/api/v2/user/logout'
+    $http(
+      method: 'GET'
+      url: url
+      cache: false
+      timeout: 5000
+      headers: Accept: 'application/json').success((data, status, headers, config) ->
+        user.loggedIn = false
+        UserService.reset user
+        user = UserService.get()
+        $route.reload()
+    )
 
   $scope.submit_login = (user) ->
     console.log 'Logging in.'
@@ -70,6 +79,8 @@
         loginPasswordElement.toggleClass("disabled")
         loginPasswordElement.text = ""
         $scope.hide_login()
+        # Try to refresh the page, otherwise we get stuff like "[Your username] likes this" instead of "You like this"
+        $route.reload()
         return)
       return
     ).error (data, status, headers, config) ->
@@ -87,6 +98,3 @@
       loginUsernameElement.toggleClass("disabled")
       loginPasswordElement.toggleClass("disabled")
       return
-
-
-]

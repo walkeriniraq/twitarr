@@ -34,6 +34,9 @@
   &.input-short {
     width: 10em;
   }
+  &.disabled {
+    background-color: #ddd;
+  }
 
   &:focus {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
@@ -131,6 +134,10 @@ html {
     outline: none;
     color: #8D031C;
     text-decoration: none;
+  }
+  &.disabled {
+      background-color: #ccc;
+      border: 1px outset #444;
   }
 }
 

@@ -1,7 +1,7 @@
 <div class="main-page-header header-with-controls">
   <div class="controls">
-    <button class="btn" ng-click="toggle_new_post()" ng-if="new_post_button_visible">New Post</button>
-    <button class="btn" ng-click="reloadTweets()">Refresh</button>
+    <button class="btn" ng-click="toggle_new_post()" ng-if="user.loggedIn">New Post</button>
+    <button class="btn" id="refreshButton" ng-click="refresh()">Refresh</button>
   </div>
 
   <div class="title">Tweets</div>
@@ -9,37 +9,24 @@
 
 <div class="display_card" ng-if="new_post_visible">
   <div class="card-section">
-    <div class="form">
-      <textarea rows="3" class="input"></textarea>
+    <form ng-controller="NewPostCtrl" ng-submit="submit(newpost)">
+      <textarea rows="3" class="input" name="text" ng-disabled="submitting" ng-class="{disabled: submitting}" ng-model="newPost.text"></textarea>
       <!-- {{view 'upload'}} -->
 
       <ul class="errors-list">
-        <!-- {{#each error in errors}}
-          <li>{{error}}</li>
-        {{/each}} -->
+        <li ng-repeat="error in errors">{{error}}</li>
       </ul>
       <span class="controls">
-        <button class="btn" ng-click="toggle_new_post()">Cancel</button>
-        <button class="btn" {{action 'new'}}>Post</button>
+        <button class="btn" ng-disabled="submitting"  ng-class="{disabled: submitting}" ng-click="toggle_new_post()">Cancel</button>
+        <button type="submit" ng-disabled="newPost.text.length <= 0 || submitting" ng-class="{disabled: newPost.text.length <= 0 || submitting}" class="btn">Post</button>
       </span>
-    </div>
+    </form>
   </div>
 </div>
 
-<div class="display_card" ng-repeat="post in posts track by post.id">
-  <ng-include src="'/stream/post_partial.html'"></ng-include>
+<div class="display_card" ng-repeat="post in posts track by post.id" ng-include="'/stream/post_partial.html'">
 </div>
 
 <div class="display_card center" ng-if="loading_posts">
   <h4>Loading...</h4>
 </div>
-
-<!--
-<div class="footer-controls">
-   {{#if has_next_page}}
-    <div class="card-section">
-      <button class="controls btn" {{action 'next_page'}}>Next</button>
-    </div>
-  {{/if}}
-</div>
--->

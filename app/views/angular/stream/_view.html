@@ -1,7 +1,7 @@
 <div id="tweetContainer" style="display: none;">
   <div class="main-page-header">
     <span class="controls">
-      <button class="btn" ng-click="refresh()">Refresh</button>
+      <button class="btn" id="refreshButton" ng-click="refresh()">Refresh</button>
     </span>
   </div>
 
@@ -11,12 +11,10 @@
     </div>
   </div>
 
-  <div class="display_card">
-    <ng-include src="'/stream/post_partial.html'"></ng-include>
+  <div class="display_card" ng-include="'/stream/post_partial.html'">
   </div>
 
-  <div class="display_card small" ng-if="post.children != []" ng-repeat="post in children | orderBy :'timestamp' track by post.id">
-    <ng-include src="'/stream/post_partial.html'"></ng-include>
+  <div class="display_card small" ng-if="post.children != []" ng-repeat="post in children | orderBy :'timestamp' track by post.id" ng-include="'/stream/post_partial.html'">
   </div>
 
   <div class="display_card">

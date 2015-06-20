@@ -30,7 +30,7 @@ Then you will need `jruby` installed.  The easiest way to do this is to install 
 To install [RVM](http://rvm.io/) run:
 
 ```
-  $ \curl -sSL https://get.rvm.io | bash -s stable
+  $ curl -sSL https://get.rvm.io | bash -s stable
 ```
 
 Then install `jruby` via [RVM](http://rvm.io/):

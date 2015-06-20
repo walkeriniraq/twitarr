@@ -1,4 +1,4 @@
-<div class="card-section section-with-photo" ng-click="viewThread(post.id)" ng-class="{clickable: !post.root}" {{model}}>
+<div class="card-section section-with-photo" ng-class="{clickable: !post.root}" {{model}}>
 
   <div class="section-photo">
     <a href="#user/author"><img class='profile_photo' src='/api/v2/user/photo/{{post.author}}'/></a>
@@ -12,7 +12,7 @@
   <span class='timestamp' title='{{post.timestamp}}'>{{post.timestamp_ago.fromNow()}}</span>
 
   <div class="body">
-    <div class="body-section" ng-bind-html="post.text"></div>
+    <div class="body-section" ng-bind-html="post.text" ng-click="viewThread(post.id)"></div>
     <div class="body-section photos" ng-if="post.photo">
       <ng-include src="'/shared/photo_mini.html'"></ng-include>
     </div>
@@ -21,12 +21,12 @@
     <div>
       {{post.likes}}
     </div>
-    <div>
-      <button class="btn-link" {{action 'unlike' model bubbles=false}} ng-if="post.unlikable">Unlike</button>
-      <button class="btn-link" {{action 'like' model bubbles=false}} ng-if="post.likeable">Like</button>
-      <button class="btn-link" {{action 'edit' id bubbles=false}} ng-if="post.editable">Edit</button>
-      <button class="btn-link" {{action 'display_tweet' id bubbles=false}} {{bind-attr class="logged_in::hidden :btn-link"}}>Reply</button>
-      <Button class="btn-link" {{action 'delete' id bubbles=false}} ng-if="post.deleteable">Delete</button>
+    <div ng-if="user.loggedIn">
+      <button class="btn-link" ng-click="unlike(post)" ng-if="post.user_likes">Unlike</button>
+      <button class="btn-link" ng-click="like(post)" ng-if="!post.user_likes">Like</button>
+      <button class="btn-link" {{action 'edit' id bubbles=false}} ng-if="post.owned">Edit</button>
+      <button class="btn-link" {{action 'display_tweet' id bubbles=false }}>Reply</button>
+      <Button class="btn-link" ng-click="delete(post)" ng-if="post.owned">Delete</button>
     </div>
   </div>
 </div>
