@@ -84,6 +84,10 @@
         return)
       return
     ).error (data, status, headers, config) ->
+      if data.status == "incorrect password or username"
+        $scope.$emit('alert', {messages: ["Incorrect username or password"]})
+      else
+        $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
       console.log 'Failure!'
       console.log 'URL:' + url
       console.log 'Status:' + status

@@ -1,4 +1,4 @@
-@Twitarr.controller 'AlertBarCtrl', ($scope, $http, $route, UserService) ->
+@Twitarr.controller 'AlertBarCtrl', ($rootScope, $scope, $http, $route, UserService) ->
   $scope.displayed_alerts = []
   displayed = false
 
@@ -26,7 +26,7 @@
       if $scope.$root.$$phase != '$apply' and $scope.$root.$$phase != '$digest' 
         $scope.$apply();
 
-  $scope.$on('alert', (event, args) ->
+  $rootScope.$on('alert', (event, args) ->
     display_alerts args.messages
   )
-  #$scope.$broadcast('alert', {messages: ["Alert 1", "Alert 2"]})
+  #$scope.$emit('alert', {messages: ["Alert 1", "Alert 2"]})

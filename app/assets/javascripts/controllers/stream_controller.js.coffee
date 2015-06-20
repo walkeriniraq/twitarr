@@ -71,9 +71,14 @@ likes_string = (likes) ->
     #console.log "Posts loaded."
 
   getTweets = (page) ->
-    $http.get("/stream/#{page}").success (data) ->
+    $http(
+      method: 'GET'
+      url: "/stream/#{page}"
+    ).success((data) ->
       nextPage = data.next_page
-      addTweets(data.stream_posts);
+      addTweets(data.stream_posts)
+    ).error (data, status, headers, config) ->
+      $scope.$emit('alert', {messages: ["Could not load tweets. Perhaps the network is down?"]});
 
   $scope.refresh = ->
     $scope.posts = []
@@ -94,7 +99,8 @@ likes_string = (likes) ->
       headers: Accept: 'application/json').success((data, status, headers, config) ->
         post.likes = likes_string data.likes
         post.user_likes = !post.user_likes
-      )
+    ).error (data, status, headers, config) ->
+      $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     
     return
 
@@ -109,7 +115,8 @@ likes_string = (likes) ->
       headers: Accept: 'application/json').success((data, status, headers, config) ->
         post.likes = likes_string data.likes
         post.user_likes = !post.user_likes
-      )
+      ).error (data, status, headers, config) ->
+        $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     return
 
   $scope.delete = (post) ->
@@ -122,7 +129,8 @@ likes_string = (likes) ->
       timeout: 5000
       headers: Accept: 'application/json').success((data, status, headers, config) ->
         $scope.posts.splice $scope.posts.indexOf(post), 1
-      )
+      ).error (data, status, headers, config) ->
+        $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     return
 
   getTweets(firstPage)
@@ -207,7 +215,8 @@ likes_string = (likes) ->
       headers: Accept: 'application/json').success((data, status, headers, config) ->
         post.likes = likes_string data.likes
         post.user_likes = !post.user_likes
-      )
+      ).error (data, status, headers, config) ->
+        $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     
     return
 
@@ -222,7 +231,8 @@ likes_string = (likes) ->
       headers: Accept: 'application/json').success((data, status, headers, config) ->
         post.likes = likes_string data.likes
         post.user_likes = !post.user_likes
-      )
+      ).error (data, status, headers, config) ->
+        $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     return
 
   $scope.delete = (post) ->
@@ -235,7 +245,8 @@ likes_string = (likes) ->
       timeout: 5000
       headers: Accept: 'application/json').success((data, status, headers, config) ->
         $location.path("/stream")
-      )
+      ).error (data, status, headers, config) ->
+        $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     return
 
   $("#loading-overlay").fadeIn(50)
