@@ -18,6 +18,72 @@
   width: device-width;
 }
 
+@-moz-keyframes slide-in {
+  0% {
+    top: -100px
+  }
+  100% {
+    top: 0px;
+  }
+}
+@-webkit-keyframes slide-in {
+  0% {
+    top: -100px
+  }
+  100% {
+    top: 0px;
+  }
+}
+@-ms-keyframes slide-in {
+  0% {
+    top: -100px
+  }
+  100% {
+    top: 0px;
+  }
+}
+@keyframes slide-in {
+  0% {
+    top: -100px
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@-moz-keyframes slide-out {
+  0% {
+    top: 0px
+  }
+  100% {
+    top: -100px;
+  }
+}
+@-webkit-keyframes slide-out {
+  0% {
+    top: 0px
+  }
+  100% {
+    top: -100px;
+  }
+}
+@-ms-keyframes slide-out {
+  0% {
+    top: 0px
+  }
+  100% {
+    top: -100px;
+  }
+}
+@keyframes slide-out {
+  0% {
+    top: 0px
+  }
+  100% {
+    top: -100px;
+  }
+}
+
 @mixin border-radius($radius: 5px) {
   border-radius: $radius;
 }
@@ -76,6 +142,31 @@ html {
   max-width: 1000px;
   margin-top: 50px;
   padding: 1em;
+}
+
+#alert-bar {
+  display: none;
+  position: absolute;
+  overflow: hidden;
+  top: -100px;
+  padding: 5px;
+  z-index: 9999999;
+  width: 100%;
+  background-color: #387ef5;
+  border-bottom: 1px solid #836700;
+  -webkit-animation: slide-out 0.5s forwards;
+  -moz-animation: slide-out 0.5s forwards;
+  -o-animation: slide-out 0.5s forwards;
+  animation: slide-out 0.5s forwards;
+  p {
+    margin-bottom: 0;
+  }
+  &.on {
+    -webkit-animation: slide-in 0.5s forwards;
+    -moz-animation: slide-in 0.5s forwards;
+    -o-animation: slide-in 0.5s forwards;
+    animation: slide-in 0.5s forwards;
+  }
 }
 
 .static-main {

@@ -23,6 +23,10 @@
   </div>
   
   <div id="main-frame" style="display: none;">
+    <div ng-controller="AlertBarCtrl" id="alert-bar" ng-click="hide_alerts()">
+      <p class="center" ng-repeat="alert in displayed_alerts">{{alert}}</p>
+    </div>
+
     <div ng-controller="NavCtrl" ng-include="'/layout/sidebar.html'">
     </div>
 
