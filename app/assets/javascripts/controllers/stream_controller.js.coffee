@@ -79,6 +79,7 @@ likes_string = (likes) ->
       addTweets(data.stream_posts)
     ).error (data, status, headers, config) ->
       $scope.$emit('alert', {messages: ["Could not load tweets. Perhaps the network is down?"]});
+      $scope.loading_posts = false
 
   $scope.refresh = ->
     $scope.posts = []
