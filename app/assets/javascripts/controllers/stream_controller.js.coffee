@@ -13,6 +13,12 @@ likes_string = (likes) ->
   last = likes.pop()
   likes.join(', ') + " and #{last} like this."
 
+# This whole photo modal thing needs to be completely refactored
+display_photo = (id) ->
+  $("#open-full-btn").attr("href", "/photo/full/#{id}")
+  $("#photo_modal #photo-holder img").attr("src", "/photo/medium_thumb/#{id}")
+  $("#photo_modal").show()
+
 @Twitarr.controller 'NewPostCtrl', ($scope, $http, $route, UserService) ->
   $scope.submitting = false
   $scope.newPost = 
@@ -43,11 +49,12 @@ likes_string = (likes) ->
 # Okay. Apparently this is impossible to pass objects between controllers well      #
 # which makes it much harder to just have a controller for indiviudal posts...      #
 #####################################################################################
-@Twitarr.controller 'StreamCtrl', ($scope, $http, $location, UserService) ->
+@Twitarr.controller 'StreamCtrl', ($scope, $rootScope, $http, $location, UserService) ->
   $scope.user = UserService.get()
   $scope.posts = []
   $scope.new_post_visible = false
   $scope.loading_posts = false
+  $scope.like_button = $rootScope.like_button_str
   firstPage = Math.ceil(new Date().valueOf() + 1000)
   nextPage = 0
 
@@ -88,6 +95,18 @@ likes_string = (likes) ->
 
   $scope.viewThread = (id) ->
     $location.path("/stream/tweet/#{id}")
+
+  $scope.displayPhoto = (id) -> 
+    display_photo(id)
+    return false
+
+  $scope.toggle_meow = () ->
+    if $rootScope.like_button_str == "like"
+      $rootScope.like_button_str = "meow"
+    else
+      $rootScope.like_button_str = "like"
+    $scope.like_button = $rootScope.like_button_str 
+    $scope.$emit('alert', {messages: ["MEOW!"]})
 
   $scope.like = (post) ->
     $http(
@@ -150,10 +169,11 @@ likes_string = (likes) ->
       $scope.loading_posts = true
       getTweets(nextPage)
 
-@Twitarr.controller 'StreamViewCtrl', ($scope, $http, $routeParams, $location) ->
+@Twitarr.controller 'StreamViewCtrl', ($scope, $rootScope, $http, $routeParams, $location) ->
   $scope.post = null
   $scope.parents = []
   $scope.children = []
+  $scope.like_button = $rootScope.like_button_str
 
   formatTweet = (data) ->
     tweet = data
@@ -202,8 +222,8 @@ likes_string = (likes) ->
     finishLoading()
 
   $scope.displayPhoto = (id) -> 
-    $("#photo_modal #photo-holder img").attr("src", "/photo/full/#{id}")
-    $("#photo_modal").show()
+    display_photo(id)
+    return false # This is here to avoid a false positive error from angular: https://docs.angularjs.org/error/$parse/isecdom#implicit-returns-in-coffeescript
 
   $scope.like = (post) ->
     $http(
@@ -249,6 +269,14 @@ likes_string = (likes) ->
       ).error (data, status, headers, config) ->
         $scope.$emit('alert', {messages: ["Unknown error. Perhaps the network is down?"]})
     return
+
+  $scope.toggle_meow = () ->
+    if $rootScope.like_button_str == "like"
+      $rootScope.like_button_str = "meow"
+    else
+      $rootScope.like_button_str = "like"
+    $scope.like_button = $rootScope.like_button_str
+    $scope.$emit('alert', {messages: ["MEOW!"]})
 
   $("#loading-overlay").fadeIn(50)
   getTweet($routeParams.page)

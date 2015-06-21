@@ -16,7 +16,9 @@
       <ul class="errors-list">
         <li ng-repeat="error in errors">{{error}}</li>
       </ul>
+      <a class="btn left" ng-if="newPost.text.toLowerCase().indexOf('meow') > -1 || like_button == 'meow'" ng-click="toggle_meow()">Meow</a>
       <span class="controls">
+
         <button class="btn" ng-disabled="submitting"  ng-class="{disabled: submitting}" ng-click="toggle_new_post()">Cancel</button>
         <button type="submit" ng-disabled="newPost.text.length <= 0 || submitting" ng-class="{disabled: newPost.text.length <= 0 || submitting}" class="btn">Post</button>
       </span>

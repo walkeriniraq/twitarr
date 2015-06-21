@@ -39,6 +39,8 @@ if (navigator.userAgent.match(/IEMobile\/10\.0/))
   $("#photo_modal").hide()
   $("#photo_modal #photo-holder img").attr("src", "")
 
+String.prototype.capitalize = () -> return this.charAt(0).toUpperCase() + this.slice(1)
+
 # These two functions are useful if we end up doing hashtag and username autocompletion
 # (($, undefined_) ->
 #   $.fn.getCursorPosition = ->

@@ -1,7 +1,7 @@
 <div class="card-section section-with-photo" ng-class="{clickable: !post.root}" {{model}}>
 
   <div class="section-photo">
-    <a href="#user/author"><img class='profile_photo' src='/api/v2/user/photo/{{post.author}}'/></a>
+    <a href="#user/author"><img class='profile_photo' ng-src='/api/v2/user/photo/{{post.author}}'/></a>
   </div>
 
   <span class="title">
@@ -22,8 +22,8 @@
       {{post.likes}}
     </div>
     <div ng-if="user.loggedIn">
-      <button class="btn-link" ng-click="unlike(post)" ng-if="post.user_likes">Unlike</button>
-      <button class="btn-link" ng-click="like(post)" ng-if="!post.user_likes">Like</button>
+      <button class="btn-link" ng-click="unlike(post)" ng-if="post.user_likes">Un{{like_button}}</button>
+      <button class="btn-link" ng-click="like(post)" ng-if="!post.user_likes">{{like_button.capitalize()}}</button>
       <button class="btn-link" {{action 'edit' id bubbles=false}} ng-if="post.owned">Edit</button>
       <button class="btn-link" {{action 'display_tweet' id bubbles=false }}>Reply</button>
       <Button class="btn-link" ng-click="delete(post)" ng-if="post.owned">Delete</button>

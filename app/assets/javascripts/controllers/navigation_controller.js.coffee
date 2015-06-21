@@ -1,4 +1,5 @@
-@Twitarr.controller 'NavCtrl', ($scope, $http, $route, UserService) ->
+@Twitarr.controller 'NavCtrl', ($scope, $rootScope, $http, $route, UserService) ->
+  $rootScope.like_button_str = "like"
   $scope.user = UserService.get()
   $scope.display_name = ""
   $scope.alerts = false

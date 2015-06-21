@@ -1,8 +1,8 @@
 <div class="full-screen-overlay" onclick="close_photo()">
   <div style="height: 10%;"></div>
   <div id="photo-modal">
-    <img class="close" onclick="close_photo()" src="/img/close-icon-white.png" />
-    <button class="btn open-full-size" ng-if="!animated" ng-click="open_full()">open full size</button>
+    <img class="close clickable" onclick="close_photo()" src="/img/close-icon-white.png" />
+    <a href="" target="_blank" id="open-full-btn" class="btn open-full-size" ng-if="!animated">open full size</a>
     <div id="photo-holder">
       <img src=""/>
     </div>

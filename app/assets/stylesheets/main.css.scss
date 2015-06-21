@@ -573,6 +573,10 @@ img.photo {
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .display_card {
   background-color: #f8fffb;
   border: 1px solid #02614A;
@@ -598,12 +602,9 @@ img.photo {
     padding: 0.2em;
     margin: 0.2em 0.4em;
 
-    &.clickable {
-      cursor: pointer;
-      &:hover {
-        background-color: #BFEEFC;
-        box-shadow: 0 0 4px 4px white inset;
-      }
+    &.clickable:hover {
+      background-color: #BFEEFC;
+      box-shadow: 0 0 4px 4px white inset;
     }
 
     &:first-child {

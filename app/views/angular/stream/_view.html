@@ -22,7 +22,7 @@
       <div class="title big-title">Reply</div>
       <div class="form">
 
-        <textarea rows="3" class="input"></textarea>
+        <textarea rows="3" ng-model="newPost.text" class="input"></textarea>
         <!-- {{#view 'upload'}} -->
 
         <ul class="errors-list">
@@ -30,6 +30,7 @@
             <li>{{#error}}</li>
           {{#/each}} -->
         </ul>
+        <a class="btn left" ng-if="newPost.text.toLowerCase().indexOf('meow') > -1 || like_button == 'meow'" ng-click="toggle_meow()">Meow</a>
         <span class="controls">
           <button class="btn" {{#action 'new'}}>Post</button>
         </span>
