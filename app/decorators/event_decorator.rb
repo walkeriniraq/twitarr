@@ -9,7 +9,8 @@ class EventDecorator < BaseDecorator
         title: title,
         location: location,
         start_time: start_time,
-        signups: signups
+        signups: signups,
+        favorites: favorites
     }
     result[:end_time] = end_time unless end_time.blank?
     result[:description] = description unless description.blank?

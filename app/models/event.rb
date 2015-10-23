@@ -10,6 +10,7 @@ class Event
   field :et, as: :end_time, type: Time
   field :ms, as: :max_signups, type: Integer
   field :su, as: :signups, type: Array, default: []
+  field :fa, as: :favorites, type: Array, default: []
   field :of, as: :official, type: Boolean
 
   validates :title, :author, :start_time, :location, presence: true
