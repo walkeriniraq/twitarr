@@ -12,9 +12,12 @@ class Event
   field :su, as: :signups, type: Array, default: []
   field :fa, as: :favorites, type: Array, default: []
   field :of, as: :official, type: Boolean
+  field :vi, as: :visibility, type: String, default: 'all'
+  field :sh, as: :shared, type: Boolean, default: true
 
-  validates :title, :author, :start_time, :location, presence: true
+  validates :title, :author, :start_time, :location, :visibility, presence: true
   validates :title, uniqueness: true
+  validates :visibility, inclusion: { in: ['all', 'invite', 'self'] }
 
   # 1 = ASC, -1 DESC
   index at_time: -1
