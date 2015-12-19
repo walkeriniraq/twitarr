@@ -92,3 +92,22 @@ Now we can finally run the rails server.  By default this server can be hit from
 ```
   $ rails server
 ```
+
+## Docker setup
+If you're not running on linux, or just want an isolated environment, you can run twitarr in docker.
+
+### Prereqs
+
+You'll need docker, docker-machine and docker-compose [download docker-toolbox](https://www.docker.com/docker-toolbox).  I used version 1.9.1
+
+The setup may automatically setup a docker virtual machine, or you create one with docker-machine.  Ultimately you'll want to set up your environment so `docker images` runs without errors.
+
+### steps
+1. Build and run
+```
+   $ docker-compose build
+   $ docker-compose up
+```
+
+This can take 10 minute to set up, as it generates indexes and seed data in mongo.
+Once it completes you can reach twitarr via http://{docker_ip}:3000 - for me on windows that's http://192.168.99.100:3000/

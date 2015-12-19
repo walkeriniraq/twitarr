@@ -1,0 +1,11 @@
+app:
+  build: .
+  ports:
+    - "3000:3000"
+  links:
+   - mongo
+mongo:
+  image: mongo:3.0
+
+# todo - volumes for app, and volumes-from for mongo
+# though it sounds like docker-compose takes care of the second (locally)

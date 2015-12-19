@@ -1,4 +1,4 @@
-# Ignore bundler config.
+ # Ignore bundler config.
 /.bundle
 
 # Ignore all logfiles and tempfiles.
@@ -26,6 +26,8 @@ tmp
 *.iml
 .sass-cache
 *.tmp
+*~
+*#
 temp/
 .rakeTasks
 
