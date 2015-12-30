@@ -15,7 +15,7 @@ class Event
   field :vi, as: :visibility, type: String, default: 'all'
   field :sh, as: :shared, type: Boolean, default: true
 
-  validates :title, :author, :start_time, :location, :visibility, presence: true
+  validates :title, :author, :start_time, :visibility, presence: true
   validates :title, uniqueness: true
   validates :visibility, inclusion: { in: ['all', 'invite', 'self'] }
 
@@ -27,9 +27,10 @@ class Event
     # TODO
   end
 
-  def self.create_new_event(author, title, start_time, location, options={})
-    event = Event.new(author: author, title: title, start_time: start_time, location: location)
+  def self.create_new_event(author, title, start_time, options={})
+    event = Event.new(author: author, title: title, start_time: start_time)
     event.description = options[:description] unless options[:description].nil?
+    event.location = options[:location] unless options[:location].nil?
     event.end_time = options[:end_time] unless options[:end_time].nil?
     event.max_signups = options[:max_signups] unless options[:max_signups].nil?
     event.save if event.valid?

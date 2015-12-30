@@ -131,7 +131,8 @@ class API::V2::EventController < ApplicationController
   end
 
   def create
-    event = Event.create_new_event(current_username, params[:title], params[:start_time], params[:location],
+    event = Event.create_new_event(current_username, params[:title], params[:start_time],
+      :location => params[:location],
       :description => params[:description],
       :end_time => params[:end_time],
       :max_signups => params[:max_signups]
