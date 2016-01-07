@@ -79,6 +79,8 @@ Twitarr::Application.routes.draw do
       get 'event/:id/ical', to: 'event#ical'
       post 'event/:id/signup', to: 'event#signup'
       delete 'event/:id/signup', to: 'event#destroy_signup'
+      post 'event/:id/favorite', to: 'event#favorite'
+      delete 'event/:id/favorite', to: 'event#destroy_favorite'
 
       post 'stream/:id/like', to: 'stream#like'
       delete 'stream/:id/like', to: 'stream#unlike'

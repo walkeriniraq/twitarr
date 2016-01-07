@@ -2,7 +2,7 @@ require 'csv'
 class API::V2::EventController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_filter :login_required, :only => [:create, :destroy, :updater, :signup, :destroy_signup]
+  before_filter :login_required, :only => [:create, :destroy, :updater, :signup, :destroy_signup, :favorite, :destroy_favorite]
   before_filter :fetch_event, :except => [:index, :create, :csv]
 
   def login_required
@@ -23,7 +23,7 @@ class API::V2::EventController < ApplicationController
     query = Event.all.order_by([sort_by, order])
     puts query
     result = CSV.generate do |csv|
-      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Signups", "Maximum Signups"]
+      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Signups", "Maximum Signups", "Favorites"]
       query.each do |q|
         csv << [
           q.id,
@@ -35,7 +35,8 @@ class API::V2::EventController < ApplicationController
           q.end_time,
           q.description,
           q.signups.join(", "),
-          q.max_signups
+          q.max_signups,
+          q.favorites.join(", ")
         ]
       end
     end
@@ -89,6 +90,28 @@ class API::V2::EventController < ApplicationController
     end
   end
 
+  def favorite
+    render json:[{error:'You have already favorited this event'}], status: :forbidden and return if @event.favorites.include? current_username
+    @event.favorites << current_username
+    @event.save
+    if @event.valid?
+      render_json event: @event.decorate.to_hash
+    else
+      render_json errors: @event.errors.full_messages
+    end
+  end
+
+  def destroy_favorite
+    render json:[{error:'You have not favorited this event'}], status: :forbidden and return if !@event.favorites.include? current_username
+    @event.favorites = @event.favorites - [current_username]
+    @event.save
+    if @event.valid?
+      render_json event: @event.decorate.to_hash
+    else
+      render_json errors: @event.errors.full_messages
+    end
+  end
+
   def index
     sort_by = (params[:sort_by] || 'start_time').to_sym
     order = (params[:order] || 'desc').to_sym
@@ -108,7 +131,8 @@ class API::V2::EventController < ApplicationController
   end
 
   def create
-    event = Event.create_new_event(current_username, params[:title], params[:start_time], params[:location],
+    event = Event.create_new_event(current_username, params[:title], params[:start_time],
+      :location => params[:location],
       :description => params[:description],
       :end_time => params[:end_time],
       :max_signups => params[:max_signups]
