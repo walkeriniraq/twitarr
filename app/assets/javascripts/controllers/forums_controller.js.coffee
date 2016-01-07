@@ -50,7 +50,7 @@ Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosU
         return
       return if @get('posting')
       @set 'posting', true
-      Twitarr.Forum.new_post(@get('id'), @get('new_post'), @get('photo_ids')).then (response) =>
+      Twitarr.Forum.new_post(@get('forum.id'), @get('new_post'), @get('photo_ids')).then (response) =>
         if response.errors?
           @set 'errors', response.errors
           @set 'posting', false
