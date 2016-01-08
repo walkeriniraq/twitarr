@@ -54,6 +54,15 @@ class ForumsController < ApplicationController
     end
   end
 
+  def delete_post
+    forum = Forum.find(params[:forum_id])
+    forum_post = forum.posts.find(params[:forum_post_id])
+
+    if forum_post.valid?
+      forum_post.destroy!
+    end
+  end
+
   def update
     forum = Forum.find(params[:forum_id])
     forum_post = forum.posts.find(params[:forum_post_id])
