@@ -4,8 +4,10 @@ app:
     - "3000:3000"
   links:
    - mongo
+# For development, use a path on your docker-host for /dev/twitarr
+# This loads your host files into the container, getting updates without a rebuild.
+# volumes:
+#  - /dev/twitarr:/srv/app
+
 mongo:
   image: mongo:3.0
-
-# todo - volumes for app, and volumes-from for mongo
-# though it sounds like docker-compose takes care of the second (locally)

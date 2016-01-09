@@ -1,7 +1,5 @@
 FROM jruby:1.7
 
-# RUN apt-get update && apt-get install -y gettext
-
 COPY Gemfile* /tmp/
 WORKDIR /tmp
 RUN bundle install
@@ -12,7 +10,7 @@ RUN mkdir $app
 WORKDIR $app
 ADD . $app
 
-RUN chmod +x start.sh
+RUN chmod +x start-docker.sh
 RUN echo "SECRET_TOKEN: '$(rake secret)'" > config/application.yml
 
 # these steps are done by start.sh:
@@ -22,4 +20,4 @@ RUN echo "SECRET_TOKEN: '$(rake secret)'" > config/application.yml
 
 EXPOSE 3000
 
-CMD [ "./start.sh" ]
+CMD [ "./start-docker.sh" ]

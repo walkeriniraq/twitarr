@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Complete the application config while running in docker, then start rails.
+#
+# If you're *not* running in docker. you probably want to run `rails server` instead
+
 set -e
 set -x
 
