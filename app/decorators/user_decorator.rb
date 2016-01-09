@@ -16,7 +16,7 @@ class UserDecorator < Draper::Decorator
   end
   
   def admin_hash
-    return_attribute_hash %w(username is_admin status email email_public?  vcard_public? display_name current_location last_login empty_password? last_photo_updated room_number real_name home_location)
+    return_attribute_hash %w(username is_admin status email email_public? vcard_public? display_name current_location last_login empty_password? last_photo_updated room_number real_name home_location)
   end
 
   def self_hash

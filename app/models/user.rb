@@ -24,7 +24,7 @@ class User
   field :um, as: :unnoticed_mentions, type: Integer, default: 0
   field :al, as: :last_viewed_alerts, type: DateTime, default: Time.at(0)
   field :ph, as: :photo_hash, type: String
-  field :pu, as: :last_photo_updated, type: DateTime, default: Time.now
+  field :pu, as: :last_photo_updated, type: Integer, default: Time.now.to_i
   field :rn, as: :room_number, type: String
   field :pe, as: :is_email_public, type: Boolean
   field :an, as: :real_name, type: String
@@ -184,7 +184,7 @@ class User
     result = PhotoStore.instance.reset_profile_photo username
     if result[:status] == 'ok'
       self.photo_hash = result[:md5_hash]
-      self.last_photo_updated = Time.now
+      self.last_photo_updated = Time.now.to_i
       save
     end
     result
@@ -194,7 +194,7 @@ class User
     result = PhotoStore.instance.upload_profile_photo(file, username)
     if result[:status] == 'ok'
       self.photo_hash = result[:md5_hash]
-      self.last_photo_updated = Time.now
+      self.last_photo_updated = Time.now.to_i
       save
     end
     result
@@ -249,8 +249,8 @@ class User
   end
 
   def self.last_photo_updated_from_username(username)
-    Rails.cache.fetch("last_photo_updated:#{username}", expires_in: 5.minutes) do |variable|
-      User.where(username: username).only(:last_photo_updated).map(:last_photo_updated).first.to_i
+    Rails.cache.fetch("last_photo_updated:#{username}", expires_in: 5.minutes) do
+      User.where(username: username).only(:last_photo_updated).map(:last_photo_updated).first
     end
   end
 
