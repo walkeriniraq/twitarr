@@ -24,9 +24,9 @@ class PhotoStore
     return { status: 'File exceeds maximum file size of 10MB' } if temp_file.tempfile.size >= 10000000 # 10MB
     photo = store(temp_file, uploader)
     img.resize_to_fit(MEDIUM_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
-    FileUtils.move "tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
+    FileUtils.move "#{Rails.root}/tmp/#{photo.store_filename}", md_thumb_path(photo.store_filename)
     img.resize_to_fill(SMALL_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
-    FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
+    FileUtils.move "#{Rails.root}/tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     photo.save
     { status: 'ok', photo: photo.id.to_s }
   rescue EXIFR::MalformedJPEG
@@ -52,7 +52,7 @@ class PhotoStore
       # yeah, ImageMagick throws a NPE if the photo isn't a photo
       return { status: 'Photo could not be opened - is it an image?' }
     end
-    tmp_store_path = "tmp/#{username}.jpg"
+    tmp_store_path = "#{Rails.root}/tmp/#{username}.jpg"
     img.resize_to_fit(LARGE_PROFILE_PHOTO_SIZE).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
     img.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
@@ -62,7 +62,7 @@ class PhotoStore
 
   def reset_profile_photo(username)
     identicon = Identicon.create(username)
-    tmp_store_path = "tmp/#{username}.jpg"
+    tmp_store_path = "#{Rails.root}/tmp/#{username}.jpg"
     identicon.resize_to_fit(LARGE_PROFILE_PHOTO_SIZE).write tmp_store_path
     FileUtils.move tmp_store_path, PhotoStore.instance.full_profile_path(username)
     identicon.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
@@ -98,8 +98,8 @@ class PhotoStore
       rescue => e
         puts e
       end
-      img.resize_to_fill(SMALL_IMAGE_SIZE).write "tmp/#{photo.store_filename}"
-      FileUtils.move "tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
+      img.resize_to_fill(SMALL_IMAGE_SIZE).write "#{Rails.root}/tmp/#{photo.store_filename}"
+      FileUtils.move "#{Rails.root}/tmp/#{photo.store_filename}", sm_thumb_path(photo.store_filename)
     end
   end
 
@@ -108,7 +108,7 @@ class PhotoStore
       puts user.username
       begin
         img = Magick::Image::read(full_profile_path user.username).first
-        tmp_store_path = "tmp/#{user.username}.jpg"
+        tmp_store_path = "#{Rails.root}/tmp/#{user.username}.jpg"
         img.resize_to_fill(SMALL_PROFILE_PHOTO_SIZE).write tmp_store_path
         FileUtils.move tmp_store_path, small_profile_path(user.username)
       rescue => e
@@ -118,7 +118,7 @@ class PhotoStore
   end
 
   def initialize
-    @root = Pathname.new(Rails.configuration.photo_store)
+    @root = Rails.root.join(Rails.configuration.photo_store)
 
     @full = @root + 'full'
     @thumb = @root + 'thumb'
