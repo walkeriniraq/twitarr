@@ -18,7 +18,7 @@
       <div class="seamail-to-users">
         {{#each user in toUsers}}
           <span class="to-user" {{ action 'remove' user }}>
-          {{unbound user_picture user.username}}
+          {{unbound user_picture user.username user.last_photo_updated}}
             {{user.display_name}}
             <span class="glyphicon glyphicon-remove"></span>
         </span>

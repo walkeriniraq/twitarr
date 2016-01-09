@@ -6,6 +6,7 @@ class ForumPostDecorator < BaseDecorator
         id: id.to_s,
         author: author,
         display_name: User.display_name_from_username(author),
+        author_last_photo_updated: User.last_photo_updated_from_username(author),
         text: clean_text_with_cr(text),
         timestamp: timestamp,
         likes: likes,
