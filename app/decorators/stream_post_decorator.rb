@@ -13,6 +13,7 @@ class StreamPostDecorator < BaseDecorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
+        author_last_photo_updated: User.last_photo_updated_from_username(author),
         text: twitarr_auto_linker(clean_text_with_cr(adjusted_text), options),
         timestamp: timestamp,
         display_timestamp: "#{time_ago_in_words(timestamp)} ago",

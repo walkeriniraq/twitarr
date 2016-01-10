@@ -6,7 +6,7 @@
         <span class="pull-left" style="padding: 0.5em;">
               {{unbound pretty_username user.username user.display_name}}
           <div style="text-align: center;">
-            {{unbound user_picture user.username}}
+            {{unbound user_picture user.username user.last_photo_updated}}
           </div>
           </span>
       {{/link-to}}
@@ -35,7 +35,7 @@
   {{#each message in messages}}
     <div class="card-section section-with-photo">
       <div class="section-photo">
-        {{unbound user_picture message.author}}
+        {{unbound user_picture message.author message.author_last_photo_updated}}
       </div>
 
       <span class="title">

@@ -6,13 +6,14 @@ class ForumPostDecorator < BaseDecorator
         id: id.to_s,
         author: author,
         display_name: User.display_name_from_username(author),
+        author_last_photo_updated: User.last_photo_updated_from_username(author),
         text: clean_text_with_cr(text),
         timestamp: timestamp,
         likes: likes,
         likes_counts: likes.length,
         photos: decorate_photos,
         hash_tags: hash_tags,
-        location: location,
+#        location: location,
         mentions: mentions
     }
     ret[:new] = (timestamp > last_view) unless last_view.nil?

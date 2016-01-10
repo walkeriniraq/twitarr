@@ -12,7 +12,7 @@
     <div {{bind-attr class="post.first_unread:scroll_to :card-section :section-with-photo"}}>
       <div class="section-photo">
         {{#link-to 'user' post.author}}
-          {{unbound user_picture post.author}}
+          {{unbound user_picture post.author post.author_last_photo_updated}}
         {{/link-to}}
       </div>
 

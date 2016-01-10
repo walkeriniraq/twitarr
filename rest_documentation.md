@@ -506,6 +506,7 @@ Get/post information on events.
         "start_time": "ISO_8601_DATETIME",
         "end_time": "ISO_8601_DATETIME",
         "signups": ["username_string", …],
+        "favorites": ["username_string", …],
         "description": "marked up text",
         "max_signups": null|Integer
     }
@@ -612,7 +613,7 @@ A user may only edit their events, unless they are an admin.
 
 ### POST /api/v2/event/:id/signup
 
-Allows the user signup to an event.
+Allows the user to signup to an event.
 
 #### Requires
 
@@ -628,6 +629,36 @@ Allows the user signup to an event.
 ### DELETE /api/v2/event/:id/signup
 
 Allows the user to remove their signup from an event.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+#### Query parameters
+
+#### Returns
+
+    JSON EventMeta {…}
+
+### POST /api/v2/event/:id/favorite
+
+Allows the user to favorite an event.
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameter
+
+#### Query parameters
+
+#### Returns
+
+    JSON EventMeta {…}
+
+### DELETE /api/v2/event/:id/favorite
+
+Allows the user to remove their favorite from an event.
 
 #### Requires
 

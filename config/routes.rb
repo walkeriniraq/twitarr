@@ -41,6 +41,7 @@ Twitarr::Application.routes.draw do
       get 'thread/:id/:page', to: 'forums#show'
       post 'new_post'
       put 'thread/:forum_id/:forum_post_id', to: 'forums#update'
+      delete 'thread/:forum_id/:forum_post_id', to: 'forums#delete_post'
     end
   end
 
@@ -79,6 +80,8 @@ Twitarr::Application.routes.draw do
       get 'event/:id/ical', to: 'event#ical'
       post 'event/:id/signup', to: 'event#signup'
       delete 'event/:id/signup', to: 'event#destroy_signup'
+      post 'event/:id/favorite', to: 'event#favorite'
+      delete 'event/:id/favorite', to: 'event#destroy_favorite'
 
       post 'stream/:id/like', to: 'stream#like'
       delete 'stream/:id/like', to: 'stream#unlike'

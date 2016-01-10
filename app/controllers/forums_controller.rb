@@ -54,6 +54,27 @@ class ForumsController < ApplicationController
     end
   end
 
+  def delete_post
+    forum = Forum.find(params[:forum_id])
+    forum_post = forum.posts.find(params[:forum_post_id])
+
+    unless is_admin? || current_username == forum_post.author
+      render_json errors: ["forum_id (#{params[:forum_id]}:#{params[:forum_post_id]}) is not owned by the user."]
+      return
+    end
+
+    unless forum.id.to_str == params[:forum_id]
+      render_json errors: ["forum_id (#{params[:forum_id]}) does not match the forum for post (#{params[:forum_post_id]})"]
+      return
+    end
+
+    if forum_post.valid?
+      forum_post.destroy!
+      forum.destroy! if forum.posts.count <= 1 # If the post is *only* the OP, delete the forum, else everything breaks
+      render_json status: 'OK'
+    end
+  end
+
   def update
     forum = Forum.find(params[:forum_id])
     forum_post = forum.posts.find(params[:forum_post_id])

@@ -6,10 +6,13 @@ class EventDecorator < BaseDecorator
         id: as_str(id),
         author: author,
         display_name: User.display_name_from_username(author),
+        author_last_photo_updated: User.last_photo_updated_from_username(author),
         title: title,
         location: location,
         start_time: start_time,
-        signups: signups
+        signups: signups,
+        favorites: favorites,
+        visibility: visibility
     }
     result[:end_time] = end_time unless end_time.blank?
     result[:description] = description unless description.blank?
