@@ -1,0 +1,13 @@
+app:
+  build: .
+  ports:
+    - "3000:3000"
+  links:
+   - mongo
+# For development, use a path on your docker-host for /dev/twitarr
+# This loads your host files into the container, getting updates without a rebuild.
+# volumes:
+#  - /dev/twitarr:/srv/app
+
+mongo:
+  image: mongo:3.0

@@ -26,6 +26,8 @@ tmp
 *.iml
 .sass-cache
 *.tmp
+*~
+*#
 temp/
 .rakeTasks
 
