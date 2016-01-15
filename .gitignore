@@ -6,11 +6,15 @@
 !/log/.keep
 /tmp
 
+# vi editor droppings
+.*.swp
+
 /config/application.yml
 /config/mongoid.yml
 /config/secrets.yml
 
 /public/img/photos/*
+/public/cm/*
 
 *.gem
 *.rbc
