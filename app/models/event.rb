@@ -31,6 +31,8 @@ class Event
     event = Event.new(author: author, title: title, start_time: start_time)
     event.description = options[:description] unless options[:description].nil?
     event.location = options[:location] unless options[:location].nil?
+    event.visibility = options[:visibility] unless options[:visibility].nil?
+    event.official = options[:official] unless options[:official].nil?
     event.end_time = options[:end_time] unless options[:end_time].nil?
     event.max_signups = options[:max_signups] unless options[:max_signups].nil?
     event.save if event.valid?

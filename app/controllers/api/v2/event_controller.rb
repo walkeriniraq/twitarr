@@ -2,7 +2,7 @@ require 'csv'
 class API::V2::EventController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_filter :login_required, :only => [:create, :destroy, :updater, :signup, :destroy_signup, :favorite, :destroy_favorite]
+  before_filter :login_required, :only => [:create, :destroy, :update, :signup, :destroy_signup, :favorite, :destroy_favorite]
   before_filter :fetch_event, :except => [:index, :create, :csv]
 
   def login_required
@@ -23,7 +23,7 @@ class API::V2::EventController < ApplicationController
     query = Event.all.order_by([sort_by, order])
     puts query
     result = CSV.generate do |csv|
-      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Signups", "Maximum Signups", "Favorites"]
+      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Visibility", "Official?", "Signups", "Maximum Signups", "Favorites"]
       query.each do |q|
         csv << [
           q.id,
@@ -34,6 +34,8 @@ class API::V2::EventController < ApplicationController
           q.start_time,
           q.end_time,
           q.description,
+          q.visibility,
+          q.official,
           q.signups.join(", "),
           q.max_signups,
           q.favorites.join(", ")
@@ -131,9 +133,15 @@ class API::V2::EventController < ApplicationController
   end
 
   def create
+    unless params[:official] or is_admin?
+      render json: [{error:"You must be admin to create official events!"}], status: :forbidden
+      return
+    end
     event = Event.create_new_event(current_username, params[:title], params[:start_time],
       :location => params[:location],
       :description => params[:description],
+      :visibility => params[:visibility],
+      :official => params[:official],
       :end_time => params[:end_time],
       :max_signups => params[:max_signups]
     )
@@ -145,7 +153,7 @@ class API::V2::EventController < ApplicationController
   end
 
   def update
-    unless (params[:event].keys - %w(description location start_time end_time max_signups)).empty?
+    unless (params[:event].keys - %w(description location visibility official start_time end_time max_signups)).empty?
       render json:[{error:'Unable to modify title or author fields'}], status: :bad_request
       return
     end
@@ -155,12 +163,19 @@ class API::V2::EventController < ApplicationController
       render json: err, status: :forbidden
       return
     end
-    event = params[:event]
-    @event.description = event[:description] if event.has_key? :description
-    @event.location = event[:location] if event.has_key? :location
-    @event.start_time = event[:start_time] if event.has_key? :start_time
-    @event.end_time = event[:end_time] if event.has_key? :end_time
-    @event.max_signups = event[:max_signups] if event.has_key? :max_signups
+
+    if (params[:official] or @event.official) and !is_admin?
+      render json: [{error:"You must be admin to modify official events!"}], status: :forbidden
+      return
+    end
+    @event.title = params[:title] if params.has_key? :title
+    @event.description = params[:description] if params.has_key? :description
+    @event.location = params[:location] if params.has_key? :location
+    @event.start_time = params[:start_time] if params.has_key? :start_time
+    @event.end_time = params[:end_time] if params.has_key? :end_time
+    @event.max_signups = params[:max_signups] if params.has_key? :max_signups
+    @event.visibility = params[:visibility] if params.has_key? :visibility
+    @event.official = params[:official] if params.has_key? :official
 
     @event.save
     if @event.valid?
