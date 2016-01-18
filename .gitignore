@@ -15,6 +15,7 @@
 
 /public/img/photos/*
 /public/cm/*
+/public/assets/*
 
 *.gem
 *.rbc
