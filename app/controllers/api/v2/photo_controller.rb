@@ -41,11 +41,14 @@ class API::V2::PhotoController < ApplicationController
 
   def create
     return render_json status: 'Must provide photos to upload.' if params[:files].blank? && params[:file].blank?
-    if params[:files].blank?
-      params[:files] = params[:file]
+    files = []
+    if params[:file].blank?
+      files = params[:files]
+    else
+      files = params[:file]
     end
-    params[:files] = [params[:files]] if params[:files].is_a? ActionDispatch::Http::UploadedFile
-    files = params[:files].map do |file|
+    files = [files] if files.is_a? ActionDispatch::Http::UploadedFile
+    files = files.map do |file|
       PhotoStore.instance.upload(file, current_username)
     end
     if browser.ie?
