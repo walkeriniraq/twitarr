@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
 
   def current_username
     return @user.username if @user
-    session[:username]
+    return session[:username] if session[:username]
+    return get_username(params[:key]) if valid_key?(params[:key])
+    return nil
   end
 
   def current_user
