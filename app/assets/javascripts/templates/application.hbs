@@ -25,7 +25,7 @@
               {{input value=text class='input top-bar-search-text' placeholder='Search...'}}
             </td>
             <td style="width: 3em; padding-left: 1em;">
-              <button class="btn" style="margin: 5px 15px 5px 0px;" {{action 'search' text}}>Go</button>
+              <button class="btn" style="margin: 10px 15px 5px 0px;" {{action 'search' text}}>Go</button>
             </td>
           </tr>
         </table>
@@ -43,6 +43,7 @@
       <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "seamail"}}<span class="glyphicon glyphicon-envelope"></span>Seamail{{/link-to}}</li>
       <li>{{#link-to "forums"}}<span class="glyphicon glyphicon-list"></span>Forums{{/link-to}}</li>
       <li>{{#link-to "stream"}}<span class="glyphicon glyphicon-bullhorn"></span>Tweets{{/link-to}}</li>
+      <li>{{#link-to "events"}}<span class="glyphicon glyphicon-calendar"></span>Events{{/link-to}}</li>
       <li>---</li>
       <li>
         {{#link-to "alerts"}}

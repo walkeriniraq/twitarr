@@ -70,6 +70,9 @@ Twitarr::Application.routes.draw do
   post 'location', to: 'location#create'
   delete 'location/:name', to: 'location#delete'
 
+  get 'event/:id', to: 'event#show'
+  get 'event/page/:page', to: 'event#page'
+
   namespace :api do
     namespace :v2 do
       resources :photo, only: [:index, :create, :destroy, :update, :show], :defaults => { :format => 'json' }

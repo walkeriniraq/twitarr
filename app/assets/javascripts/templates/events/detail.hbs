@@ -1,0 +1,50 @@
+<div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
+  <div class="title">{{#link-to 'events' }}Events{{/link-to}} > {{title}}</div>
+  <span class="controls">
+    {{#if editable}}
+      <button class="btn" {{action 'edit'}}>Edit</button>
+    {{/if}}
+
+  </span>
+</div>
+<div class="display_card">
+  <div class="card-section">
+    <div {{bind-attr class=":title :big-title official:official"}}>
+      {{unbound title}}
+    </div>
+  </div>
+  <div class="card-section">
+    <div class="form row">
+      <div class="col-xs-12">
+        <p>{{unbound description}}</p>
+      </div>
+    </div>
+    <div class="form row">
+      <div class="col-xs-6">
+        <div class="label">Organized by</div>
+        <div class="data">{{#link-to 'user' author}}{{unbound pretty_username author display_name}}{{/link-to}}</div>
+        {{#if location}}
+          <div class="label">Location</div>
+          <div class="data">{{unbound location}}</div>
+        {{/if}}
+      </div>
+      <div class="col-xs-6">
+        <div class="label">Start Time</div>
+        <div class="data">{{pretty_time start_time}}</div>
+        {{#if end_time}}
+          <div class="label">End Time</div>
+          <div class="data">{{pretty_time end_time}}</div>
+        {{/if}}
+      </div>
+    </div>
+    
+    {{#if has_signups}}
+      <div class="form row">
+        <div class="col-xs-6">
+          <div class="label">Signups</div>
+          <div class="data">{{signups_string}}</div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<div class="card-section clickable" {{action 'display_event' id}}>
+  <span {{bind-attr class=":title :big-title official:official"}}>
+    {{unbound title}}
+  </span>
+  {{unbound pretty_timespan start_time end_time}}
+  <span class="description">{{unbound description}}</span>
+</div>

@@ -21,6 +21,63 @@
 @mixin border-radius($radius: 5px) {
   border-radius: $radius;
 }
+@mixin transform($params) {
+  -ms-transform: $params;
+  -moz-transform: $params;
+  -webkit-transform: $params;
+  -o-transform: $params;
+  transform: $params;
+}
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+@include keyframes(loading-ring) {
+  0% {
+    @include transform(rotate(0deg))
+  }
+  100% {
+    @include transform(rotate(360deg))
+  }
+}
+@mixin animation($params) {
+  -ms-animation: $params;
+  -moz-animation: $params;
+  -webkit-animation: $params;
+  -o-animation: $params;
+  animation: $params;
+}
+
+#app-loading {
+  background: none;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  div {
+    position: absolute;
+    display: block;
+    width: 80%;
+    height: 80%;
+    top: 20%;
+    left: 20%;
+    border-radius: 100%;
+    box-shadow: 0 2px 0 0 #052f45;
+    @include animation(loading-ring 0.7s linear infinite);
+  }
+}
 
 .input {
   width: 100%;
@@ -29,14 +86,13 @@
   margin-top: 0.3em;
   @include border-radius(4px);
   padding: 0.1em 0.4em;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s;
 
   &.input-short {
     width: 10em;
   }
 
   &:focus {
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
     border-color: #66afe9;
   }
 }
@@ -55,13 +111,6 @@ html {
   font-size: 14px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-}
-
-#app-loading {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 200px;
 }
 
 #main {
@@ -112,21 +161,15 @@ html {
   }
 }
 
-.button {
-  box-shadow: 1px 1px rgba(0, 0, 0, 0.5), 1px 1px 1px rgba(255, 255, 255, 0.3) inset;
-}
-
 .btn {
-  @extend .button;
-  @include border-radius(3px);
-  border: 1px outset #8D031C;
+  border: none;
   padding: 4px 7px;
-  background-color: #FFCA73;
-  color: #000000;
+  background-color: #547d92;
+  color: white;
 
   &:hover, &:focus {
     outline: none;
-    color: #8D031C;
+    background-color: #6e96ab;
     text-decoration: none;
   }
 }
@@ -144,31 +187,31 @@ html {
 }
 
 body {
-  background-color: #CBFCF0;
+  background-color: #f5f5eb;
 }
 
 #top-bar {
-  background-color: #FFECCE;
-  border-bottom: 1px solid #02614A;
+  background-color: #052F45;
+  border-bottom: 1px solid #042333;
   height: 50px;
   position: fixed;
   left: 0;
   top: 0;
   position: fixed;
   width: 100%;
-  z-index: 100;
+  z-index: 999;
 
   .menu-toggle {
-    @extend .button;
     @include border-radius(4px);
-    background-color: #FFCA73;
-    border: 1px solid #02614A;
+    border: none;
+    background-color: #547d92;
     float: left;
     margin: 8px 16px;
     padding: 9px 10px 5px;
+    color: white;
 
     .icon-bar {
-      background-color: #02614A;
+      background-color: white;
       @include border-radius(1px);
       display: block;
       height: 2px;
@@ -180,9 +223,10 @@ body {
   .menu-brand {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     float: left;
-    padding: 10px;
-    font-size: 18px;
-    color: #444;
+    padding: 10px 5px;
+    font-size: 20px;
+    line-height: 1.3em;
+    color: white;
 
     img {
       height: 1.6em;
@@ -218,7 +262,7 @@ body {
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 999;
+  z-index: 998;
 }
 
 #photo-modal {
@@ -276,7 +320,8 @@ body {
     bottom: 0;
     top: 50px;
     width: 250px;
-    background-color: #222;
+    background-color: #052F45;
+    border-right: 1px solid #042333;
     overflow-x: hidden;
     overflow-y: auto;
     white-space: nowrap;
@@ -293,26 +338,23 @@ body {
 
       li {
         .glyphicon {
-          color: #666;
+          color: #aaa;
           margin-right: 0.6em;
         }
 
         a {
           padding: 10px;
           display: block;
-          font-size: large;
+          font-size: 12pt;
+          color: #f5f5eb;
 
           &:focus {
             text-decoration: none;
           }
 
           &:hover {
-            color: #4ca0e9;
-            background-color: #333;
-            text-decoration: none;
-            .glyphicon {
-              color: #999;
-            }
+            background-color: #04293b;
+            text-decoration: underline;
           }
         }
       }
@@ -459,7 +501,6 @@ img.photo {
     float: right;
 
     a {
-      @extend .button;
     }
   }
 
@@ -472,7 +513,6 @@ img.photo {
   background-color: #f8fffb;
   border: 1px solid #02614A;
   margin-bottom: 0.6em;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
   .card_title {
     @extend .clearfix;
@@ -490,7 +530,6 @@ img.photo {
       cursor: pointer;
       &:hover {
         background-color: #BFEEFC;
-        box-shadow: 0 0 4px 4px white inset;
       }
     }
 
@@ -500,7 +539,6 @@ img.photo {
 
     .title {
       font-size: medium;
-      margin: 0.2em 0.4em;
 
       &.big-title {
         font-size: large;
@@ -510,6 +548,12 @@ img.photo {
     .timestamp {
       float: right;
       color: darkgrey;
+    }
+
+    .description {
+      display: block;
+      width: 100%;
+      float: left;
     }
 
     .body {
