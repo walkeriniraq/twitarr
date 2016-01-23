@@ -1,6 +1,11 @@
 Twitarr::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
+  # yet still be able to expire them through the digest params.
+  config.assets.digest = true
+  config.assets.debug = true
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -34,4 +39,8 @@ Twitarr::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  config.read_only = false
+  config.allow_new_users = true
+
+  config.ember.variant = :test
 end

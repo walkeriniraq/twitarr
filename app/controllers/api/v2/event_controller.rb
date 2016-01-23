@@ -9,9 +9,22 @@ class API::V2::EventController < ApplicationController
     head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
+  def is_event_allowed(ev)
+    #logger.debug("is_event_allowed: " + ev.decorate.to_hash.inspect)
+    #logger.debug("valid key? " + (valid_key?(params[:key]) ? "true" : "false"))
+    #logger.debug("official=" + (ev.official ? "true" : "false"))
+    return true if (ev.official)
+    #logger.debug("shared=" + (ev.shared ? "true" : "false"))
+    return true if (ev.shared)
+    #logger.debug("author=" + ev.author + ", current_username=" + (current_username == nil ? "nil" : current_username))
+    return true if (ev.author == current_username)
+    return false
+  end
+
   def fetch_event
     begin
       @event = Event.find(params[:id])
+      head :unauthorized and return if !is_event_allowed(@event)
     rescue Mongoid::Errors::DocumentNotFound
       render status: 404, json: {status:'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
     end
@@ -20,10 +33,10 @@ class API::V2::EventController < ApplicationController
   def csv
     sort_by = (params[:sort_by] || 'start_time').to_sym
     order = (params[:order] || 'desc').to_sym
-    query = Event.all.order_by([sort_by, order])
+    query = Event.all.order_by([sort_by, order]).select { |ev| is_event_allowed(ev) }
     puts query
     result = CSV.generate do |csv|
-      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Visibility", "Official?", "Signups", "Maximum Signups", "Favorites"]
+      csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Official?", "Shared?", "Signups", "Maximum Signups", "Favorites"]
       query.each do |q|
         csv << [
           q.id,
@@ -34,8 +47,8 @@ class API::V2::EventController < ApplicationController
           q.start_time,
           q.end_time,
           q.description,
-          q.visibility,
           q.official,
+          q.shared,
           q.signups.join(", "),
           q.max_signups,
           q.favorites.join(", ")
@@ -117,8 +130,9 @@ class API::V2::EventController < ApplicationController
   def index
     sort_by = (params[:sort_by] || 'start_time').to_sym
     order = (params[:order] || 'desc').to_sym
-    query = Event.all.order_by([sort_by, order]).map(&:decorate).map(&:to_hash)
-    result = [status: 'ok', total_count: query.length, events: query]
+    query = Event.all.order_by([sort_by, order]).select { |ev| is_event_allowed(ev) }
+    filtered_query = query.map(&:decorate).map(&:to_hash)
+    result = [status: 'ok', total_count: filtered_query.length, events: filtered_query]
     respond_to do |format|
       format.json { render json: result }
       format.xml { render xml: result }
@@ -133,14 +147,11 @@ class API::V2::EventController < ApplicationController
   end
 
   def create
-    unless params[:official] or is_admin?
-      render json: [{error:"You must be admin to create official events!"}], status: :forbidden
-      return
-    end
+    render json:[{error:'You must be admin to create official events!'}], status: :forbidden and return if (params[:official] and !is_admin?)
     event = Event.create_new_event(current_username, params[:title], params[:start_time],
       :location => params[:location],
       :description => params[:description],
-      :visibility => params[:visibility],
+      :shared => params[:shared],
       :official => params[:official],
       :end_time => params[:end_time],
       :max_signups => params[:max_signups]
@@ -153,14 +164,14 @@ class API::V2::EventController < ApplicationController
   end
 
   def update
-    unless (params[:event].keys - %w(description location visibility official start_time end_time max_signups)).empty?
+    render json:[{error:'You must be admin to create official events!'}], status: :forbidden and return if (params[:event][:official] and !is_admin?)
+    unless (params[:event].keys - %w(description location official shared start_time end_time max_signups)).empty?
       render json:[{error:'Unable to modify title or author fields'}], status: :bad_request
       return
     end
 
     unless @event.author == current_username or is_admin?
-      err = [{error:"You can not modify other users' posts"}]
-      render json: err, status: :forbidden
+      render json: [{error:"You may not modify other users' posts"}], status: :forbidden
       return
     end
 
@@ -174,8 +185,8 @@ class API::V2::EventController < ApplicationController
     @event.start_time = params[:start_time] if params.has_key? :start_time
     @event.end_time = params[:end_time] if params.has_key? :end_time
     @event.max_signups = params[:max_signups] if params.has_key? :max_signups
-    @event.visibility = params[:visibility] if params.has_key? :visibility
     @event.official = params[:official] if params.has_key? :official
+    @event.shared = params[:shared] if params.has_key? :shared
 
     @event.save
     if @event.valid?
@@ -187,7 +198,7 @@ class API::V2::EventController < ApplicationController
 
   def destroy
     unless @event.author == current_username or is_admin?
-      err = [{error:"You can not delete other users' posts"}]
+      err = [{error:"You may not delete other users' posts"}]
       return respond_to do |format|
         format.json { render json: err, status: :forbidden }
         format.xml { render xml: err, status: :forbidden }
