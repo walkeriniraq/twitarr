@@ -1,12 +1,20 @@
 <div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
   <div class="title">{{#link-to 'events' }}Events{{/link-to}} > {{title}}</div>
-  <span class="controls">
+  <span {{bind-attr class=":controls logged_in::hidden"}}>
+    {{#if can_sign_up}}
+      {{#unless signed_up}}
+        <button class="btn" {{action 'signup'}}>Signup</button>
+      {{else}}
+        <button class="btn" {{action 'unsignup'}}>Unsignup</button>
+      {{/unless}}
+    {{/if}}
     {{#if editable}}
       <button class="btn" {{action 'edit'}}>Edit</button>
+      <button class="btn" {{action 'delete'}}>Delete</button>
     {{/if}}
-
   </span>
 </div>
+
 <div class="display_card">
   <div class="card-section">
     <div {{bind-attr class=":title :big-title official:official"}}>
@@ -38,11 +46,15 @@
       </div>
     </div>
     
-    {{#if has_signups}}
+    {{#if max_signups}}
       <div class="form row">
         <div class="col-xs-6">
           <div class="label">Signups</div>
-          <div class="data">{{signups_string}}</div>
+          <div class="data">{{signup_string signups}}</div>
+        </div>
+        <div class="col-xs-6">
+          <div class="label">Maximum allowed signups</div>
+          <div class="data">{{max_signups}}</div>
         </div>
       </div>
     {{/if}}

@@ -25,3 +25,16 @@ Ember.Handlebars.helper 'pretty_timespan', (start_time, end_time) ->
 
 Ember.Handlebars.helper 'user_picture', (username, last_time) ->
   new Ember.Handlebars.SafeString("<img class='profile_photo' src='/api/v2/user/photo/#{username}?bust=#{last_time}'/>")
+
+Ember.Handlebars.helper 'signup_string', (signups) ->
+  # return 'Nobody' unless signups and signups.length > 0
+  # if signups.length == 1
+  #   if signups[0] == 'You'
+  #     return 'You have signed up for this.'
+  #   if signups[0].indexOf('seamonkeys') > -1
+  #     return "#{signups[0]} have signed up for this."
+  #   else
+  #     return "#{signups[0]} have signed up for this."
+  # last = signups.pop()
+  # signups.join(', ') + " and #{last} like this."
+  signups.join(', ')

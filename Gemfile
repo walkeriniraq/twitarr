@@ -41,6 +41,8 @@ gem 'siphash'
 
 gem 'twitter-text', '~> 1.10.0'
 
+gem 'momentjs-rails'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

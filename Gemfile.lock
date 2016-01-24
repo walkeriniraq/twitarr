@@ -102,6 +102,8 @@ GEM
       rails (~> 4.1)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
+    momentjs-rails (2.11.0)
+      railties (>= 3.1)
     mongoid (4.0.1)
       activemodel (~> 4.0)
       moped (~> 2.0.0)
@@ -207,6 +209,7 @@ DEPENDENCIES
   minitest (~> 5.4.3)
   minitest-spec-rails
   mocha
+  momentjs-rails
   mongoid
   puma
   rack-cors

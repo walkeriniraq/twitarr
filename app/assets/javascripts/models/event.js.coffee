@@ -1,11 +1,29 @@
 Twitarr.EventMeta = Ember.Object.extend
   events: null
-  next_page: null
 
 Twitarr.EventMeta.reopenClass
   page: (page) ->
     $.getJSON("event/page/#{page}").then (data) =>
-      { events: Ember.A(@create(meta)) for meta in data.events }
+      h = {}
+      a = []
+      # Yeah. I know how gross this is. Forgive me.
+      # I blame ember for this.
+      for e in data.events
+        m = moment(e.start_time)
+        d = "#{m.date()}"
+        
+        h[d] = {} if h[d] == undefined
+        h[d]["date"] = m.format('MMMM Do') if h[d]["date"] == undefined
+        h[d]["events"] = [] if h[d]["events"] == undefined
+        h[d]["events"].push(Twitarr.Event.create(e))
+        
+      for key of h
+        a.push Twitarr.EventDateMeta.create(h[key])
+      { events: a }
+
+Twitarr.EventDateMeta = Ember.Object.extend
+  date: ""
+  events: []
 
 Twitarr.Event = Ember.Object.extend
   author: null
@@ -16,64 +34,43 @@ Twitarr.Event = Ember.Object.extend
   start_time: null
   end_time: null
   official: null
-  signups: null
-  editable: false
-
-  user_signups: (->
-  	@get('signups') && @get('signups')[0] == 'You'
-  ).property('signups')
-
-  signups_string: (->
-    signups = @get('signups')
-    return '' unless signups and signups.length > 0
-    if signups.length == 1
-      if signups[0] == 'You'
-        return 'You have signed up for this.'
-      if signups[0].indexOf('seamonkeys') > -1
-        return "#{signups[0]} have signed up for this."
-      else
-        return "#{signups[0]} have signed up for this."
-    last = signups.pop()
-    signups.join(', ') + " and #{last} like this."
-  ).property('signups')
-
-  has_signups: (->
-    return @get('max_signups') > 0
-  ).property('max_signups')
+  max_signups: null
+  signups: []
 
   signup: ->
-    $.getJSON("event/signup/#{@get('id')}").then (data) =>
-      if(data.status == 'ok')
-        @set('signups', data.signups)
+    $.post("/api/v2/event/#{@get('id')}/signup").then (data) =>
+      if(!data.error or !data.errors)
+        @set('signups', data.event.signups)
       else
-        alert data.status
+        alert data.error || data.errors.join("\n")
 
   unsignup: ->
-    $.getJSON("event/unsignup/#{@get('id')}").then (data) =>
-      if(data.status == 'ok')
-        @set('signups', data.signups)
+    $.ajax("/api/v2/event/#{@get('id')}/signup", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
+      if(!data.error or !data.errors)
+        @set('signups', data.event.signups)
       else
-        alert data.status
+        alert data.error || data.errors.join("\n")
 
   delete: ->
-    $.getJSON("event/destroy/#{@get('id')}").then (data) =>
-      if(data.status == 'ok')
+    $.ajax("/api/v2/event/#{@get('id')}", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
+      if(!data)
         alert("Successfully deleted")
-        @transitionToRoute 'event.index'
+        true
       else
         alert data.status
+        false
 
 Twitarr.Event.reopenClass
   get: (event_id) ->
-    $.getJSON("event/#{event_id}").then (data) =>
-      data.event
+    $.getJSON("/api/v2/event/#{event_id}").then (data) =>
+      Twitarr.Event.create(data)
 
-  edit: (event_id, title, description, location, start_time, end_time, max_signups) ->
-    $.post("event/edit/#{event_id}", title: title, description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups).then (data) =>
+  edit: (event_id, description, location, start_time, end_time, max_signups) ->
+    $.post("/api/v2/event/#{event_id}", method: 'PUT', description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups).then (data) =>
       data.event = Twitarr.Event.create(data.event) if data.event?
       data
 
   new_event: (title, description, location, start_time, end_time, max_signups) ->
-    $.post('event', title: title, description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups).then (data) =>
+    $.post('/api/v2/event/', title: title, description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups).then (data) =>
       data.event = Twitarr.Event.create(data.event) if data.event?
       data

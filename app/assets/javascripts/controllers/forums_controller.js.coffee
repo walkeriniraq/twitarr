@@ -20,7 +20,6 @@ Twitarr.PhotosUploadMixin = Ember.Mixin.create
       @get('photo_ids').removeObject id
 
 Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosUploadMixin,
-
   has_new_posts: (->
     for post in @get('forum.posts')
       return true if post.timestamp > @get('forum.latest_read')

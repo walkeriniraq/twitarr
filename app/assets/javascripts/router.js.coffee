@@ -30,9 +30,9 @@ Twitarr.Router.map ()->
   @resource 'events', ->
     @route 'page', { path: '/'}
     @route 'page', { path: ':page' }
-    @route 'new_event', { path: '/new'}
-    @route 'detail', { path: '/event/:id' }
-    @route 'edit', { path: '/edit/:id'}
+    @route 'new', { path: '/new'}
+    @route 'detail', { path: '/:id' }
+    @route 'edit', { path: '/:id/edit'}
 
 
   @route 'user', { path: 'user/:username' }

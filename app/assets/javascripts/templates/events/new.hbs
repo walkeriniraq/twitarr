@@ -1,0 +1,45 @@
+<div class="main-page-header">
+  <div class="title">{{#link-to 'events'}}Events{{/link-to}} > New</div>
+</div>
+<div class="display_card">
+  <div class="card-section">
+    <div class="form">
+      <ul class="errors-list">
+        {{#if errors}}
+          <strong>Errors:</strong>
+          {{#each error in errors}}
+            <li>{{error}}</li>
+          {{/each}}
+        {{/if}}
+      </ul>
+      Items with an * in the name are required
+      <div class="form row">
+        <div class="col-xs-12">
+          {{input value=title class='input' placeholder='Title*'}}
+          {{input value=location class='input' placeholder='Location'}}
+          {{textarea value=description rows='3' class='input' placeholder='Description'}}
+        </div>
+      </div>
+
+      <div class="form row">
+        <div class="col-xs-5">
+          Start Time*
+          {{input value=start_time type='datetime-local' class='input'}}
+        </div>
+
+        <div class="col-xs-5">
+          End Time
+          {{input value=end_time type='datetime-local' class='input'}}
+        </div>
+        <div class="col-xs-2">
+          Max Signups
+          {{input value=max_signups type='number' class='input'}}
+        </div>
+      </div>
+      <span class="controls">
+        <button class="btn" {{action 'new'}}>Create</button>
+      </span>
+    </div>
+  </div>
+</div>
+
