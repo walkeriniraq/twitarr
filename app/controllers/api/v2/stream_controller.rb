@@ -176,7 +176,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:start]
     author = params[:author] || nil
     limit = params[:limit] || PAGE_LENGTH
-    posts = StreamPost.at_or_before(start_loc, author).limit(limit).order_by(timestamp: :desc).map { |x| x }
+    posts = StreamPost.at_or_before(start_loc, {filter_author: author}).limit(limit).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
     {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end
@@ -189,7 +189,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:start]
     author = params[:author] || nil
     limit = params[:limit] || PAGE_LENGTH
-    posts = StreamPost.at_or_after(start_loc, author).limit(limit).order_by(timestamp: :asc).map { |x| x }
+    posts = StreamPost.at_or_after(start_loc, {filter_author: author}).limit(limit).order_by(timestamp: :asc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
     {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end

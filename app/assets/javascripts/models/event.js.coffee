@@ -5,7 +5,7 @@ Twitarr.EventMeta.reopenClass
   page: (page) ->
     # Yeah. I know how gross this is. Forgive me.
     # I blame ember for this.
-    page = parseInt(page)
+    page = parseInt(page) || 0
     current_events = {}
     past_events = {}
     upcoming_events = {}
@@ -30,7 +30,7 @@ Twitarr.EventMeta.reopenClass
         for key of current_events
           current_a.push Twitarr.EventDateMeta.create(current_events[key])
 
-      if page == 0
+      if page < 1
         $.getJSON("event/recent").then (data) =>
           for e in data.events
             m = moment(e.start_time)
@@ -58,7 +58,7 @@ Twitarr.EventMeta.reopenClass
       { events: current_a, past_events: past_a, upcoming_events: upcoming_a, page: page, past_page: past_page, next_page: next_page }
 
   past_page: (page) ->
-    page = parseInt(page)
+    page = parseInt(page) || 0
     events = {}
     a = []
     past_page = undefined

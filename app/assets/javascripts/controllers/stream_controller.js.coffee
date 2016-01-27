@@ -70,6 +70,10 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
     @get('next_page') isnt 0
   ).property('next_page')
 
+  has_prev_page: (->
+    @get('prev_page') isnt 0
+  ).property('prev_page')
+
   actions:
     show_new_post: ->
       @set 'new_post_visible', true
@@ -103,6 +107,9 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
     next_page: ->
       return if @get('next_page') is 0
       @transitionToRoute 'stream.page', @get('next_page')
+    prev_page: ->
+      return if @get('prev_page') is 0
+      @transitionToRoute 'stream.page', @get('prev_page')
     post_view: (model) ->
       [p, ...] = model.get('parent_chain')
       p = model.get('id') unless p
