@@ -117,6 +117,7 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
       @get('model').unlike()
     delete: ->
       @get('model').delete()
+      @transitionToRoute 'stream'
     view: ->
       @transitionToRoute 'stream.view', @get('id')
     edit: ->

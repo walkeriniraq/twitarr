@@ -53,8 +53,9 @@ Twitarr.StreamPost = Ember.Object.extend
   delete: ->
     $.getJSON("tweet/destroy/#{@get('id')}").then (data) =>
       if(data.status == 'ok')
+        for child in @get('children')
+          child.parent_chain = []
         alert("Successfully deleted")
-        @transitionToRoute 'application'
       else
         alert data.status
 

@@ -46,9 +46,14 @@ GEM
       execjs
       handlebars-source (>= 1.0.0.rc.4)
     bcrypt (3.1.10-java)
+    better_errors (2.1.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     browser (0.8.0)
     bson (2.3.0-java)
     builder (3.2.2)
+    coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -198,6 +203,7 @@ PLATFORMS
 DEPENDENCIES
   andand
   bcrypt
+  better_errors
   browser
   coffee-rails (~> 4.1.0)
   draper (~> 1.3)

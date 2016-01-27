@@ -43,6 +43,10 @@ gem 'twitter-text', '~> 1.10.0'
 
 gem 'momentjs-rails'
 
+group :development do
+  gem 'better_errors'
+end
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

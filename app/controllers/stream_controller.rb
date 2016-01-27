@@ -77,6 +77,10 @@ class StreamController < ApplicationController
     if !is_admin? && post.author != current_username
       render_json status: 'You cannot delete a post that does not belong to you' and return
     end
+    children = StreamPost.any_in(parent_chain: [params[:id]])
+    children.each do |p|
+      p.destroy_parent_chain
+    end
     post.destroy
     render_json status: 'ok'
   end

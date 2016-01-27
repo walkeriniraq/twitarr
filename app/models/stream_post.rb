@@ -47,6 +47,11 @@ class StreamPost
     query
   end
 
+  def destroy_parent_chain
+    self.parent_chain = []
+    save
+  end
+
   def parent_chain
     self.parent_chain = [] if super.nil?
     super
