@@ -8,9 +8,17 @@ Twitarr.UserMeta = Ember.Object.extend
   number_of_tweets: null
   number_of_mentions: null
   "vcard_public?": null
+  starred: null
   # TODO: this is an interesting idea, but don't have time now
 #  current_location: null
 #  location_timestamp: null
+
+  star: ->
+    $.getJSON("user/profile/#{@get('username')}/star").then (data) =>
+      if(data.status == 'ok')
+        @set('starred', data.starred)
+      else
+        alert data.status
 
 Twitarr.User = Twitarr.UserMeta.extend
   recent_tweets: []

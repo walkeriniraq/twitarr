@@ -144,3 +144,13 @@ Twitarr.AlertsController = Twitarr.ObjectController.extend
   ).on('init')
 
 Twitarr.TagController = Twitarr.Controller.extend()
+
+Twitarr.StarredController = Twitarr.ObjectController.extend
+  actions:
+    save: (user) ->
+      user.save().then (response) =>
+        if response.status is 'ok'
+          alert 'Comment was saved.'
+        else
+          alert response.status
+  

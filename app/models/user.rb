@@ -32,6 +32,8 @@ class User
   field :lf, as: :forum_view_timestamps, type: Hash, default: {}
   field :pv, as: :is_vcard_public, type: Boolean, default: true
   field :lc, as: :current_location, type: String
+  field :us, as: :starred_users, type: Array, default: []
+  field :pc, as: :personal_comments, type: Hash, default: {}
 
   index username: 1
   index display_name: 1

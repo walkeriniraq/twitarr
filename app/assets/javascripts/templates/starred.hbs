@@ -1,0 +1,29 @@
+<div class="main-page-header">
+  <div class="title">Starred Users</div>
+</div>
+
+{{#each user in starred}}
+  <div class="display_card">
+    <div class="card-section section-with-photo">
+      <div class="section-photo">
+        {{#link-to 'user' user.username}}
+          {{unbound user_picture user.username user.last_photo_updated}}
+        {{/link-to}}
+      </div>
+      <span class="title">
+        {{#link-to 'user' user.username}}
+          {{unbound pretty_username user.username user.display_name}}
+        {{/link-to}}
+      </span>
+      <div class="body">
+        Personal comment:
+        <div class="body-section">
+          {{textarea value=user.comment rows='2' class='input'}}
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" {{action 'save' user}}>save</button>
+      </div>
+    </div>
+  </div>
+{{/each}}

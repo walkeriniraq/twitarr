@@ -61,6 +61,7 @@
       <li {{bind-attr class="login_admin::hidden"}}>{{#link-to "admin.announcements"}}New announcement{{/link-to}}</li>
       <li {{bind-attr class="login_admin::hidden"}}>---</li>
       <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "profile"}}<span class="glyphicon glyphicon-user"></span>Profile{{/link-to}}</li>
+      <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "starred"}}<span class="glyphicon glyphicon-star"></span>Starred Users{{/link-to}}</li>
       <li {{bind-attr class="logged_in::hidden"}}><a tabindex='-1' href='#' {{ action 'logout' }}>Logout</a></li>
     </ul>
   </div>

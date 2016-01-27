@@ -70,3 +70,7 @@ Twitarr.TagRoute = Ember.Route.extend
       controller.set 'recent_tweets', model.posts
     else
       alert(model.status)
+
+Twitarr.StarredRoute = Ember.Route.extend
+  model: ->
+    Twitarr.StarredMeta.get()

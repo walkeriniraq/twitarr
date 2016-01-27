@@ -139,10 +139,12 @@ class UserController < ApplicationController
   def show
     show_username = User.format_username params[:username]
     render_json status: 'User does not exist.' and return unless User.exist?(show_username)
-    render_json status: 'ok', user: User.get(show_username).decorate.public_hash.merge(
+    hash = User.get(show_username).decorate.public_hash.merge(
         {
             recent_tweets: StreamPost.where(author: show_username).desc(:timestamp).limit(10).map { |x| x.decorate.to_hash(current_username) }
         })
+    hash[:starred] = current_user.starred_users.include?(show_username) if logged_in? 
+    render_json status: 'ok', user: hash
   end
 
   def vcard
@@ -164,6 +166,43 @@ class UserController < ApplicationController
     headers['Content-Disposition'] = "inline; filename=\"#{user.username}.vcf\""
 
     render body: card_string, content_type: 'text/vcard', layout: false 
+  end
+
+  def star
+    return unless logged_in!
+    show_username = User.format_username params[:username]
+    user = User.get show_username
+    render_json status: 'User does not exist.' and return unless User.exist?(params[:username])
+    starred = current_user.starred_users.include? show_username
+    if starred
+      current_user.starred_users.delete show_username
+    else
+      current_user.starred_users << show_username
+    end
+    current_user.save
+    render_json status: 'ok', starred: !starred
+  end
+
+  def starred
+    return unless logged_in!
+    users = User.where(:username.in => current_user.starred_users)
+    hash = users.map do |u|
+      username = User.format_username u.username
+      uu = u.decorate.gui_hash
+      uu.merge!({comment: current_user.personal_comments[username]})
+      uu
+    end
+    render_json status: 'ok', users: hash
+  end
+
+  def personal_comment
+    return unless logged_in!
+    show_username = User.format_username params[:username]
+    user = User.get show_username
+    render_json status: 'User does not exist.' and return unless User.exist?(params[:username])
+    current_user.personal_comments[show_username] = params[:comment]
+    current_user.save
+    render_json status: 'ok'
   end
 
 end

@@ -544,6 +544,11 @@ img.photo {
 
     .title {
       font-size: medium;
+      .star {
+        height: 25px;
+        width: 20px;
+        vertical-align: bottom;
+      }
 
       &.big-title {
         font-size: large;

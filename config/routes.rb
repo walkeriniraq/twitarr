@@ -22,10 +22,13 @@ Twitarr::Application.routes.draw do
   get 'user/security_answer'
   post 'user/security_answer', to: 'user#security_answer'
   get 'user/logout'
+  get 'user/starred'
   get 'user/autocomplete'
   post 'user/save_profile'
   get 'user/profile/:username', to: 'user#show'
+  get 'user/profile/:username/star', to: 'user#star'
   get 'user/profile/:username/vcf', to: 'user#vcard', format: false
+  post 'user/profile/:username/personal_comment', to: 'user#personal_comment'
 
   get 'admin/users'
   post 'admin/activate'
