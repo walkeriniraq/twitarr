@@ -33,6 +33,8 @@ Twitarr.Router.map ()->
     @route 'new', { path: '/new'}
     @route 'detail', { path: '/:id' }
     @route 'edit', { path: '/:id/edit'}
+    @route 'past', { path: '/past' }
+    @route 'past', { path: '/past/:page' }
 
 
   @route 'user', { path: 'user/:username' }

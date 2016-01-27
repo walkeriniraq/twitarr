@@ -41,7 +41,7 @@
 </div>
 
 {{#if past_events}}
-  <h4 class="title">Past Events</h4>
+  <h4 class="title"><a {{action 'past_events'}}>Past Events</a></h4>
   {{#each e in past_events}}
     {{e.date}}
     <div class="display_card">

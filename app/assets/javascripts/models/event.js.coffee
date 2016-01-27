@@ -5,6 +5,7 @@ Twitarr.EventMeta.reopenClass
   page: (page) ->
     # Yeah. I know how gross this is. Forgive me.
     # I blame ember for this.
+    page = parseInt(page)
     current_events = {}
     past_events = {}
     upcoming_events = {}
@@ -55,6 +56,27 @@ Twitarr.EventMeta.reopenClass
             upcoming_a.push Twitarr.EventDateMeta.create(upcoming_events[key])
     ).then ->
       { events: current_a, past_events: past_a, upcoming_events: upcoming_a, page: page, past_page: past_page, next_page: next_page }
+
+  past_page: (page) ->
+    page = parseInt(page)
+    events = {}
+    a = []
+    past_page = undefined
+    next_page = undefined
+    $.when(
+      $.getJSON("event/recent/#{page}").then (data) =>
+        for e in data.events
+          m = moment(e.start_time)
+          d = "#{m.date()}"
+
+          events[d] = {} if events[d] == undefined
+          events[d]["date"] = m.format('MMMM Do') if events[d]["date"] == undefined
+          events[d]["events"] = [] if events[d]["events"] == undefined
+          events[d]["events"].push(Twitarr.Event.create(e))
+        for key of events
+          a.push Twitarr.EventDateMeta.create(events[key])
+    ).then ->
+      { events: a, page: page, past_page: past_page, next_page: next_page }
 
 Twitarr.EventDateMeta = Ember.Object.extend
   date: ""

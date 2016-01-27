@@ -16,6 +16,25 @@ Twitarr.EventsPageController = Twitarr.ObjectController.extend
       @transitionToRoute 'events.page', @get('prev_page')
     create_event: ->
       @transitionToRoute 'events.new'
+    past_events: ->
+      @transitionToRoute 'events.past', 0
+
+Twitarr.EventsPastController = Twitarr.ObjectController.extend
+  has_next_page: (->
+    @get('next_page') isnt null and @get('next_page') isnt undefined
+  ).property('next_page')
+
+  has_prev_page: (->
+    @get('prev_page') isnt null and @get('prev_page') isnt undefined
+  ).property('prev_page')
+
+  actions:
+    next_page: ->
+      return if @get('next_page') isnt null and @get('next_page') isnt undefined
+      @transitionToRoute 'events.past', @get('next_page')
+    prev_page: ->
+      return if @get('prev_page') isnt null and @get('prev_page') isnt undefined
+      @transitionToRoute 'events.past', @get('prev_page')
 
 Twitarr.EventsMetaPartialController = Twitarr.ObjectController.extend()
 
