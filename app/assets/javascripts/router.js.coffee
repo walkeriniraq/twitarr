@@ -13,6 +13,7 @@ Twitarr.Router.map ()->
 
   @resource 'stream', ->
     @route 'page', { path: ':page' }
+    @route 'star_page', { path: 'star/:page' }
     @route 'new'
     @route 'edit', { path: 'edit/:id'}
     @route 'view', { path: 'tweet/:id' }

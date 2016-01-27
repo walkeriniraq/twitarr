@@ -55,6 +55,7 @@ Twitarr::Application.routes.draw do
   end
   put 'seamail/:id/recipients', to: 'seamail#recipients'
 
+  get 'stream/star/:page', to: 'stream#star_filtered_page'
   get 'stream/:page', to: 'stream#page'
   post 'stream', to: 'stream#create'
   post 'tweet/edit/:id', to: 'stream#edit'

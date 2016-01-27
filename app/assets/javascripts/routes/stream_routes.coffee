@@ -12,6 +12,14 @@ Twitarr.StreamPageRoute = Ember.Route.extend
     reload: ->
       @transitionTo 'stream.page', mostRecentTime()
 
+Twitarr.StreamStarPageRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.StreamPost.star_page params.page
+
+  actions:
+    reload: ->
+      @transitionTo 'stream.star_page', mostRecentTime()
+
 Twitarr.StreamViewRoute = Ember.Route.extend
   model: (params) ->
     Twitarr.StreamPost.view params.id

@@ -153,4 +153,5 @@ Twitarr.StarredController = Twitarr.ObjectController.extend
           alert 'Comment was saved.'
         else
           alert response.status
-  
+    go_to_star_feed: ->
+      @transitionToRoute 'stream.star_page', Math.ceil(new Date().valueOf() + 1000)

@@ -2,6 +2,8 @@
   <div class="title">Starred Users</div>
 </div>
 
+<a {{action 'go_to_star_feed'}}>View filtered feed of tweets made only by starred users</a>
+
 {{#each user in starred}}
   <div class="display_card">
     <div class="card-section section-with-photo">

@@ -38,14 +38,14 @@ class StreamPost
   def self.at_or_before(ms_since_epoch, options = {})
     query = where(:timestamp.lte => Time.at(ms_since_epoch.to_i / 1000.0))
     query = query.where(:author.in => options[:filter_authors]) if options.has_key? :filter_authors
-    query = query.where(:author => options[:filter_author]) if options.has_key? :filter_author
+    query = query.where(author: options[:filter_author]) if options.has_key? :filter_author
     query
   end
 
   def self.at_or_after(ms_since_epoch, options = {})
     query = where(:timestamp.gte => Time.at(ms_since_epoch.to_i / 1000.0))
     query = query.where(:author.in => options[:filter_authors]) if options.has_key? :filter_authors
-    query = query.where(:author => options[:filter_author]) if options.has_key? :filter_author
+    query = query.where(author: options[:filter_author]) if options.has_key? :filter_author
     query
   end
 

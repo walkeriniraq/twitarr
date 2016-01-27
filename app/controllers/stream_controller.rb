@@ -1,14 +1,28 @@
 class StreamController < ApplicationController
 
   def page
-    posts = StreamPost.at_or_before(params[:page]).limit(20).order_by(timestamp: :desc).map { |x| x }
+    posts = StreamPost.at_or_before(params[:page]).limit(20).order_by(timestamp: :desc).map{|x|x}
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
     next_page = 0 if StreamPost.at_or_before(next_page).count < 1
-    newer_posts = StreamPost.at_or_after(params[:page])
+    newer_posts = StreamPost.at_or_after(params[:page]).map{|x|x}
     prev_page = newer_posts.first.nil? ? 0 : (newer_posts.first.timestamp.to_f * 1000).to_i
     prev_page = 0 if newer_posts.count < 1
     render_json stream_posts: posts.map { |x| x.decorate.to_hash(current_username, length_limit: 300) }, next_page: next_page, prev_page: prev_page
   end
+
+
+  def star_filtered_page
+    return unless logged_in!
+    posts = StreamPost.at_or_before(params[:page], {filter_authors: current_user.starred_users}).limit(20).order_by(timestamp: :desc).map{|x|x}
+    next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
+    next_page = 0 if StreamPost.at_or_before(next_page, {filter_authors: current_user.starred_users}).count < 1
+
+    newer_posts = StreamPost.at_or_after(params[:page], {filter_authors: current_user.starred_users}).map{|x|x}
+    prev_page = newer_posts.first.nil? ? 0 : (newer_posts.first.timestamp.to_f * 1000).to_i
+    prev_page = 0 if newer_posts.count < 1
+
+    posts = posts.map {|x| x if x.author != current_user.username }.compact # This was a really, really strange bug. although not sure it's necessary.
+    render_json stream_posts: posts.map { |x| x.decorate.to_hash(current_username, length_limit: 300) }, next_page: next_page, prev_page: prev_page
   end
 
   def create

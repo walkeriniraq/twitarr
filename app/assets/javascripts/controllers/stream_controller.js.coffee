@@ -116,6 +116,23 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
       console.log("ID = " + p)
       @transitionToRoute 'stream.view', p
 
+Twitarr.StreamStarPageController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
+  has_next_page: (->
+    @get('next_page') isnt 0
+  ).property('next_page')
+
+  has_prev_page: (->
+    @get('prev_page') isnt 0
+  ).property('prev_page')
+
+  actions:
+    next_page: ->
+      return if @get('next_page') is 0
+      @transitionToRoute 'stream.star_page', @get('next_page')
+    prev_page: ->
+      return if @get('prev_page') is 0
+      @transitionToRoute 'stream.star_page', @get('prev_page')
+
 Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
   actions:
     like: ->
