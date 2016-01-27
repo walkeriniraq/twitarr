@@ -98,6 +98,8 @@ Twitarr::Application.routes.draw do
       get 'user/auth', to: 'user#auth'
       get 'user/logout', to: 'user#logout'
       get 'user/whoami', to: 'user#whoami'
+      get 'user/profile', to: 'user#whoami'
+      post 'user/profile', to: 'user#update_profile'
       get 'user/autocomplete/:username', to: 'user#autocomplete'
       get 'user/view/:username', to: 'user#show'
       get 'user/photo/:username', to: 'user#get_photo'
