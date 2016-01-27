@@ -70,8 +70,9 @@ Twitarr::Application.routes.draw do
   post 'location', to: 'location#create'
   delete 'location/:name', to: 'location#delete'
 
-  get 'event/:id', to: 'event#show'
   get 'event/page/:page', to: 'event#page'
+  get 'event/recent', to: 'event#past_events'
+  get 'event/upcoming', to: 'event#upcoming'
 
   namespace :api do
     namespace :v2 do

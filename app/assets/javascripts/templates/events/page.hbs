@@ -1,10 +1,23 @@
-<div class="main-page-header header-with-controls">
-  <span class="controls">
+<div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
+  <span {{bind-attr class=":controls logged_in::hidden"}}>
     <button class="btn" {{action 'create_event'}}>Create Event</button>
   </span>
 
   <div class="title">Events</div>
 </div>
+{{#if upcoming_events}}
+  <h4>Your Upcoming Events</h4>
+  {{#each e in upcoming_events}}
+    {{e.date}}
+    <div class="display_card">
+      {{#each event in e.events}}
+        {{render "events.meta_partial" event}}
+      {{/each}}
+    </div>
+  {{/each}}
+{{/if}}
+
+<h4>Events</h4>
 {{#each e in events}}
   {{e.date}}
   <div class="display_card">
@@ -26,3 +39,15 @@
     </div>
   {{/if}}
 </div>
+
+{{#if past_events}}
+  <h4 class="title">Past Events</h4>
+  {{#each e in past_events}}
+    {{e.date}}
+    <div class="display_card">
+      {{#each event in e.events}}
+        {{render "events.meta_partial" event}}
+      {{/each}}
+    </div>
+  {{/each}}
+{{/if}}

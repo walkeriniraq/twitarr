@@ -14,8 +14,10 @@ class Event
   field :of, as: :official, type: Boolean
   field :sh, as: :shared, type: Boolean, default: true
 
-  validates :title, :author, :start_time, presence: true
+  validates :title, :start_time, presence: true
   validates :title, uniqueness: true
+
+  validates_presence_of :author, unless: "official" # Official events won't have owners.
 
   # 1 = ASC, -1 DESC
   index at_time: -1

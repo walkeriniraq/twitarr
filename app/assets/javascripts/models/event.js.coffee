@@ -3,23 +3,58 @@ Twitarr.EventMeta = Ember.Object.extend
 
 Twitarr.EventMeta.reopenClass
   page: (page) ->
-    $.getJSON("event/page/#{page}").then (data) =>
-      h = {}
-      a = []
-      # Yeah. I know how gross this is. Forgive me.
-      # I blame ember for this.
-      for e in data.events
-        m = moment(e.start_time)
-        d = "#{m.date()}"
-        
-        h[d] = {} if h[d] == undefined
-        h[d]["date"] = m.format('MMMM Do') if h[d]["date"] == undefined
-        h[d]["events"] = [] if h[d]["events"] == undefined
-        h[d]["events"].push(Twitarr.Event.create(e))
-        
-      for key of h
-        a.push Twitarr.EventDateMeta.create(h[key])
-      { events: a }
+    # Yeah. I know how gross this is. Forgive me.
+    # I blame ember for this.
+    current_events = {}
+    past_events = {}
+    upcoming_events = {}
+    current_a = []
+    past_a = []
+    upcoming_a = []
+    past_page = undefined
+    next_page = undefined
+    $.when(
+      $.getJSON("event/page/#{page}").then (data) =>
+        past_page = data.past_page
+        next_page = data.next_page
+        for e in data.events
+          m = moment(e.start_time)
+          d = "#{m.date()}"
+
+          # Only list current events.
+          current_events[d] = {} if current_events[d] == undefined
+          current_events[d]["date"] = m.format('MMMM Do') if current_events[d]["date"] == undefined
+          current_events[d]["events"] = [] if current_events[d]["events"] == undefined
+          current_events[d]["events"].push(Twitarr.Event.create(e))
+        for key of current_events
+          current_a.push Twitarr.EventDateMeta.create(current_events[key])
+
+      if page == 0
+        $.getJSON("event/recent").then (data) =>
+          for e in data.events
+            m = moment(e.start_time)
+            d = "#{m.date()}"
+
+            past_events[d] = {} if past_events[d] == undefined
+            past_events[d]["date"] = m.format('MMMM Do') if past_events[d]["date"] == undefined
+            past_events[d]["events"] = [] if past_events[d]["events"] == undefined
+            past_events[d]["events"].push(Twitarr.Event.create(e))
+          for key of past_events
+            past_a.push Twitarr.EventDateMeta.create(past_events[key])
+
+        $.getJSON("event/upcoming").then (data) =>
+          for e in data.events
+            m = moment(e.start_time)
+            d = "#{m.date()}"
+
+            upcoming_events[d] = {} if upcoming_events[d] == undefined
+            upcoming_events[d]["date"] = m.format('MMMM Do') if upcoming_events[d]["date"] == undefined
+            upcoming_events[d]["events"] = [] if upcoming_events[d]["events"] == undefined
+            upcoming_events[d]["events"].push(Twitarr.Event.create(e))
+          for key of upcoming_events
+            upcoming_a.push Twitarr.EventDateMeta.create(upcoming_events[key])
+    ).then ->
+      { events: current_a, past_events: past_a, upcoming_events: upcoming_a, page: page, past_page: past_page, next_page: next_page }
 
 Twitarr.EventDateMeta = Ember.Object.extend
   date: ""
@@ -36,6 +71,7 @@ Twitarr.Event = Ember.Object.extend
   official: null
   max_signups: null
   signups: []
+  favorites: []
 
   signup: ->
     $.post("/api/v2/event/#{@get('id')}/signup").then (data) =>
@@ -59,6 +95,20 @@ Twitarr.Event = Ember.Object.extend
       else
         alert data.status
         false
+
+  favourite: ->
+    $.post("/api/v2/event/#{@get('id')}/favorite").then (data) =>
+      if(!data.error or !data.errors)
+        @set('favorites', data.event.favorites)
+      else
+        alert data.error || data.errors.join("\n")
+
+  unfavourite: ->
+    $.ajax("/api/v2/event/#{@get('id')}/favorite", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
+      if(!data.error or !data.errors)
+        @set('favorites', data.event.favorites)
+      else
+        alert data.error || data.errors.join("\n")
 
 Twitarr.Event.reopenClass
   get: (event_id) ->

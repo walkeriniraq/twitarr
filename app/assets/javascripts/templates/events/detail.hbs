@@ -1,6 +1,11 @@
 <div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
   <div class="title">{{#link-to 'events' }}Events{{/link-to}} > {{title}}</div>
   <span {{bind-attr class=":controls logged_in::hidden"}}>
+    {{#unless favourited}}
+      <button class="btn" {{action 'favourite'}}>Favorite</button>
+    {{else}}
+      <button class="btn" {{action 'unfavourite'}}>Unfavorite</button>
+    {{/unless}}
     {{#if can_sign_up}}
       {{#unless signed_up}}
         <button class="btn" {{action 'signup'}}>Signup</button>
@@ -29,8 +34,10 @@
     </div>
     <div class="form row">
       <div class="col-xs-6">
-        <div class="label">Organized by</div>
-        <div class="data">{{#link-to 'user' author}}{{unbound pretty_username author display_name}}{{/link-to}}</div>
+        {{#if author}}
+          <div class="label">Organized by</div>
+          <div class="data">{{#link-to 'user' author}}{{unbound pretty_username author display_name}}{{/link-to}}</div>
+        {{/if}}
         {{#if location}}
           <div class="label">Location</div>
           <div class="data">{{unbound location}}</div>

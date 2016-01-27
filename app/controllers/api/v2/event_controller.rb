@@ -83,8 +83,8 @@ class API::V2::EventController < ApplicationController
   end
 
   def signup
-    render json:[{error:'Max signups has already been reached'}], status: :forbidden and return if @event.signups.length >= @event.max_signups
-    render json:[{error:'You have already signed up for this event'}], status: :forbidden and return if @event.signups.include? current_username
+    render json:[{error:'Max signups has already been reached'}], status: :forbidden and return if (!!@event.signups and !!@event.max_signups) and @event.signups.length >= @event.max_signups
+    render json:[{error:'You have already signed up for this event'}], status: :forbidden and return if (!!@event.signups and !!@event.max_signups) and @event.signups.include? current_username
     @event.signups << current_username
     @event.save
     if @event.valid?
