@@ -15,6 +15,7 @@ class API::V2::SearchController < ApplicationController
                    forum_posts: do_search(params, Forum) { |e| e.decorate.to_meta_hash },
                    users: do_search(params, User) { |e| e.decorate.gui_hash },
                    seamails: do_search(params, Seamail) { |e| e.decorate.to_meta_hash },
+                   events: do_search(params, Event) { |e| e.decorate.to_hash },
                    query: {text: params[:text]}}
   end
 

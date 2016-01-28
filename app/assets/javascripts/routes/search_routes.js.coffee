@@ -71,3 +71,20 @@ Twitarr.SearchForumResultsRoute = Ember.Route.extend
       controller.set('model', model)
     else
       controller.set('error', model.status)
+
+Twitarr.SearchEventResultsRoute = Ember.Route.extend
+  actions:
+    search: (text) ->
+      if !!text
+        @transitionTo('search.event_results', text)
+
+  model: (params) ->
+    $.getJSON("search_events/#{params.text}")
+
+  setupController: (controller, model) ->
+    if model.status is 'ok'
+      @controllerFor('search').set('text', model.text)
+      controller.set('error', null)
+      controller.set('model', model)
+    else
+      controller.set('error', model.status)

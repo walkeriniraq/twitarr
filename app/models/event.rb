@@ -20,11 +20,15 @@ class Event
   validates_presence_of :author, unless: "official" # Official events won't have owners.
 
   # 1 = ASC, -1 DESC
-  index at_time: -1
+  index start_time: -1
   index author: 1
+  index title: 1
+  index({:title => 'text', :description => 'text'})
 
   def self.search(params = {})
-    # TODO
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
+    criteria = Event.or({ title: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
+    limit_criteria(criteria, params).order_by(timestamp: :desc)
   end
 
   def self.create_new_event(author, title, start_time, options={})

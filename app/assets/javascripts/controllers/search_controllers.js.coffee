@@ -20,4 +20,7 @@ Twitarr.SearchTweetResultsController = Twitarr.ObjectController.extend
 Twitarr.SearchForumResultsController = Twitarr.ObjectController.extend
   error: ''
 
+Twitarr.SearchEventResultsController = Twitarr.ObjectController.extend
+  error: ''
+
 Twitarr.SearchUserPartialController = Twitarr.ObjectController.extend()

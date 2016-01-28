@@ -23,6 +23,7 @@ Twitarr.Router.map ()->
     @route 'user_results', { path: 'user/:text' }
     @route 'tweet_results', { path: 'tweet/:text' }
     @route 'forum_results', { path: 'forum/:text' }
+    @route 'event_results', { path: 'event/:text' }
 
   @resource 'admin', ->
     @route 'announcements'

@@ -13,6 +13,7 @@ Twitarr::Application.routes.draw do
   get 'search_users/:text', to: 'search#search_users'
   get 'search_tweets/:text', to: 'search#search_tweets'
   get 'search_forums/:text', to: 'search#search_forums'
+  get 'search_events/:text', to: 'search#search_events'
 
   get 'user/username'
   get 'user/new', to: 'user#create_user'

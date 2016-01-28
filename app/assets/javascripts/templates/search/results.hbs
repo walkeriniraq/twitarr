@@ -30,6 +30,21 @@
   {{/if}}
 </div>
 <div class="display_card">
+  <div class="card_title">Events</div>
+  {{#each event in events}}
+    {{render "events.meta_partial" event}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_events}}
+    <div class="card-section clickable" {{action 'event_search'}}>
+      View all matching events...
+    </div>
+  {{/if}}
+</div>
+<div class="display_card">
   <div class="card_title">Forums</div>
   {{#each forum in forums}}
     {{render "forums.meta_partial" forum}}

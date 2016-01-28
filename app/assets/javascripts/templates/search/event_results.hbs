@@ -1,0 +1,16 @@
+{{partial 'search/search'}}
+<div class="display_card">
+  <div class="card_title">Events</div>
+  {{#each event in events}}
+    {{render "events.meta_partial" event}}
+  {{else}}
+    <div class="card-section">
+      No results.
+    </div>
+  {{/each}}
+  {{#if more_events}}
+    <div class="card-section">
+      Search query returned too many results - please narrow the search.
+    </div>
+  {{/if}}
+</div>

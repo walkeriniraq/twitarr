@@ -13,6 +13,7 @@ class SearchController < ApplicationController
     forum_query = Forum.search(params)
     user_query = User.search(params)
     seamail_query = Seamail.search(params)
+    event_query = Event.search(params)
 
     render_json status: 'ok',
                 users: user_query.map { |x| x.decorate.gui_hash },
@@ -23,6 +24,8 @@ class SearchController < ApplicationController
                 more_tweets: tweet_query.has_more?,
                 forums: forum_query.map { |x| x.decorate.to_meta_hash },
                 more_forums: forum_query.has_more?,
+                events: event_query.map { |x| x.decorate.to_hash },
+                more_events: event_query.has_more?,
                 text: search_text,
                 query: {text: search_text}
   end
@@ -58,6 +61,17 @@ class SearchController < ApplicationController
                 text: search_text,
                 forums: forum_query.map { |x| x.decorate.to_meta_hash },
                 more_forums: forum_query.has_more?
+  end
+
+  def search_events
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
+    render_json status: 'no text' and return if search_text.blank?
+    params[:limit] = DETAILED_SEARCH_MAX unless params[:limit]
+    event_query = Event.search(params)
+    render_json status: 'ok',
+                text: search_text,
+                events: event_query.map { |x| x.decorate.to_hash },
+                more_events: event_query.has_more?
   end
 
 end
