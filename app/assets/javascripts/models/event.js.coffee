@@ -78,6 +78,31 @@ Twitarr.EventMeta.reopenClass
     ).then ->
       { events: a, page: page, past_page: past_page, next_page: next_page }
 
+  own_page: (page) ->
+    page = parseInt(page) || 0
+    events = {}
+    a = []
+    past_page = undefined
+    next_page = undefined
+    $.when(
+      $.getJSON("event/own/#{page}").then (data) =>
+        past_page = data.past_page
+        next_page = data.next_page
+        for e in data.events
+          m = moment(e.start_time)
+          d = "#{m.date()}"
+
+          # Only list current events.
+          events[d] = {} if events[d] == undefined
+          events[d]["date"] = m.format('MMMM Do') if events[d]["date"] == undefined
+          events[d]["events"] = [] if events[d]["events"] == undefined
+          events[d]["events"].push(Twitarr.Event.create(e))
+        for key of events
+          a.push Twitarr.EventDateMeta.create(events[key])
+    ).then ->
+      { events: a, page: page, past_page: past_page, next_page: next_page }
+
+
 Twitarr.EventDateMeta = Ember.Object.extend
   date: ""
   events: []

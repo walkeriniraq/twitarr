@@ -16,8 +16,6 @@ Twitarr.EventsPageController = Twitarr.ObjectController.extend
       @transitionToRoute 'events.page', @get('prev_page')
     create_event: ->
       @transitionToRoute 'events.new'
-    past_events: ->
-      @transitionToRoute 'events.past', 0
 
 Twitarr.EventsPastController = Twitarr.ObjectController.extend
   has_next_page: (->
@@ -72,6 +70,8 @@ Twitarr.EventsDetailController = Twitarr.ObjectController.extend
       if(confirm("Are you sure you want to delete this event?"))
         r=@get('model').delete()
         @transitionToRoute 'events.page', 0 if r
+    ical: ->
+      window.location.replace("/api/v2/event/#{@get('id')}/ical")
 
 Twitarr.EventsNewController = Twitarr.Controller.extend
   init: ->
@@ -126,5 +126,23 @@ Twitarr.EventsEditController = Twitarr.ObjectController.extend
         @set 'posting', false
         alert 'Event could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
+
+Twitarr.EventsOwnController = Twitarr.ObjectController.extend
+  has_next_page: (->
+    @get('next_page') isnt null and @get('next_page') isnt undefined
+  ).property('next_page')
+
+  has_prev_page: (->
+    @get('prev_page') isnt null and @get('prev_page') isnt undefined
+  ).property('prev_page')
+
+  actions:
+    next_page: ->
+      return if @get('next_page') isnt null and @get('next_page') isnt undefined
+      @transitionToRoute 'events.own', @get('next_page')
+    prev_page: ->
+      return if @get('prev_page') isnt null and @get('prev_page') isnt undefined
+      @transitionToRoute 'events.own', @get('prev_page')
+
 
 getUsableTimeValue = -> d = new Date(); d.toISOString().replace('Z', '')

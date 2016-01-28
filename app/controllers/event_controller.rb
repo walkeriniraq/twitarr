@@ -33,4 +33,15 @@ class EventController < ApplicationController
     events = events.map { |x| x if x.signups.include? current_username or x.favorites.include? current_username }.compact
     render_json events: events.map { |x| x.decorate.to_hash(current_username)}
   end
+
+  def own
+    return unless logged_in!
+    favourited_events = Event.where(:start_time.gte => (DateTime.now - 1.hours)).any_in(favorites: current_username).order_by(:start_time.desc).map {|x|x}
+    signed_up_events = Event.where(:start_time.gte => (DateTime.now - 1.hours)).any_in(signups: current_username).order_by(:start_time.desc).map {|x|x}
+    owned_events = Event.where(:start_time.gte => (DateTime.now - 1.hours)).where(author: current_username).order_by(:start_time.desc).map {|x|x}
+    events = favourited_events.concat(owned_events)
+    events = events.concat(signed_up_events).uniq
+    events.sort! {|a,b| a.start_time <=> b.start_time }
+    render_json events: events.map { |x| x.decorate.to_hash(current_username)}
+  end
 end

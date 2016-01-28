@@ -79,6 +79,7 @@ Twitarr::Application.routes.draw do
   get 'event/recent', to: 'event#past_events'
   get 'event/recent/:page', to: 'event#past_events'
   get 'event/upcoming', to: 'event#upcoming'
+  get 'event/own/:page', to: 'event#own'
 
   namespace :api do
     namespace :v2 do

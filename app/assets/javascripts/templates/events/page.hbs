@@ -5,6 +5,7 @@
 
   <div class="title">Events</div>
 </div>
+<a {{bind-attr class="logged_in::hidden"}}>{{#link-to 'events.own' 0}}Go to My Events{{/link-to}}</a>
 {{#if upcoming_events}}
   <h4>Your Upcoming Events</h4>
   {{#each e in upcoming_events}}
@@ -41,7 +42,7 @@
 </div>
 
 {{#if past_events}}
-  <h4 class="title"><a {{action 'past_events'}}>Past Events</a></h4>
+  <h4 class="title"><a>{{#link-to 'events.past' 0}}Past Events{{/link-to}}</a></h4>
   {{#each e in past_events}}
     {{e.date}}
     <div class="display_card">

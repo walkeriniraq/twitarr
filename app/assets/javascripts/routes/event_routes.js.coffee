@@ -23,3 +23,7 @@ Twitarr.EventsNewRoute = Ember.Route.extend()
 Twitarr.EventsPastRoute = Ember.Route.extend
   model: (params) ->
     Twitarr.EventMeta.past_page params.page || 0
+
+Twitarr.EventsOwnRoute = Ember.Route.extend
+  model: (params) ->
+    Twitarr.EventMeta.own_page params.page || 0
