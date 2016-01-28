@@ -49,6 +49,22 @@
 </div>
 
 <div class="display_card">
+  <div class="card_title">Upcoming Events</div>
+  {{#each event in e.events}}
+    {{render "events.meta_partial" event}}
+  {{else}}
+    <div class="card-section">
+      No upcoming events.
+    </div>
+  {{/each}}
+  <div class="card-section">
+    {{#link-to 'events.page' 0}}
+      View all events
+    {{/link-to}}
+  </div>
+</div>
+
+<div class="display_card">
   <div class="card_title">Tweet Mentions</div>
   {{#each tweet in tweet_mentions}}
     {{render "stream.post_partial" tweet}}

@@ -9,6 +9,7 @@ class AlertsController < ApplicationController
       forum_mentions = Forum.view_mentions(query: current_username,
                                                 mentions_only: true).map {|p| p.decorate.to_meta_hash }
       unread_seamail = current_user.seamails(unread: true).map{|m| m.decorate.to_meta_hash }
+      upcoming_events = current_user.upcoming_events(true).map{|e| e.decorate.to_hash }
       current_user.reset_last_viewed_alerts
       current_user.save!
     else
@@ -16,12 +17,14 @@ class AlertsController < ApplicationController
       tweet_mentions = []
       forum_mentions = []
       unread_seamail = []
+      upcoming_events = []
       session[:last_viewed_alerts] = DateTime.now
     end
 
 
     render_json tweet_mentions: tweet_mentions, forum_mentions: forum_mentions,
                 announcements: announcements, unread_seamail: unread_seamail,
+                upcoming_events: upcoming_events,
                 last_checked_time: (last_checked_time.to_f * 1000).to_i
   end
 

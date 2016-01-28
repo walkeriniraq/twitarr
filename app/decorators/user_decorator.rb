@@ -26,7 +26,7 @@ class UserDecorator < Draper::Decorator
   end
 
   def alerts_meta
-    return_attribute_hash %w(seamail_unread_count unnoticed_mentions unnoticed_alerts unnoticed_announcements)
+    return_attribute_hash %w(seamail_unread_count unnoticed_mentions unnoticed_alerts unnoticed_announcements unnoticed_upcoming_events)
   end
 
 end

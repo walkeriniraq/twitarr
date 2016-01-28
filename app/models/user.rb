@@ -34,6 +34,7 @@ class User
   field :lc, as: :current_location, type: String
   field :us, as: :starred_users, type: Array, default: []
   field :pc, as: :personal_comments, type: Hash, default: {}
+  field :ea, as: :acknowledged_event_alerts, type: Array, default: []
 
   index username: 1
   index display_name: 1
@@ -141,6 +142,24 @@ class User
     self[:is_vcard_public] = !val.nil? && val.to_bool
   end
 
+  def upcoming_events(alerts=false)
+    events = Event.where(:start_time.gte => (DateTime.now - 1.hours)).where(:start_time.lte => (DateTime.now + 3.hours)).limit(20).order_by(:start_time.desc)
+    events = events.map {|x| x if !x.end_time or x.end_time > DateTime.now }.compact
+    events = events.map { |x| x if x.signups.include? self.username or x.favorites.include? self.username }.compact
+    if alerts
+      events = events.map { |e| e unless self.acknowledged_event_alerts.include? e.id }.compact
+      events.each { |e| self.acknowledged_event_alerts << e.id unless self.acknowledged_event_alerts.include? e.id }
+      self.save
+    end
+    events
+  end
+
+  def unnoticed_upcoming_events
+    events = self.upcoming_events()
+    events = events.map {|e| e unless self.acknowledged_event_alerts.include? e.id}.compact
+    events.count
+  end
+
   def seamails(params = {})
     query = {usernames: username}
     query[:unread_users] = username if params.has_key?(:unread)
@@ -241,7 +260,7 @@ class User
   end
 
   def unnoticed_alerts
-    (unnoticed_mentions || 0) > 0 || (seamail_unread_count || 0) > 0 || unnoticed_announcements >= 1
+    (unnoticed_mentions || 0) > 0 || (seamail_unread_count || 0) > 0 || unnoticed_announcements >= 1 || unnoticed_upcoming_events >= 1
   end
 
   def self.display_name_from_username(username)

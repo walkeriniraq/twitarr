@@ -28,9 +28,7 @@ class EventController < ApplicationController
 
   def upcoming
     # Shows all upcoming events for the user, starting from one hour ago up to 3 hours from now and removes events that have had their end_time past 
-    events = Event.where(:start_time.gte => (DateTime.now - 1.hours)).where(:start_time.lte => (DateTime.now + 3.hours)).limit(20).order_by(:start_time.desc)
-    events = events.map {|x| x if !x.end_time or x.end_time > DateTime.now }.compact
-    events = events.map { |x| x if x.signups.include? current_username or x.favorites.include? current_username }.compact
+    events = current_user.upcoming_events()
     render_json events: events.map { |x| x.decorate.to_hash(current_username)}
   end
 
