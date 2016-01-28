@@ -168,6 +168,18 @@ class PhotoStore
     PHOTO_EXTENSIONS = %w(jpg jpeg gif png).freeze
 
     def initialize(file)
+      Rails.logger.debug('content type = ' + file.content_type)
+      if file.original_filename.nil? || file.original_filename !~ /\./
+        Rails.logger.debug('no valid filename')
+        if file.content_type == 'image/png'
+          file.original_filename = 'image.png'
+        elsif file.content_type == 'image/jpeg'
+          file.original_filename = 'image.jpg'
+        elsif file.content_type == 'image/gif'
+          file.original_filename = 'image.gif'
+        end
+      end
+      Rails.logger.debug('filename = ' + file.original_filename)
       @file = file
     end
 
