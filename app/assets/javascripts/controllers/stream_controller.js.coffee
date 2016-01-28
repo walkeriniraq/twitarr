@@ -49,7 +49,7 @@ Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePho
           @set 'reply_text', @get('base_reply_text1')
           @set 'photo_id', null
           [p, ...] = response.stream_post['parent_chain']
-          @transitionToRoute 'stream.view', p
+          @send 'reload'
       , =>
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
