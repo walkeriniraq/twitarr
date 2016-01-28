@@ -14,13 +14,13 @@ Ember.Handlebars.helper 'pretty_timestamp', (timestamp) ->
   new Ember.Handlebars.SafeString("<span class='timestamp' title='#{timestamp}'>#{moment(timestamp).fromNow(true)} ago</span>")
 
 Ember.Handlebars.helper 'pretty_time', (timestamp) ->
-  moment(timestamp).format('lll')
+  moment.utc(timestamp).format('lll')
 
 Ember.Handlebars.helper 'pretty_timespan', (start_time, end_time) ->
   if end_time
-    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment(start_time).format('lll')} - #{moment(end_time).format('lll')}</span>")
+    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment.utc(start_time).format('lll')} - #{moment.utc(end_time).format('lll')}</span>")
   else
-    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment(start_time).format('lll')}</span>")
+    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment.utc(start_time).format('lll')}</span>")
 
 
 Ember.Handlebars.helper 'user_picture', (username, last_time) ->

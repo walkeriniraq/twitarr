@@ -164,8 +164,10 @@ class API::V2::EventController < ApplicationController
   end
 
   def update
-    render json:[{error:'You must be admin to create official events!'}], status: :forbidden and return if (params[:event][:official] and !is_admin?)
-    unless (params[:event].keys - %w(description location official shared start_time end_time max_signups)).empty?
+    render json:[{error:'Event hash missing from data'}], status: :forbidden and return unless (params.has_key? :event)
+    event = params[:event]
+    render json:[{error:'You must be admin to create official events!'}], status: :forbidden and return if (!!event[:official] and !is_admin?)
+    unless (event.keys - %w(description location official shared start_time end_time max_signups)).empty?
       render json:[{error:'Unable to modify title or author fields'}], status: :bad_request
       return
     end
@@ -175,22 +177,22 @@ class API::V2::EventController < ApplicationController
       return
     end
 
-    if (params[:official] or @event.official) and !is_admin?
+    if (event[:official] or @event.official) and !is_admin?
       render json: [{error:"You must be admin to modify official events!"}], status: :forbidden
       return
     end
-    @event.title = params[:title] if params.has_key? :title
-    @event.description = params[:description] if params.has_key? :description
-    @event.location = params[:location] if params.has_key? :location
-    @event.start_time = params[:start_time] if params.has_key? :start_time
-    @event.end_time = params[:end_time] if params.has_key? :end_time
-    @event.max_signups = params[:max_signups] if params.has_key? :max_signups
-    @event.official = params[:official] if params.has_key? :official
-    @event.shared = params[:shared] if params.has_key? :shared
+    @event.title = event[:title] if event.has_key? :title
+    @event.description = event[:description] if event.has_key? :description
+    @event.location = event[:location] if event.has_key? :location
+    @event.start_time = event[:start_time] if event.has_key? :start_time
+    @event.end_time = event[:end_time] if event.has_key? :end_time
+    @event.max_signups = event[:max_signups] if event.has_key? :max_signups
+    @event.official = event[:official] if event.has_key? :official
+    @event.shared = event[:shared] if event.has_key? :shared
 
     @event.save
     if @event.valid?
-      render_json stream_post: @event.decorate.to_hash
+      render_json events: @event.decorate.to_hash
     else
       render_json errors: @event.errors.full_messages
     end

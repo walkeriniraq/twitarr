@@ -13,12 +13,9 @@ Twitarr.EventsDetailRoute = Ember.Route.extend
 
 Twitarr.EventsEditRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.Event.get(params.id)
+    Twitarr.Event.get_edit(params.id)
 
   setupController: (controller, model) ->
-    if(model.status isnt 'ok')
-      alert model.status
-      return
     controller.set 'model', model
 
 Twitarr.EventsNewRoute = Ember.Route.extend()

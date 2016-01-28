@@ -1,5 +1,5 @@
 <div class="main-page-header">
-  <div class="title">{{#link-to 'events'}}Events{{/link-to}} > New</div>
+  <div class="title">{{#link-to 'events'}}Events{{/link-to}} > Edit</div>
 </div>
 <div class="display_card">
   <div class="card-section">
@@ -14,7 +14,7 @@
       </ul>
       <div class="form row">
         <div class="col-xs-12">
-          {{input value=title class='input' placeholder='Title*'}}
+          <h4>{{unbound title}}</h4>
           {{input value=location class='input' placeholder='Location'}}
           {{textarea value=description rows='3' class='input' placeholder='Description'}}
         </div>
@@ -36,10 +36,11 @@
         </div>
       </div>
       <span class="controls">
-        <button class="btn" {{action 'new'}}>Create</button>
+        <button class="btn" {{action 'save'}}>Save</button>
       </span>
       Items with an * in the name are required
     </div>
   </div>
 </div>
+
 

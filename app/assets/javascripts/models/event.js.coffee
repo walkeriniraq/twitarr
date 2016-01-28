@@ -137,8 +137,16 @@ Twitarr.Event.reopenClass
     $.getJSON("/api/v2/event/#{event_id}").then (data) =>
       Twitarr.Event.create(data)
 
+  get_edit: (event_id) ->
+    $.getJSON("/api/v2/event/#{event_id}").then (data) =>
+      g = Twitarr.Event.create(data)
+      # Format the time to a usable format for the front-end.
+      g.start_time = moment.utc(g.start_time).format().slice(0,-6)
+      g.end_time = moment.utc(g.end_time).format().slice(0,-6) if g.end_time
+      g
+
   edit: (event_id, description, location, start_time, end_time, max_signups) ->
-    $.post("/api/v2/event/#{event_id}", method: 'PUT', description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups).then (data) =>
+    $.ajax("/api/v2/event/#{event_id}", method: 'PUT', data: {event: {description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups}}).then (data) =>
       data.event = Twitarr.Event.create(data.event) if data.event?
       data
 
