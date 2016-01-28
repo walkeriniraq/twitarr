@@ -85,9 +85,10 @@ Twitarr::Application.routes.draw do
     namespace :v2 do
       resources :photo, only: [:index, :create, :destroy, :update, :show], :defaults => { :format => 'json' }
       resources :stream, only: [:index, :new, :create, :show, :destroy, :update]
+      get 'event/csv', to: 'event#csv'
       resources :event, only: [:index, :show, :create, :destroy, :update], :defaults => { :format => 'json' }
 
-      get 'event/csv', to: 'event#csv'
+      
       get 'event/:id/ical', to: 'event#ical'
       post 'event/:id/signup', to: 'event#signup'
       delete 'event/:id/signup', to: 'event#destroy_signup'

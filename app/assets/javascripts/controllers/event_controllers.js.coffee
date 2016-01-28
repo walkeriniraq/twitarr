@@ -16,6 +16,8 @@ Twitarr.EventsPageController = Twitarr.ObjectController.extend
       @transitionToRoute 'events.page', @get('prev_page')
     create_event: ->
       @transitionToRoute 'events.new'
+    csv: ->
+      window.location.replace("/api/v2/event/csv")
 
 Twitarr.EventsPastController = Twitarr.ObjectController.extend
   has_next_page: (->
@@ -143,6 +145,8 @@ Twitarr.EventsOwnController = Twitarr.ObjectController.extend
     prev_page: ->
       return if @get('prev_page') isnt null and @get('prev_page') isnt undefined
       @transitionToRoute 'events.own', @get('prev_page')
+    csv: ->
+      window.location.replace("/api/v2/event/csv?source=own")
 
 
 getUsableTimeValue = -> d = new Date(); d.toISOString().replace('Z', '')

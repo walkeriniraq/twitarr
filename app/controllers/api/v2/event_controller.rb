@@ -33,8 +33,17 @@ class API::V2::EventController < ApplicationController
   def csv
     sort_by = (params[:sort_by] || 'start_time').to_sym
     order = (params[:order] || 'desc').to_sym
-    query = Event.all.order_by([sort_by, order]).select { |ev| is_event_allowed(ev) }
-    puts query
+    source = params[:source] || 'all'
+    case source
+    when 'all'
+      query = Event.all.order_by([sort_by, order]).select { |ev| is_event_allowed(ev) }
+    when 'own'
+      events = Event.any_in(favorites: current_username).map {|x|x}
+      events = events.concat(Event.any_in(signups: current_username).map {|x|x})
+      events = events.concat(Event.where(author: current_username).map {|x|x}).uniq
+      query = events.sort {|a,b| a.start_time <=> b.start_time }
+    end
+    #puts query
     result = CSV.generate do |csv|
       csv << ["id", "Title", "Author", "Display Name", "Location", "Start Time", "End Time", "Description", "Official?", "Shared?", "Signups", "Maximum Signups", "Favorites"]
       query.each do |q|

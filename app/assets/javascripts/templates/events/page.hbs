@@ -1,5 +1,6 @@
 <div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
   <span {{bind-attr class=":controls logged_in::hidden"}}>
+    <button class="btn" {{action 'csv'}}>Export list as CSV</button>
     <button class="btn" {{action 'create_event'}}>Create Event</button>
   </span>
 
