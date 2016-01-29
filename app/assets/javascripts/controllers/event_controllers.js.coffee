@@ -44,17 +44,17 @@ Twitarr.EventsDetailController = Twitarr.ObjectController.extend
   ).property('logged_in', 'author', 'login_user', 'login_admin')
 
   signed_up: (->
-    @get('signups').includes(@get('login_user'))
+    $.inArray(@get('login_user'), @get('signups'))
   ).property('author', 'signups')
 
   can_sign_up: (->
     return false if !@get('max_signups')
-    return true if @get('signups').includes(@get('login_user')) # Let people unsign-up
+    return true if $.inArray(@get('login_user'), @get('signups')) # Let people unsign-up
     @get('signups').length <= @get('max_signups')
   ).property('signups', 'max_signups', 'login_user')
 
   favourited: (->
-    @get('favorites').includes(@get('login_user'))
+    $.inArray(@get('login_user'), @get('favorites'))
   ).property('favorites', 'login_user')
 
   actions:

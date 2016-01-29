@@ -27,13 +27,14 @@ class EventController < ApplicationController
   end
 
   def upcoming
-    # Shows all upcoming events for the user, starting from one hour ago up to 3 hours from now and removes events that have had their end_time past 
-    events = current_user.upcoming_events()
+    # Shows all upcoming events for the user, starting from one hour ago up to 3 hours from now and removes events that have had their end_time past
+    events = []
+    events = current_user.upcoming_events() if logged_in?
     render_json events: events.map { |x| x.decorate.to_hash(current_username)}
   end
 
   def own
-    return unless logged_in!
+    return unless logged_in?
     events = Event.any_in(favorites: current_username).map {|x|x}
     events = events.concat(Event.any_in(signups: current_username).map {|x|x})
     events = events.concat(Event.where(author: current_username).map {|x|x}).uniq
