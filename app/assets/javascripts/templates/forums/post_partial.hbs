@@ -1,0 +1,34 @@
+<div {{bind-attr class="first_unread:scroll_to :card-section :section-with-photo"}}>
+  <div class="section-photo">
+    {{#link-to 'user' author}}
+      {{unbound user_picture author author_last_photo_updated}}
+    {{/link-to}}
+  </div>
+
+  <span class="title">
+    {{#link-to 'user' author}}
+      {{unbound pretty_username author display_name}}
+    {{/link-to}}
+  </span>
+  {{unbound pretty_timestamp timestamp}}
+  <div class="body">
+    <div class="body-section">
+      {{{unbound text}}}
+    </div>
+    <div class="body-section photos">
+      {{#each photo in photos}}
+        {{render 'photo_mini' photo }}
+      {{/each}}
+    </div>
+  </div>
+  <div class="controls">
+    <div>
+      {{likes_string}}
+    </div>
+    <div>
+      <button {{action 'unlike' bubbles=false}} {{bind-attr class="unlikeable::hidden :btn-link"}}>Unlike</button>
+      <button {{action 'like' bubbles=false}} {{bind-attr class="likeable::hidden :btn-link"}}>Like</button>
+    </div>
+  </div>
+  <span {{bind-attr class="new::hidden :controls"}} style="color: red;">new</span>
+</div>

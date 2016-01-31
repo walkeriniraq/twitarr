@@ -4,7 +4,7 @@ class ForumsController < ApplicationController
     per_page = 20
     offset = params[:page].to_i || 0
 
-    threads = Forum.offset(offset * per_page).limit(per_page).order_by(:last_post_time.desc)
+    threads = Forum.offset(offset * per_page).limit(per_page).sort_by(&:last_post).reverse
     if logged_in?
       threads = threads.map { |x| x.decorate.to_meta_hash(current_user) }
     else
@@ -28,10 +28,10 @@ class ForumsController < ApplicationController
   def show
     page = params[:page].to_i || 0
     if logged_in?
-      render_json forum: Forum.find(params[:id]).decorate.to_hash(page,current_user)
+      render_json forum: Forum.find(params[:id]).decorate.to_paginated_hash(page,current_user)
       current_user.update_forum_view(params[:id]) if logged_in?
     else
-      render_json forum: Forum.find(params[:id]).decorate.to_hash(page)
+      render_json forum: Forum.find(params[:id]).decorate.to_paginated_hash(page)
     end
   end
 

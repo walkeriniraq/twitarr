@@ -9,31 +9,7 @@
     </span>
   </div>
   {{#each post in forum.posts}}
-    <div {{bind-attr class="post.first_unread:scroll_to :card-section :section-with-photo"}}>
-      <div class="section-photo">
-        {{#link-to 'user' post.author}}
-          {{unbound user_picture post.author post.author_last_photo_updated}}
-        {{/link-to}}
-      </div>
-
-    <span class="title">
-      {{#link-to 'user' post.author}}
-        {{unbound pretty_username post.author post.display_name}}
-      {{/link-to}}
-    </span>
-      {{unbound pretty_timestamp post.timestamp}}
-      <div class="body">
-        <div class="body-section">
-          {{{unbound post.text}}}
-        </div>
-        <div class="body-section photos">
-          {{#each photo in post.photos}}
-            {{render 'photo_mini' photo }}
-          {{/each}}
-        </div>
-      </div>
-      <span {{bind-attr class="post.new::hidden :controls"}} style="color: red;">new</span>
-    </div>
+    {{render "forums.post_partial" post}}
   {{/each}}
   <div class="card-section">
     <div class="footer">

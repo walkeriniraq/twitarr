@@ -95,6 +95,13 @@ Twitarr::Application.routes.draw do
       post 'event/:id/favorite', to: 'event#favorite'
       delete 'event/:id/favorite', to: 'event#destroy_favorite'
 
+      get 'forums', to: 'forums#index'
+      put 'forums', to: 'forums#create'
+      get 'forums/thread/:id', to: 'forums#show'
+      post 'forums/thread/:id', to: 'forums#new_post'
+      get 'forums/thread/:id/like/:post_id', to: 'forums#like'
+      get 'forums/thread/:id/unlike/:post_id', to: 'forums#unlike'
+
       post 'stream/:id/like', to: 'stream#like'
       delete 'stream/:id/like', to: 'stream#unlike'
       get 'stream/m/:query', to: 'stream#view_mention'

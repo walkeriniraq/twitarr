@@ -70,6 +70,21 @@ Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosU
       return if @get('prev_page') is null or undefined
       @transitionToRoute 'forums.detail', @get('prev_page')
 
+Twitarr.ForumsPostPartialController = Twitarr.ObjectController.extend
+  unlikeable: (->
+    @get('logged_in') and @get('user_likes')
+  ).property('logged_in', 'user_likes')
+
+  likeable: (->
+    @get('logged_in') and not @get('user_likes')
+  ).property('logged_in', 'user_likes')
+
+  actions:
+    like: ->
+      @get('model').like()
+    unlike: ->
+      @get('model').unlike()
+
 Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixin,
   actions:
     new: ->
@@ -116,8 +131,10 @@ Twitarr.ForumsPageController = Twitarr.ObjectController.extend
 
 Twitarr.ForumsMetaPartialController = Twitarr.ObjectController.extend
   posts_sentence: (->
+    post_word = 'post'
+    post_word = 'posts' if @get('posts') > 1
     if @get('new_posts') != undefined
-      "#{@get('posts')}, #{@get('new_posts')}"
+      "#{@get('posts')} #{post_word}, #{@get('new_posts')} <b class=\"highlight\">new</b>"
     else
-      @get('posts')
+      "#{@get('posts')} #{post_word}"
   ).property('posts', 'new_posts') 
