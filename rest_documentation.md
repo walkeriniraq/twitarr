@@ -491,6 +491,147 @@ Modify the user's profile photo
 
 Reset the user's profile to the default identicon image
 
+## Forum information
+
+Get/post new threads and posts to those threads
+
+### Forum Specific types
+
+    JSON ForumMeta {
+        "id": "id_string",
+        "last_post_display_name": "display_name_string",
+        "last_post_page": Integer,
+        "last_post_username": "author_string",
+        "posts": Integer,
+        "subject": "subject_string",
+        "timestamp": "ISO_8601_DATETIME"
+    }
+
+    JSON Forum {
+        "id": "id_string",
+        "latest_read": "ISO_8601_DATETIME", // Last time the user read the thread
+        "subject": "subject_string",
+        "next_page": null|Integer,
+        "prev_page": null|Integer,
+        "posts": Array[PostMeta {…}, …]
+    }
+
+    JSON PostMeta {
+        "id": "id_string",
+        "forum_id": "forum_id_string",
+        "author": "author_string",
+        "display_name": "display_name_string",
+        "likes": Array["username_string", …],
+        "new": boolean,
+        "text": "text_string",
+        "timestamp": "ISO_8601_DATETIME"
+    }
+
+### GET /api/v2/forums/
+
+Returns the index of all threads. Can be paginated or mass list.
+
+#### Requires
+
+#### Query parameters
+
+* page=integer - Optional - Used in conjunction with limit query, if not present will respond with all threads
+* limit=integer - Optional - Used in conjunction with page query, will determine how many threads are shown per page
+
+#### Returns
+
+    JSON Object {
+        "forums_meta": Array[ ForumMeta {…}, … ],
+        "next_page": Integer,
+        "prev_page": Integer
+    }
+
+### PUT /api/v2/forums
+
+Creates a forum and it's first post.
+
+### Requires
+
+* logged in.
+    * Accepts: key query parameters
+
+#### Json Request Body
+
+    JSON Object {
+      "subject": "string",
+      "text": "string",
+      "photos": Array ["string", …]
+    }
+
+### GET /api/v2/forums/thread/:id
+
+Returns a thread and it's contained posts.
+
+#### Requires
+
+#### Query parameters
+
+* page=integer - Optional - Used in conjunction with limit query, if not present will respond with all posts in the thread
+* limit=integer - Optional - Used in conjunction with page query, will determine how many posts are shown per page
+
+#### Returns
+  
+    JSON Object {
+        "forum": ForumMeta {…}
+    }
+
+### POST /api/v2/forums/thread/:id
+
+Creates a new post in the thread
+
+### Requires
+
+* logged in.
+    * Accepts: key query parameters
+
+#### Json Request Body
+
+    JSON Object {
+      "text": "string",
+      "photos": Array ["string", …]
+    }
+
+#### Returns
+
+  JSON Object {
+          "forum_post": PostMeta {…}
+      }
+
+### GET /api/v2/forums/thread/:id/like/:post_id
+
+Likes a specific post_id
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameters
+
+#### Returns
+
+  JSON Object {
+          "likes": Array ["username_string", …]
+      }
+
+### GET /api/v2/forums/thread/:id/unlike/:post_id
+
+Unlikes a specific post_id
+
+#### Requires
+
+* logged in.
+    * Accepts: key query parameters
+
+#### Returns
+
+  JSON Object {
+          "likes": Array ["username_string", …]
+      }
+
 ## Event Information
 
 Get/post information on events.
