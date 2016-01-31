@@ -176,8 +176,8 @@ class API::V2::EventController < ApplicationController
     render json:[{error:'Event hash missing from data'}], status: :forbidden and return unless (params.has_key? :event)
     event = params[:event]
     render json:[{error:'You must be admin to create official events!'}], status: :forbidden and return if (!!event[:official] and !is_admin?)
-    unless (event.keys - %w(description location official shared start_time end_time max_signups)).empty?
-      render json:[{error:'Unable to modify title or author fields'}], status: :bad_request
+    if event[:author] != @event.author
+      render json:[{error:'Unable to modify event.  Author cannot be changed!'}], status: :bad_request
       return
     end
 
