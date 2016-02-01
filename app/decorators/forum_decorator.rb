@@ -32,7 +32,7 @@ class ForumDecorator < Draper::Decorator
       {
           id: id.to_s,
           subject: subject,
-          posts: posts.map { |x| x.decorate.to_hash(user.last_post_username, last_view) },
+          posts: posts.map { |x| x.decorate.to_hash(user.username, last_view) },
           latest_read: last_view
       }
     end
