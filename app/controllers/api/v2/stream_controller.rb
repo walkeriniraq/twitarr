@@ -114,8 +114,8 @@ class API::V2::StreamController < ApplicationController
 
   # noinspection RubyResolve
   def update
-    unless (params[:stream].keys - %w(text photo)).empty?
-      render json:[{error:'Unable to modify fields other than text or photo'}], status: :bad_request
+    unless params.has_key?(:text) or params.has_key?(:photo)
+      render json:[{error:'Update may only modify text or photo.'}], status: :bad_request
       return
     end
 
