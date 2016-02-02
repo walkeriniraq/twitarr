@@ -7,11 +7,15 @@ class BaseDecorator < Draper::Decorator
   @@emojiReplace = '<img src="/img/emoji/small/\1.png" class="emoji">'
 
   def clean_text(text)
-    CGI.escapeHTML(text).gsub(@@emojiRE, @@emojiReplace)
+    CGI.escapeHTML(text)
   end
 
   def clean_text_with_cr(text)
-    CGI.escapeHTML(text || '').gsub("\n", '<br />').gsub(@@emojiRE, @@emojiReplace)
+    CGI.escapeHTML(text || '').gsub("\n", '<br />')
+  end
+  
+  def replace_emoji(text)
+    text.gsub(@@emojiRE, @@emojiReplace)
   end
 
   def twitarr_auto_linker(text, options = {})

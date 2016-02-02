@@ -37,7 +37,7 @@
   <div id="menu">
     <div id="login-info">
       <span {{bind-attr class="logged_in:hidden"}}>Not logged in.</span>
-      <span {{bind-attr class="logged_in::hidden"}}>{{ display_name }}</span>
+      <span {{bind-attr class="logged_in::hidden"}}>{{#link-to 'user' login_user}}{{ display_name }}{{/link-to}}</span>
     </div>
     <ul {{action 'menu_close'}}>
       <li {{bind-attr class="logged_in::hidden"}}>{{#link-to "seamail"}}<span class="glyphicon glyphicon-envelope"></span>Seamail{{/link-to}}</li>
