@@ -23,6 +23,7 @@
   </div>
   <div class="controls">
     <div>
+      <span {{bind-attr class="new::hidden"}} style="color: red;">new</span>
       {{likes_string}}
     </div>
     <div>
@@ -30,5 +31,5 @@
       <button {{action 'like' bubbles=false}} {{bind-attr class="likeable::hidden :btn-link"}}>Like</button>
     </div>
   </div>
-  <span {{bind-attr class="new::hidden :controls"}} style="color: red;">new</span>
+  
 </div>

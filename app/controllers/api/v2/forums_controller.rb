@@ -38,10 +38,10 @@ class API::V2::ForumsController < ApplicationController
 
     query = Forum.find(params[:id]).decorate
     if current_user
-      query = query.to_paginated_hash(start_loc, current_user) if params.has_key?(:page)
+      query = query.to_paginated_hash(start_loc, limit, current_user) if params.has_key?(:page)
       query = query.to_hash(current_user) if !params.has_key?(:page)
     else
-      query = query.to_paginated_hash(start_loc) if params.has_key?(:page)
+      query = query.to_paginated_hash(start_loc, limit) if params.has_key?(:page)
       query = query.to_hash() if !params.has_key?(:page)
     end
 
