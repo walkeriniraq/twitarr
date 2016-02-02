@@ -27,7 +27,8 @@ Twitarr.Router.map ()->
 
   @resource 'admin', ->
     @route 'announcements'
-    @route 'users'
+    @route 'search', { path: 'users' }
+    @route 'users', { path: 'users/:text' }
 
   @resource 'events', ->
     @route 'page', { path: '/'}

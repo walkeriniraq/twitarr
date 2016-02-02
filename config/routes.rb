@@ -32,6 +32,7 @@ Twitarr::Application.routes.draw do
   post 'user/profile/:username/personal_comment', to: 'user#personal_comment'
 
   get 'admin/users'
+  get 'admin/users/:text', to: 'admin#user'
   post 'admin/activate'
   post 'admin/reset_password'
   post 'admin/update_user'

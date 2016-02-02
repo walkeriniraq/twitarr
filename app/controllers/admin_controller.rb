@@ -15,6 +15,13 @@ class AdminController < ApplicationController
     render_json status: 'ok', list: User.all.asc(:username).map { |x| x.decorate.admin_hash }
   end
 
+  def user
+    return no_access unless has_access?
+    search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_]/, '')
+    user_query = User.search(params)
+    render_json status: 'ok', search_text: search_text, users: user_query.map{|x| x.decorate.admin_hash }
+  end
+
   def update_user
     return no_access unless has_access?
     user = User.get(params[:username])

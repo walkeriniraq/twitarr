@@ -1,8 +1,4 @@
-<div class="main-page-header header-with-controls">
-  <div class="controls">
-    <button class="btn" {{action 'reload'}}>Refresh</button>
-  </div>
-
+<div class="main-page-header">
   <div class="title">User Administration</div>
 
   <form>
@@ -21,10 +17,3 @@
     </table>
   </form>
 </div>
-  
-
-{{#each user in model}}
-  <div class="display_card">
-    {{render "admin.user_partial" user}}
-  </div>
-{{/each}}

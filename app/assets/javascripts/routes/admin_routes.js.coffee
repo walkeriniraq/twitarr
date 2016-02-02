@@ -1,12 +1,15 @@
 Twitarr.AdminUsersRoute = Ember.Route.extend
-  model: ->
-    $.getJSON("admin/users")
+  model: (params) ->
+    $.getJSON("admin/users/#{params.text}")
 
   setupController: (controller, model) ->
     if model.status isnt 'ok'
       alert model.status
     else
-      controller.set('model', model.list)
+      controller.set('search_text', model.search_text)
+      controller.set('model', model.users)
+
+
 
   actions:
     reload: ->
@@ -40,6 +43,16 @@ Twitarr.AdminUsersRoute = Ember.Route.extend
           alert data.status
         else
           @refresh()
+
+    search: (text) ->
+      if !!text
+        @transitionTo('admin.users', text)
+
+Twitarr.AdminSearchRoute = Ember.Route.extend
+  actions:
+    search: (text) ->
+      if !!text
+        @transitionTo('admin.users', text)
 
 Twitarr.AdminAnnouncementsRoute = Ember.Route.extend
   model: ->
