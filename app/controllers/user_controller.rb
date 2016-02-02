@@ -64,9 +64,9 @@ class UserController < ApplicationController
       @error = 'User does not exist.'
       render :forgot_password
     end
-    if params[:security_answer].downcase.strip != @user.security_answer ||
-        params[:email].strip != @user.email
-      sleep 30.seconds.to_i
+    if params[:security_answer].downcase.strip != @user.security_answer.downcase ||
+        params[:email].strip != @user.email.downcase
+      sleep 10.seconds.to_i
       @error = 'Email or security answer did not match.'
       render :security_question and return
     end
