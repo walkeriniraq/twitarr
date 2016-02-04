@@ -5,6 +5,13 @@ class BaseDecorator < Draper::Decorator
 
   @@emojiRE = Regexp.new('\:(buffet|die-ship|die|fez|hottub|joco|pirate|ship-front|ship|towel-monkey|tropical-drink|zombie)\:')
   @@emojiReplace = '<img src="/img/emoji/small/\1.png" class="emoji">'
+  @@emojiReplaceCM = '<cm-emoji type="\1" />'
+
+  def request_options
+    ret = {}
+    ret[:app] = params[:app] if params[:app]
+    ret
+  end
 
   def clean_text(text)
     CGI.escapeHTML(text)
@@ -14,8 +21,14 @@ class BaseDecorator < Draper::Decorator
     CGI.escapeHTML(text || '').gsub("\n", '<br />')
   end
   
-  def replace_emoji(text)
-    text.gsub(@@emojiRE, @@emojiReplace)
+  def replace_emoji(text, options)
+    if options[:app] == 'CM'
+      text.gsub(@@emojiRE, @@emojiReplaceCM)
+    elsif options[:app] == 'plain'
+      text
+    else
+      text.gsub(@@emojiRE, @@emojiReplace)
+    end
   end
 
   def twitarr_auto_linker(text, options = {})

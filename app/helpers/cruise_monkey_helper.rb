@@ -8,15 +8,15 @@ module CruiseMonkeyHelper
   #private
   def self.prepare_cruise_monkey_link(entity, attributes)
     puts entity
+    attributes.delete :href
+    attributes.delete :class
+    attributes.delete :title
     if entity[:hashtag]
-      attributes.delete :href
-      attributes['ng-click'] = "openTag('#{entity[:hashtag]}')"
+      attributes['cm-hashtag'] = "#{entity[:hashtag]}"
     elsif entity[:screen_name]
-      attributes.delete :href
-      attributes['ng-click'] = "openUser('#{entity[:screen_name]}')"
+      attributes['cm-user'] = "#{entity[:screen_name]}"
     elsif entity[:url]
-      attributes.delete :href
-      attributes['ng-click'] = "openUrl('#{entity[:url]}', '_blank')"
+      attributes['cm-link'] = "#{entity[:url]}"
     end
   end
 
