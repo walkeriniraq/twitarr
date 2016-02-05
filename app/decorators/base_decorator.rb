@@ -7,12 +7,6 @@ class BaseDecorator < Draper::Decorator
   @@emojiReplace = '<img src="/img/emoji/small/\1.png" class="emoji">'
   @@emojiReplaceCM = '<cm-emoji type="\1" />'
 
-  def request_options
-    ret = {}
-    ret[:app] = params[:app] if params[:app]
-    ret
-  end
-
   def clean_text(text)
     CGI.escapeHTML(text)
   end

@@ -12,12 +12,12 @@ class SeamailDecorator < Draper::Decorator
     }
   end
 
-  def to_hash
+  def to_hash(options = {})
     {
         id: id.to_s,
         users: usernames.map { |x| { username: x, display_name: User.display_name_from_username(x), last_photo_updated: User.last_photo_updated_from_username(x) }},
         subject: subject,
-        messages: messages.map { |x| x.decorate.to_hash }
+        messages: messages.map { |x| x.decorate.to_hash(options) }
     }
   end
 

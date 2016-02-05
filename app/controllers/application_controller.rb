@@ -99,6 +99,12 @@ class ApplicationController < ActionController::Base
     "#{name}:#{digest}"
   end
 
+  def request_options
+    ret = {}
+    ret[:app] = params[:app] if !params.nil? and params.has_key?(:app)
+    ret
+  end
+
   CHECK_DAYS_BACK = 10
 
 end

@@ -25,7 +25,7 @@ class SeamailController < ApplicationController
     seamail = Seamail.find(params[:id])
     was_unread = seamail.unread_users.andand.include?(current_username)
     seamail.mark_as_read current_username
-    render_json seamail:seamail.decorate.to_hash.merge!({is_unread: was_unread})
+    render_json seamail:seamail.decorate.to_hash(request_options).merge!({is_unread: was_unread})
   end
 
   def create
@@ -41,7 +41,7 @@ class SeamailController < ApplicationController
     seamail = Seamail.find(params[:seamail_id])
     message = seamail.add_message current_username, params[:text]
     if message.valid?
-      render_json seamail_message: message.decorate.to_hash.merge!({is_unread: seamail.unread_users.include?(current_username)})
+      render_json seamail_message: message.decorate.to_hash(request_options).merge!({is_unread: seamail.unread_users.include?(current_username)})
     else
       render_json errors: message.errors.full_messages
     end

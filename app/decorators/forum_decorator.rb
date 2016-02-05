@@ -20,25 +20,25 @@ class ForumDecorator < Draper::Decorator
     ret
   end
 
-  def to_hash(user = nil)
+  def to_hash(user = nil, options = {})
     if user.nil?
       {
           id: id.to_s,
           subject: subject,
-          posts: posts.map { |x| x.decorate.to_hash(user) }
+          posts: posts.map { |x| x.decorate.to_hash(user, nil, options) }
       }
     else
       last_view = user.last_forum_view(id.to_s)
       {
           id: id.to_s,
           subject: subject,
-          posts: posts.map { |x| x.decorate.to_hash(user.username, last_view) },
+          posts: posts.map { |x| x.decorate.to_hash(user.username, last_view, options) },
           latest_read: last_view
       }
     end
   end
 
-  def to_paginated_hash(page, limit = 10,user = nil)
+  def to_paginated_hash(page, limit = 10,user = nil, options = {})
     per_page = limit
     offset = page * per_page
     next_page = nil
@@ -50,7 +50,7 @@ class ForumDecorator < Draper::Decorator
       {
           id: id.to_s,
           subject: subject,
-          posts: posts.limit(per_page).offset(offset).map { |x| x.decorate.to_hash },
+          posts: posts.limit(per_page).offset(offset).map { |x| x.decorate.to_hash(nil, nil, options) },
           next_page: next_page,
           prev_page: prev_page
       }
@@ -59,7 +59,7 @@ class ForumDecorator < Draper::Decorator
       {
           id: id.to_s,
           subject: subject,
-          posts: posts.limit(per_page).offset(offset).map { |x| x.decorate.to_hash(user.username, last_view) },
+          posts: posts.limit(per_page).offset(offset).map { |x| x.decorate.to_hash(user.username, last_view, options) },
           latest_read: last_view,
           next_page: next_page,
           prev_page: prev_page

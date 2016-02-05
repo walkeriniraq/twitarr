@@ -61,7 +61,7 @@ class API::V2::ForumsController < ApplicationController
   def new_post
     post = @forum.add_post current_username, params[:text], params[:photos]
     if post.valid?
-      render_json forum_post: post.decorate.to_hash(current_user)
+      render_json forum_post: post.decorate.to_hash(current_user, nil, request_options)
     else
       render_json errors: post.errors.full_messages
     end
@@ -87,11 +87,5 @@ class API::V2::ForumsController < ApplicationController
 
     def login_required
       head :unauthorized unless logged_in? || valid_key?(params[:key])
-    end
-
-    def request_options
-      ret = {}
-      ret[:app] = params[:app] if params[:app]
-      ret
     end
 end

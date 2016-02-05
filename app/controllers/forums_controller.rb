@@ -48,7 +48,7 @@ class ForumsController < ApplicationController
     forum = Forum.find(params[:forum_id])
     post = forum.add_post current_username, params[:text], params[:photos]
     if post.valid?
-      render_json forum_post: post.decorate.to_hash
+      render_json forum_post: post.decorate.to_hash(nil, nil, request_options)
     else
       render_json errors: post.errors.full_messages
     end
@@ -115,7 +115,7 @@ class ForumsController < ApplicationController
     end
     if forum.valid?
       forum.save!
-      render_json forum_post: forum.decorate.to_hash
+      render_json forum_post: forum.decorate.to_hash(nil, nil, request_options)
     else
       render_json errors: forum.errors.full_messages
     end

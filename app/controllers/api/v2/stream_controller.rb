@@ -10,12 +10,6 @@ class API::V2::StreamController < ApplicationController
     head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
-  def request_options
-    ret = {}
-    ret[:app] = params[:app] if params[:app]
-    ret
-  end
-
   def fetch_post
     begin
       @post = StreamPost.find(params[:id])
@@ -51,7 +45,9 @@ class API::V2::StreamController < ApplicationController
 
   def view_mention
     params[:page] = 0 unless params[:page]
+    params[:page] = params[:page].to_i
     params[:limit] = PAGE_LENGTH unless params[:limit]
+    params[:limit] = params[:limit].to_i
     if params[:after]
       params[:after] = Time.at(params[:after].to_f / 1000)
     end
@@ -63,8 +59,14 @@ class API::V2::StreamController < ApplicationController
 
   def view_hash_tag
     query_string = params[:query].downcase
-    start_loc = params[:page] || 0
-    limit = params[:limit] || PAGE_LENGTH
+
+    params[:page] = 0 unless params[:page]
+    params[:page] = params[:page].to_i
+    params[:limit] = PAGE_LENGTH unless params[:limit]
+    params[:limit] = params[:limit].to_i
+
+    start_loc = params[:page]
+    limit = params[:limit]
     query = StreamPost.where(hash_tags: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
     render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
   end
