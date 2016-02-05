@@ -67,6 +67,8 @@ class ApplicationController < ActionController::Base
   end
 
   def get_username(key)
+    return nil if key.nil?
+    key = URI.unescape(key)
     key.split(':').first
   end
 
@@ -76,6 +78,7 @@ class ApplicationController < ActionController::Base
 
   def valid_key?(key)
     return false if key.nil?
+    key = URI.unescape(key)
     return false unless key.include? ':'
     username = get_username key
     CHECK_DAYS_BACK.times do |x|
