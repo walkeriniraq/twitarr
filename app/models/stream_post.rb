@@ -40,7 +40,7 @@ class StreamPost
     query = query.where(:author.in => options[:filter_authors]) if options.has_key? :filter_authors and !options[:filter_authors].nil?
     query = query.where(author: options[:filter_author]) if options.has_key? :filter_author and !options[:filter_author].nil?
     query = query.where(likes: options[:filter_likes]) if options.has_key? :filter_likes and !options[:filter_likes].nil?
-    query = query.where(hashtag: options[:filter_hashtag]) if options.has_key? :filter_hashtag and !options[:filter_hashtag].nil?
+    query = query.where(hash_tags: options[:filter_hashtag]) if options.has_key? :filter_hashtag and !options[:filter_hashtag].nil?
     if options.has_key? :filter_mentions and !options[:filter_mentions].nil?
       if options[:mentions_only]
         query = query.where(mentions: options[:filter_mentions])
@@ -56,7 +56,7 @@ class StreamPost
     query = query.where(:author.in => options[:filter_authors]) if options.has_key? :filter_authors and !options[:filter_authors].nil?
     query = query.where(author: options[:filter_author]) if options.has_key? :filter_author and !options[:filter_author].nil?
     query = query.where(likes: options[:filter_likes]) if options.has_key? :filter_likes and !options[:filter_likes].nil?
-    query = query.where(hashtag: options[:filter_hashtag]) if options.has_key? :filter_hashtag and !options[:filter_hashtag].nil?
+    query = query.where(hash_tags: options[:filter_hashtag]) if options.has_key? :filter_hashtag and !options[:filter_hashtag].nil?
     if options.has_key? :filter_mentions and !options[:filter_mentions].nil?
       if options[:mentions_only]
         query = query.where(mentions: options[:filter_mentions])
