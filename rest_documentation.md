@@ -216,7 +216,11 @@ Get the recent tweets in the stream
 * start=epoch - Optional (Default: Now) - The start location for getting tweets
 * older_posts - Optional (Default: off) - If this parameter exist, retrieve posts older than this, otherwise get newer ones
 * limit=Integer - Optional (Default: 20) - How many to tweets to get
-* author=username_stream - Optional (Default:No Filter) - Filter by username specified
+* author=username - Optional (Default:No Filter) - Filter by username specified
+* hashtag=hashtag - Optional (Default:NO Filter) - Filter by hashtag
+* likes=username - Optional (Default:No Filter) - Return only posts liked by the username specified
+* mentions=username - Optional (Default:No Filter) - Filter by mentions of username specified
+* starred=true - Optional (Default:No Filter) - Return only posts by starred users (You must be logged in for this to work.)
 
 #### Returns
 
