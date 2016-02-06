@@ -54,7 +54,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:page]
     limit = params[:limit]
     query = StreamPost.view_mentions params
-    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
+    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username, request_options) }, next:(start_loc+limit)}
   end
 
   def view_hash_tag
@@ -68,7 +68,7 @@ class API::V2::StreamController < ApplicationController
     start_loc = params[:page]
     limit = params[:limit]
     query = StreamPost.where(hash_tags: query_string).order_by(timestamp: :desc).skip(start_loc*limit).limit(limit)
-    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username) }, next:(start_loc+limit)}
+    render status: :ok, json: {status: 'ok', posts: query.map { |x| x.decorate.to_hash(current_username, request_options) }, next:(start_loc+limit)}
   end
 
   def destroy
@@ -108,7 +108,7 @@ class API::V2::StreamController < ApplicationController
         current_user.current_location = params[:location]
         current_user.save
       end
-      render_json stream_post: post.decorate.to_hash
+      render_json stream_post: post.decorate.to_hash(current_username, request_options)
     else
       render status: :unprocessable_entity, json:{errors: post.errors.full_messages}
     end
@@ -138,7 +138,7 @@ class API::V2::StreamController < ApplicationController
 
     @post.save
     if @post.valid?
-      render_json stream_post: @post.decorate.to_hash(current_username)
+      render_json stream_post: @post.decorate.to_hash(current_username, request_options)
     else
       render_json errors: @post.errors.full_messages
     end

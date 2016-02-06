@@ -11,7 +11,7 @@ class API::V2::SearchController < ApplicationController
     end
     params[:current_username] = current_username
     render json: { status: 'ok',
-                   stream_posts: do_search(params, StreamPost) { |e| e.decorate.to_hash(current_username) },
+                   stream_posts: do_search(params, StreamPost) { |e| e.decorate.to_hash(current_username, request_options) },
                    forum_posts: do_search(params, Forum) { |e| e.decorate.to_meta_hash },
                    users: do_search(params, User) { |e| e.decorate.gui_hash },
                    seamails: do_search(params, Seamail) { |e| e.decorate.to_meta_hash },
