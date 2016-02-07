@@ -180,12 +180,13 @@ class API::V2::StreamController < ApplicationController
     filter_hashtag = params[:hashtag] || nil
     filter_likes = params[:likes] || nil
     filter_mentions = params[:mentions] || nil
+    mentions_only = !params[:include_author]
     filter_authors = nil
     if params[:starred]
       filter_authors = current_user.starred_users
     end
     limit = params[:limit] || PAGE_LENGTH
-    posts = StreamPost.at_or_before(start_loc, {filter_author: author, filter_authors: filter_authors, filter_hashtag: filter_hashtag, filter_likes: filter_likes, filter_mentions: filter_mentions, mentions_only: true}).limit(limit).order_by(timestamp: :desc).map { |x| x }
+    posts = StreamPost.at_or_before(start_loc, {filter_author: author, filter_authors: filter_authors, filter_hashtag: filter_hashtag, filter_likes: filter_likes, filter_mentions: filter_mentions, mentions_only: mentions_only}).limit(limit).order_by(timestamp: :desc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
     {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end
@@ -200,12 +201,13 @@ class API::V2::StreamController < ApplicationController
     filter_hashtag = params[:hashtag] || nil
     filter_likes = params[:likes] || nil
     filter_mentions = params[:mentions] || nil
+    mentions_only = !params[:include_author]
     filter_authors = nil
     if params[:starred]
       filter_authors = current_user.starred_users
     end
     limit = params[:limit] || PAGE_LENGTH
-    posts = StreamPost.at_or_after(start_loc, {filter_author: author, filter_authors: filter_authors, filter_hashtag: filter_hashtag, filter_likes: filter_likes, filter_mentions: filter_mentions, mentions_only: true}).limit(limit).order_by(timestamp: :asc).map { |x| x }
+    posts = StreamPost.at_or_after(start_loc, {filter_author: author, filter_authors: filter_authors, filter_hashtag: filter_hashtag, filter_likes: filter_likes, filter_mentions: filter_mentions, mentions_only: mentions_only}).limit(limit).order_by(timestamp: :asc).map { |x| x }
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
     {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end

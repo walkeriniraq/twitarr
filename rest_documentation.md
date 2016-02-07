@@ -220,7 +220,8 @@ Get the recent tweets in the stream
 * hashtag=hashtag - Optional (Default:NO Filter) - Filter by hashtag
 * likes=username - Optional (Default:No Filter) - Return only posts liked by the username specified
 * mentions=username - Optional (Default:No Filter) - Filter by mentions of username specified
-* starred=true - Optional (Default:No Filter) - Return only posts by starred users (You must be logged in for this to work.)
+* include_author=true - Optional (Default: false) - When filtering by mentions, include posts mentioning *or* written by the username specified
+* starred=true - Optional (Default: false) - Return only posts by starred users (You must be logged in for this to work.)
 
 #### Returns
 
