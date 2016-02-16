@@ -15,7 +15,7 @@ class Event
   field :sh, as: :shared, type: Boolean, default: true
 
   validates :title, :start_time, presence: true
-  validates :title, uniqueness: true
+  #validates :title, uniqueness: true
 
   validates_presence_of :author, unless: "official" # Official events won't have owners.
 
