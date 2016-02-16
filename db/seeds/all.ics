@@ -1,0 +1,1472 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+X-WR-CALNAME:jococruise2016
+X-WR-CALDESC:Event Calendar
+METHOD:PUBLISH
+CALSCALE:GREGORIAN
+PRODID:-//Sched.org JoCo Cruise 2016//EN
+X-WR-TIMEZONE:UTC
+BEGIN:VEVENT
+DTSTART:20160221T163000Z
+DTEND:20160221T203000Z
+SUMMARY:Registration
+DESCRIPTION:Stop by the Conference Center sometime before 3:30 pm to pick up your JoCo Cruise badge (which gets you access to all JCC2016 events)\, your swag bag\, and a copy of the Sea Monkey newsletter.
+CATEGORIES:
+LOCATION:Game Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:d1e273d876af6720dbb233477b7825c1
+URL:http://jococruise2016.sched.org/event/d1e273d876af6720dbb233477b7825c1
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T170000Z
+DTEND:20160221T183000Z
+SUMMARY:Speed Meeting
+DESCRIPTION:Join your fellow SeaMonkeys for a facilitated\, casually structured meet and greet.If you board late and want to attend\, you do not need your badge! You can pick it up after the event. 
+CATEGORIES:SHADOW CRUISE
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:ae2ff9eb325cbb7409cc5dbf83204f0c
+URL:http://jococruise2016.sched.org/event/ae2ff9eb325cbb7409cc5dbf83204f0c
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T184500Z
+DTEND:20160221T194500Z
+SUMMARY:Ninja Pirate Assassin Game : THE REGISTRATION
+DESCRIPTION:If you are playing the #NinjaPirateAssassinGame\, this is where you get started. We will be going over the game rules\, you will be receiving your game supplies\, and this is a chance to get to know the other players. We will also be doing a Q & A session\, and then getting the game started. ATTENDANCE IS MANDATORY FOR PLAYERS. If you miss this session\, you will not be able to play. There will also be a limited number of open slots for new players who did not pre-register. Please make sure you board early enough to attend if you are playing!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Skylight Chapel\, Deck 15\, Aft
+SEQUENCE:0
+UID:10597a0a877786bc1c944d37305a00fd
+URL:http://jococruise2016.sched.org/event/10597a0a877786bc1c944d37305a00fd
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T190000Z
+DTEND:20160221T193000Z
+SUMMARY:Minions Meet n Greet
+DESCRIPTION:A meeting for families who are traveling with children on JoCo\, just to get faces familiar and exchange info for the trip
+CATEGORIES:SHADOW CRUISE
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:797a26274cd3e4a34acbd24f6eaef5ea
+URL:http://jococruise2016.sched.org/event/797a26274cd3e4a34acbd24f6eaef5ea
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T194500Z
+DTEND:20160221T204500Z
+SUMMARY:New Monkey Orientation
+DESCRIPTION:New to the cruise? Find out what to expect\, and ask any questions you might have about the week ahead. Others are welcome to attend as well\, if you could use a refresher. Get orientated!
+CATEGORIES:FEATURED EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:8e6fb10f14af5003db42461fe4c053cc
+URL:http://jococruise2016.sched.org/event/8e6fb10f14af5003db42461fe4c053cc
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T210000Z
+DTEND:20160221T211500Z
+SUMMARY:Safety (Lifeboat) Drill
+DESCRIPTION:Mandatory lifeboat drill for all passengers.
+CATEGORIES:
+LOCATION:TBA\, Freedom of the Seas
+SEQUENCE:0
+UID:25651371fcdcd069ce84e7e587310822
+URL:http://jococruise2016.sched.org/event/25651371fcdcd069ce84e7e587310822
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T213000Z
+DTEND:20160221T214500Z
+SUMMARY:Sail Away!
+DESCRIPTION:Head on up to the upper decks to watch the ship pull out of dock and head off into the blue. Sing a chantey or two\, if you're of a mind to.
+CATEGORIES:
+LOCATION:TBA\, Freedom of the Seas
+SEQUENCE:0
+UID:32a4674987eba1ab3bae5cd446fcefab
+URL:http://jococruise2016.sched.org/event/32a4674987eba1ab3bae5cd446fcefab
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T214500Z
+DTEND:20160221T224500Z
+SUMMARY:Welcome Cocktail Reception
+DESCRIPTION:Mingle\, see old friends\, meet new friends\, and get your money&rsquo;s worth of free cocktails and soft drinks\, including custom beers from Mystery Brewing. Get &lsquo;em while you can! Also a great place to start on the Sea Monkey Activity Book (brought to you by Lone Shark Games)\, especially if you're a first time JoCo Cruiser (a "New Monkey").
+CATEGORIES:MAIN EVENT
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:21ad2222f8590dae6fdc38fa394f3fac
+URL:http://jococruise2016.sched.org/event/21ad2222f8590dae6fdc38fa394f3fac
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T220000Z
+DTEND:20160221T224500Z
+SUMMARY:Solo-Traveling Monkeys Meetup
+DESCRIPTION:Traveling solo this trip? Want to meet some other SeaMonkeys who are likewise flying solo this year\, or just want to reach out to say hello and welcome those intrepid adventurers? Come to the top level of the port side of Studio B during the first cocktail hour to say hello over cocktails\, and get to know the other adventurous solo travelers on the ship.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:9299f3352a6c5a516ca1c08a36a6e944
+URL:http://jococruise2016.sched.org/event/9299f3352a6c5a516ca1c08a36a6e944
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160221T224500Z
+DTEND:20160222T003000Z
+SUMMARY:Dinner
+DESCRIPTION:Let's eat!
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:5c95ef10414e8c9af72cba82cc3ea35e
+URL:http://jococruise2016.sched.org/event/5c95ef10414e8c9af72cba82cc3ea35e
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T003000Z
+DTEND:20160222T020000Z
+SUMMARY:JCC Karaoke
+DESCRIPTION:You know how karaoke works. And this is a time you can do it.
+CATEGORIES:FEATURED EVENT
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:8ffac0a283b02d636b8c3f69626c08a9
+URL:http://jococruise2016.sched.org/event/8ffac0a283b02d636b8c3f69626c08a9
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T003000Z
+DTEND:20160222T020000Z
+SUMMARY:Memorial for Missing Monkeys
+DESCRIPTION:We have lost far too many of our friends and fellow Sea Monkeys.  Please join us for an informal memorial service.  Talk if you want to\, listen if you can't find the words\, raise a glass and offer a moment of silent remembrance to those we have lost\, just be with those who share your grief.  SeaMonkeys are forever\, even death cannot take that from them\, they sail with us in our hearts.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Skylight Chapel\, Deck 15\, Aft
+SEQUENCE:0
+UID:149b5942b421b991e3772a6f53ce467a
+URL:http://jococruise2016.sched.org/event/149b5942b421b991e3772a6f53ce467a
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T020000Z
+DTEND:20160222T033000Z
+SUMMARY:Concert - Jonathan Coulton
+DESCRIPTION:The face that launched five ships (one per year) starts things off right\, in power trio formation. 
+CATEGORIES:MAIN EVENT
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:de704f7b94d750e2cd059b6ad2ae4ad6
+URL:http://jococruise2016.sched.org/event/de704f7b94d750e2cd059b6ad2ae4ad6
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T033000Z
+DTEND:20160222T050000Z
+SUMMARY:"Welcome\, New Monkeys!" Mixer
+DESCRIPTION:Our experienced Sea Monkeys are encouraged to hang around and get to know our new Sea Monkey friends. Walk on up and introduce yourself! Everyone is friends here! Not sure how to start? Try the Sea Monkey Activity book included with your swag.
+CATEGORIES:FEATURED EVENT
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:9a494d95633c38d1d37d0ceffe00094a
+URL:http://jococruise2016.sched.org/event/9a494d95633c38d1d37d0ceffe00094a
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T050000Z
+DTEND:20160222T063000Z
+SUMMARY:If I Had 1\,000\,000 Monkeys
+DESCRIPTION:Travel back to 1992 as Canadian Content Requirements performs the classic Barenaked Ladies album Gordon! Green dresses optional. Featuring Sara Chicazul\, Michael Bain\, Adam Sakellarides and Ryan McKellar.No members of BNL were harmed (or consulted) in making this show.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:4eccd11e49ec41889ce6593affcace9d
+URL:http://jococruise2016.sched.org/event/4eccd11e49ec41889ce6593affcace9d
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T120000Z
+DTEND:20160222T210000Z
+SUMMARY:CocoCay\, Bahamas
+DESCRIPTION:An island paradise missing ony one thing: us. We shall rectify that. Follow the signs to Barefoot Beach\, which we can totally take over.
+CATEGORIES:PORT OF CALL
+LOCATION:Port of Call\, Freedom of the Seas
+SEQUENCE:0
+UID:1c36b6a94ea135ef4a050766d096b0f8
+URL:http://jococruise2016.sched.org/event/1c36b6a94ea135ef4a050766d096b0f8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T163000Z
+DTEND:20160222T183000Z
+SUMMARY:Geocaching Coco Cay
+DESCRIPTION:A 2-3 mile trek around the island\, with the goal of finding all 7 of the geocaches on the Island. Bring plenty of water\, snacks\, and good shoes. First time geocachers welcome! We will have gps with maps and waypoints preloaded.Meet up at the Information Booth in the main square just off the docks where the tenders bring everyone to shore. 
+CATEGORIES:SHADOW CRUISE
+LOCATION:Coco Cay\, Freedom of the Seas
+SEQUENCE:0
+UID:8f9a4399afb3c058a4ad2502fa1960b8
+URL:http://jococruise2016.sched.org/event/8f9a4399afb3c058a4ad2502fa1960b8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T210000Z
+DTEND:20160222T220000Z
+SUMMARY:JoCo Cruise 2017 - Whatcha Wanna Know?
+DESCRIPTION:The Management answers any and all of your questions about JoCo Cruise 2017. Whether you're already booked or interested in booking\, this is your one-stop-shopping source for information.
+CATEGORIES:FEATURED EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:4385b7899afed785088b87deb48eaf74
+URL:http://jococruise2016.sched.org/event/4385b7899afed785088b87deb48eaf74
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160222T223000Z
+DTEND:20160223T003000Z
+SUMMARY:Dinner (Formal Night)
+DESCRIPTION:Mangia!(Formal wear required in dining room) 
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:e2792c329fc318a96d9ce88f48cbd0ac
+URL:http://jococruise2016.sched.org/event/e2792c329fc318a96d9ce88f48cbd0ac
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T000000Z
+DTEND:20160223T023000Z
+SUMMARY:Johann Sebastian Joust
+DESCRIPTION:This is a sea monkey favorite! JS Joust pairs music with motion controllers; the music sets the pace\, while the players try to knock their opponents out of the game by making a controller move faster than the music. Drop in at any time to enjoy this fun\, easy to learn game. Recommended Age: 8+. Get ready to Joust...go!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:5aa7366deb9261ee45302f2a1a69c35c
+URL:http://jococruise2016.sched.org/event/5aa7366deb9261ee45302f2a1a69c35c
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T003000Z
+DTEND:20160223T013000Z
+SUMMARY:JCC Karaoke
+DESCRIPTION:You know how karaoke works. And this is another time you can do it.
+CATEGORIES:FEATURED EVENT
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:6aecd12ae477ba9380818b6aec40ef4e
+URL:http://jococruise2016.sched.org/event/6aecd12ae477ba9380818b6aec40ef4e
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T003000Z
+DTEND:20160223T020000Z
+SUMMARY:SWAK Slow Jam (Jam on Songs We All Know!)
+DESCRIPTION:Want to enjoy playing great familiar tunes with other SeaMonkeys? Bring the chords or chart for a simple classic or standard song you think most people already know\, or pick one from the host's songbook\, or start a 12 bar blues riff for people to play along with. We'll quickly break down each song into arrangements\, review the rhythm chords\, and take turns playing lead\, fills or solo breaks. Guitar\, uke\, bass\, keys\, rhythm\, voice\, ocarina\, whatever: all welcome.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:e5c4ca21eeed663681e60be3216ae5bf
+URL:http://jococruise2016.sched.org/event/e5c4ca21eeed663681e60be3216ae5bf
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T010000Z
+DTEND:20160223T020000Z
+SUMMARY:What's New at Steve Jackson Games?
+DESCRIPTION:Meet Steve Jackson and Andrew Hackard and hear what's new at SJ Games! Secrets WILL be revealed!
+CATEGORIES:GAMING TRACK
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:c664d7a5008ca3fb5d5ab1fed643bfbd
+URL:http://jococruise2016.sched.org/event/c664d7a5008ca3fb5d5ab1fed643bfbd
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T013000Z
+DTEND:20160223T020000Z
+SUMMARY:Geek Out About Tattoos
+DESCRIPTION:Do you have tattoos\, want a tattoo\, or just think tattoos are super rad? Join the Wolff Pack\, husband and wife tattoo collectors\, for an exciting Q&amp;A on the high seas. We'll answer all of your burning questions\, including:How much does it cost?Did it hurt?What should I wear to my first ever tattoo appointment?OMG is that really a sleeve of Bill Murray portraits?Everyone is encouraged to bring their art and stories for a round table discussion 'bout the triumphs\, hilarity\, and downright weirdness that is tattoo collecting.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Skylight Chapel\, Deck 15\, Aft
+SEQUENCE:0
+UID:f1d7fc3fe0388d831c8b9eb53a5e3a4b
+URL:http://jococruise2016.sched.org/event/f1d7fc3fe0388d831c8b9eb53a5e3a4b
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T023000Z
+DTEND:20160223T033000Z
+SUMMARY:Concert - Jean Grae
+DESCRIPTION:Get ready for high-energy fun! Last year Jean won our hearts\, and got an entire room full of Sea Monkeys dancing and moving and loving every minute of it. She's back again this year\, and we're pretty sure she's going to own the entire ship before the end of the week.
+CATEGORIES:MAIN EVENT
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:33e872208388bca6b9f93beb8c840d67
+URL:http://jococruise2016.sched.org/event/33e872208388bca6b9f93beb8c840d67
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T033000Z
+DTEND:20160223T050000Z
+SUMMARY:The 6th Annual Paul F. Tompkins Memorial Moustache Formal Fezstravaganza Dance Party\, with DJ Flans
+DESCRIPTION:Fezzes (not required)\, mustaches (provided)\, fancy dress\, a memorial event for a man who is not dead and is in fact present . . . come hang out with your fellow Sea Monkeys at JCC&rsquo;s second- or third-silliest&mdash;and awesomest&mdash;tradition! And dance the night away to a soundtrack provided by DJ Flans (They Might Be Giants' own John Flansburgh)!
+CATEGORIES:MAIN EVENT
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:8484557c80da55c89354dc8c6f023de6
+URL:http://jococruise2016.sched.org/event/8484557c80da55c89354dc8c6f023de6
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T140000Z
+DTEND:20160223T160000Z
+SUMMARY:Magic: The Gathering
+DESCRIPTION:Learn to play Magic: The Gathering! All participants will be given a starter deck. Eight participants will be chosen by lottery to participate in the People's Tournament.
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:b8571945d0ce9ef7ce9eb785d094ea16
+URL:http://jococruise2016.sched.org/event/b8571945d0ce9ef7ce9eb785d094ea16
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T140000Z
+DTEND:20160223T150000Z
+SUMMARY:Stitch Monkeys
+DESCRIPTION:A meetup for Sea Monkeys who knit\, crochet\, weave\, embroider\, sew\, etc.\, to meet and mingle. Have fun comparing patterns\, sharing techniques and trading tips on stitches\, sweaters\, scarves\, hats\, etc.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:9a82334ebbe0b36c5119860191f72a6f
+URL:http://jococruise2016.sched.org/event/9a82334ebbe0b36c5119860191f72a6f
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T150000Z
+DTEND:20160223T160000Z
+SUMMARY:Creative Stabbing
+DESCRIPTION:Needle felting class for all levels. Bring your own wool or have it provided for you. Learn how to stab wool for fun and make cute little things! Current tetanus shot highly recommended prior to trying this craft.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:099975abea0fedf5c0ae0a3af08676fe
+URL:http://jococruise2016.sched.org/event/099975abea0fedf5c0ae0a3af08676fe
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T150000Z
+DTEND:20160223T173000Z
+SUMMARY:Johann Sebastian Joust
+DESCRIPTION:This is a sea monkey favorite! JS Joust pairs music with motion controllers; the music sets the pace\, while the players try to knock their opponents out of the game by making a controller move faster than the music. Drop in at any time to enjoy this fun\, easy to learn game. Recommended Age: 8+. Get ready to Joust...go!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:2cab9af591844a22bb2d0f5f2a5ff22f
+URL:http://jococruise2016.sched.org/event/2cab9af591844a22bb2d0f5f2a5ff22f
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T150000Z
+DTEND:20160223T163000Z
+SUMMARY:Speed Meeting
+DESCRIPTION:Join your fellow SeaMonkeys for a facilitated\, casually structured meet and greet.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:dc723b0caa864bd04c3bfb6a5cf7be23
+URL:http://jococruise2016.sched.org/event/dc723b0caa864bd04c3bfb6a5cf7be23
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T160000Z
+DTEND:20160223T190000Z
+SUMMARY:Table Top Taste Test
+DESCRIPTION:The cruise is a spectacular time to try new things&hellip; so why not try a new game? The Tabletop Taste Test lets you take a twenty-minute taste of a game\, then move on and try another. By the end of an hour\, you&rsquo;ll know how to play up to three new games&mdash;games you can find in the game room and play again at your leisure. It&rsquo;s a great opportunity to try something new and get to meet some fellow Monkeys in the process. In addition\, a few lucky players will win FABULOUS PRIZES from our sponsors\, including the chance to play Munchkin with Steve Jackson! (Winners will be announced at the Tuesday afternoon concert.)The Taste Test is broken into three one-hour sessions: 11 AM - Noon\, Noon - 1:00 PM\, and 1:00 - 2:00 PM. Stop by the Information Desk to sign up for a slot!
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:22aa961b13f1b9dacaf26162e3823eaf
+URL:http://jococruise2016.sched.org/event/22aa961b13f1b9dacaf26162e3823eaf
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T160000Z
+DTEND:20160223T180000Z
+SUMMARY:Filk Song Circle
+DESCRIPTION:Bring acoustic instruments and voices; let's go around the room and play some songs! Original songs\, cover songs\, parodies - all types of music and all skill levels welcome. We'll harmonize and help sing the chorus.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:054b6cf17c9cda1440bb877e3bc847a8
+URL:http://jococruise2016.sched.org/event/054b6cf17c9cda1440bb877e3bc847a8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T160000Z
+DTEND:20160223T190000Z
+SUMMARY:Geek Pub Trivia
+DESCRIPTION:Come compete in teams in the field of geek trivia. Teams should be 5-8 people. Sign ups will be posted in the Game Room. Sign up as an assembled team\, or any single participants can be grouped by us if needed. Limit of 8 teams.
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:b0fffa7ffd7675486c35522d5df563b6
+URL:http://jococruise2016.sched.org/event/b0fffa7ffd7675486c35522d5df563b6
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T170000Z
+DTEND:20160223T180000Z
+SUMMARY:Titansgrave: Ashes of Valkana
+DESCRIPTION:A talk with Chris Pramas and Wil Wheaton\, covering the Titansgrave webseries/RPG.
+CATEGORIES:GAMING TRACK
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:a381fc17ceb19a66e4cc63abf5e99f6b
+URL:http://jococruise2016.sched.org/event/a381fc17ceb19a66e4cc63abf5e99f6b
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T170000Z
+DTEND:20160223T183000Z
+SUMMARY:Color Me Monkey
+DESCRIPTION:Let's get together to chat and color. Take a break from the noise and sun\, because we are quiet and pale folk\, and engage in the new fad sweeping the nation\, coloring!! Bring your coloring books and crayons\, or just yourself\, we're all happy to share\, and spend a little time getting in touch with your inner child.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:02941e7c61723c2110f6c535bf43e209
+URL:http://jococruise2016.sched.org/event/02941e7c61723c2110f6c535bf43e209
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T170000Z
+DTEND:20160223T183000Z
+SUMMARY:Sea Monkey Mail Lunch
+DESCRIPTION:A get together for those who participated in Sea Monkey Mail
+CATEGORIES:SHADOW CRUISE
+LOCATION:Windjammer\, Freedom of the Seas
+SEQUENCE:0
+UID:47e1e6cec4d7bf77d75d092d15778c48
+URL:http://jococruise2016.sched.org/event/47e1e6cec4d7bf77d75d092d15778c48
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T180000Z
+DTEND:20160223T190000Z
+SUMMARY:Eban Schletter and His Magical\, Mystical Theremin
+DESCRIPTION:Eban Schletter can actually play the theremin&mdash;you know\, that spooky "ooooOOOOOOOOoooooh" thing that sounds like aliens in '50s sci fi movies. Come hear Eban play the theremin in different styles\, and&mdash;no kidding&mdash;come TRY IT FOR YOURSELF.oooooooooOOOOOOOOOooooOOOOOOOOOOoooooooOOOooooo... 
+CATEGORIES:FEATURED EVENT
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:ad4e5e309e282cab7b68e82ec239de16
+URL:http://jococruise2016.sched.org/event/ad4e5e309e282cab7b68e82ec239de16
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T180000Z
+DTEND:20160223T190000Z
+SUMMARY:Munchkin Shakespeare
+DESCRIPTION:Come playtest the set you helped write: Munchkin Shakespeare!
+CATEGORIES:GAMING TRACK
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:97f33fb5346be12fdf1a766b46ad0ad0
+URL:http://jococruise2016.sched.org/event/97f33fb5346be12fdf1a766b46ad0ad0
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T180000Z
+DTEND:20160223T193000Z
+SUMMARY:Cheese Party
+DESCRIPTION:Ain't no party like a JoCo cheese party. Due to the overwhelming success of last year's cheese party\, we're having a repeat! Feel free to bring cheese\, crackers\, salami\, elk\, or any of your other favorite snacks to share! If you don't have anything to bring\, please join us anyway! Seriously\, there was so much food. One of our hosts is a real\, live man from Wisconsin!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:e060cc2bd3731e07470fa708ed901bd1
+URL:http://jococruise2016.sched.org/event/e060cc2bd3731e07470fa708ed901bd1
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T193000Z
+DTEND:20160223T220000Z
+SUMMARY:Concert - Allie Brosh\, Paul and Storm
+DESCRIPTION:She's new to JoCo Cruise\, but widely known for the wit and heart she brings to her webcomic Hyperbole and a Half\, as well as her New York Times bestselling book (with another on the way). So please to give her the warmest of welcomes!Sharing the show are Paul and Storm\, a.k.a. Principal Sabourin and Coach Cruise\, who will bring their own mix of music\, comedy\, and who knows what else to the stage.
+CATEGORIES:MAIN EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:28ffa71b803151c29285043e271897ff
+URL:http://jococruise2016.sched.org/event/28ffa71b803151c29285043e271897ff
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160223T223000Z
+DTEND:20160224T003000Z
+SUMMARY:Dinner
+DESCRIPTION:Bon app&eacute;tit!
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:018e75398efdfeabc67cc698a3e0400c
+URL:http://jococruise2016.sched.org/event/018e75398efdfeabc67cc698a3e0400c
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T003000Z
+DTEND:20160224T013000Z
+SUMMARY:JCC Karaoke
+DESCRIPTION:You know how karaoke works. And this is yet another time you can do it.
+CATEGORIES:FEATURED EVENT
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:6ddd2fd19b491b3b2aa1b1c59ca29a1d
+URL:http://jococruise2016.sched.org/event/6ddd2fd19b491b3b2aa1b1c59ca29a1d
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T003000Z
+DTEND:20160224T013000Z
+SUMMARY:Office Hours with the Looneys
+DESCRIPTION:This is your chance to ask the Looneys anything. You can look through Andy&rsquo;s notebook of unpublished Fluxx designs\, ask Kristin about the business of selling games\, learn more about the Pyramid Arcade Kickstarter and other upcoming Looney Labs projects\, or even hear stories about their younger days at NASA.
+CATEGORIES:GAMING TRACK\, OFFICE HOURS
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:1a180f9de13731a00209592a76b682fe
+URL:http://jococruise2016.sched.org/event/1a180f9de13731a00209592a76b682fe
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T003000Z
+DTEND:20160224T030000Z
+SUMMARY:Artemis Free Play
+DESCRIPTION:Artemis is a favorite going back to the beginning of time. Get a crew of your favorite Starship personnel together to work together to pilot your ship through space\, docking at Space Stations\, fighting aliens\, and avoiding space monsters.Players will need to bring their own laptop - preferably with Artemis preinstalled. There will be a bridge copy of Artemis available for users to install - it will be expected anyone that installs Artemis on their laptop will delete the installer and uninstall the game after playing.
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:8240cb2a542cab90b371df4fe66ad9c7
+URL:http://jococruise2016.sched.org/event/8240cb2a542cab90b371df4fe66ad9c7
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T003000Z
+DTEND:20160224T030000Z
+SUMMARY:Keep Talking and Nobody Explodes
+DESCRIPTION:Keep Talking is a co-op game with one goal: defuse the bomb before it goes off! One player is the Defuser who has view of the bomb and can manipulate the modules\, one (or more) players are the Operators who can't see the bomb but have the Defusal Manual and can relay what actions the Defuser must take. Communication is key in this fast paced\, high stakes game.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:8602a904b9e40a2649aa0195709e002e
+URL:http://jococruise2016.sched.org/event/8602a904b9e40a2649aa0195709e002e
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T003000Z
+DTEND:20160224T013000Z
+SUMMARY:Sea Shanty Sing
+DESCRIPTION:Since we're all on a boat&hellip; ship&hellip; whatever\, we might as well sing some sea shanties! Experience is wholly unnecessary; goodness knows the original singers didn't have any. Feel free to bring requests\, songbooks\, lyric sheets\, etc!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Skylight Chapel\, Deck 15\, Aft
+SEQUENCE:0
+UID:71835ee23b76cb5a13d5a5153f5afa03
+URL:http://jococruise2016.sched.org/event/71835ee23b76cb5a13d5a5153f5afa03
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T003000Z
+DTEND:20160224T013000Z
+SUMMARY:The Business of Writing
+DESCRIPTION:Writing is not just a craft or an art: Those who make a living at it are running a small (and sometimes not-so-small) business as well. We dig into the practical side of the writing gig&mdash;what it takes\, behind the scenes\, to pay the bills and still make the work you love to read.
+CATEGORIES:WRITING TRACK
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:020b8f61c71f3ea9dec39647495d48c7
+URL:http://jococruise2016.sched.org/event/020b8f61c71f3ea9dec39647495d48c7
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T013000Z
+DTEND:20160224T033000Z
+SUMMARY:Parsely Games with Andy Looney
+DESCRIPTION:Remember those '80s text adventures? Parsely is a live game experience where Andy plays the part of the computer\, while the crowd collectively becomes the player\, taking turns giving simple commands. Andy's got four different adventures\, so each session is unique...come to them all!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Skylight Chapel\, Deck 15\, Aft
+SEQUENCE:0
+UID:90df73fb0ea7c0cb9b3326854d5f5824
+URL:http://jococruise2016.sched.org/event/90df73fb0ea7c0cb9b3326854d5f5824
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T013000Z
+DTEND:20160224T023000Z
+SUMMARY:Comedy Songwriting
+DESCRIPTION:Songwriting is tricky enough as it is. Now you want us to be funny\, too? And yet some people manage it&mdash;this very cruise is testament to the fact it can happen. We ask out songwriters to crack open the mysteries of comedy songwriting\, and what it takes to make people laugh and sing along.
+CATEGORIES:WRITING TRACK
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:79714f7492733293c677a733c4677d13
+URL:http://jococruise2016.sched.org/event/79714f7492733293c677a733c4677d13
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T023000Z
+DTEND:20160224T033000Z
+SUMMARY:Teach Aimee Mann to Be a Nerd
+DESCRIPTION:Aimee Mann likes nerds just fine. (She&rsquo;s on her second straight JoCo Cruise\, after all.) But she is not a nerd. She&rsquo;s never read Harry Potter\, she doesn&rsquo;t own any 20-sided dice\, and she is entirely unfamiliar with the work of Joss Whedon. But she wants to understand you all better. She genuinely wants to learn&mdash;what you do\, what you like\, how you think. And she wants your help. Join moderator Ted Leo as he\, with your help\, develops a &ldquo;Nerd Syllabus&rdquo; to help guide Aimee on the Path to understanding the various enthusiasms that help define &ldquo;nerddom." Or\, at least\, help her to know the difference between an orc and a kobold.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:7afb8a25ee3e6cc7dfb9455b6abfa9af
+URL:http://jococruise2016.sched.org/event/7afb8a25ee3e6cc7dfb9455b6abfa9af
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T034500Z
+DTEND:20160224T053000Z
+SUMMARY:Concert - Comedy Night
+DESCRIPTION:One of our favorite new traditions\, we turn the Arcadia Theatre into a floating comedy club (but with more comfortable seats and no terrible\, terrible nachos)\, as we welcome talented standups Solomon Georgio\, Rhea Butcher\, Michael Ian Black and Cameron Esposito.(Recording prohibited at this event.)
+CATEGORIES:MAIN EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:bbb4795a37d90d3950f899b580124baf
+URL:http://jococruise2016.sched.org/event/bbb4795a37d90d3950f899b580124baf
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T053000Z
+DTEND:20160224T070000Z
+SUMMARY:Stargazing
+DESCRIPTION:After the Comedy Night Concert on Tuesday (scheduled to end at 12:30am\, so technically Wednesday morning) come out to the Helipad and look at some stars\, planets\, at least one moon\, and maybe some other stuff too. An astronomy enthusiast will be there with star charts and a cool green laser pointer (it makes beams\, not dots) and the willingness to answer any astronomy question you have! Most of the answers will probably be accurate\, too! If the weather doesn't cooperate or you just can't get enough stargazing\, another session is planned for late Thursday/early Friday morning. Please dim your phone screens if you attend to preserve night vision.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Helicopter Pad\, Freedom of the Seas
+SEQUENCE:0
+UID:c2db6bc948dfdc0ac0c78f20f09ffaa8
+URL:http://jococruise2016.sched.org/event/c2db6bc948dfdc0ac0c78f20f09ffaa8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T140000Z
+DTEND:20160224T150000Z
+SUMMARY:Management Q&A
+DESCRIPTION:An annual\, hangover-riddled tradition: the Management (a.k.a. Jonathan\, Paul\, Storm\, and Drew (Scarface)) will be on hand to answer your questions about JoCo Cruise. Or pretty much anything else. Yes\, it's early. Yes\, last night was a late night. We know.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:c776e4ce279a35198865dd5028c4bc25
+URL:http://jococruise2016.sched.org/event/c776e4ce279a35198865dd5028c4bc25
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T140000Z
+DTEND:20160224T160000Z
+SUMMARY:Swing/One-Step Dance Lesson!
+DESCRIPTION:Back by Popular Demand! Ren&eacute;e Camus (JCC 1 through 4) once again teaches the basics of swing and one-step dancing\, to the music of JoCo and other cruise performers! Learn clear leading and following techniques\, easy cool moves\, and good rhythm so you can use what you've learned and enjoy the music and your partners during the rest of the week.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:31b3da68275175d474255393f73c34d3
+URL:http://jococruise2016.sched.org/event/31b3da68275175d474255393f73c34d3
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T150000Z
+DTEND:20160224T160000Z
+SUMMARY:Andy vs. Everyone
+DESCRIPTION:Andy Looney loves playing multiple games simultaneously. He can play up to 10 separate games at once\, with as many as 40 or 50 people at one time! It's great fun watching him run from one table to the next\, taking his turns as fast as he can! How many people can Andy take on at once? Challenge him to any Looney Labs game in print\, or ask to try one of his unpublished prototypes!
+CATEGORIES:GAMING TRACK
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:1347c46b5ed838d321b90be253ea63b1
+URL:http://jococruise2016.sched.org/event/1347c46b5ed838d321b90be253ea63b1
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T150000Z
+DTEND:20160224T170000Z
+SUMMARY:Playtest Parlor
+DESCRIPTION:Would you like to try a game you won&rsquo;t find anywhere else? Do you have a game you&rsquo;ve been working on that you&rsquo;d like to test? The Playtest Parlor is an informal event where any and all game designers&mdash;sponsors and passengers alike&mdash;can present games that are under development! Come play a game or just wander from table to table and see what people are working on!
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:f4bb1a5ccc76f69672ee0319cbea24bc
+URL:http://jococruise2016.sched.org/event/f4bb1a5ccc76f69672ee0319cbea24bc
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T150000Z
+DTEND:20160224T160000Z
+SUMMARY:Sausage Party Mega-Tournament!
+DESCRIPTION:Paul and Storm wrote a song called "Sausage Party"! Mike Selinker wrote a game about it! For the first time in public\, we're gonna play it! (Spoiler Alert: it's completely madcap. Maybe even MADALLCAPS.) You should be there when it happens\, because\, mmm\, sausages.
+CATEGORIES:GAMING TRACK
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:a23e8d1930c3a98d851937f894096be0
+URL:http://jococruise2016.sched.org/event/a23e8d1930c3a98d851937f894096be0
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T150000Z
+DTEND:20160224T160000Z
+SUMMARY:Married\, with Creativity
+DESCRIPTION:It's not a surprise that creative people marry other creative people. But once coupled up\, how do these spouses face the challenges of two full-time creative careers running at the same time? We dig into the day-to-day of being spouses and being creative\, and what it take to make both work
+CATEGORIES:WRITING TRACK
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:dd842c94823c0f86a55bc996e865515b
+URL:http://jococruise2016.sched.org/event/dd842c94823c0f86a55bc996e865515b
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T153000Z
+DTEND:20160224T163000Z
+SUMMARY:All Things Podcasts\, with Matt Gourley
+DESCRIPTION:As a creator\, host and guest of numerous podcasts (including Superego\, I Was There Too\, James Bonding and Pistol Shrimps Radio\, just to name a few)\, Matt Gourley leads an informal chat or Q&A about developing\, creating\, being on\, hosting\, editing\, loving\, listening to\, the business of\, and future of podcasts.(Recording prohibited at this event.)
+CATEGORIES:FEATURED EVENT
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:dead674df7e790284efcac33e3f396d3
+URL:http://jococruise2016.sched.org/event/dead674df7e790284efcac33e3f396d3
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T153000Z
+DTEND:20160224T170000Z
+SUMMARY:Sysadmin Nail Painting Party
+DESCRIPTION:Scheduled ahead of time this year\, Sysadmins\, DevOps\, and those who tolerate them are all welcome to come\, have a drink (or three! or zero!) and paint each other's nails while talking about all things Ops-y.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:073100322e9918c508870884333cc868
+URL:http://jococruise2016.sched.org/event/073100322e9918c508870884333cc868
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T160000Z
+DTEND:20160224T170000Z
+SUMMARY:Cthulhu's Vault
+DESCRIPTION:Come learn about and play this exciting\, collaborative storytelling card game\, IF YOU DARE. Can you defeat the Old Great One? Will you get sidetracked by the Great Old One? Will it get completely silly\, with you chronicling the adventures of the One Great Old? It's up to you\, and as many as five other players.
+CATEGORIES:GAMING TRACK
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:fda8812ece0fba85f225efe6fb10b847
+URL:http://jococruise2016.sched.org/event/fda8812ece0fba85f225efe6fb10b847
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T160000Z
+DTEND:20160224T170000Z
+SUMMARY:Sentinel Comics: The RPG!
+DESCRIPTION:Be a super hero and save the world in this preview event for the upcoming Sentinel Comics RPG! Christopher Badell&mdash;game designer and writer of Sentinel Comics stories&mdash;will GM a one-shot super-heroic adventure! Will you be able to stop Baron Blade's villainous plot?!
+CATEGORIES:GAMING TRACK
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:8786c88071914db50668d6786f1c9aee
+URL:http://jococruise2016.sched.org/event/8786c88071914db50668d6786f1c9aee
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T160000Z
+DTEND:20160224T170000Z
+SUMMARY:Reading: N. K. Jemisin
+DESCRIPTION:Speculative fiction writer\, blogger\, and Hugo\, Nebula and World Fantasy Award nominee N. K. Jemisin offers an "audience choice" reading&mdash;she'll bring her latest novel in the new Broken Earth trilogy\, and a a forthcoming short story\, and decide what to read based on the crowd's preference. It's just like a "Choose Your Own Adventure" book\, but with a room full of people and with reading aloud instead of an adventure!
+CATEGORIES:WRITING TRACK
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:33eb03961f992d27c4704a917f92814d
+URL:http://jococruise2016.sched.org/event/33eb03961f992d27c4704a917f92814d
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T170000Z
+DTEND:20160225T000000Z
+SUMMARY:Charlotte Amalie\, St. Thomas
+DESCRIPTION:The only Caribbean island with a jazz standard named after it (well\, other than the lesser known standard "The Saint Croix\, U.S. Virgin Islands Blues")\, St. Thomas awaits to enfold you in its loving embrace. (And to maybe try to sell you some tanzanite.)
+CATEGORIES:PORT OF CALL
+LOCATION:Port of Call\, Freedom of the Seas
+SEQUENCE:0
+UID:723cdaf56e26e147e9644efc84361eba
+URL:http://jococruise2016.sched.org/event/723cdaf56e26e147e9644efc84361eba
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T180000Z
+DTEND:20160224T190000Z
+SUMMARY:Office Hours: Molly Lewis
+DESCRIPTION:Molly Lewis eats all the snacks & answers your questions about ukulele\, songwriting\, Stephen Fry\, and Disneyland.
+CATEGORIES:FEATURED EVENT\, OFFICE HOURS
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:c0298b505592031a7bc1add193461146
+URL:http://jococruise2016.sched.org/event/c0298b505592031a7bc1add193461146
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T180000Z
+DTEND:20160224T200000Z
+SUMMARY:Parsely Games with Andy Looney
+DESCRIPTION:Remember those '80s text adventures? Parsely is a live game experience where Andy plays the part of the computer\, while the crowd collectively becomes the player\, taking turns giving simple commands. Andy's got four different adventures\, so each session is unique...come to them all!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:1cf5fbe0b79900262e3e2bcddac748a0
+URL:http://jococruise2016.sched.org/event/1cf5fbe0b79900262e3e2bcddac748a0
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160224T223000Z
+DTEND:20160225T003000Z
+SUMMARY:Dinner
+DESCRIPTION:Guten Appetit! Mahlzeit!
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:3a3f8aec5c28d1ed9ae7a6c216e3d672
+URL:http://jococruise2016.sched.org/event/3a3f8aec5c28d1ed9ae7a6c216e3d672
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T000000Z
+DTEND:20160225T010000Z
+SUMMARY:LGBTQSA Cocktail Meetup
+DESCRIPTION:Begun on the ms Westerdam during JoCo Cruise 2012\, the annual LGBTQSA happy hour celebrates its 5th year of having extra letters at the end of its acronym and being a low key get together for Sea Monkeys of all persuasions.
+CATEGORIES:FEATURED EVENT
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:5665bea3a49352d5393c110e4491bb68
+URL:http://jococruise2016.sched.org/event/5665bea3a49352d5393c110e4491bb68
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T003000Z
+DTEND:20160225T013000Z
+SUMMARY:JCC Karaoke
+DESCRIPTION:You still know how karaoke works. And this is still another time you can do it.
+CATEGORIES:FEATURED EVENT
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:c1e9ed12f0f4a5ba6a5f8d8bd8d4f1df
+URL:http://jococruise2016.sched.org/event/c1e9ed12f0f4a5ba6a5f8d8bd8d4f1df
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T003000Z
+DTEND:20160225T013000Z
+SUMMARY:Office Hours: Mike Selinker
+DESCRIPTION:Come to Cloud Nine and hang out with Mike\, who very probably designed a bunch of games in your house. Maybe you've played the Pathfinder Adventure Card Game or Betrayal at House on the Hill or any of his other creations. He'll talk about boardgames\, RPGs\, puzzles\, Japanese Kit-Kats\, or whatever you like. He will probably drink whatever you hand him.
+CATEGORIES:GAMING TRACK\, OFFICE HOURS
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:f461405fd9de8fc4d3011369c3861c7f
+URL:http://jococruise2016.sched.org/event/f461405fd9de8fc4d3011369c3861c7f
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T003000Z
+DTEND:20160225T013000Z
+SUMMARY:Keith Explains!
+DESCRIPTION:Back on land\, I have a monthly access TV show I do called "Keith Explains!"\, which is generally just me talking about whatever I've done or seen. If folks are interested\, or\, really\, even if they're not\, I'm thinking of doing a show on the boat. Folks looking for what it might be like are welcome to go look at the shows on YouTube or on my website\, www.KeithExplains.com.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:74d4377435fb4a9ffe0cfc99638bff0f
+URL:http://jococruise2016.sched.org/event/74d4377435fb4a9ffe0cfc99638bff0f
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T010000Z
+DTEND:20160225T030000Z
+SUMMARY:Open Mic Night
+DESCRIPTION:A JoCo Cruise tradition. The stage will be yours for 10 minutes to present to the assembled: songs\, readings\, iPhone bell choirs\, it's up to you! Sign up sheets will be at the JCC Info desk outside the Game Room starting on Day 1\, with slots assigned on a first-come basis.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:30fd82e3192b614525a0443fb2563805
+URL:http://jococruise2016.sched.org/event/30fd82e3192b614525a0443fb2563805
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T020000Z
+DTEND:20160225T043000Z
+SUMMARY:Karaoke Night on the "Big Stage"
+DESCRIPTION:Another annual tradition: your chance to sing on the "big stage" in Studio B. It's like American Idol\, but completely different. Hosted by Paul F. Tompkins and John Roderick.
+CATEGORIES:FEATURED EVENT
+LOCATION:Studio B\, Deck 3\, Midship
+SEQUENCE:0
+UID:fae16eddeb12d5224fc8f42f46388648
+URL:http://jococruise2016.sched.org/event/fae16eddeb12d5224fc8f42f46388648
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T040000Z
+DTEND:20160225T045900Z
+SUMMARY:Molly Lewis
+DESCRIPTION:Perennial Sea Monkey fave and Extraordinarily Charming Individual Molly Lewis brings her wit and ukulele to the Star Lounge. CAUTION: performance may contain sarcasm\, heart\, and\, if you're good\, Abraham Lincoln.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:91ee4feaafba0f3bb0606dd7cb6d80c4
+URL:http://jococruise2016.sched.org/event/91ee4feaafba0f3bb0606dd7cb6d80c4
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T050000Z
+DTEND:20160225T060000Z
+SUMMARY:The Both After Dark
+DESCRIPTION:Ted Leo and Aimee Mann (a.k.a.\, The Both) take us past midnight with a cool vibe of music\, sophisticated and smoky banter\, and possibly a smoking jacket or two. Very likely: new songs and special guests. Far less likely: appearances by Buddy Rich\, Moms Mabley or Norman Mailer.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:8fb0b351287ad59f090fe63cd9bf7856
+URL:http://jococruise2016.sched.org/event/8fb0b351287ad59f090fe63cd9bf7856
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T130000Z
+DTEND:20160225T220000Z
+SUMMARY:Philipsburg\, St. Maarten
+DESCRIPTION:
+CATEGORIES:PORT OF CALL
+LOCATION:Port of Call\, Freedom of the Seas
+SEQUENCE:0
+UID:b959743cb8d39ee22230123c0deb965a
+URL:http://jococruise2016.sched.org/event/b959743cb8d39ee22230123c0deb965a
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T180000Z
+DTEND:20160225T190000Z
+SUMMARY:Office Hours: Molly Lewis
+DESCRIPTION:Molly Lewis eats all the snacks & answers your questions about ukulele\, songwriting\, Stephen Fry\, and Disneyland.
+CATEGORIES:FEATURED EVENT\, OFFICE HOURS
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:27452fe636f232aeaa4bf257044f71c4
+URL:http://jococruise2016.sched.org/event/27452fe636f232aeaa4bf257044f71c4
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T183000Z
+DTEND:20160225T210000Z
+SUMMARY:Johann Sebastian Joust
+DESCRIPTION:This is a sea monkey favorite! JS Joust pairs music with motion controllers; the music sets the pace\, while the players try to knock their opponents out of the game by making a controller move faster than the music. Drop in at any time to enjoy this fun\, easy to learn game. Recommended Age: 8+. Get ready to Joust...go!
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:ac214e62e9a6a7c5055e65754dd8ea7f
+URL:http://jococruise2016.sched.org/event/ac214e62e9a6a7c5055e65754dd8ea7f
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T211500Z
+DTEND:20160225T220000Z
+SUMMARY:Group Photo
+DESCRIPTION:We'll all gather in the Arcadia Theatre at 4:15 pm\, then head out to the ship's bow at 4:30 for our traditional group photo. Say cheese!
+CATEGORIES:FEATURED EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:576daef904328801546b6f50972ab850
+URL:http://jococruise2016.sched.org/event/576daef904328801546b6f50972ab850
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160225T223000Z
+DTEND:20160226T003000Z
+SUMMARY:Dinner
+DESCRIPTION:&iexcl;Buen provecho!
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:a0e11ecacd0556c35d4368b806f38891
+URL:http://jococruise2016.sched.org/event/a0e11ecacd0556c35d4368b806f38891
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T010000Z
+DTEND:20160226T031500Z
+SUMMARY:Concert - Imogen Heap\, SPONTANEANATION Live
+DESCRIPTION:Imogen Heap's brings her literally inventive music&mdash;she created a new technology\, Mimu Gloves\, to realize her creative vision&mdash;to the JoCo Cruise stage. And while she did not invent cellist and JoCo Cruise alum Zo&euml; Keating\, she is bringing Zo&euml; to join her on stage for what is sure to be an amazing set of true virtuosity.Then\, Paul F. Tompkins' SPONTANEANATION takes over for a live podcast recording. The first half will be a "serious" interview with Jean Grae; then Paul and his all-star team of improvisers (Matt Gourley\, Amanda Lund and Janet Varney) will improvise a long-form story based around the interview.(Recording of SPONTANEANATION is prohibited.) 
+CATEGORIES:MAIN EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:7461772c57914fe1f79a6fc5cba09bd2
+URL:http://jococruise2016.sched.org/event/7461772c57914fe1f79a6fc5cba09bd2
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T033000Z
+DTEND:20160226T050000Z
+SUMMARY:Extreme Improv Trivia with Mike Selinker and Molly Lewis
+DESCRIPTION:Ready for some pub trivia? Well\, our puzzlemaster Mike Selinker sure isn't. He'll come entirely unprepared for this trivia event. But don't worry! The audience (and plucky cohost Molly Lewis) will give him the subjects for all his questions\, which he will make up on the spot. And the answers will be 100% accurate\, which you can verify with your internet connec... Yeah\, we wouldn't worry about it.
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:0446482fef4d55dea1ee29c5cc11bfe5
+URL:http://jococruise2016.sched.org/event/0446482fef4d55dea1ee29c5cc11bfe5
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T033000Z
+DTEND:20160226T050000Z
+SUMMARY:Glow-Juggle-Spin Jam
+DESCRIPTION:LED poi? Light up juggling props? Glowing spin fans? If you brought them\, or like to watch others rock out with them\, stop by and have fun with some glow toys!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:180974fc91f19faaa5054103601178a8
+URL:http://jococruise2016.sched.org/event/180974fc91f19faaa5054103601178a8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T050000Z
+DTEND:20160226T063000Z
+SUMMARY:The Show Show w Jean Grae
+DESCRIPTION:Do you like live talk shows? Chats with your favorite celebrities? Commercials for products you wish existed? The NEWS? Well\, fantastic. Everything on that list is here\, and more. With guests Rhea Butcher and Cameron Esposito. Come to this\, or you'll get scurvy.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:43326b6059e3d257a3decee30e799bb4
+URL:http://jococruise2016.sched.org/event/43326b6059e3d257a3decee30e799bb4
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T060000Z
+DTEND:20160226T070000Z
+SUMMARY:Stargazing
+DESCRIPTION:Come explore the night sky with friendly astronomers in the darkest place we can find. Weather permitting\, we'll be able to see the Southern Cross and Alpha Centauri (but not the Magellanic Clouds). Bring your burning questions about all things astronomical!Time and place subject to change due to weather and/or availability of a better venue with less artificial light.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Helicopter Pad\, Freedom of the Seas
+SEQUENCE:0
+UID:50c52940ce9aaeb05b533a2dd6709f16
+URL:http://jococruise2016.sched.org/event/50c52940ce9aaeb05b533a2dd6709f16
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T140000Z
+DTEND:20160226T170000Z
+SUMMARY:Stitch Monkeys
+DESCRIPTION:A meetup for Sea Monkeys who knit\, crochet\, weave\, embroider\, sew\, etc. to meet and mingle. Have fun comparing patterns\, sharing techniques and trading tips on stitches\, sweaters\, scarves\, hats\, etc.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:7bcdcafe9a58fa01a2dd3c9814cb5fdd
+URL:http://jococruise2016.sched.org/event/7bcdcafe9a58fa01a2dd3c9814cb5fdd
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T150000Z
+DTEND:20160226T160000Z
+SUMMARY:The Annual Ukulele Melee Summit
+DESCRIPTION:Participants in this year's Ukulele Melee are invited to help Molly make another Video For The Internet. (Legal disclaimer: Molly might video-record you playing ukulele and put you in a Video For The Internet.) All instruments welcome! but ukuleles preferred.
+CATEGORIES:FEATURED EVENT
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:2abcb1b959dbe28c06408a4382a5d9bd
+URL:http://jococruise2016.sched.org/event/2abcb1b959dbe28c06408a4382a5d9bd
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T150000Z
+DTEND:20160226T173000Z
+SUMMARY:Magic: People's Tournament
+DESCRIPTION:The eight people chosen in the Magic Meetup event compete in a single-elimination tournament for a chance to face our Celebrity Champion!
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:3740333699632ffa9166a0721806f79f
+URL:http://jococruise2016.sched.org/event/3740333699632ffa9166a0721806f79f
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T150000Z
+DTEND:20160226T170000Z
+SUMMARY:Sentinel Comics: The RPG!
+DESCRIPTION:Be a super hero and save the world in this preview event for the upcoming Sentinel Comics RPG! Christopher Badell - game designer and writer of Sentinel Comics stories - will GM a one-shot super-heroic adventure! Will you be able to stop Baron Blade's villainous plot?!
+CATEGORIES:GAMING TRACK
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:b44a9ab30c012f4bb4ef28f60e6130e0
+URL:http://jococruise2016.sched.org/event/b44a9ab30c012f4bb4ef28f60e6130e0
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T153000Z
+DTEND:20160226T163000Z
+SUMMARY:Reading: John Scalzi
+DESCRIPTION:John Scalzi is gonna read some new stuff! Some of it might even be funny!
+CATEGORIES:WRITING TRACK
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:8865ab056c3ed00868930dbffee7aed6
+URL:http://jococruise2016.sched.org/event/8865ab056c3ed00868930dbffee7aed6
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T160000Z
+DTEND:20160226T170000Z
+SUMMARY:Chez Cruise Jam Session
+DESCRIPTION:Once again\, we're asking you guys to help us write a game. This time\, it's Chez Cruise&mdash;the geeks are on vacation\, but they still need Slack!
+CATEGORIES:GAMING TRACK
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:36a1a47af405ec67d0b59c87d9b51df8
+URL:http://jococruise2016.sched.org/event/36a1a47af405ec67d0b59c87d9b51df8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T160000Z
+DTEND:20160226T170000Z
+SUMMARY:Glen Raphael Show: More Musical Nerdity
+DESCRIPTION:Returning seamonkey Glen Raphael will play a few songs; there may also be Singing Along\, Special Guests\, and/or Songs From People You've Never Heard Of. If you like this sort of thing\, it is exactly the sort of thing you'd like. (Last year's show went so well\, they retired the room!)
+CATEGORIES:SHADOW CRUISE
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:a933fe4214fe18ac0cedd460e8eeeee8
+URL:http://jococruise2016.sched.org/event/a933fe4214fe18ac0cedd460e8eeeee8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T170000Z
+DTEND:20160226T183000Z
+SUMMARY:Monkey Play Date: Improv
+DESCRIPTION:Improv basics and practice using a Second City type "game" format designed to be fun for novice monkeys and the experienced amateur. Improv is great way to meet other monkeys. Shy monkey friendly. Not sure you want to participate? Supportive voyeurs welcome--then decide. You know you want to.
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:d74550812aafb7f0e4a322874b586820
+URL:http://jococruise2016.sched.org/event/d74550812aafb7f0e4a322874b586820
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T170000Z
+DTEND:20160226T180000Z
+SUMMARY:Reading: Pat Rothfuss
+DESCRIPTION:Bestselling author Pat Rothfuss stands in front of a microphone and reads some new stuff he wrote. Perhaps some old stuff as well. He might answer questions too. Or maybe not. We'll see how he feels on that day.
+CATEGORIES:WRITING TRACK
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:1d96016c076ee7c40d2196d2dff1e287
+URL:http://jococruise2016.sched.org/event/1d96016c076ee7c40d2196d2dff1e287
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T173000Z
+DTEND:20160226T183000Z
+SUMMARY:The JV Club
+DESCRIPTION:Remember what it was like to be an awkward teenager? And remember how some things haven&rsquo;t really changed that much for you since then? Join proud dork Janet Varney as she explores the highs and lows of the bygone years with some of her favorite women (as they talk their way through the terrible teens into adult-lescence. Joining Janet is Zoe Keating\, the innovative singer-songwriter/cellist/wizard who knocked us all flat on JoCo Cruise 2014.(Recording is permitted\, but plese no public reposting without Janet's okay.)
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:d06321e9730c8499cdb26417cc8bf831
+URL:http://jococruise2016.sched.org/event/d06321e9730c8499cdb26417cc8bf831
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T173000Z
+DTEND:20160226T190000Z
+SUMMARY:Cody Wymore's Mad Piano Science Laboratory
+DESCRIPTION:Dubbed "The Mad Scientist of Musical Theater" during JoCo Cruise 5\, Cody Wymore is back at the piano with more of your favorites! Come sing along to classics\, recent hits\, and maybe even hear a few brand new originals! Musical theater? On my cruise? It's more likely than you think!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:b8c2e17d58fb3068d2f7670d5b14fc05
+URL:http://jococruise2016.sched.org/event/b8c2e17d58fb3068d2f7670d5b14fc05
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T180000Z
+DTEND:20160226T190000Z
+SUMMARY:Designing a Family Game
+DESCRIPTION:James Ernest\, designer of games such as 12 Days\, Pairs\, and Kill Doctor Lucky\, talks about the principles involved in designing traditional-style family games. With the right blend of strategy and luck\, and accessible rules\, these are games that family members\, casual gamers and hardcore gamers can enjoy together.
+CATEGORIES:GAMING TRACK
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:64b3c68f62706803bb375d63e74cacca
+URL:http://jococruise2016.sched.org/event/64b3c68f62706803bb375d63e74cacca
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T180000Z
+DTEND:20160226T190000Z
+SUMMARY:You Live\, You Die\, You Tell Your Story
+DESCRIPTION:How do you create a hero? How does the tale of a life&mdash;and death&mdash;create hooks for a story still to be told? In this hour you&rsquo;ll be guided through the character creation system of Phoenix: Dawn Command to develop the life and death story of your hero. Whether you&rsquo;re playing the game or writing a novel\, join us and see how your story begins! All materials will be provided.
+CATEGORIES:GAMING TRACK
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:f6f1389dfd333d9fd591279f0f80fcb1
+URL:http://jococruise2016.sched.org/event/f6f1389dfd333d9fd591279f0f80fcb1
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T180000Z
+DTEND:20160226T190000Z
+SUMMARY:Office Hours: Matt Fraction & Kelly Sue Deconnick
+DESCRIPTION:Authors Kelly Sue DeConnick and Matt Fraction will hang out\, discuss their work\, answer questions\, smile indulgently at pictures of your children\, and whatever else they care to do. See them up close\, like the zebras and lemurs at the zoo! (NOTE: Kelly Sue and Matt smell much better than zoo animals.)
+CATEGORIES:OFFICE HOURS\, WRITING TRACK
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:dca781cec88f6f91c25fbcc5e38fa50a
+URL:http://jococruise2016.sched.org/event/dca781cec88f6f91c25fbcc5e38fa50a
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T190000Z
+DTEND:20160226T213000Z
+SUMMARY:Concert - John Hodgman\, Celebrity Game Night Afternoon
+DESCRIPTION:Author\, actor\, humorist and self-appointed judge John Hodgman performs this afternoon. After that\, various combinations of performers and guests will take part in fun\, high-energy games for your collective enjoyment\, like non-violent versions of the gladiators of old. ARE YOU NOT ENTERTAINED?(Recording of John Hodgman's performance is permitted\, but no public posting\, please. Private sharing is allowed.)
+CATEGORIES:MAIN EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:96d8df56bd961e20d7e3bf5c24930af3
+URL:http://jococruise2016.sched.org/event/96d8df56bd961e20d7e3bf5c24930af3
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160226T223000Z
+DTEND:20160227T003000Z
+SUMMARY:Dinner (Formal Night)
+DESCRIPTION:This ship will not stop serving us food. Eat\, or else!(Formal wear required in dining room) 
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:d7bf489e181b0def9372a50e3d46aa95
+URL:http://jococruise2016.sched.org/event/d7bf489e181b0def9372a50e3d46aa95
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T003000Z
+DTEND:20160227T013000Z
+SUMMARY:JCC Karaoke
+DESCRIPTION:Like the previous Karaoke events\, but later in the week.
+CATEGORIES:FEATURED EVENT
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:4d78177c9d68d3f9decaf958704e4646
+URL:http://jococruise2016.sched.org/event/4d78177c9d68d3f9decaf958704e4646
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T003000Z
+DTEND:20160227T013000Z
+SUMMARY:Office Hours: Keith Baker\, Twogether Studios
+DESCRIPTION:Keith Baker is the designer of Gloom\, Eberron\, Phoenix: Dawn Command\, and the worst Dolphins In Space videogame to never be made. Stop by and talk about games\, game design\, dolphins\, and more!
+CATEGORIES:GAMING TRACK\, OFFICE HOURS
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:b37d54064ec8344499ff54cb3722fa53
+URL:http://jococruise2016.sched.org/event/b37d54064ec8344499ff54cb3722fa53
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T003000Z
+DTEND:20160227T030000Z
+SUMMARY:Artemis Free Play
+DESCRIPTION:Artemis is a favorite going back to the beginning of time. Get a crew of your favorite Starship personnel together to work together to pilot your ship through space\, docking at Space Stations\, fighting aliens\, and avoiding space monsters.Players will need to bring their own laptop - preferably with Artemis preinstalled. There will be a bridge copy of Artemis available for users to install - it will be expected anyone that installs Artemis on their laptop will delete the installer and uninstall the game after playing.
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:b6f44c3cec24f3457dca9065295c48b5
+URL:http://jococruise2016.sched.org/event/b6f44c3cec24f3457dca9065295c48b5
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T003000Z
+DTEND:20160227T030000Z
+SUMMARY:Keep Talking and Nobody Explodes
+DESCRIPTION:Keep Talking is a co-op game with one goal: defuse the bomb before it goes off! One player is the Defuser who has view of the bomb and can manipulate the modules\, one (or more) players are the Operators who can't see the bomb but have the Defusal Manual and can relay what actions the Defuser must take. Communication is key in this fast paced\, high stakes game.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:9fb39abe6e3afa0d694e43a883533fda
+URL:http://jococruise2016.sched.org/event/9fb39abe6e3afa0d694e43a883533fda
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T003000Z
+DTEND:20160227T013000Z
+SUMMARY:In Conversation with N. K. Jemisin
+DESCRIPTION:She's outspoken\, opinionated and hands down one of the best fantasy writers writing today\, and we have her on the cruise! John Scalzi sits with Jemisin to talk about writing\, life\, and what it's like to be in the genre of science fiction and fantasy today.
+CATEGORIES:WRITING TRACK
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:bf778c8bf72ffb384849b07270b56f0d
+URL:http://jococruise2016.sched.org/event/bf778c8bf72ffb384849b07270b56f0d
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T013000Z
+DTEND:20160227T023000Z
+SUMMARY:Office Hours: Gavin Verhey
+DESCRIPTION:A chance to talk with Gavin Verhey of Wizards of the Coast about Magic: The Gathering\, Game Design\, and surviving Cruise catastrophes!
+CATEGORIES:GAMING TRACK\, OFFICE HOURS
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:96eef95a0783a2d2994071aabdb4ed51
+URL:http://jococruise2016.sched.org/event/96eef95a0783a2d2994071aabdb4ed51
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T013000Z
+DTEND:20160227T023000Z
+SUMMARY:Life Online: Putting the Meme in Memoir
+DESCRIPTION:These days\, sharing details about your life on the internet is pretty normal\, but some of share way more than your average person. Way\, way more than your average person. What effect does this have on our lives\, what lessons have we learned\, and what are the lines that we ourselves won't cross? Come join us as we tell war stories and discuss the pros and cons of doing what we do.
+CATEGORIES:WRITING TRACK
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:b82ff82811556cd2e02597edddeb2849
+URL:http://jococruise2016.sched.org/event/b82ff82811556cd2e02597edddeb2849
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T014500Z
+DTEND:20160227T020000Z
+SUMMARY:Fancy Pants Parade
+DESCRIPTION:Do you have what it takes to be The Best in Terms of Pants? Bring your fanciest pants\, and march around to the strains of Jonathan Coulton's silliest\, weirdest song\, and the Monarch of the Seas will determine if the trophy goes to you.
+CATEGORIES:FEATURED EVENT
+LOCATION:Pool Deck\, Deck 12\, Midship
+SEQUENCE:0
+UID:3fd4b2fdf194e5277d8741332ab77c89
+URL:http://jococruise2016.sched.org/event/3fd4b2fdf194e5277d8741332ab77c89
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T020000Z
+DTEND:20160227T050000Z
+SUMMARY:Movie Night
+DESCRIPTION:Grab a drink from the pool bar\, relax on a lounge chair&mdash;or in a hot tub!&mdash;and settle in for a night under the stars watching two stone classics: The Iron Giant and Galaxy Quest.
+CATEGORIES:FEATURED EVENT
+LOCATION:Pool Deck\, Deck 12\, Midship
+SEQUENCE:0
+UID:83d8f7f40c132860b75af8bc48e8c49a
+URL:http://jococruise2016.sched.org/event/83d8f7f40c132860b75af8bc48e8c49a
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T030000Z
+DTEND:20160227T040000Z
+SUMMARY:The Jim Boggia Hour
+DESCRIPTION:It's Jim Boggia's stage\, which he will fill with musical awesome. And anythinig goes: last year he organized a complete playthrough of Paul McCartney's Band on the Run album.
+CATEGORIES:FEATURED EVENT
+LOCATION:Star Lounge\, Deck 5\, Forward
+SEQUENCE:0
+UID:15dd3c31d381eaa601cf325437321d73
+URL:http://jococruise2016.sched.org/event/15dd3c31d381eaa601cf325437321d73
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T040000Z
+DTEND:20160227T050000Z
+SUMMARY:Comedy! feat. Jason Hatrick
+DESCRIPTION:The first time I ever performed stand-up comedy was at the open mic on JoCo Cruise 2. Since then I've performed in several festivals\, made the finals of several competitions\, and been hired to perform full weekends in comedy clubs in exchange for money. So\, you know\, I'm like legit now. There is no one I would rather celebrate my 4-year comicaversary with than an audience full of sea monkeys\, so come see what your support and encouragement has wrought! Note: This show promises that it will not be racist\, homophobic\, misogynist\, transphobic\, nor will it pick on any marginalized cross-section of society. That said\, it may get a little dirty in places. Tastefully.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:ed7e2b9d8afc8d7099ca0385a7d8201b
+URL:http://jococruise2016.sched.org/event/ed7e2b9d8afc8d7099ca0385a7d8201b
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T040000Z
+DTEND:20160227T060000Z
+SUMMARY:Parsely Games with Andy Looney
+DESCRIPTION:Remember those '80s text adventures? Parsely is a live game experience where Andy plays the part of the computer\, while the crowd collectively becomes the player\, taking turns giving simple commands. Andy's got four different adventures\, so each session is unique...come to them all!
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:8733113610697b7f7f541e812330f89b
+URL:http://jococruise2016.sched.org/event/8733113610697b7f7f541e812330f89b
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T140000Z
+DTEND:20160227T190000Z
+SUMMARY:Ferdinand Marcos Memorial Junta Game
+DESCRIPTION:(REAR OF ROOM\, PORT SIDE)31st Annual Ferdinand Marcos Memorial Junta Game (Celebrated)Started at MIT in 1986\, to recognize "they are playing 'Junta' in the Philippines." Every year they are playing Junta somewhere in the real world. We play to celebrate the worthy and mock the corrupt. Depending on coups\, game can take 3+ hours. 7 players per board.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:1488e0d446459e3b64aadb40414474bf
+URL:http://jococruise2016.sched.org/event/1488e0d446459e3b64aadb40414474bf
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T140000Z
+DTEND:20160227T170000Z
+SUMMARY:Stitch Monkeys
+DESCRIPTION:A meetup for Sea Monkeys who knit\, crochet\, weave\, embroider\, sew\, etc. to meet and mingle. Have fun comparing patterns\, sharing techniques and trading tips on stitches\, sweaters\, scarves\, hats\, etc.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:25eb81d44284dd60680c83c59467a9d7
+URL:http://jococruise2016.sched.org/event/25eb81d44284dd60680c83c59467a9d7
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T150000Z
+DTEND:20160227T170000Z
+SUMMARY:Sentinel Comics: The RPG!
+DESCRIPTION:Be a super hero and save the world in this preview event for the upcoming Sentinel Comics RPG! Christopher Badell - game designer and writer of Sentinel Comics stories - will GM a one-shot super-heroic adventure! Will you be able to stop Baron Blade's villainous plot?!
+CATEGORIES:GAMING TRACK
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:9d40d81f1c28693c5dba6481ad02fe37
+URL:http://jococruise2016.sched.org/event/9d40d81f1c28693c5dba6481ad02fe37
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T150000Z
+DTEND:20160227T160000Z
+SUMMARY:Talk about Tak
+DESCRIPTION:Patrick Rothfuss and James Ernest talk about Tak. This new board game was first described in The Wise Man's Fear\, and now Pat and James have made it a real thing. Tak is an abstract strategy game for two players\, falling somewhere between classic games like chess\, go\, and mancala. Learn about the design processes behind creating a new classic game\, and play Tak with the inventors!
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:0cda98109810ca095ca667b6417fb088
+URL:http://jococruise2016.sched.org/event/0cda98109810ca095ca667b6417fb088
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T160000Z
+DTEND:20160227T170000Z
+SUMMARY:Magic: Contest of Champions
+DESCRIPTION:The Champion of the People's Tournament faces off against our Celebrity Champion!
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:891e0d8a0200862fd613905b1d7a9613
+URL:http://jococruise2016.sched.org/event/891e0d8a0200862fd613905b1d7a9613
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T160000Z
+DTEND:20160227T190000Z
+SUMMARY:Johann Sebastian Joust
+DESCRIPTION:This is a sea monkey favorite! JS Joust pairs music with motion controllers; the music sets the pace\, while the players try to knock their opponents out of the game by making a controller move faster than the music. Drop in at any time to enjoy this fun\, easy to learn game. Recommended Age: 8+. Get ready to Joust...go!
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:47bd21d5dad915703e2bc9d42f228e93
+URL:http://jococruise2016.sched.org/event/47bd21d5dad915703e2bc9d42f228e93
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T160000Z
+DTEND:20160227T170000Z
+SUMMARY:Zoe & Brian Gray\, Nerd Rock
+DESCRIPTION:And now for something completely different: the multigenerational Gray musicians bring you a show of original nerd rock\, witty banter\, and a distinctively dorky sort of fun. This is the one. Rocks out. Concert. Tell your friends.
+CATEGORIES:SHADOW CRUISE
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:d9e214b98ed89512010ddd431154fef5
+URL:http://jococruise2016.sched.org/event/d9e214b98ed89512010ddd431154fef5
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T170000Z
+DTEND:20160227T180000Z
+SUMMARY:I Was There Too\, with Guest Aimee Mann
+DESCRIPTION: If you're like Matt Gourley (Superego\, Drunk History\, Comedy Bang! Bang!)\, then you know all the classic movie and television scenes so well it's like you were in the room when they happened. Well\, you weren't. And neither was he. But the people Matt interviews were! Listen in as they tell the inside stories of how cinema and television history was made from a fly-on-the-wall perspective you've never heard. Matt&rsquo;s guest for I Was There Too: JoCo Cruise is Aimee Mann. The topic: her time on The Big Lebowski and at least one or two questions about what it&rsquo;s like being in a Rush video.
+CATEGORIES:FEATURED EVENT
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:ad793c683c2039e56f6002ff1c8ae3a9
+URL:http://jococruise2016.sched.org/event/ad793c683c2039e56f6002ff1c8ae3a9
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T170000Z
+DTEND:20160227T180000Z
+SUMMARY:Play Munchkin with Steve Jackson
+DESCRIPTION:Come watch as four lucky Sea Monkeys match wits with the Master of Munchkin\, Steve Jackson! (Participate in Tuesday's Table Top Taste Test for a chance to be one of the players!)
+CATEGORIES:GAMING TRACK
+LOCATION:Isaac Dining Room (Deck 4)\, Deck 4\, Aft
+SEQUENCE:0
+UID:2d5d96833f10d74a7daebe332849b809
+URL:http://jococruise2016.sched.org/event/2d5d96833f10d74a7daebe332849b809
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T170000Z
+DTEND:20160227T180000Z
+SUMMARY:Should This Be the Last “Women In Gaming” Panel You Attend? – A Round Table Discussion
+DESCRIPTION:We don't know...what do you think?We've all seen Women In Gaming panels at conventions. They're almost mandatory for female designers and company executives these days. But are we helping or hurting ourselves with these gender-specific panels? Does our anatomy make a difference in our gaming experience? Come join in on a round-table discussion led by Lone Shark&rsquo;s CEO\, Marie Poole\, featuring game industry guests Kristin Looney of Looney Labs\, Elisa Teague of Lone Shark Games\, and Christopher Badell of Greater Than Games.
+CATEGORIES:GAMING TRACK
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:928a4a9977c6f407523ce5027d0c5998
+URL:http://jococruise2016.sched.org/event/928a4a9977c6f407523ce5027d0c5998
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T170000Z
+DTEND:20160227T183000Z
+SUMMARY:Color Me Monkey
+DESCRIPTION:Let's get together to chat and color. Take a break from the noise and sun\, because we are quiet and pale folk\, and engage in the new fad sweeping the nation\, coloring!! Bring your coloring books and crayons\, or just yourself\, we're all happy to share\, and spend a little time getting in touch with your inner child.
+CATEGORIES:SHADOW CRUISE
+LOCATION:Galileo Dining Room (Deck 5)\, Deck 5\, Aft
+SEQUENCE:0
+UID:a53dc83062dab159c20258c196e93af8
+URL:http://jococruise2016.sched.org/event/a53dc83062dab159c20258c196e93af8
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T180000Z
+DTEND:20160227T190000Z
+SUMMARY:Office Hours: Wil Wheaton
+DESCRIPTION:Wil Wheaton hangs out and talks about...well\, whatever the heck he wants to talk about.
+CATEGORIES:OFFICE HOURS
+LOCATION:Olive or Twist\, Deck 14\, Aft
+SEQUENCE:0
+UID:7fd71655e43fafc7fa790c0de5079d90
+URL:http://jococruise2016.sched.org/event/7fd71655e43fafc7fa790c0de5079d90
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T180000Z
+DTEND:20160227T190000Z
+SUMMARY:International Reddit Meetup at Sea
+DESCRIPTION:Redditors\, Narwhals\, and Little Blue Aliens - ASSEMBLE!Do you spend waaaaaay too much time on reddit.com? Experiencing withdrawal symptoms from refreshing /r/all? Come visit us and have a drink or 10! Unless you're /u/unidan. Screw that guy. 
+CATEGORIES:SHADOW CRUISE
+LOCATION:Cloud Nine\, Deck 14\, Aft
+SEQUENCE:0
+UID:6ec1b476c514b47eda6575331bd7e03b
+URL:http://jococruise2016.sched.org/event/6ec1b476c514b47eda6575331bd7e03b
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T183000Z
+DTEND:20160227T193000Z
+SUMMARY:Puzzle Hunt Wrap-Up
+DESCRIPTION:This is the wrap-up session for The Hastily Put-Together Puzzle HunT (THPTPHT). We'll review all the puzzles and solutions\, and you can ask questions and meet the puzzle designers.
+CATEGORIES:SHADOW CRUISE
+LOCATION:St. Thomas Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:41a49ca5e7bcbaa09c39ab4ba4b4f159
+URL:http://jococruise2016.sched.org/event/41a49ca5e7bcbaa09c39ab4ba4b4f159
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T193000Z
+DTEND:20160227T220000Z
+SUMMARY:Concert - Jonathan Coulton and Friends
+DESCRIPTION:A final concert from Jonathan\, with on-stage collaborations with many of the week&rsquo;s performers\, and closing once again with the traditional &ldquo;Sloop John B&rdquo; singalong. Feels!
+CATEGORIES:MAIN EVENT
+LOCATION:Arcadia Theatre\, Deck 3\, Forward
+SEQUENCE:0
+UID:8d8548e4c7a640ab467453c3baeb5840
+URL:http://jococruise2016.sched.org/event/8d8548e4c7a640ab467453c3baeb5840
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160227T223000Z
+DTEND:20160228T003000Z
+SUMMARY:Dinner
+DESCRIPTION:Oof. Okay; just one more bite...[faints]
+CATEGORIES:DINNER
+LOCATION:Leonardo Dining Room\, Deck 3\, Aft
+SEQUENCE:0
+UID:71cb233c8528d44d2e9cfb1343383b5e
+URL:http://jococruise2016.sched.org/event/71cb233c8528d44d2e9cfb1343383b5e
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160228T003000Z
+DTEND:20160228T020000Z
+SUMMARY:JCC Karaoke
+DESCRIPTION:Final chance for JCC karaoke. Sing through the sadness!
+CATEGORIES:FEATURED EVENT
+LOCATION:On Air Club\, Deck 3\, Midship
+SEQUENCE:0
+UID:3de4b2a8aa773ad61ed844b9a33b3038
+URL:http://jococruise2016.sched.org/event/3de4b2a8aa773ad61ed844b9a33b3038
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160228T003000Z
+DTEND:20160228T020000Z
+SUMMARY:Ninja Pirate Assassin Game : THE END GAME
+DESCRIPTION:Join all your fellow #NinjaPirateAssassinGame players in the JamaicaRoom in the Conference Center to bring the game to it's finalconclusion!   If there is more than one player "standing" by thispoint\, we will have a final sudden-death face-off between theremaining survivors.We have prizes to give out!  A $200 Amazon Gift Card for the LastAssassin Standing\, a $50 Gift Card for the Last Target Standing\, andother prizes kindly given to us by the cruise sponsors to be givenaway -- you definitely want to be here.We be distributing your pristine-and-new NinjaPirate card decks atthis gathering.  They came out beautifully\, and each of you made itpossible.   We will end with a Q&A\, and then head off to the FarewellCocktail Reception to enjoy some grog\, some sake\, and a martini (shaken\, not stirred. )
+CATEGORIES:SHADOW CRUISE
+LOCATION:Jamaica Room (Conference Center)\, Deck 2\, Forward
+SEQUENCE:0
+UID:5e0d1e3babe2ab03b738eefc03995c36
+URL:http://jococruise2016.sched.org/event/5e0d1e3babe2ab03b738eefc03995c36
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20160228T020000Z
+DTEND:20160228T030000Z
+SUMMARY:Farewell Cocktail Reception
+DESCRIPTION:Reminisce about the week. Exchange contact information with your new friends. Look at all the great pictures you took. Try to fight off the impending end of the week. We will miss you all\, too!Also: free drinks. 
+CATEGORIES:MAIN EVENT
+LOCATION:Pool Deck\, Deck 12\, Midship
+SEQUENCE:0
+UID:e962dff354e8e00390839e3220fc3527
+URL:http://jococruise2016.sched.org/event/e962dff354e8e00390839e3220fc3527
+END:VEVENT
+END:VCALENDAR

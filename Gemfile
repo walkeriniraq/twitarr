@@ -43,6 +43,8 @@ gem 'twitter-text', '~> 1.10.0'
 
 gem 'momentjs-rails'
 
+gem 'icalendar', '>= 2.3.0'
+
 group :development do
   gem 'better_errors'
 end
