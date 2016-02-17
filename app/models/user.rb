@@ -123,7 +123,11 @@ class User
   end
 
   def room_number=(val)
-    super val.andand.strip
+    if val.is_a? Numeric
+      return super val
+    else
+      return super val.andand.strip.to_i
+    end
   end
 
   def real_name=(val)
