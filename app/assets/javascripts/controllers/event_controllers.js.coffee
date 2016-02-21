@@ -9,10 +9,10 @@ Twitarr.EventsPageController = Twitarr.ObjectController.extend
 
   actions:
     next_page: ->
-      return if @get('next_page') isnt null and @get('next_page') isnt undefined
+      return if @get('next_page') is null or @get('next_page') is undefined
       @transitionToRoute 'events.page', @get('next_page')
     prev_page: ->
-      return if @get('prev_page') isnt null and @get('prev_page') isnt undefined
+      return if @get('prev_page') is null or @get('prev_page') is undefined
       @transitionToRoute 'events.page', @get('prev_page')
     create_event: ->
       @transitionToRoute 'events.new'
@@ -44,7 +44,7 @@ Twitarr.EventsDetailController = Twitarr.ObjectController.extend
   ).property('logged_in', 'author', 'login_user', 'login_admin')
 
   signed_up: (->
-    $.inArray(@get('login_user'), @get('signups'))
+    !$.inArray(@get('login_user'), @get('signups'))
   ).property('author', 'signups')
 
   can_sign_up: (->
@@ -54,7 +54,7 @@ Twitarr.EventsDetailController = Twitarr.ObjectController.extend
   ).property('signups', 'max_signups', 'login_user')
 
   favourited: (->
-    $.inArray(@get('login_user'), @get('favorites'))
+    !$.inArray(@get('login_user'), @get('favorites'))
   ).property('favorites', 'login_user')
 
   actions:

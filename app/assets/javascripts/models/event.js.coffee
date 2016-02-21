@@ -12,11 +12,11 @@ Twitarr.EventMeta.reopenClass
     current_a = []
     past_a = []
     upcoming_a = []
-    past_page = undefined
+    prev_page = undefined
     next_page = undefined
     $.when(
       $.getJSON("event/page/#{page}").then (data) =>
-        past_page = data.past_page
+        prev_page = data.prev_page
         next_page = data.next_page
         for e in data.events
           m = moment(e.start_time)
@@ -55,13 +55,13 @@ Twitarr.EventMeta.reopenClass
           for key of upcoming_events
             upcoming_a.push Twitarr.EventDateMeta.create(upcoming_events[key])
     ).then ->
-      { events: current_a, past_events: past_a, upcoming_events: upcoming_a, page: page, past_page: past_page, next_page: next_page }
+      { events: current_a, past_events: past_a, upcoming_events: upcoming_a, page: page, prev_page: prev_page, next_page: next_page }
 
-  past_page: (page) ->
+  prev_page: (page) ->
     page = parseInt(page) || 0
     events = {}
     a = []
-    past_page = undefined
+    prev_page = undefined
     next_page = undefined
     $.when(
       $.getJSON("event/recent/#{page}").then (data) =>
@@ -76,17 +76,17 @@ Twitarr.EventMeta.reopenClass
         for key of events
           a.push Twitarr.EventDateMeta.create(events[key])
     ).then ->
-      { events: a, page: page, past_page: past_page, next_page: next_page }
+      { events: a, page: page, prev_page: prev_page, next_page: next_page }
 
   own_page: (page) ->
     page = parseInt(page) || 0
     events = {}
     a = []
-    past_page = undefined
+    prev_page = undefined
     next_page = undefined
     $.when(
       $.getJSON("event/own/#{page}").then (data) =>
-        past_page = data.past_page
+        prev_page = data.prev_page
         next_page = data.next_page
         for e in data.events
           m = moment(e.start_time)
@@ -100,7 +100,7 @@ Twitarr.EventMeta.reopenClass
         for key of events
           a.push Twitarr.EventDateMeta.create(events[key])
     ).then ->
-      { events: a, page: page, past_page: past_page, next_page: next_page }
+      { events: a, page: page, prev_page: prev_page, next_page: next_page }
 
 
 Twitarr.EventDateMeta = Ember.Object.extend

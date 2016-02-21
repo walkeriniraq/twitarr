@@ -34,7 +34,7 @@ Twitarr.Router.map ()->
     @route 'page', { path: '/'}
     @route 'page', { path: ':page' }
     @route 'new', { path: '/new'}
-    @route 'detail', { path: '/:id' }
+    @route 'detail', { path: '/e/:id' }
     @route 'edit', { path: '/:id/edit'}
     @route 'past', { path: '/past' }
     @route 'past', { path: '/past/:page' }
