@@ -62,10 +62,11 @@ First you will need to run:
   $ bundle install
 ```
 
-Then you will need to setup the application's secret token and mongoid configuration:
+Remember to set up your secrets file: (http://guides.rubyonrails.org/v4.2/upgrading_ruby_on_rails.html#config-secrets-yml)
+
+Then you will need to setup mongo:
 
 ```
-   $ echo "SECRET_TOKEN: '$(rake secret)'" > config/application.yml
    $ cp config/mongoid-example.yml config/mongoid.yml
 ```
 
