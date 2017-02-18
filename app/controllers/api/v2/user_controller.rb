@@ -49,7 +49,7 @@ class API::V2::UserController < ApplicationController
       current_user.save
       render status: :ok, json: { status: 'Updated', user: UserDecorator.decorate(current_user).self_hash } and return
     else
-      render status: :unprocessable_entity, json: { status: 'Error', errors: current_user.errors.full_messages } and return
+      render status: :ok, json: { status: 'Error', errors: current_user.errors.full_messages } and return
     end
   end
 
