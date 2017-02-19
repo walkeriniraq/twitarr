@@ -1,25 +1,10 @@
 <div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
-  <span {{bind-attr class=":controls logged_in::hidden"}}>
-    <button class="btn" {{action 'csv'}}>Export list as CSV</button>
-    <button class="btn" {{action 'create_event'}}>Create Event</button>
+  <span class="controls">
+    <button class="btn" {{action 'reload'}}>Refresh</button>
   </span>
 
   <div class="title">Events</div>
 </div>
-<a {{bind-attr class="logged_in::hidden"}}>{{#link-to 'events.own' 0}}Go to My Events{{/link-to}}</a>
-{{#if upcoming_events}}
-  <h4>Your Upcoming Events</h4>
-  {{#each e in upcoming_events}}
-    {{e.date}}
-    <div class="display_card">
-      {{#each event in e.events}}
-        {{render "events.meta_partial" event}}
-      {{/each}}
-    </div>
-  {{/each}}
-{{/if}}
-
-<h4>Events</h4>
 {{#each e in events}}
   {{e.date}}
   <div class="display_card">
@@ -27,6 +12,8 @@
       {{render "events.meta_partial" event}}
     {{/each}}
   </div>
+{{else}}
+  <div>You haven't added any events yet!</div>
 {{/each}}
 
 <div class="footer-controls">
@@ -42,14 +29,6 @@
   {{/if}}
 </div>
 
-{{#if past_events}}
-  <h4 class="title"><a>{{#link-to 'events.past' 0}}Past Events{{/link-to}}</a></h4>
-  {{#each e in past_events}}
-    {{e.date}}
-    <div class="display_card">
-      {{#each event in e.events}}
-        {{render "events.meta_partial" event}}
-      {{/each}}
-    </div>
-  {{/each}}
-{{/if}}
+<a {{bind-attr class="logged_in::hidden"}}>{{#link-to 'events.all' 0}}View all events{{/link-to}}</a>
+<br />
+<a {{bind-attr class="logged_in::hidden"}}>{{#link-to 'events.past' 0}}View past events{{/link-to}}</a>

@@ -76,23 +76,22 @@ Twitarr::Application.routes.draw do
   post 'location', to: 'location#create'
   delete 'location/:name', to: 'location#delete'
 
-  get 'event/page/:page', to: 'event#page'
-  get 'event/recent', to: 'event#past_events'
-  get 'event/recent/:page', to: 'event#past_events'
-  get 'event/upcoming', to: 'event#upcoming'
-  get 'event/own/:page', to: 'event#own'
+  resources :event, except: [:index, :edit, :new] do
+    collection do
+      get 'page/:page', to: 'event#page'
+      get 'past/:page', to: 'event#past'
+      get 'all/:page', to: 'event#all'
+      get 'csv'
+    end
+  end
 
   namespace :api do
     namespace :v2 do
       resources :photo, only: [:index, :create, :destroy, :update, :show], :defaults => { :format => 'json' }
       resources :stream, only: [:index, :new, :create, :show, :destroy, :update]
-      get 'event/csv', to: 'event#csv'
-      resources :event, only: [:index, :show, :create, :destroy, :update], :defaults => { :format => 'json' }
+      resources :event, only: [:index, :show]
 
-      
       get 'event/:id/ical', to: 'event#ical'
-      post 'event/:id/signup', to: 'event#signup'
-      delete 'event/:id/signup', to: 'event#destroy_signup'
       post 'event/:id/favorite', to: 'event#favorite'
       delete 'event/:id/favorite', to: 'event#destroy_favorite'
 

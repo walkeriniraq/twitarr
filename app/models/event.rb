@@ -37,9 +37,9 @@ class Event
     event.location = options[:location] unless options[:location].nil?
     event.official = options[:official] unless options[:official].nil?
     event.shared = options[:shared] unless options[:shared].nil?
-    event.end_time = options[:end_time] unless options[:end_time].nil?
+    # Time.parse should occur on the controller side, but I haven't got time to straighten this out right now
+    event.end_time = Time.parse(options[:end_time]) unless options[:end_time].nil?
     event.max_signups = options[:max_signups] unless options[:max_signups].nil?
-    event.save if event.valid?
     event
   end
 

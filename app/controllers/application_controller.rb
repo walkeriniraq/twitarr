@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_json(hash)
-    render json: hash.update({server_time: (DateTime.now.to_f * 1000).to_i})
+    render json: hash
   end
 
   def get_username(key)

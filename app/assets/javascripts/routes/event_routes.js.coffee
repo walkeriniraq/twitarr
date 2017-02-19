@@ -2,7 +2,11 @@ Twitarr.EventsLoadingRoute = Twitarr.LoadingRoute.extend()
 
 Twitarr.EventsPageRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.EventMeta.page params.page || 0
+    Twitarr.EventMeta.page params.page
+
+  actions:
+    reload: ->
+      @transitionTo 'events.page'
 
 Twitarr.EventsDetailRoute = Ember.Route.extend
   model: (params) ->
@@ -24,6 +28,6 @@ Twitarr.EventsPastRoute = Ember.Route.extend
   model: (params) ->
     Twitarr.EventMeta.prev_page params.page || 0
 
-Twitarr.EventsOwnRoute = Ember.Route.extend
+Twitarr.EventsAllRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.EventMeta.own_page params.page || 0
+    Twitarr.EventMeta.all params.page || 0

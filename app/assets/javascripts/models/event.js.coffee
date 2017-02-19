@@ -1,141 +1,39 @@
 Twitarr.EventMeta = Ember.Object.extend
-  events: null
+  id: null
+  author: null
+  author_display_name: null
+  title: null
+  location: null
+  start_time: null
 
 Twitarr.EventMeta.reopenClass
-  page: (page) ->
-    # Yeah. I know how gross this is. Forgive me.
-    # I blame ember for this.
-    page = parseInt(page) || 0
-    current_events = {}
-    past_events = {}
-    upcoming_events = {}
-    current_a = []
-    past_a = []
-    upcoming_a = []
-    prev_page = undefined
-    next_page = undefined
-    $.when(
-      $.getJSON("event/page/#{page}").then (data) =>
-        prev_page = data.prev_page
-        next_page = data.next_page
-        for e in data.events
-          m = moment(e.start_time)
-          d = "#{m.date()}"
+  page: (page = 0) ->
+    $.getJSON("/event/page/#{page}").then (data) =>
+      { events: @process_date(date) for date in data.events, has_next_page: data.has_next_page, page: page }
 
-          # Only list current events.
-          current_events[d] = {} if current_events[d] == undefined
-          current_events[d]["date"] = m.format('MMMM Do') if current_events[d]["date"] == undefined
-          current_events[d]["events"] = [] if current_events[d]["events"] == undefined
-          current_events[d]["events"].push(Twitarr.Event.create(e))
-        for key of current_events
-          current_a.push Twitarr.EventDateMeta.create(current_events[key])
+  all: (page = 0) ->
+    $.getJSON("/event/all/#{page}").then (data) =>
+      { events: @process_date(date) for date in data.events, has_next_page: data.has_next_page, page: page }
 
-      if page < 1
-        $.getJSON("event/recent").then (data) =>
-          for e in data.events
-            m = moment(e.start_time)
-            d = "#{m.date()}"
-
-            past_events[d] = {} if past_events[d] == undefined
-            past_events[d]["date"] = m.format('MMMM Do') if past_events[d]["date"] == undefined
-            past_events[d]["events"] = [] if past_events[d]["events"] == undefined
-            past_events[d]["events"].push(Twitarr.Event.create(e))
-          for key of past_events
-            past_a.push Twitarr.EventDateMeta.create(past_events[key])
-
-        $.getJSON("event/upcoming").then (data) =>
-          for e in data.events
-            m = moment(e.start_time)
-            d = "#{m.date()}"
-
-            upcoming_events[d] = {} if upcoming_events[d] == undefined
-            upcoming_events[d]["date"] = m.format('MMMM Do') if upcoming_events[d]["date"] == undefined
-            upcoming_events[d]["events"] = [] if upcoming_events[d]["events"] == undefined
-            upcoming_events[d]["events"].push(Twitarr.Event.create(e))
-          for key of upcoming_events
-            upcoming_a.push Twitarr.EventDateMeta.create(upcoming_events[key])
-    ).then ->
-      { events: current_a, past_events: past_a, upcoming_events: upcoming_a, page: page, prev_page: prev_page, next_page: next_page }
-
-  prev_page: (page) ->
-    page = parseInt(page) || 0
-    events = {}
-    a = []
-    prev_page = undefined
-    next_page = undefined
-    $.when(
-      $.getJSON("event/recent/#{page}").then (data) =>
-        for e in data.events
-          m = moment(e.start_time)
-          d = "#{m.date()}"
-
-          events[d] = {} if events[d] == undefined
-          events[d]["date"] = m.format('MMMM Do') if events[d]["date"] == undefined
-          events[d]["events"] = [] if events[d]["events"] == undefined
-          events[d]["events"].push(Twitarr.Event.create(e))
-        for key of events
-          a.push Twitarr.EventDateMeta.create(events[key])
-    ).then ->
-      { events: a, page: page, prev_page: prev_page, next_page: next_page }
-
-  own_page: (page) ->
-    page = parseInt(page) || 0
-    events = {}
-    a = []
-    prev_page = undefined
-    next_page = undefined
-    $.when(
-      $.getJSON("event/own/#{page}").then (data) =>
-        prev_page = data.prev_page
-        next_page = data.next_page
-        for e in data.events
-          m = moment(e.start_time)
-          d = "#{m.date()}"
-
-          # Only list current events.
-          events[d] = {} if events[d] == undefined
-          events[d]["date"] = m.format('MMMM Do') if events[d]["date"] == undefined
-          events[d]["events"] = [] if events[d]["events"] == undefined
-          events[d]["events"].push(Twitarr.Event.create(e))
-        for key of events
-          a.push Twitarr.EventDateMeta.create(events[key])
-    ).then ->
-      { events: a, page: page, prev_page: prev_page, next_page: next_page }
-
+  process_date: ([date, events]) ->
+    { date: date, events: Ember.A(@create(event)) for event in events }
 
 Twitarr.EventDateMeta = Ember.Object.extend
   date: ""
   events: []
 
 Twitarr.Event = Ember.Object.extend
+  id: null
   author: null
-  display_name: null
+  author_display_name: null
   title: null
-  description: null
   location: null
   start_time: null
+  description: null
   end_time: null
-  official: null
-  max_signups: null
-  signups: []
-  favorites: []
-
-  signup: ->
-    $.post("/api/v2/event/#{@get('id')}/signup").then (data) =>
-      if(!data.error or !data.errors)
-        @set('signups', data.event.signups)
-      else
-        alert data.error || data.errors.join("\n")
-
-  unsignup: ->
-    $.ajax("/api/v2/event/#{@get('id')}/signup", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
-      if(!data.error or !data.errors)
-        @set('signups', data.event.signups)
-      else
-        alert data.error || data.errors.join("\n")
 
   delete: ->
-    $.ajax("/api/v2/event/#{@get('id')}", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
+    $.ajax("/event/#{@get('id')}", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
       if(!data)
         alert("Successfully deleted")
         true
@@ -144,14 +42,14 @@ Twitarr.Event = Ember.Object.extend
         false
 
   favourite: ->
-    $.post("/api/v2/event/#{@get('id')}/favorite").then (data) =>
+    $.post("/event/#{@get('id')}/favorite").then (data) =>
       if(!data.error or !data.errors)
         @set('favorites', data.event.favorites)
       else
         alert data.error || data.errors.join("\n")
 
   unfavourite: ->
-    $.ajax("/api/v2/event/#{@get('id')}/favorite", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
+    $.ajax("/event/#{@get('id')}/favorite", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>
       if(!data.error or !data.errors)
         @set('favorites', data.event.favorites)
       else
@@ -159,23 +57,23 @@ Twitarr.Event = Ember.Object.extend
 
 Twitarr.Event.reopenClass
   get: (event_id) ->
-    $.getJSON("/api/v2/event/#{event_id}").then (data) =>
-      Twitarr.Event.create(data)
+    $.getJSON("/event/#{event_id}").then (data) =>
+      @create(data)
 
   get_edit: (event_id) ->
-    $.getJSON("/api/v2/event/#{event_id}").then (data) =>
-      g = Twitarr.Event.create(data)
+    $.getJSON("/event/#{event_id}").then (data) =>
+      g = @create(data)
       # Format the time to a usable format for the front-end.
-      g.start_time = moment.utc(g.start_time).format().slice(0,-6)
-      g.end_time = moment.utc(g.end_time).format().slice(0,-6) if g.end_time
+      g.start_time = moment.utc(g.start_time).local().format().slice(0,-6)
+      g.end_time = moment.utc(g.end_time).local().format().slice(0,-6) if g.end_time
       g
 
-  edit: (event_id, description, location, start_time, end_time, max_signups) ->
-    $.ajax("/api/v2/event/#{event_id}", method: 'PUT', data: {event: {description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups}}).then (data) =>
-      data.event = Twitarr.Event.create(data.event) if data.event?
+  edit: (event_id, description, location, start_time, end_time) ->
+    $.ajax("/event/#{event_id}", method: 'PUT', data: { description: description, location: location, start_time: start_time, end_time: end_time}).then (data) =>
+      data.event = @create(data.event) if data.event?
       data
 
-  new_event: (title, description, location, start_time, end_time, max_signups) ->
-    $.post('/api/v2/event/', title: title, description: description, location: location, start_time: start_time, end_time: end_time, max_signups: max_signups).then (data) =>
-      data.event = Twitarr.Event.create(data.event) if data.event?
+  new_event: (title, description, location, start_time, end_time) ->
+    $.post('/event', title: title, description: description, location: location, start_time: start_time, end_time: end_time).then (data) =>
+      data.event = @create(data.event) if data.event?
       data

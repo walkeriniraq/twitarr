@@ -1,19 +1,17 @@
 Twitarr.EventsPageController = Twitarr.ObjectController.extend
-  has_next_page: (->
-    @get('next_page') isnt null and @get('next_page') isnt undefined
-  ).property('next_page')
+#  has_next_page: (->
+#    @get('has_next_page')
+#  ).property('has_next_page')
 
   has_prev_page: (->
-    @get('prev_page') isnt null and @get('prev_page') isnt undefined
-  ).property('prev_page')
+    @get('page') > 0
+  ).property('page')
 
   actions:
     next_page: ->
-      return if @get('next_page') is null or @get('next_page') is undefined
-      @transitionToRoute 'events.page', @get('next_page')
+      @transitionToRoute 'events.page', @get('page') + 1
     prev_page: ->
-      return if @get('prev_page') is null or @get('prev_page') is undefined
-      @transitionToRoute 'events.page', @get('prev_page')
+      @transitionToRoute 'events.page', @get('page') - 1
     create_event: ->
       @transitionToRoute 'events.new'
     csv: ->
@@ -87,7 +85,7 @@ Twitarr.EventsNewController = Twitarr.Controller.extend
     new: ->
       return if @get('posting')
       @set 'posting', true
-      Twitarr.Event.new_event(@get('title'), @get('description'), @get('location'), @get('start_time'), @get('end_time'), @get('max_signups')).then((response) =>
+      Twitarr.Event.new_event(@get('title'), @get('description'), @get('location'), @get('start_time'), @get('end_time')).then((response) =>
         if response.errors?
           @set 'errors', response.errors
           @set 'posting', false
@@ -102,7 +100,7 @@ Twitarr.EventsNewController = Twitarr.Controller.extend
 
           @set 'posting', false
           @get('errors').clear()
-          @transitionToRoute 'events.detail', response.event.id
+          @transitionToRoute 'events.page', 0
       , ->
         @set 'posting', false
         alert 'Event could not be added. Please try again later. Or try again someplace without so many seamonkeys.'
@@ -115,8 +113,8 @@ Twitarr.EventsEditController = Twitarr.ObjectController.extend
     save: ->
       return if @get('posting')
       @set 'posting', true
-      Twitarr.Event.edit(@get('id'), @get('description'), @get('location'), @get('start_time'), @get('end_time'), @get('max_signups')).then((response) =>
-        if response.errors?
+      Twitarr.Event.edit(@get('id'), @get('description'), @get('location'), @get('start_time'), @get('end_time')).then((response) =>
+        if response.status isnt 'ok'
           @set 'errors', response.errors
           @set 'posting', false
           return
@@ -129,7 +127,7 @@ Twitarr.EventsEditController = Twitarr.ObjectController.extend
         alert 'Event could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
 
-Twitarr.EventsOwnController = Twitarr.ObjectController.extend
+Twitarr.EventsAllController = Twitarr.ObjectController.extend
   has_next_page: (->
     @get('next_page') isnt null and @get('next_page') isnt undefined
   ).property('next_page')
@@ -149,4 +147,4 @@ Twitarr.EventsOwnController = Twitarr.ObjectController.extend
       window.location.replace("/api/v2/event/csv?source=own")
 
 
-getUsableTimeValue = -> d = new Date(); d.toISOString().replace('Z', '')
+getUsableTimeValue = -> d = new Date(); d.toISOString().replace('Z', '').replace(/:\d{2}\.\d{3}/, '')

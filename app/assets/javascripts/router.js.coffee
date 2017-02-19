@@ -33,13 +33,13 @@ Twitarr.Router.map ()->
   @resource 'events', ->
     @route 'page', { path: '/'}
     @route 'page', { path: ':page' }
+    @route 'past', { path: '/past' }
+    @route 'past', { path: '/past/:page' }
+    @route 'all', { path: '/all' }
+    @route 'all', { path: '/all/:page' }
     @route 'new', { path: '/new'}
     @route 'detail', { path: '/e/:id' }
     @route 'edit', { path: '/:id/edit'}
-    @route 'past', { path: '/past' }
-    @route 'past', { path: '/past/:page' }
-    @route 'own', { path: '/my_events' }
-    @route 'own', { path: '/my_events/:page' }
 
 
   @route 'user', { path: 'user/:username' }

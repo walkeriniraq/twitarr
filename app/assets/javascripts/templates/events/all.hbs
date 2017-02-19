@@ -1,10 +1,11 @@
 <div class="main-page-header header-with-controls">
   <span class="controls">
     <button class="btn" {{action 'csv'}}>Export list as CSV</button>
+    <button {{bind-attr class=":btn login_admin::hidden"}} {{action 'csv'}}>Export list as CSV</button>
+    <button {{bind-attr class=":btn login_admin::hidden"}} {{action 'create_event'}}>Create Event</button>
   </span>
 
-  <div class="title">{{#link-to 'events' }}Events{{/link-to}} > My Events</div>
-  <p>Events you have favorited, signed up for or have created!</p>
+  <div class="title">{{#link-to 'events' }}Events{{/link-to}} > All Events</div>
 </div>
 {{#each e in events}}
   {{e.date}}
@@ -13,6 +14,8 @@
       {{render "events.meta_partial" event}}
     {{/each}}
   </div>
+{{else}}
+  <div>No events have been added to the system.</div>
 {{/each}}
 
 <div class="footer-controls">
@@ -27,3 +30,5 @@
     </div>
   {{/if}}
 </div>
+
+<a {{bind-attr class="logged_in::hidden"}}>{{#link-to 'events.past' 0}}View past events{{/link-to}}</a>
