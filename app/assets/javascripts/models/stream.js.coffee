@@ -17,6 +17,10 @@ Twitarr.StreamPost = Ember.Object.extend
     @get('likes') && @get('likes')[0] == 'You'
   ).property('likes')
 
+  parent_id: (->
+    _.first(@get('parent_chain')) or @get('id')
+  ).property('parent_chain', 'id')
+
   likes_string: (->
     likes = @get('likes')
     return '' unless likes and likes.length > 0

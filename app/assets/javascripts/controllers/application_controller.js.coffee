@@ -142,6 +142,10 @@ Twitarr.AlertsController = Twitarr.ObjectController.extend
     @set 'controllers.application.alerts', false
   ).on('init')
 
+  actions:
+    post_view: (model) ->
+      @transitionToRoute 'stream.view', model.get('parent_id')
+
 Twitarr.TagController = Twitarr.Controller.extend()
 
 Twitarr.StarredController = Twitarr.ObjectController.extend

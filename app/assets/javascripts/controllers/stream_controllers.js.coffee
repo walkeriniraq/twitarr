@@ -99,10 +99,7 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
     next_page: ->
       @transitionToRoute 'stream.page', @get('next_page')
     post_view: (model) ->
-      [p, ...] = model.get('parent_chain')
-      p = model.get('id') unless p
-      console.log("ID = " + p)
-      @transitionToRoute 'stream.view', p
+      @transitionToRoute 'stream.view', model.get('parent_id')
 
 Twitarr.StreamStarPageController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
   has_next_page: (->
