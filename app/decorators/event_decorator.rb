@@ -1,7 +1,7 @@
 class EventDecorator < BaseDecorator
   delegate_all
 
-  def to_meta_hash
+  def to_meta_hash(username)
     result = {
         id: as_str(id),
         author: author,
@@ -11,10 +11,11 @@ class EventDecorator < BaseDecorator
         start_time: start_time
     }
     result[:end_time] = end_time unless end_time.blank?
+    result[:following] = favorites.include? username
     result
   end
 
-  def to_hash
+  def to_hash(username)
     result = {
         id: as_str(id),
         author: author,
@@ -25,6 +26,7 @@ class EventDecorator < BaseDecorator
     }
     result[:end_time] = end_time unless end_time.blank?
     result[:description] = description unless description.blank?
+    result[:following] = favorites.include? username
     result
   end
 end

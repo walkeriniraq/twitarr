@@ -1,0 +1,30 @@
+<div class="main-page-header header-with-controls">
+  <span class="controls">
+    <button {{bind-attr class=":btn login_admin::hidden"}} {{action 'create_event'}}>Create Event</button>
+    {{#if has_prev_page}}
+      <button class="btn" {{action 'prev_page'}}>Older</button>
+    {{/if}}
+  </span>
+  <div class="title">Cruise Calendar <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span></button></div>
+</div>
+
+{{#each e in events}}
+  {{e.date}}
+  <div class="display_card">
+    {{#each event in e.events}}
+      {{render "schedule.meta_partial" event}}
+    {{/each}}
+  </div>
+{{else}}
+  {{#if past_events_page}}
+    <div>No past events.</div>
+  {{else}}
+    <div>No events in the system.</div>
+  {{/if}}
+{{/each}}
+
+{{#if has_next_page}}
+  <div class="footer-controls">
+    <button class="controls btn right" {{action 'next_page'}}>Newer</button>
+  </div>
+{{/if}}

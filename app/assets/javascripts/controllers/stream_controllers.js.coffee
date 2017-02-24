@@ -66,14 +66,6 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
     @get('logged_in') and not @get('new_post_visible')
   ).property('logged_in', 'new_post_visible')
 
-  has_next_page: (->
-    @get('next_page') isnt 0
-  ).property('next_page')
-
-  has_prev_page: (->
-    @get('prev_page') isnt 0
-  ).property('prev_page')
-
   actions:
     show_new_post: ->
       @set 'new_post_visible', true
@@ -105,11 +97,7 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
       )
 
     next_page: ->
-      return if @get('next_page') is 0
       @transitionToRoute 'stream.page', @get('next_page')
-    prev_page: ->
-      return if @get('prev_page') is 0
-      @transitionToRoute 'stream.page', @get('prev_page')
     post_view: (model) ->
       [p, ...] = model.get('parent_chain')
       p = model.get('id') unless p
@@ -196,7 +184,7 @@ Twitarr.StreamEditController = Twitarr.ObjectController.extend
           @get('errors').clear()
           @set 'posting', false
           @transitionToRoute 'stream.view', @get('id')
-      , ->
+      , =>
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )

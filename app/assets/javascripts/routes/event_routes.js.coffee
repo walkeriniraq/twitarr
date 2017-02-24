@@ -1,33 +1,26 @@
 Twitarr.EventsLoadingRoute = Twitarr.LoadingRoute.extend()
 
-Twitarr.EventsPageRoute = Ember.Route.extend
-  model: (params) ->
-    Twitarr.EventMeta.page params.page
+Twitarr.EventsIndexRoute = Ember.Route.extend
+  model: ->
+    Twitarr.EventMeta.mine()
 
   actions:
     reload: ->
-      @transitionTo 'events.page'
+      @refresh()
 
-Twitarr.EventsDetailRoute = Ember.Route.extend
+Twitarr.EventsPageRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.Event.get params.id
+    Twitarr.EventMeta.mine params.page
 
-  setupController: (controller, model) ->
-    controller.set 'model', model
+  actions:
+    reload: ->
+      @transitionTo 'events'
 
-Twitarr.EventsEditRoute = Ember.Route.extend
+Twitarr.EventsOldRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.Event.get_edit(params.id)
+    Twitarr.EventMeta.mine_old params.page
 
-  setupController: (controller, model) ->
-    controller.set 'model', model
+  actions:
+    reload: ->
+      @transitionTo 'events'
 
-Twitarr.EventsNewRoute = Ember.Route.extend()
-
-Twitarr.EventsPastRoute = Ember.Route.extend
-  model: (params) ->
-    Twitarr.EventMeta.prev_page params.page || 0
-
-Twitarr.EventsAllRoute = Ember.Route.extend
-  model: (params) ->
-    Twitarr.EventMeta.all params.page || 0

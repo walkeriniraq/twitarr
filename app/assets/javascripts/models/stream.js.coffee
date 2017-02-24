@@ -1,21 +1,16 @@
 Twitarr.StreamPost = Ember.Object.extend
   author: null
+  display_name: null
   text: null
   timestamp: null
   photo: null
-  display_name: null
   likes: []
-  children: []
   parent_chain: []
 
   objectize: (->
     photo = @get('photo')
     if photo
       @set 'photo', Twitarr.Photo.create(photo)
-    if @get('children')
-      @set('children', Ember.A(Twitarr.StreamPost.create(post) for post in @get('children')))
-    else
-      @set('children', Ember.A())
   ).on('init')
 
   user_likes: (->
@@ -62,7 +57,7 @@ Twitarr.StreamPost = Ember.Object.extend
 Twitarr.StreamPost.reopenClass
   page: (page) ->
     $.getJSON("stream/#{page}").then (data) =>
-      { posts: Ember.A(@create(post) for post in data.stream_posts), next_page: data.next_page, prev_page: data.prev_page }
+      { posts: Ember.A(@create(post) for post in data.stream_posts), has_next_page: data.has_next_page, next_page: data.next_page }
 
   star_page: (page) ->
     $.getJSON("stream/star/#{page}").then (data) =>

@@ -78,10 +78,14 @@ Twitarr::Application.routes.draw do
 
   resources :event, except: [:index, :edit, :new] do
     collection do
-      get 'page/:page', to: 'event#page'
-      get 'past/:page', to: 'event#past'
+      get 'mine/:page', to: 'event#mine'
       get 'all/:page', to: 'event#all'
       get 'csv'
+    end
+    member do
+      post 'follow'
+      post 'unfollow'
+      get 'ical'
     end
   end
 

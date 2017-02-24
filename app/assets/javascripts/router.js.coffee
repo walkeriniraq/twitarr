@@ -30,17 +30,16 @@ Twitarr.Router.map ()->
     @route 'search', { path: 'users' }
     @route 'users', { path: 'users/:text' }
 
-  @resource 'events', ->
-    @route 'page', { path: '/'}
-    @route 'page', { path: ':page' }
-    @route 'past', { path: '/past' }
-    @route 'past', { path: '/past/:page' }
-    @route 'all', { path: '/all' }
-    @route 'all', { path: '/all/:page' }
-    @route 'new', { path: '/new'}
-    @route 'detail', { path: '/e/:id' }
-    @route 'edit', { path: '/:id/edit'}
+  @resource 'schedule', ->
+    @route 'page', { path: 'page/:page' }
+    @route 'old', { path: 'old/:page' }
+    @route 'new', { path: 'new'}
+    @route 'detail', { path: 'event/:id' }
+    @route 'edit', { path: 'event/:id/edit'}
 
+  @resource 'events', ->
+    @route 'page', { path: ':page' }
+    @route 'old', { path: 'old/:page' }
 
   @route 'user', { path: 'user/:username' }
   @route 'tag', { path: 'tag/:tag_name' }

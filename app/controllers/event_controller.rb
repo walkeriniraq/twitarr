@@ -1,34 +1,41 @@
 class EventController < ApplicationController
-  PAGE_SIZE = 20
+  # TODO FIX THIS BACK to 20
+  PAGE_SIZE = 5
 
-  def page
+  def mine
     page = params[:page].to_i || 0
-    events = Event.where(:start_time.gte => DateTime.now).offset(page * PAGE_SIZE).limit(PAGE_SIZE).order_by(:start_time.asc)
-    if logged_in?
-      events = events.where(favorites: current_username)
-    end
+    events = Event.where(favorites: current_username).where(:start_time.gte => Time.now).order_by(:start_time.asc).offset(page * PAGE_SIZE)
     has_next_page = events.count > (page + 1) * PAGE_SIZE
-    render_json events: events.map(&:decorate).map(&:to_meta_hash).group_by { |x| x[:start_time].localtime.to_date }.sort, has_next_page: has_next_page
+    events = events.limit(PAGE_SIZE)
+                 .map { |x| x.decorate.to_meta_hash(current_username) }.group_by { |x| x[:start_time].localtime.to_date }
+                 .sort
+                 .map { |k, v| [k.strftime('%A - %B %-d'), v] }
+    render_json events: events, has_next_page: has_next_page
   end
 
-  def past
-    per_page = 20
-    offset = params[:page].to_i || 0
-
-    events = Event.where(:shared => true).where(:start_time.lt => DateTime.now).offset(offset * per_page).limit(per_page).order_by(:start_time.desc)
-    next_page = offset + 1
-    next_page = nil if Event.where(:shared => true).where(:start_time.lt => DateTime.now).offset((offset + 1) * per_page).limit(per_page).order_by(:start_time.desc).to_a.count == 0
-    prev_page = offset - 1
-    prev_page = nil if prev_page < 0
-
-    render_json events: events.map { |x| x.decorate.to_hash(current_username) }, next_page: next_page, prev_page: prev_page
-  end
+  # def past
+  #   per_page = 20
+  #   offset = params[:page].to_i || 0
+  #
+  #   events = Event.where(:shared => true).where(:start_time.lt => DateTime.now).offset(offset * per_page).limit(per_page).order_by(:start_time.desc)
+  #   next_page = offset + 1
+  #   next_page = nil if Event.where(:shared => true).where(:start_time.lt => DateTime.now).offset((offset + 1) * per_page).limit(per_page).order_by(:start_time.desc).to_a.count == 0
+  #   prev_page = offset - 1
+  #   prev_page = nil if prev_page < 0
+  #
+  #   render_json events: events.map { |x| x.decorate.to_hash(current_username) }, next_page: next_page, prev_page: prev_page
+  # end
 
   def all
     page = params[:page].to_i || 0
-    events = Event.where(:start_time.gte => DateTime.now).offset(page * PAGE_SIZE).limit(PAGE_SIZE).order_by(:start_time.asc)
+    events = Event.where(:start_time.gte => Time.now).offset(page * PAGE_SIZE).limit(PAGE_SIZE).order_by(:start_time.asc)
     has_next_page = events.count > (page + 1) * PAGE_SIZE
-    render_json events: events.map(&:decorate).map(&:to_meta_hash).group_by { |x| x[:start_time].localtime.to_date }.sort, has_next_page: has_next_page
+    events = events
+                 .map { |x| x.decorate.to_meta_hash(current_username) }.group_by { |x| x[:start_time].localtime.to_date }
+                 .sort
+                 .map { |k, v| [k.strftime('%A - %B %-d'), v] }
+    # render_json events: events, has_next_page: has_next_page, has_prev_page: Event.where(:start_time.lt => Time.now).count > 0
+    render_json events: events, has_next_page: has_next_page, has_prev_page: Event.where(:start_time.lt => Time.now).count > 0
   end
 
   def create
@@ -47,7 +54,7 @@ class EventController < ApplicationController
 
   def show
     return unless logged_in?
-    render json: Event.find(params[:id]).decorate.to_hash
+    render json: Event.find(params[:id]).decorate.to_hash(current_username)
   end
 
   def update
@@ -61,7 +68,7 @@ class EventController < ApplicationController
     @event.end_time = Time.parse(params[:end_time]) unless params[:end_time].blank?
 
     if @event.save
-      render_json events: @event.decorate.to_hash
+      render_json events: @event.decorate.to_hash(current_username)
     else
       render_json errors: @event.errors.full_messages
     end
@@ -71,9 +78,9 @@ class EventController < ApplicationController
     @event = Event.find(params[:id])
     render json: {status: :error, errors: ['Only admins can delete events.']} and return if (!is_admin?)
     if @event.destroy
-      render json: {status: :ok}
+      render_json status: :ok
     else
-      render json: {status: :error, error: @event.errors}
+      render_json status: :error, error: @event.errors
     end
   end
 
@@ -114,5 +121,26 @@ class EventController < ApplicationController
     send_data result, type: "text/csv", disposition: "attachment; filename=events.csv"
   end
 
+  def follow
+    return unless logged_in!
+    event = Event.find(params[:id])
+    event.follow current_username
+    if event.save
+      render_json status: 'ok'
+    else
+      render_json status: 'error', errors: event.errors
+    end
+  end
+
+  def unfollow
+    return unless logged_in!
+    event = Event.find(params[:id])
+    event.unfollow current_username
+    if event.save
+      render_json status: 'ok'
+    else
+      render_json status: 'error', errors: event.errors
+    end
+  end
 
 end

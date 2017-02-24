@@ -18,9 +18,9 @@ Ember.Handlebars.helper 'pretty_time', (timestamp) ->
 
 Ember.Handlebars.helper 'pretty_timespan', (start_time, end_time) ->
   if end_time
-    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment(start_time).format('lll')} - #{moment(end_time).format('lll')}</span>")
+    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment(start_time).format('LT')} - #{moment(end_time).format('LT')}</span>")
   else
-    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment(start_time).format('lll')}</span>")
+    new Ember.Handlebars.SafeString("<span class='timestamp'>#{moment(start_time).format('LT')}</span>")
 
 
 Ember.Handlebars.helper 'user_picture', (username, last_time) ->

@@ -8,16 +8,12 @@ class Event
   field :lc, as: :location, type: String # Should do some auto-suggest magic with this?
   field :st, as: :start_time, type: Time
   field :et, as: :end_time, type: Time
-  field :ms, as: :max_signups, type: Integer
-  field :su, as: :signups, type: Array, default: []
   field :fa, as: :favorites, type: Array, default: []
   field :of, as: :official, type: Boolean
-  field :sh, as: :shared, type: Boolean, default: true
 
   validates :title, :start_time, presence: true
-  #validates :title, uniqueness: true
 
-  validates_presence_of :author, unless: "official" # Official events won't have owners.
+  validates_presence_of :author, unless: 'official' # Official events won't have owners.
 
   # 1 = ASC, -1 DESC
   index start_time: -1
@@ -41,6 +37,14 @@ class Event
     event.end_time = Time.parse(options[:end_time]) unless options[:end_time].nil?
     event.max_signups = options[:max_signups] unless options[:max_signups].nil?
     event
+  end
+
+  def follow(username)
+    self.favorites << username unless self.favorites.include? username
+  end
+
+  def unfollow(username)
+    self.favorites.delete username
   end
 
 end

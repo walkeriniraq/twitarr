@@ -9,8 +9,6 @@ Twitarr.AdminUsersRoute = Ember.Route.extend
       controller.set('search_text', model.search_text)
       controller.set('model', model.users)
 
-
-
   actions:
     reload: ->
       @refresh()

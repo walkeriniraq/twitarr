@@ -25,6 +25,10 @@ class BaseDecorator < Draper::Decorator
     end
   end
 
+  def twitarr_replace_emoji(text)
+    text.gsub(@@emojiRE, @@emojiReplace)
+  end
+
   def twitarr_auto_linker(text, options = {})
     if options[:app] == 'CM'
       cm_auto_link text, options

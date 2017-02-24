@@ -1,7 +1,7 @@
 Twitarr.StreamLoadingRoute = Twitarr.LoadingRoute.extend()
 
 Twitarr.StreamIndexRoute = Ember.Route.extend
-  redirect: ->
+  beforeModel: ->
     @transitionTo 'stream.page', mostRecentTime()
 
 Twitarr.StreamPageRoute = Ember.Route.extend

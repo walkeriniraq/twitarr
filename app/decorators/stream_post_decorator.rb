@@ -5,6 +5,22 @@ class StreamPostDecorator < BaseDecorator
 
   MAX_LIST_LIKES = 5
 
+  def to_twitarr_hash(username = nil)
+    result = {
+        id: as_str(id),
+        author: author,
+        timestamp: timestamp,
+        display_name: User.display_name_from_username(author),
+        text: twitarr_auto_linker(twitarr_replace_emoji(clean_text_with_cr(text))),
+        likes: some_likes(username),
+        parent_chain: parent_chain
+    }
+    unless photo.blank?
+      result[:photo] = { id: photo, animated: PhotoMetadata.find(photo).animated }
+    end
+    result
+  end
+
   def to_hash(username = nil, options = {})
     length_limit = options[:length_limit] || text.length
     adjusted_text = (text)[0...length_limit]

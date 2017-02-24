@@ -89,7 +89,6 @@ Twitarr.ApplicationController.reopenClass
   full_photo_path: (photo) ->
     "/photo/full/#{photo}"
 
-
 Twitarr.PhotoViewController = Twitarr.ObjectController.extend
   photo_path: (->
     if @get('model').get('constructor').toString() == 'Twitarr.User'
