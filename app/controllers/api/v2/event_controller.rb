@@ -13,7 +13,7 @@ class API::V2::EventController < ApplicationController
     begin
       @event = Event.find(params[:id])
     rescue Mongoid::Errors::DocumentNotFound
-      render status: 404, json: {status:'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
+      render status: 404, json: {status: 'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
     end
   end
 
@@ -43,7 +43,7 @@ class API::V2::EventController < ApplicationController
 
   def favorite
     @event = Event.find(params[:id])
-    render json:[{error:'You have already favorited this event'}], status: :forbidden and return if @event.favorites.include? current_username
+    render json: [{error: 'You have already favorited this event'}], status: :forbidden and return if @event.favorites.include? current_username
     @event.favorites << current_username
     @event.save
     if @event.valid?
@@ -55,7 +55,7 @@ class API::V2::EventController < ApplicationController
 
   def destroy_favorite
     @event = Event.find(params[:id])
-    render json:[{error:'You have not favorited this event'}], status: :forbidden and return if !@event.favorites.include? current_username
+    render json: [{error: 'You have not favorited this event'}], status: :forbidden and return if !@event.favorites.include? current_username
     @event.favorites = @event.favorites - [current_username]
     @event.save
     if @event.valid?
@@ -69,7 +69,7 @@ class API::V2::EventController < ApplicationController
     sort_by = (params[:sort_by] || 'start_time').to_sym
     order = (params[:order] || 'desc').to_sym
     query = Event.all.order_by([sort_by, order])
-    filtered_query = query.map(&:decorate).map(&:to_hash)
+    filtered_query = query.map { |x| x.decorate.to_hash current_username }
     result = [status: 'ok', total_count: filtered_query.length, events: filtered_query]
     respond_to do |format|
       format.json { render json: result }
