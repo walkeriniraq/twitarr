@@ -1,9 +1,7 @@
 <div class="main-page-header header-with-controls">
-  <div class="controls">
-    <button class="btn" {{action 'reload'}}>Refresh</button>
+  <div class="title">Tweets from Starred Users
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span></button>
   </div>
-
-  <div class="title">Tweets from Starred Users</div>
 </div>
 
 <div class="display_card">
@@ -13,14 +11,9 @@
 </div>
 
 <div class="footer-controls">
-  {{#if has_prev_page}}
-    <div class="card-section left">
-      <button class="controls btn" {{action 'prev_page'}}>Previous</button>
-    </div>
-  {{/if}}
   {{#if has_next_page}}
     <div class="card-section">
-      <button class="controls btn" {{action 'next_page'}}>Next</button>
+      <button class="controls btn" {{action 'next_page'}}>Older</button>
     </div>
   {{/if}}
 </div>

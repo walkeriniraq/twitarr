@@ -3,7 +3,7 @@ class StreamController < ApplicationController
   PAGE_SIZE = 5
 
   def page
-    page_time = if(params.has_key? :page)
+    page_time = if params.has_key? :page
                   Time.at(params[:page].to_i / 1000.0)
                 else
                   Time.now
@@ -11,22 +11,33 @@ class StreamController < ApplicationController
     posts = StreamPost.where(:timestamp.lt => page_time).desc(:timestamp).limit(PAGE_SIZE)
     has_next_page = posts.count > PAGE_SIZE
     posts = posts.map { |x| x }
-    render_json stream_posts: posts.map { |x| x.decorate.to_twitarr_hash(current_username)}, has_next_page: has_next_page, next_page: posts.last.timestamp.to_i * 1000
+    next_page = if posts.count > 0
+                  posts.last.timestamp.to_i * 1000
+                else
+                  0
+                end
+    render_json stream_posts: posts.map { |x| x.decorate.to_twitarr_hash(current_username) }, has_next_page: has_next_page, next_page: next_page
   end
 
 
   def star_filtered_page
     return unless logged_in!
-    posts = StreamPost.at_or_before(params[:page], {filter_authors: current_user.starred_users}).limit(PAGE_SIZE).order_by(timestamp: :desc).map{|x|x}
-    next_page = posts.last.nil? ? 0 : (posts.last.timestamp.to_f * 1000).to_i - 1
-    next_page = 0 if StreamPost.at_or_before(next_page, {filter_authors: current_user.starred_users}).count < 1
+    page_time = if params.has_key? :page
+                  Time.at(params[:page].to_i / 1000.0)
+                else
+                  Time.now
+                end
 
-    newer_posts = StreamPost.at_or_after(params[:page], {filter_authors: current_user.starred_users}).map{|x|x}
-    prev_page = newer_posts.first.nil? ? 0 : (newer_posts.first.timestamp.to_f * 1000).to_i
-    prev_page = 0 if newer_posts.count < 1
-
-    posts = posts.map {|x| x if x.author != current_user.username }.compact # This was a really, really strange bug. although not sure it's necessary.
-    render_json stream_posts: posts.map { |x| x.decorate.to_hash(current_username, length_limit: 300) }, next_page: next_page, prev_page: prev_page
+    users = current_user.starred_users.reject { |x| x == current_username }
+    posts = StreamPost.where(:timestamp.lt => page_time).where(:author.in => users).desc(:timestamp).limit(PAGE_SIZE)
+    has_next_page = posts.count > PAGE_SIZE
+    posts = posts.map { |x| x }
+    next_page = if posts.count > 0
+                  posts.last.timestamp.to_i * 1000
+                else
+                  0
+                end
+    render_json stream_posts: posts.map { |x| x.decorate.to_twitarr_hash(current_username) }, has_next_page: has_next_page, next_page: next_page
   end
 
   def create
@@ -35,7 +46,7 @@ class StreamController < ApplicationController
     if params[:parent]
       parent = StreamPost.where(id: params[:parent]).first
       unless parent
-        render json:{errors: ["Parent id: #{params[:parent]} was not found"]}, status: :not_acceptable
+        render json: {errors: ["Parent id: #{params[:parent]} was not found"]}, status: :not_acceptable
         return
       end
       parent_chain = parent.parent_chain + [params[:parent]]
@@ -82,7 +93,7 @@ class StreamController < ApplicationController
       return
     end
     post.edits = [] if post.edits.nil?
-    post.edits << { user: current_username, old_text: post.text }
+    post.edits << {user: current_username, old_text: post.text}
     post.text = params[:text]
     post.photo = params[:photo]
     post.save

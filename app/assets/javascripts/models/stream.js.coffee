@@ -65,7 +65,7 @@ Twitarr.StreamPost.reopenClass
 
   star_page: (page) ->
     $.getJSON("stream/star/#{page}").then (data) =>
-      { posts: Ember.A(@create(post) for post in data.stream_posts), next_page: data.next_page, prev_page: data.prev_page }
+      { posts: Ember.A(@create(post) for post in data.stream_posts), has_next_page: data.has_next_page, next_page: data.next_page }
 
   view: (post_id) ->
     $.getJSON("/api/v2/stream/#{post_id}").then (data) =>

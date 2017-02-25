@@ -3,7 +3,9 @@
     <button {{action 'show_new_post'}} {{bind-attr class="new_post_button_visible::hidden :btn"}}>New Post</button>
   </div>
 
-  <div class="title">Tweets <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span></button></div>
+  <div class="title">Tweets
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span></button>
+  </div>
 </div>
 
 <div {{bind-attr class="new_post_visible::hidden :display_card"}}>

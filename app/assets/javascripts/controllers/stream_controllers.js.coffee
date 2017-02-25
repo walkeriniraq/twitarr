@@ -54,10 +54,6 @@ Twitarr.StreamViewController = Twitarr.ObjectController.extend Twitarr.SinglePho
         @set 'posting', false
         alert 'Post could not be saved! Please try again later. Or try again someplace without so many seamonkeys.'
       )
-    post_view: (model) ->
-      p = model.get('id')
-      [p,...] = @get('parent_chain') if p == @get('id') && @get('parent_chain')?.length
-      @transitionToRoute 'stream.view', p
 
 Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
   new_post_visible: false
@@ -98,25 +94,11 @@ Twitarr.StreamPageController = Twitarr.ObjectController.extend Twitarr.SinglePho
 
     next_page: ->
       @transitionToRoute 'stream.page', @get('next_page')
-    post_view: (model) ->
-      @transitionToRoute 'stream.view', model.get('parent_id')
 
 Twitarr.StreamStarPageController = Twitarr.ObjectController.extend Twitarr.SinglePhotoMixin,
-  has_next_page: (->
-    @get('next_page') isnt 0
-  ).property('next_page')
-
-  has_prev_page: (->
-    @get('prev_page') isnt 0
-  ).property('prev_page')
-
   actions:
     next_page: ->
-      return if @get('next_page') is 0
       @transitionToRoute 'stream.star_page', @get('next_page')
-    prev_page: ->
-      return if @get('prev_page') is 0
-      @transitionToRoute 'stream.star_page', @get('prev_page')
 
 Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
   actions:
@@ -132,7 +114,7 @@ Twitarr.StreamPostPartialController = Twitarr.ObjectController.extend
     edit: ->
       @transitionToRoute 'stream.edit', @get('id')
     view_thread: ->
-      @get('parentController').send('post_view', @get('model'))
+      @transitionToRoute 'stream.view', @get('parent_id')
 
   show_parent: (->
     @get('parentController').get('parent_link_visible') && @get('parent_chain')
