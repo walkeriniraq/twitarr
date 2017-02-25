@@ -19,7 +19,7 @@ class Event
 
   def self.search(params = {})
     search_text = params[:text].strip.downcase.gsub(/[^0-9A-Za-z_\s@]/, '')
-    criteria = Event.or({ title: /^#{search_text}/ }, { '$text' => { '$search' => "\"#{search_text}\"" } })
+    criteria = Event.or({title: /^#{search_text}/}, {'$text' => {'$search' => "\"#{search_text}\""}})
     limit_criteria(criteria, params).order_by(timestamp: :desc)
   end
 
@@ -33,16 +33,20 @@ class Event
     event
   end
 
-  def self.create_from_ics(event)
-    Event.new(
-        _id: event.uid,
-        title: event.summary,
-        description: event.description,
-        start_time: event.dtstart,
-        end_time: event.dtend,
-        official: !event.categories.include?('SHADOW CRUISE'),
-        location: event.location
-    ).upsert
+  def self.create_from_ics(ics_event)
+    event = Event.where(id: ics_event.uid).first
+    if event.nil?
+      event = Event.new(
+          _id: ics_event.uid
+      )
+    end
+    event.title = ics_event.summary
+    event.description = ics_event.description
+    event.start_time = ics_event.dtstart
+    event.end_time = ics_event.dtend
+    event.official = !ics_event.categories.include?('SHADOW CRUISE')
+    event.location = ics_event.location
+    event.save
   end
 
   def follow(username)
