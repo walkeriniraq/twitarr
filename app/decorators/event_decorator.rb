@@ -4,11 +4,10 @@ class EventDecorator < BaseDecorator
   def to_meta_hash(username)
     result = {
         id: as_str(id),
-        author: author,
-        author_display_name: User.display_name_from_username(author),
         title: title,
         location: location,
-        start_time: start_time
+        start_time: start_time,
+        official: official
     }
     result[:end_time] = end_time unless end_time.blank?
     result[:following] = favorites.include? username
@@ -16,17 +15,8 @@ class EventDecorator < BaseDecorator
   end
 
   def to_hash(username)
-    result = {
-        id: as_str(id),
-        author: author,
-        author_display_name: User.display_name_from_username(author),
-        title: title,
-        location: location,
-        start_time: start_time
-    }
-    result[:end_time] = end_time unless end_time.blank?
+    result = to_hash username
     result[:description] = description unless description.blank?
-    result[:following] = favorites.include? username
     result
   end
 end

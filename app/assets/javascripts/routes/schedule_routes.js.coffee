@@ -1,28 +1,26 @@
 Twitarr.ScheduleLoadingRoute = Twitarr.LoadingRoute.extend()
 
 Twitarr.ScheduleIndexRoute = Ember.Route.extend
+  beforeModel: ->
+    @transitionTo 'schedule.today'
+
+Twitarr.ScheduleTodayRoute = Ember.Route.extend
+  renderTemplate: ->
+    @render 'schedule.day', { controller: 'schedule.day' }
   model: ->
     Twitarr.EventMeta.all()
 
   actions:
     reload: ->
-      @refresh()
+      @transitionTo 'schedule.today'
 
-Twitarr.SchedulePageRoute = Ember.Route.extend
+Twitarr.ScheduleDayRoute = Ember.Route.extend
   model: (params) ->
     Twitarr.EventMeta.all params.page
 
   actions:
     reload: ->
-      @transitionTo 'schedule'
-
-Twitarr.ScheduleOldRoute = Ember.Route.extend
-  model: (params) ->
-    Twitarr.EventMeta.old params.page
-
-  actions:
-    reload: ->
-      @transitionTo 'schedule'
+      @transitionTo 'schedule.today'
 
 Twitarr.ScheduleNewRoute = Ember.Route.extend()
 

@@ -27,19 +27,19 @@ Twitarr.Router.map ()->
 
   @resource 'admin', ->
     @route 'announcements'
+    @route 'upload_schedule'
     @route 'search', { path: 'users' }
     @route 'users', { path: 'users/:text' }
 
   @resource 'schedule', ->
-    @route 'page', { path: 'page/:page' }
-    @route 'old', { path: 'old/:page' }
+    @route 'today', { path: 'today' }
+    @route 'day', { path: 'day/:page' }
     @route 'new', { path: 'new'}
     @route 'detail', { path: 'event/:id' }
     @route 'edit', { path: 'event/:id/edit'}
 
   @resource 'events', ->
     @route 'page', { path: ':page' }
-    @route 'old', { path: 'old/:page' }
 
   @route 'user', { path: 'user/:username' }
   @route 'tag', { path: 'tag/:tag_name' }

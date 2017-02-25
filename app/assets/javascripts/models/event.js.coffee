@@ -22,24 +22,13 @@ Twitarr.EventMeta = Ember.Object.extend
         alert data.error || data.errors.join("\n")
 
 Twitarr.EventMeta.reopenClass
-  mine: (page = 0) ->
-    $.getJSON("/event/mine/#{page}").then (data) =>
-      {events: @process_date_events(date) for date in data.events, has_next_page: data.has_next_page, page: page}
+  mine: (date = new Date()) ->
+    $.getJSON("/event/mine/#{date.toISOString().split('T')[0]}").then (data) =>
+      {events: Ember.A(@create(event)) for event in data.events}
 
-  mine_old: (page = 0) ->
-    $.getJSON("/event/mine/old/#{page}").then (data) =>
-      {events: @process_date_events(date) for date in data.events, has_next_page: data.has_next_page, has_prev_page: data.has_prev_page, page: page}
-
-  all: (page = 0) ->
-    $.getJSON("/event/all/#{page}").then (data) =>
-      {events: @process_date_events(date) for date in data.events, has_next_page: data.has_next_page, has_prev_page: data.has_prev_page, page: page}
-
-  old: (page = 0) ->
-    $.getJSON("/event/all/old/#{page}").then (data) =>
-      {events: @process_date_events(date) for date in data.events, has_next_page: data.has_next_page, has_prev_page: data.has_prev_page, page: page}
-
-  process_date_events: ([date, events]) ->
-    {date: date, events: Ember.A(@create(event)) for event in events}
+  all: (date = new Date()) ->
+    $.getJSON("/event/all/#{date.toISOString().split('T')[0]}").then (data) =>
+      {events: Ember.A(@create(event)) for event in data.events}
 
 Twitarr.Event = Twitarr.EventMeta.extend
   description: null

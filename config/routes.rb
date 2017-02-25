@@ -38,6 +38,7 @@ Twitarr::Application.routes.draw do
   post 'admin/update_user'
   post 'admin/new_announcement'
   get 'admin/announcements'
+  post 'admin/upload_schedule'
 
   resources :forums, except: [:show, :destroy, :edit, :new] do
     collection do
@@ -78,8 +79,8 @@ Twitarr::Application.routes.draw do
 
   resources :event, except: [:index, :edit, :new] do
     collection do
-      get 'mine/:page', to: 'event#mine'
-      get 'all/:page', to: 'event#all'
+      get 'mine/:day', to: 'event#mine'
+      get 'all/:day', to: 'event#all'
       get 'csv'
     end
     member do

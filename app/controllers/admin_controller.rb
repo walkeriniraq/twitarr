@@ -82,4 +82,9 @@ class AdminController < ApplicationController
     render_json status: 'ok', list: Announcement.all.desc(:timestamp).map { |x| x.decorate.to_admin_hash }
   end
 
+  def upload_schedule
+    Icalendar.parse(params[:schedule].tempfile.read).first.events.map { |x| Event.create_from_ics x }
+    render_json status: 'ok'
+  end
+
 end

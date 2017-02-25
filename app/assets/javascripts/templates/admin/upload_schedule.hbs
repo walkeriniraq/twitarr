@@ -1,0 +1,15 @@
+<div class="main-page-header">
+  <div class="title">Upload Schedule</div>
+</div>
+<div class="display_card">
+  <div class="card-section">
+    <div id="schedule-upload-div" class="upload-div">
+      <input id="scheduleupload" class="fileupload" type="file" name="schedule" data-url="/admin/upload_schedule" accept="text/calendar">
+      {{#if controllers.application.uploads_pending}}
+        <div class="uploading">Uploading...</div>
+      {{else}}
+        Click to upload a new schedule
+      {{/if}}
+    </div>
+  </div>
+</div>

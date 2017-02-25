@@ -71,3 +71,5 @@ Twitarr.AdminAnnouncementsRoute = Ember.Route.extend
           alert data.status
         else
           @refresh()
+
+Twitarr.AdminUploadScheduleRoute = Ember.Route.extend()

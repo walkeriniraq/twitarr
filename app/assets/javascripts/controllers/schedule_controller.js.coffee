@@ -1,21 +1,16 @@
-Twitarr.ScheduleIndexController = Twitarr.ObjectController.extend
+Twitarr.ScheduleDayController = Twitarr.ObjectController.extend
   actions:
-    next_page: ->
-      @transitionToRoute 'schedule.page', 1
-    prev_page: ->
-      @transitionToRoute 'schedule.old', 1
-
-Twitarr.SchedulePageController = Twitarr.ObjectController.extend
-  actions:
-    next_page: ->
-      page = parseInt @get('page')
-      @transitionToRoute 'schedule.page', page + 1
-    prev_page: ->
-      page = parseInt @get('page')
-      if page < 2
-        @transitionToRoute 'schedule'
-      else
-        @transitionToRoute 'schedule.page', page - 1
+    next_day: ->
+      alert 'next'
+#      page = parseInt @get('page')
+#      @transitionToRoute 'schedule.page', page + 1
+    prev_day: ->
+      alert 'prev'
+#      page = parseInt @get('page')
+#      if page < 2
+#        @transitionToRoute 'schedule'
+#      else
+#        @transitionToRoute 'schedule.page', page - 1
 
 Twitarr.ScheduleMetaPartialController = Twitarr.ObjectController.extend
   followable: (->

@@ -1,16 +1,14 @@
 class EventController < ApplicationController
-  # TODO FIX THIS BACK to 20
-  PAGE_SIZE = 5
-
   def mine
-    page = params[:page].to_i || 0
-    events = Event.where(favorites: current_username).where(:start_time.gte => Time.now).order_by(:start_time.asc).offset(page * PAGE_SIZE)
-    has_next_page = events.count > (page + 1) * PAGE_SIZE
-    events = events.limit(PAGE_SIZE)
-                 .map { |x| x.decorate.to_meta_hash(current_username) }.group_by { |x| x[:start_time].localtime.to_date }
-                 .sort
-                 .map { |k, v| [k.strftime('%A - %B %-d'), v] }
-    render_json events: events, has_next_page: has_next_page
+    day = Date.parse params[:day]
+    events = Event.where(favorites: current_username).where(:start_time.gte => day).where(:start_time.lt => day + 1).order_by(:start_time.asc)
+    render_json events: events.map { |x| x.decorate.to_meta_hash(current_username) }
+  end
+
+  def all
+    day = Date.parse params[:day]
+    events = Event.where(:start_time.gte => day).where(:start_time.lt => day + 1).order_by(:start_time.asc)
+    render_json events: events.map { |x| x.decorate.to_meta_hash(current_username) }
   end
 
   # def past
@@ -25,18 +23,6 @@ class EventController < ApplicationController
   #
   #   render_json events: events.map { |x| x.decorate.to_hash(current_username) }, next_page: next_page, prev_page: prev_page
   # end
-
-  def all
-    page = params[:page].to_i || 0
-    events = Event.where(:start_time.gte => Time.now).offset(page * PAGE_SIZE).limit(PAGE_SIZE).order_by(:start_time.asc)
-    has_next_page = events.count > (page + 1) * PAGE_SIZE
-    events = events
-                 .map { |x| x.decorate.to_meta_hash(current_username) }.group_by { |x| x[:start_time].localtime.to_date }
-                 .sort
-                 .map { |k, v| [k.strftime('%A - %B %-d'), v] }
-    # render_json events: events, has_next_page: has_next_page, has_prev_page: Event.where(:start_time.lt => Time.now).count > 0
-    render_json events: events, has_next_page: has_next_page, has_prev_page: Event.where(:start_time.lt => Time.now).count > 0
-  end
 
   def create
     render json: [{error: 'Only admins can create events.'}], status: :ok and return if (!is_admin?)
