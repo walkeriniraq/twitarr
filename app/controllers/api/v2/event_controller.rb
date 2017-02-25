@@ -9,22 +9,9 @@ class API::V2::EventController < ApplicationController
     head :unauthorized unless logged_in? || valid_key?(params[:key])
   end
 
-  def is_event_allowed(ev)
-    #logger.debug("is_event_allowed: " + ev.decorate.to_hash.inspect)
-    #logger.debug("valid key? " + (valid_key?(params[:key]) ? "true" : "false"))
-    #logger.debug("official=" + (ev.official ? "true" : "false"))
-    return true if (ev.official)
-    #logger.debug("shared=" + (ev.shared ? "true" : "false"))
-    return true if (ev.shared)
-    #logger.debug("author=" + ev.author + ", current_username=" + (current_username == nil ? "nil" : current_username))
-    return true if (ev.author == current_username)
-    return false
-  end
-
   def fetch_event
     begin
       @event = Event.find(params[:id])
-      head :unauthorized and return unless is_event_allowed(@event)
     rescue Mongoid::Errors::DocumentNotFound
       render status: 404, json: {status:'Not found', id: params[:id], error: "Event by id #{params[:id]} is not found."}
     end
@@ -81,7 +68,7 @@ class API::V2::EventController < ApplicationController
   def index
     sort_by = (params[:sort_by] || 'start_time').to_sym
     order = (params[:order] || 'desc').to_sym
-    query = Event.all.order_by([sort_by, order]).select { |ev| is_event_allowed(ev) }
+    query = Event.all.order_by([sort_by, order])
     filtered_query = query.map(&:decorate).map(&:to_hash)
     result = [status: 'ok', total_count: filtered_query.length, events: filtered_query]
     respond_to do |format|
