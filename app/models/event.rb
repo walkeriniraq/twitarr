@@ -37,7 +37,6 @@ class Event
     Event.new(
         _id: event.uid,
         title: event.summary,
-        author: 'THO',
         description: event.description,
         start_time: event.dtstart,
         end_time: event.dtend,
