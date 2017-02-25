@@ -45,7 +45,8 @@ class Event
     event.start_time = ics_event.dtstart
     event.end_time = ics_event.dtend
     event.official = !ics_event.categories.include?('SHADOW CRUISE')
-    event.location = ics_event.location
+    # locations tend to have trailing commas for some reason
+    event.location = ics_event.location.strip.gsub(/,$/, '')
     event.save
   end
 
