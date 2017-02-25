@@ -24,7 +24,7 @@ class SearchController < ApplicationController
                 more_tweets: tweet_query.has_more?,
                 forums: forum_query.map { |x| x.decorate.to_meta_hash },
                 more_forums: forum_query.has_more?,
-                events: event_query.map { |x| x.decorate.to_hash },
+                events: event_query.map { |x| x.decorate.to_meta_hash(current_username) },
                 more_events: event_query.has_more?,
                 text: search_text,
                 query: {text: search_text}
@@ -70,7 +70,7 @@ class SearchController < ApplicationController
     event_query = Event.search(params)
     render_json status: 'ok',
                 text: search_text,
-                events: event_query.map { |x| x.decorate.to_hash },
+                events: event_query.map { |x| x.decorate.to_hash(current_username) },
                 more_events: event_query.has_more?
   end
 

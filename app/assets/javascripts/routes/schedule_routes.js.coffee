@@ -5,8 +5,6 @@ Twitarr.ScheduleIndexRoute = Ember.Route.extend
     @transitionTo 'schedule.today'
 
 Twitarr.ScheduleTodayRoute = Ember.Route.extend
-  renderTemplate: ->
-    @render 'schedule.day', { controller: 'schedule.day' }
   model: ->
     Twitarr.EventMeta.all()
 
@@ -16,7 +14,7 @@ Twitarr.ScheduleTodayRoute = Ember.Route.extend
 
 Twitarr.ScheduleDayRoute = Ember.Route.extend
   model: (params) ->
-    Twitarr.EventMeta.all params.page
+    Twitarr.EventMeta.all params.date
 
   actions:
     reload: ->

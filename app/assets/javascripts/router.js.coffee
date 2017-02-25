@@ -33,13 +33,14 @@ Twitarr.Router.map ()->
 
   @resource 'schedule', ->
     @route 'today', { path: 'today' }
-    @route 'day', { path: 'day/:page' }
+    @route 'day', { path: 'day/:date' }
     @route 'new', { path: 'new'}
     @route 'detail', { path: 'event/:id' }
     @route 'edit', { path: 'event/:id/edit'}
 
   @resource 'events', ->
-    @route 'page', { path: ':page' }
+    @route 'today', { path: 'today' }
+    @route 'day', { path: 'day/:date' }
 
   @route 'user', { path: 'user/:username' }
   @route 'tag', { path: 'tag/:tag_name' }

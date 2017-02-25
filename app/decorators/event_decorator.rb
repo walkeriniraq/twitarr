@@ -15,7 +15,7 @@ class EventDecorator < BaseDecorator
   end
 
   def to_hash(username)
-    result = to_hash username
+    result = to_meta_hash username
     result[:description] = description unless description.blank?
     result
   end

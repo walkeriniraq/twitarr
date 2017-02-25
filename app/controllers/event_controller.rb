@@ -1,14 +1,14 @@
 class EventController < ApplicationController
   def mine
     day = Date.parse params[:day]
-    events = Event.where(favorites: current_username).where(:start_time.gte => day).where(:start_time.lt => day + 1).order_by(:start_time.asc)
-    render_json events: events.map { |x| x.decorate.to_meta_hash(current_username) }
+    events = Event.where(:start_time.gte => day.to_time + 4.hours).where(:start_time.lt => day.to_time + 28.hours).where(favorites: current_username).order_by(:start_time.asc)
+    render_json events: events.map { |x| x.decorate.to_meta_hash(current_username) }, today: day.to_s, prev_day: (day - 1).to_s, next_day: (day + 1).to_s
   end
 
   def all
     day = Date.parse params[:day]
-    events = Event.where(:start_time.gte => day).where(:start_time.lt => day + 1).order_by(:start_time.asc)
-    render_json events: events.map { |x| x.decorate.to_meta_hash(current_username) }
+    events = Event.where(:start_time.gte => day.to_time + 4.hours).where(:start_time.lt => day.to_time + 28.hours).order_by(:start_time.asc)
+    render_json events: events.map { |x| x.decorate.to_meta_hash(current_username) }, today: day.to_s, prev_day: (day - 1).to_s, next_day: (day + 1).to_s
   end
 
   # def past
@@ -39,7 +39,6 @@ class EventController < ApplicationController
   end
 
   def show
-    return unless logged_in?
     render json: Event.find(params[:id]).decorate.to_hash(current_username)
   end
 

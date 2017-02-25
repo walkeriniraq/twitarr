@@ -17,6 +17,7 @@ Twitarr.SearchResultsRoute = Ember.Route.extend
       controller.set('error', null)
       model.tweets = (Twitarr.StreamPost.create(post) for post in model.tweets)
       model.forums = (Twitarr.ForumMeta.create(forum) for forum in model.forums)
+      model.events = (Twitarr.EventMeta.create(event) for event in model.events)
       controller.set('model', model)
     else
       controller.set('error', model.status)
@@ -85,6 +86,6 @@ Twitarr.SearchEventResultsRoute = Ember.Route.extend
     if model.status is 'ok'
       @controllerFor('search').set('text', model.text)
       controller.set('error', null)
-      controller.set('model', model)
+      controller.set('model', { events: (Twitarr.EventMeta.create(event) for event in model.events) })
     else
       controller.set('error', model.status)

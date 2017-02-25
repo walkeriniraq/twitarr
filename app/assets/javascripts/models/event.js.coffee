@@ -5,6 +5,7 @@ Twitarr.EventMeta = Ember.Object.extend
   title: null
   location: null
   start_time: null
+  end_time: null
   following: false
 
   follow: ->
@@ -22,17 +23,16 @@ Twitarr.EventMeta = Ember.Object.extend
         alert data.error || data.errors.join("\n")
 
 Twitarr.EventMeta.reopenClass
-  mine: (date = new Date()) ->
-    $.getJSON("/event/mine/#{date.toISOString().split('T')[0]}").then (data) =>
-      {events: Ember.A(@create(event)) for event in data.events}
+  mine: (date = new Date().toISOString().split('T')[0]) ->
+    $.getJSON("/event/mine/#{date}").then (data) =>
+      {events: Ember.A(@create(event)) for event in data.events, today: data.today, prev_day: data.prev_day, next_day: data.next_day }
 
-  all: (date = new Date()) ->
-    $.getJSON("/event/all/#{date.toISOString().split('T')[0]}").then (data) =>
-      {events: Ember.A(@create(event)) for event in data.events}
+  all: (date = new Date().toISOString().split('T')[0]) ->
+    $.getJSON("/event/all/#{date}").then (data) =>
+      {events: Ember.A(@create(event)) for event in data.events, today: data.today, prev_day: data.prev_day, next_day: data.next_day }
 
 Twitarr.Event = Twitarr.EventMeta.extend
   description: null
-  end_time: null
 
   delete: ->
     $.ajax("/event/#{@get('id')}", method: 'DELETE', async: false, dataType: 'json', cache: false).done (data) =>

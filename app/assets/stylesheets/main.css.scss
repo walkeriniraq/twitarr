@@ -21,6 +21,7 @@
 @mixin border-radius($radius: 5px) {
   border-radius: $radius;
 }
+
 @mixin transform($params) {
   -ms-transform: $params;
   -moz-transform: $params;
@@ -28,6 +29,7 @@
   -o-transform: $params;
   transform: $params;
 }
+
 @mixin keyframes($animation-name) {
   @-webkit-keyframes #{$animation-name} {
     @content;
@@ -42,6 +44,7 @@
     @content;
   }
 }
+
 @include keyframes(loading-ring) {
   0% {
     @include transform(rotate(0deg))
@@ -50,6 +53,7 @@
     @include transform(rotate(360deg))
   }
 }
+
 @mixin animation($params) {
   -ms-animation: $params;
   -moz-animation: $params;
@@ -418,7 +422,8 @@ img.photo {
   z-index: 100;
 }
 
-@media screen\9 {
+@media screen \9
+{
   #fileupload {
     filter: alpha(opacity=0);
     font-size: 100%;
@@ -634,6 +639,15 @@ img.photo {
   }
 }
 
+.calendar-nav {
+  div {
+    text-align: center;
+    height: 1.66em;
+    line-height: 1.66em;
+    font-size: larger;
+  }
+}
+
 .profile_photo {
   height: 50px;
   width: 50px;
@@ -641,10 +655,10 @@ img.photo {
 
 .footer-controls {
   margin-bottom: 0.6em;
-  .card-section { 
+  .card-section {
     display: inline-block;
     &:last-child {
-      float: right;  
+      float: right;
     }
   }
 }
@@ -659,6 +673,7 @@ img.photo {
 .hidden {
   display: none;
 }
+
 @media (max-width: 550px) {
   .top-bar-search {
     display: none;
@@ -672,6 +687,7 @@ img.photo {
 .form-control {
   width: 100%;
 }
+
 .highlight {
   color: red;
 }

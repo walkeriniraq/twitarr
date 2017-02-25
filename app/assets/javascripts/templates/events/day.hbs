@@ -2,7 +2,7 @@
   <span class="controls">
     <button {{bind-attr class=":btn login_admin::hidden"}} {{action 'create_event'}}>Create Event</button>
   </span>
-  <div class="title">Schedule
+  <div class="title">My Schedule
     <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span>
     </button>
   </div>
@@ -19,7 +19,7 @@
     {{render "schedule.meta_partial" event}}
   </div>
 {{else}}
-  <div>No events scheduled for this day.</div>
+  <div>You aren't following any events for this day.</div>
 {{/each}}
 
 {{#if events}}
