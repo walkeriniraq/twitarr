@@ -47,7 +47,7 @@ class API::V2::EventController < ApplicationController
     @event.favorites << current_username
     @event.save
     if @event.valid?
-      render_json event: @event.decorate.to_hash
+      render_json event: @event.decorate.to_hash(current_username)
     else
       render_json errors: @event.errors.full_messages
     end
@@ -56,10 +56,10 @@ class API::V2::EventController < ApplicationController
   def destroy_favorite
     @event = Event.find(params[:id])
     render json: [{error: 'You have not favorited this event'}], status: :forbidden and return if !@event.favorites.include? current_username
-    @event.favorites = @event.favorites - [current_username]
+    @event.favorites = @event.favorites.delete current_username
     @event.save
     if @event.valid?
-      render_json event: @event.decorate.to_hash
+      render_json event: @event.decorate.to_hash(current_username)
     else
       render_json errors: @event.errors.full_messages
     end
