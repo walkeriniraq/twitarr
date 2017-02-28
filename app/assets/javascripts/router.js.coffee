@@ -4,7 +4,6 @@ Twitarr.Router.map ()->
     @route 'new'
 
   @resource 'forums', ->
-    @route 'page', { path: '/' }
     @route 'page', { path: ':page' }
     @route 'new_post', { path: ':id/new' }
     @route 'detail', { path: 'thread/:id' }

@@ -2,6 +2,8 @@ class Event
   include Mongoid::Document
   include Searchable
 
+  FIRST_CRUISE_DATE = Date.new 2017, 3, 4
+
   field :tl, as: :title, type: String
   field :sm, as: :description, type: String
   field :lc, as: :location, type: String
@@ -42,8 +44,13 @@ class Event
     end
     event.title = ics_event.summary
     event.description = ics_event.description
-    event.start_time = ics_event.dtstart
-    event.end_time = ics_event.dtend
+    if event.start_time.andand.to_date == FIRST_CRUISE_DATE
+      event.start_time = ics_event.dtstart + 1.hour
+      event.end_time = ics_event.dtend + 1.hour unless ics_event.dtend.nil?
+    else
+      event.start_time = ics_event.dtstart
+      event.end_time = ics_event.dtend
+    end
     event.official = !ics_event.categories.include?('SHADOW CRUISE')
     # locations tend to have trailing commas for some reason
     event.location = ics_event.location.strip.gsub(/,$/, '')

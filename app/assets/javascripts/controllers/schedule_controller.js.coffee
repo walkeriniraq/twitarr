@@ -28,9 +28,11 @@ Twitarr.ScheduleMetaPartialController = Twitarr.ObjectController.extend
 
   actions:
     follow: ->
-      @get('model').follow()
+      Ember.run =>
+        @get('model').follow()
     unfollow: ->
-      @get('model').unfollow()
+      Ember.run =>
+        @get('model').unfollow()
 
 Twitarr.ScheduleDetailController = Twitarr.ObjectController.extend
   editable: (->

@@ -27,7 +27,7 @@ class API::V2::EventController < ApplicationController
     cal_string << "BEGIN:VEVENT\n"
     cal_string << "UID:#{@event.id}@twitarr.local\n"
     cal_string << "DTSTAMP:#{@event.start_time.strftime('%Y%m%dT%H%M%S')}\n"
-    cal_string << "ORGANIZER:CN=#{User.display_name_from_username(@event.author)}\n"
+    cal_string << "ORGANIZER:CN=JOCO Cruise\n"
     cal_string << "DTSTART:#{@event.start_time.strftime('%Y%m%dT%H%M%S')}\n"
     cal_string << "DTEND:#{@event.end_time.strftime('%Y%m%dT%H%M%S')}\n" unless @event.end_time.blank?
     cal_string << "SUMMARY:#{@event.title}\n"

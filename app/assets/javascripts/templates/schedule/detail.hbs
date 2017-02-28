@@ -1,5 +1,4 @@
 <div {{bind-attr class=":main-page-header logged_in:header-with-controls"}}>
-  <div class="title">{{title}}</div>
   <span {{bind-attr class=":controls logged_in::hidden"}}>
     {{#unless following}}
       <button class="btn" {{action 'follow'}}>Follow</button>
@@ -11,12 +10,15 @@
       <button class="btn" {{action 'delete'}}>Delete</button>
     {{/if}}
   </span>
+  <div class="title">{{title}}</div>
 </div>
 
 <div class="display_card">
   <div class="card-section">
     <div {{bind-attr class=":title :big-title official:official"}}>
-      {{unbound title}} <a {{action 'ical'}}><span class="glyphicon glyphicon-calendar right" title="Export as iCal"></span></a>
+      {{unbound title}}
+      <button class="btn btn-link right" {{action 'ical'}}><span class="glyphicon glyphicon-calendar right" title="Export as iCal"></span>
+      </button>
     </div>
   </div>
   <div class="card-section">

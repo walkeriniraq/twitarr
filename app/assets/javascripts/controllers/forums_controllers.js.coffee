@@ -40,7 +40,6 @@ Twitarr.ForumsDetailController = Twitarr.ObjectController.extend Twitarr.PhotosU
   has_prev_page: (->
     @get('prev_page') isnt null or undefined
   ).property('prev_page')
-    
 
   actions:
     new: ->
@@ -104,7 +103,7 @@ Twitarr.ForumsNewController = Twitarr.Controller.extend Twitarr.PhotosUploadMixi
           @set 'text', ''
           @get('errors').clear()
           @get('photo_ids').clear()
-          @transitionToRoute 'forums.detail', response.forum_meta.id, response.forum_meta.last_post_page
+        @transitionToRoute 'forums.page', 0
       , ->
         @set 'posting', false
         alert 'Forum could not be added. Please try again later. Or try again someplace without so many seamonkeys.'

@@ -1,29 +1,20 @@
-<div class="main-page-header">
-  <div class="title">{{#link-to 'forums' }}Forums{{/link-to}} > {{forum.subject}}</div>
+<div class="main-page-header header-with-controls">
+  {{#if has_prev_page}}
+    <button class="controls btn" {{action 'prev_page'}}>Older</button>
+  {{/if}}
+  <div class="title">{{#link-to 'forums' }}Forums{{/link-to}} > {{forum.subject}}
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span></button>
+  </div>
 </div>
 
 <div class="display_card">
-  <div class="card-section">
-    <span class="header">
-      <button class="btn right" {{action 'reload'}}>Refresh</button>
-    </span>
-  </div>
   {{#each post in forum.posts}}
     {{render "forums.post_partial" post}}
   {{/each}}
-  <div class="card-section">
-    <div class="footer">
-      {{#if has_prev_page}}
-        <button class="controls btn left" {{action 'prev_page'}}>Previous</button>
-      {{/if}}
-      {{#if has_next_page}}
-        <button class="controls btn right" {{action 'next_page'}}>Next</button>
-      {{/if}}
-    </div>
-  </div>
+
 </div>
 
-<div {{bind-attr class="logged_in::hidden has_new_posts::scroll_to :display_card"}}>
+<div {{bind-attr class="logged_in::hidden has_next_page:hidden has_new_posts::scroll_to :display_card"}}>
   <div class="card-section">
     <span class="title big-title">Post a message</span>
     {{textarea value=new_post rows='3' class='input'}}
@@ -36,5 +27,11 @@
     <span class="controls">
       <button class="btn" {{action 'new'}}>Post</button>
     </span>
+  </div>
+</div>
+
+<div {{bind-attr class="has_next_page::hidden has_new_posts::scroll_to :footer-controls"}}>
+  <div class="card-section">
+    <button class="controls btn" {{action 'next_page'}}>More</button>
   </div>
 </div>

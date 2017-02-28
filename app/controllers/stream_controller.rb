@@ -1,6 +1,5 @@
 class StreamController < ApplicationController
-  # TODO FIX THIS BACK to 20
-  PAGE_SIZE = 5
+  PAGE_SIZE = 20
 
   def page
     page_time = if params.has_key? :page

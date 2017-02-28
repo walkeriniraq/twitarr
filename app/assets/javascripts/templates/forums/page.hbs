@@ -1,10 +1,15 @@
 <div class="main-page-header header-with-controls">
   <span class="controls">
     <button class="btn" {{action 'create_forum'}}>Create Forum</button>
-    <button class="btn" {{action 'reload'}}>Refresh</button>
+    {{#if has_prev_page}}
+      <button class="btn" {{action 'prev_page'}}>More Recent</button>
+    {{/if}}
   </span>
 
-  <div class="title">Forums</div>
+  <div class="title">Forums
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span>
+    </button>
+  </div>
 </div>
 
 <div class="display_card">
@@ -13,15 +18,8 @@
   {{/each}}
 </div>
 
-<div class="footer-controls">
-  {{#if has_prev_page}}
-    <div class="card-section left">
-      <button class="controls btn" {{action 'prev_page'}}>Previous</button>
-    </div>
-  {{/if}}
-  {{#if has_next_page}}
-    <div class="card-section">
-      <button class="controls btn" {{action 'next_page'}}>Next</button>
-    </div>
-  {{/if}}
+<div {{bind-attr class="has_next_page::hidden :footer-controls"}}>
+  <div class="card-section">
+    <button class="controls btn" {{action 'next_page'}}>Older</button>
+  </div>
 </div>

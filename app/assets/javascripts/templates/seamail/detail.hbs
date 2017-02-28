@@ -1,5 +1,11 @@
+<div class="main-page-header">
+  <div class="title">{{#link-to 'seamail' }}Seamail{{/link-to}} > {{subject}}
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span>
+    </button>
+  </div>
+</div>
+
 <div class="display_card">
-  <div class="card_title">{{subject}}</div>
   <div class="card-section">
     {{#each user in users}}
       {{#link-to 'user' user.username}}
@@ -20,18 +26,13 @@
           <li>{{error}}</li>
         {{/each}}
       </ul>
-    <span class="footer">
-      <button class="btn" {{action 'post' text}}>Send</button>
+      <span class="footer">
+      <button class="btn right" {{action 'post' text}}>Send</button>
     </span>
     </div>
   </div>
 </div>
 <div class="display_card">
-  <div class="card-section">
-    <span class="controls">
-      <button class="btn" {{action 'reload'}}>Refresh</button>
-    </span>
-  </div>
   {{#each message in messages}}
     <div class="card-section section-with-photo">
       <div class="section-photo">

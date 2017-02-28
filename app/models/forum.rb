@@ -55,6 +55,7 @@ class Forum
     forum
   end
 
+  # This is just a terrible scheme
   def add_post(author, text, photos)
     self.last_post_time = Time.now
     posts.create author: author, text: text, timestamp: Time.now, photos: photos

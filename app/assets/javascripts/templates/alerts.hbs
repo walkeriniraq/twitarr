@@ -1,9 +1,8 @@
-<div class="main-page-header header-with-controls">
-  <span class="controls">
-    <button class="btn" {{action 'reload'}}>Refresh</button>
-  </span>
-
-  <div class="title">Your alerts</div>
+<div class="main-page-header">
+  <div class="title">Your Alerts
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span>
+    </button>
+  </div>
 </div>
 
 {{#if announcements}}

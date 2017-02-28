@@ -1,10 +1,12 @@
-<div class="main-page-header header-with-controls">
+<div class="main-page-header">
   <span class="controls">
     <button class="btn" {{action 'compose_seamail'}}>New Seamail</button>
-    <button class="btn" {{action 'reload'}}>Refresh</button>
   </span>
 
-  <div class="title">Seamails</div>
+  <div class="title">Seamail
+    <button class="btn btn-link" {{action 'reload'}}><span class="glyphicon glyphicon-repeat" title="Refresh"></span>
+    </button>
+  </div>
 </div>
 
 <div class="display_card">
