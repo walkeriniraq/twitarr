@@ -11,9 +11,15 @@
     </div>
   </div>
   <div class="controls">
-    <div>
-      <button {{action 'follow' model bubbles=false}} style="color: darkgreen;" {{bind-attr class="followable::hidden :btn-link"}}>Follow</button>
-      <button {{action 'unfollow' model bubbles=false}} style="color: darkred;" {{bind-attr class="unfollowable::hidden :btn-link"}}>Unfollow</button>
-    </div>
+    <button {{action 'follow' model bubbles=false}} style="color: darkgreen;" {{bind-attr
+        class="followable::hidden :btn :btn-link"}}>Follow
+    </button>
+    <button {{action 'unfollow' model bubbles=false}} style="color: darkred;" {{bind-attr
+        class="unfollowable::hidden :btn-link"}}>Unfollow
+    </button>
+  </div>
+  <div class="icons">
+    <span {{bind-attr class="official::hidden :glyphicon :glyphicon-flag :official"}} title="Official event"></span>
+    <span {{bind-attr class="official:hidden :glyphicon :glyphicon-adjust :shadow"}} title="Shadow cruise event"></span>
   </div>
 </div>

@@ -14,13 +14,13 @@
   <div>{{unbound today_text}}</div>
 </div>
 
+<div class="display_card">
 {{#each event in events}}
-  <div class="display_card">
     {{render "schedule.meta_partial" event}}
-  </div>
 {{else}}
-  <div>No events scheduled for this day.</div>
+  <div class="card-section">No events scheduled for this day.</div>
 {{/each}}
+</div>
 
 {{#if events}}
   <div class="display_card calendar-nav">

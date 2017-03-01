@@ -29,10 +29,6 @@
     </div>
     <div class="form row">
       <div class="col-xs-6">
-        {{#if author}}
-          <div class="label">Organized by</div>
-          <div class="data">{{#link-to 'user' author}}{{unbound pretty_username author author_display_name}}{{/link-to}}</div>
-        {{/if}}
         {{#if location}}
           <div class="label">Location</div>
           <div class="data">{{unbound location}}</div>
@@ -47,18 +43,13 @@
         {{/if}}
       </div>
     </div>
-    
-    {{#if max_signups}}
-      <div class="form row">
-        <div class="col-xs-6">
-          <div class="label">Signups</div>
-          <div class="data">{{signup_string signups}}</div>
-        </div>
-        <div class="col-xs-6">
-          <div class="label">Maximum allowed signups</div>
-          <div class="data">{{max_signups}}</div>
-        </div>
-      </div>
-    {{/if}}
+    <div class="icons">
+      <span {{bind-attr class="official::hidden :glyphicon :glyphicon-flag :official"}} title="Official event">
+        Official Event
+      </span>
+      <span {{bind-attr class="official:hidden :glyphicon :glyphicon-adjust :shadow"}} title="Shadow cruise event">
+        Shadow Cruise Event
+      </span>
+    </div>
   </div>
 </div>

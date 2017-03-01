@@ -587,9 +587,24 @@ img.photo {
       }
     }
 
+    .icons {
+      @extend .clearfix;
+      line-height: 1.5em;
+      .glyphicon {
+        vertical-align: bottom;
+        &.official {
+          color: blue;
+        }
+        &.shadow {
+          color: darkgray;
+        }
+      }
+    }
+
     .form {
       @extend .clearfix;
       padding: 0.2em 0.2em 0;
+      line-height: 1.2em;
 
       .label {
         color: darkgray;

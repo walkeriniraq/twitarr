@@ -4,6 +4,7 @@ Twitarr.EventMeta = Ember.Object.extend
   author_display_name: null
   title: null
   location: null
+  official: false
   start_time: null
   end_time: null
   following: false
