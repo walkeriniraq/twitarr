@@ -46,4 +46,5 @@ Twitarr.Router.map ()->
   @route 'alerts'
   @route 'profile'
   @route 'starred'
+  @route 'time'
   @route 'help'

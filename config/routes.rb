@@ -1,6 +1,8 @@
 Twitarr::Application.routes.draw do
   root 'home#index'
 
+  get 'time', to: 'home#time'
+
   get 'login', to: 'user#login_page'
   post 'login', to: 'user#login'
 

@@ -154,3 +154,13 @@ Twitarr.StarredController = Twitarr.ObjectController.extend
           alert response.status
     go_to_star_feed: ->
       @transitionToRoute 'stream.star_page', Math.ceil(new Date().valueOf() + 1000)
+
+Twitarr.TimeController = Twitarr.ObjectController.extend
+
+  server_time: (->
+    @get('time')
+  ).property('time')
+
+  device_time: (->
+    moment().format('MMMM Do, h:mm a')
+  ).property()

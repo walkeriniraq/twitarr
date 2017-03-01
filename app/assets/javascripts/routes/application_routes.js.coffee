@@ -75,3 +75,8 @@ Twitarr.TagRoute = Ember.Route.extend
 Twitarr.StarredRoute = Ember.Route.extend
   model: ->
     Twitarr.StarredMeta.get()
+
+Twitarr.TimeRoute = Ember.Route.extend
+  model: ->
+    $.getJSON("time").then (data) ->
+      data
