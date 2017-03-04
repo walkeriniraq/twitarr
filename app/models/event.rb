@@ -44,7 +44,7 @@ class Event
     end
     event.title = ics_event.summary
     event.description = ics_event.description
-    if event.start_time.andand.to_date == FIRST_CRUISE_DATE
+    if ics_event.dtstart.andand.to_date == FIRST_CRUISE_DATE
       event.start_time = ics_event.dtstart + 1.hour
       event.end_time = ics_event.dtend + 1.hour unless ics_event.dtend.nil?
     else
