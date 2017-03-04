@@ -17,6 +17,7 @@ class Event
 
   # 1 = ASC, -1 DESC
   index start_time: -1
+  index title: -1
   index({:title => 'text', :description => 'text', :location => 'text'})
 
   def self.search(params = {})
