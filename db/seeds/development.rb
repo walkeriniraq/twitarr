@@ -47,7 +47,9 @@ def add_photo(url, localfilename, uploader, upload_date)
     }
   }
   local_file = ActionDispatch::Http::UploadedFile.new(:tempfile => File.new(localfilename),
-                                                     :filename => photo_basename)
+                                                      :filename => photo_basename,
+                                                      :type     => "image/jpeg"
+                                                     )
   res = PhotoStore.instance.upload local_file, uploader
   photo_md = PhotoMetadata.find_by id: res[:photo]
   photo_md.upload_time = upload_date
