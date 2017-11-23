@@ -8,6 +8,40 @@ Twit-arr was the name for the Status.net instance brought onto the cruise ship f
 less than optimal for this environment, I took it upon myself to build a new version, completely customized for
 the cruise. It does help that I wanted to have a chance to use Ember.js and Mongodb in production.
 
+## Docker setup
+If you're not running on linux, or just want an isolated environment, you can run twitarr in docker.
+
+### Prereqs
+
+You'll need the Docker [toolbox](https://www.docker.com/docker-toolbox).  I (Joey) used version 1.16.1.  The default install on a Mac is Just Fine; not sure about other platforms.
+
+### Configuration
+* Create an `application.yml` and `secrets.yml` file based on the respective `examples` files. The tokens are just random hex strings (I think).
+* If you want to run with local changes (so that you can change the Ruby code and not have to rebuild the world each time), modify docker-compose accordingly:
+```
+  volumes:   # Remove this for production use
+   - /Users/Joey/twitarr:/srv/app
+```
+
+### Building the docker images
+Run:
+```
+   $ docker-compose build
+   $ docker-compose up
+```
+
+This will create a docker image based on JRuby 9, as well as download a MongoDB image.
+
+This can take 10 minute to set up, as it generates indexes and seed data in mongo.
+Once it completes you should be able to reach twitarr via http://localhost:3000.
+
+### Quicker startup
+After running the server once, it is no longer necessary to reseed the database. You can comment out the following lines in `start-docker.sh`:
+```
+#rake db:mongoid:create_indexes
+#rake db:seed
+```
+
 ## Setup
 
 Mongo
@@ -93,22 +127,3 @@ Now we can finally run the rails server.  By default this server can be hit from
 ```
   $ rails server
 ```
-
-## Docker setup
-If you're not running on linux, or just want an isolated environment, you can run twitarr in docker.
-
-### Prereqs
-
-You'll need docker, docker-machine and docker-compose [download docker-toolbox](https://www.docker.com/docker-toolbox).  I used version 1.9.1
-
-The setup may automatically setup a docker virtual machine, or you create one with docker-machine.  Ultimately you'll want to set up your environment so `docker images` runs without errors.
-
-### steps
-1. Build and run
-```
-   $ docker-compose build
-   $ docker-compose up
-```
-
-This can take 10 minute to set up, as it generates indexes and seed data in mongo.
-Once it completes you can reach twitarr via http://{docker_ip}:3000 - for me on windows that's http://192.168.99.100:3000/
