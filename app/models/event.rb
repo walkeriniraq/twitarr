@@ -1,5 +1,6 @@
 class Event
   include Mongoid::Document
+  include Mongoid::Timestamps
   include Searchable
 
   FIRST_CRUISE_DATE = Date.new 2017, 3, 4
