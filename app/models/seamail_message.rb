@@ -1,5 +1,7 @@
 class SeamailMessage
   include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Paranoia
 
   field :au, as: :author, type: String
   field :tx, as: :text, type: String
