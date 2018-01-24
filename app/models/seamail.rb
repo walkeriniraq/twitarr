@@ -1,5 +1,7 @@
 class Seamail
   include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Paranoia
   include Searchable
 
   field :sj, as: :subject, type: String
