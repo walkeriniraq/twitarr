@@ -69,8 +69,8 @@ class ForumsController < ApplicationController
     end
 
     if forum_post.valid?
-      forum_post.destroy!
-      forum.destroy! if forum.posts.count <= 1 # If the post is *only* the OP, delete the forum, else everything breaks
+      forum_post.destroy
+      forum.destroy if forum.posts.count <= 1 # If the post is *only* the OP, delete the forum, else everything breaks
       render_json status: 'OK'
     end
   end
