@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-    (@user && @user.is_admin) || session[:is_admin]
+    (current_user&.is_admin) || session[:is_admin]
   end
 
   def logged_in!
