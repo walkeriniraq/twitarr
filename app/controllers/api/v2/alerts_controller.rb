@@ -11,7 +11,7 @@ class API::V2::AlertsController < ApplicationController
                                                 mentions_only: true).map {|p| p.decorate.to_meta_hash }
       unread_seamail = current_user.seamails(unread: true).map{|m| m.decorate.to_meta_hash }
 
-      upcoming_events = current_user.upcoming_events(true).map{|e| e.decorate.to_hash }
+      upcoming_events = current_user.upcoming_events(true).map{|e| e.decorate.to_hash current_username }
 
       unless params[:no_reset]
         current_user.reset_last_viewed_alerts
