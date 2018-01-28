@@ -2,6 +2,7 @@ require 'bcrypt'
 
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps
   include Searchable
 
   USERNAME_CACHE_TIME = 30.minutes

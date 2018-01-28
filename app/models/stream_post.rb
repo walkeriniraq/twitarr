@@ -1,6 +1,8 @@
 # noinspection RubyStringKeysInHashInspection
 class StreamPost
   include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Paranoia
   include Searchable
   include Postable
 

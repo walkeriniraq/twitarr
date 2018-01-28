@@ -45,6 +45,9 @@ gem 'momentjs-rails'
 
 gem 'icalendar', '>= 2.3.0'
 
+# mongoid-paranoia for soft deletes, because we're still on mongoid 4
+gem 'mongoid-paranoia'
+
 group :development do
   gem 'better_errors'
 end
