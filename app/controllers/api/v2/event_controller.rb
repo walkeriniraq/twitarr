@@ -86,7 +86,7 @@ class API::V2::EventController < ApplicationController
   end
   
   def rc_events
-	  return unless valid_key?(params[:key])
+    return unless valid_key?(params[:key])
     start_loc = params[:since]
     limit = params[:limit] || 0
     events = Event.where(:updated_at.gte => start_loc).only(:id, :title, :description, :location, :start_time, :end_time).limit(limit).order_by(id: :asc)
