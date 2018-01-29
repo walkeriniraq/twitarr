@@ -2,8 +2,8 @@ require 'csv'
 class API::V2::EventController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_filter :login_required, :only => [:create, :destroy, :update, :signup, :destroy_signup, :favorite, :destroy_favorite]
-  before_filter :fetch_event, :except => [:index, :create, :csv]
+  before_filter :login_required, :only => [:create, :destroy, :update, :signup, :destroy_signup, :favorite, :destroy_favorite, :rc_events]
+  before_filter :fetch_event, :except => [:index, :create, :csv, :rc_events]
 
   def login_required
     head :unauthorized unless logged_in? || valid_key?(params[:key])
@@ -83,6 +83,14 @@ class API::V2::EventController < ApplicationController
       format.json { render json: @event.decorate.to_hash }
       format.xml { render xml: @event.decorate.to_hash }
     end
+  end
+  
+  def rc_events
+	  return unless valid_key?(params[:key])
+    start_loc = params[:since]
+    limit = params[:limit] || 0
+    events = Event.where(:updated_at.gte => start_loc).only(:id, :title, :description, :location, :start_time, :end_time).limit(limit).order_by(id: :asc)
+    render json: forums 
   end
 
 end
