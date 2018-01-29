@@ -90,7 +90,7 @@ class API::V2::EventController < ApplicationController
     start_loc = params[:since]
     limit = params[:limit] || 0
     events = Event.where(:updated_at.gte => start_loc).only(:id, :title, :description, :location, :start_time, :end_time).limit(limit).order_by(id: :asc)
-    render json: forums 
+    render json: events
   end
 
 end
