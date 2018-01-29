@@ -118,7 +118,7 @@ class API::V2::UserController < ApplicationController
   end
   
   def rc_users
-	  return unless valid_key?(params[:key])
+    return unless valid_key?(params[:key])
     start_loc = params[:since]
     limit = params[:limit] || 0
     users = User.where(:updated_at.gte => start_loc).only(:id, :updated_at, :username, :display_name, :real_name, :email, :home_location, :last_photo_updated, :room_number, :is_email_public, :is_vcard_public).limit(limit).order_by(username: :asc)
@@ -126,7 +126,7 @@ class API::V2::UserController < ApplicationController
   end
   
   def rc_update_profile
-	  return unless logged_in!
+    return unless logged_in!
     current_user.display_name = params[:display_name] if params.has_key? :display_name
     current_user.email = params[:email] if params.has_key? :email
     current_user.email_public = params[:email_public] if params.has_key? :email_public
