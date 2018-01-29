@@ -3,8 +3,8 @@ class API::V2::StreamController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   PAGE_LENGTH = 20
-  before_filter :login_required,  :only => [:create, :destroy, :update, :like, :unlike]
-  before_filter :fetch_post, :except => [:index, :create, :view_mention, :view_hash_tag]
+  before_filter :login_required,  :only => [:create, :destroy, :update, :like, :unlike, :rc_posts]
+  before_filter :fetch_post, :except => [:index, :create, :view_mention, :view_hash_tag, :rc_posts]
 
   def login_required
     head :unauthorized unless logged_in? || valid_key?(params[:key])
@@ -211,4 +211,12 @@ class API::V2::StreamController < ApplicationController
     next_page = posts.last.nil? ? 0 : (posts.first.timestamp.to_f * 1000).to_i + 1
     {stream_posts: posts.map{|x| x.decorate.to_hash(current_username, request_options)}, next_page: next_page}
   end
+  
+  def rc_posts
+    start_loc = params[:since]
+    limit = params[:limit] || 0
+    posts = StreamPost.unscoped.where(:updated_at.gte => start_loc).only(:id, :deleted_at, :author, :text, :timestamp, :photo, :likes, :parent_chain).limit(limit).order_by(timestamp: :asc)
+    render json: posts 
+  end
+  
 end

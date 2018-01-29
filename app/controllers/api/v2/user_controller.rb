@@ -1,6 +1,13 @@
 class API::V2::UserController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  before_filter :login_required,  :only => [:rc_update_profile]
+
+  def login_required
+    head :unauthorized unless logged_in? || valid_key?(params[:key])
+  end
+
+
   def auth
     login_result = validate_login params[:username], params[:password]
     if login_result.has_key? :error
@@ -109,4 +116,30 @@ class API::V2::UserController < ApplicationController
     logout_user
     render_json status: 'ok'
   end
+  
+  def rc_users
+    return unless valid_key?(params[:key])
+    start_loc = params[:since]
+    limit = params[:limit] || 0
+    users = User.where(:updated_at.gte => start_loc).only(:id, :updated_at, :username, :display_name, :real_name, :email, :home_location, :last_photo_updated, :room_number, :is_email_public, :is_vcard_public).limit(limit).order_by(username: :asc)
+    render json: users 
+  end
+  
+  def rc_update_profile
+    return unless logged_in!
+    current_user.display_name = params[:display_name] if params.has_key? :display_name
+    current_user.email = params[:email] if params.has_key? :email
+    current_user.email_public = params[:email_public] if params.has_key? :email_public
+    current_user.home_location = params[:home_location] if params.has_key? :home_location
+    current_user.real_name = params[:real_name] if params.has_key? :real_name
+    current_user.room_number = params[:room_number] if params.has_key? :room_number
+    current_user.vcard_public = params[:vcard_public] if params.has_key? :vcard_public
+    if current_user.valid?
+      current_user.save
+      render json: { status: 'Updated' }
+    else
+      render json: { status: 'Error', errors: current_user.errors.full_messages }
+    end
+  end
+		
 end
