@@ -82,11 +82,11 @@ class API::V2::ForumsController < ApplicationController
   end
 
    def rc_forum
- 	  return unless logged_in!
- 		forum_id = params[:id]
- 		start_loc = params[:since]
+    return unless logged_in!
+    forum_id = params[:id]
+    start_loc = params[:since]
     limit = params[:limit] || 0
- 	  posts = Forum.unscoped.where(:id => forum_id, :updated_at.gte => start_loc).only(:id, :posts).limit(limit)
+    posts = Forum.unscoped.where(:id => forum_id, :updated_at.gte => start_loc).only(:id, :posts).limit(limit)
     render json: posts
   end
     
