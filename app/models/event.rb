@@ -28,7 +28,7 @@ class Event
   end
 
   def self.create_new_event(author, title, start_time, options={})
-    event = Event.new(author: author, title: title, start_time: start_time)
+    event = Event.new(title: title, start_time: start_time)
     event.description = options[:description] unless options[:description].nil?
     event.location = options[:location] unless options[:location].nil?
     event.official = options[:official] unless options[:official].nil?

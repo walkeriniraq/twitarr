@@ -1,5 +1,5 @@
 def create_official_event(title, author, start_time, end_time, description)
-  event = Event.create(title: title, author: author, description: description, start_time: start_time, end_time: end_time, official: true)
+  event = Event.create(title: title, description: description, start_time: start_time, end_time: end_time, official: true)
   unless event.valid?
     puts "Errors for event #{title}: #{event.errors.full_messages}"
     return event

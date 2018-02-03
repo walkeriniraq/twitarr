@@ -3,7 +3,7 @@ unless User.exist? 'official'
 end
 
 def create_event(id, title, author, start_time, end_time, description, official)
-  event = Event.create(_id: id, title: title, author: author, description: description, start_time: start_time, end_time: end_time, official: official)
+  event = Event.create(_id: id, title: title, description: description, start_time: start_time, end_time: end_time, official: official)
   unless event.valid?
     puts "Errors for event #{title}: #{event.errors.full_messages}"
     return event
@@ -16,7 +16,9 @@ cal_filename = "db/seeds/all.ics"
 # fix bad encoding from sched.org
 cal_text = File.read(cal_filename)
 cal_text = cal_text.gsub(/\;/, "\\;")
-File.delete(cal_filename + ".tmp")
+if File.exists? cal_filename + ".tmp"
+  File.delete(cal_filename + ".tmp")
+end
 File.open(cal_filename + ".tmp", "w") { |file| file << cal_text }
 
 cal_file = File.open(cal_filename + ".tmp")
@@ -36,7 +38,6 @@ cal.events.each { |event|
   existing = nil
   begin
     existing = Event.find(event.uid)
-    existing.author = "official"
     existing.start_time = event.dtstart
     existing.end_time = event.dtend
     existing.title = event.summary
