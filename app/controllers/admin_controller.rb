@@ -83,7 +83,9 @@ class AdminController < ApplicationController
   end
 
   def upload_schedule
-    Icalendar.parse(params[:schedule].tempfile.read).first.events.map { |x| Event.create_from_ics x }
+    upload = params[:schedule].tempfile.read
+    temp = upload.gsub(/&amp;/, '&')
+    Icalendar.parse(temp).first.events.map { |x| Event.create_from_ics x }
     render_json status: 'ok'
   end
 
