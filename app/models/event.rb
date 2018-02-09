@@ -3,7 +3,7 @@ class Event
   include Mongoid::Timestamps
   include Searchable
 
-  FIRST_CRUISE_DATE = Date.new 2017, 3, 4
+  FIRST_CRUISE_DATE = Date.new 2018, 2, 18
 
   field :tl, as: :title, type: String
   field :sm, as: :description, type: String
