@@ -1,3 +1,5 @@
+*NOTE: I am not able to maintain this project any longer. Please feel free to fork and if there's community support for another repo then I'll link to it here*
+
 # twitarr
 
 Twit-arr is a micro-blogging site that is set up for [JoCo Cruise Crazy](http://jococruisecrazy.com/)
